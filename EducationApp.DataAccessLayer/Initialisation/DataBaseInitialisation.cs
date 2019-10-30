@@ -88,17 +88,15 @@ namespace EducationApp.DataAccessLayer.Initialisation
 
         public void InitializationAuthors()
         {
-            var amountAuthors = _applicationContext.Authors.Count();
-            if (amountAuthors == 0)
+
+            var author = new Author
             {
-                var author = new Author
-                {
-                    Id = 1,
-                    Name = "Terry Pratchett"
-                };
-                _applicationContext.Authors.Add(author);
-                _applicationContext.SaveChanges();
-            }
+                Id = 1,
+                Name = "Terry Pratchett"
+            };
+            _applicationContext.Authors.Add(author);
+            _applicationContext.SaveChanges();
+
         }
     }
 }

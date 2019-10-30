@@ -23,3 +23,57 @@ Request finished in 15.036800000000001ms 200
 Request starting HTTP/2.0 GET https://localhost:44357/favicon.ico  
 Processing request /favicon.ico
 Request finished in 9.9814ms 200 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/api/home  
+Processing request /api/home
+Request finished in 39.458200000000005ms 200 
+Request starting HTTP/2.0 GET https://localhost:44357/favicon.ico  
+Processing request /favicon.ico
+Request finished in 29.3531ms 200 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/api/home  
+Processing request /api/home
+Request finished in 37.1017ms 200 
+Request starting HTTP/2.0 GET https://localhost:44357/favicon.ico  
+Processing request /favicon.ico
+Request finished in 18.8214ms 200 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Processing request /
+Request finished in 35.8891ms 200 
+Request starting HTTP/2.0 GET https://localhost:44357/favicon.ico  
+Processing request /favicon.ico
+Request finished in 19.677300000000002ms 200 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Processing request /
+Request finished in 36.6743ms 200 
+Request starting HTTP/2.0 GET https://localhost:44357/favicon.ico  
+Processing request /favicon.ico
+Request finished in 17.4765ms 200 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Processing request /
+Request finished in 47.3114ms 200 
+Request starting HTTP/2.0 GET https://localhost:44357/favicon.ico  
+Processing request /favicon.ico
+Request finished in 22.0819ms 200 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Processing request /
+Request finished in 38.1512ms 200 
+Request starting HTTP/2.0 GET https://localhost:44357/favicon.ico  
+Processing request /favicon.ico
+Request finished in 19.6386ms 200 
