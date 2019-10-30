@@ -13,4 +13,9 @@
     <ProjectReference Include="..\EducationApp.DataAccessLayer\EducationApp.DataAccessLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>

@@ -4,9 +4,6 @@ using EducationApp.DataAccessLayer.Initialisation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EducationApp.BusinessLogicLayer.BaseInit
 {
@@ -24,6 +21,8 @@ namespace EducationApp.BusinessLogicLayer.BaseInit
             services.AddTransient<UserManager<ApplicationUser>>();
             services.AddTransient<RoleManager<Role>>();
             services.AddTransient<DataBaseInitialisation>();
+
+
         }
     }
 }

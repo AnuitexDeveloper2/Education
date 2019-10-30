@@ -1,0 +1,25 @@
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/api/home  
+Processing request /api/home
+Request finished in 28.929000000000002ms 200 
+Request starting HTTP/2.0 GET https://localhost:44357/favicon.ico  
+Processing request /favicon.ico
+Request finished in 12.3598ms 200 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Connection ID "18374686485577203782", Request ID "80000047-0001-ff00-b63f-84710c7967bb": An unhandled exception was thrown by the application.
+Request starting HTTP/2.0 GET https://localhost:44357/api/home  
+Processing request /api/home
+Request finished in 21.637800000000002ms 200 
+Request starting HTTP/2.0 GET https://localhost:44357/favicon.ico  
+Processing request /favicon.ico
+Request finished in 8.6219ms 200 
+Request starting HTTP/2.0 GET https://localhost:44357/api/home  
+Processing request /api/home
+Request finished in 15.036800000000001ms 200 
+Request starting HTTP/2.0 GET https://localhost:44357/favicon.ico  
+Processing request /favicon.ico
+Request finished in 9.9814ms 200 

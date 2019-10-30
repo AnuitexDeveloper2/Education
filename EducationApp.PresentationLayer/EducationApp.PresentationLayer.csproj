@@ -24,7 +24,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EducationApp.BusinessLogicLayer\EducationApp.BusinessLogicLayer.csproj" />
-    <ProjectReference Include="..\EducationApp.DataAccessLayer\EducationApp.DataAccessLayer.csproj" />
   </ItemGroup>
 
 </Project>
