@@ -22,7 +22,7 @@ namespace EducationApp.PresentationLayer.Helpers.Middlware
             {
                 await _next(context);
             }
-            catch(Exception exeption)
+            catch (Exception exeption)
             {
                 _logger.LogError(0, exeption, "");
             }
