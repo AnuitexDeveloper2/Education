@@ -12,6 +12,7 @@ namespace EducationApp.DataAccessLayer.Initialisation
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly ApplicationContext _applicationContext;
+
         public DataBaseInitialisation(UserManager<ApplicationUser> userManager, RoleManager<Role> roleManager, ApplicationContext applicationContext)
         {
             _userManager = userManager;
@@ -21,8 +22,8 @@ namespace EducationApp.DataAccessLayer.Initialisation
         public void StartInit()
         {
             InitialisationRole();
-            InitializationApplicationUser();
             InitializationAuthors();
+            InitializationApplicationUser();
             InitializationPrintingEdition();
             InitialisationAuthorInPrintingEdition();
         }
@@ -35,7 +36,6 @@ namespace EducationApp.DataAccessLayer.Initialisation
                 PrintingEditionId = 1
             };
             _applicationContext.AuthorInPrintingEditions.Add(authoirIn);
-            _applicationContext.SaveChanges();
         }
 
         private void InitialisationRole()
@@ -50,7 +50,6 @@ namespace EducationApp.DataAccessLayer.Initialisation
             {
                 _roleManager.CreateAsync(item).GetAwaiter().GetResult();
             }
-
         }
 
         private void InitializationApplicationUser()
@@ -63,39 +62,53 @@ namespace EducationApp.DataAccessLayer.Initialisation
             foreach (var item in users)
             {
                 _userManager.CreateAsync(item).GetAwaiter().GetResult();
-                if (item.UserName.Equals(Admin))
+                if (item.UserName == Admin)
                 {
                     _userManager.AddToRoleAsync(item, Admin).GetAwaiter();
                     continue;
                 }
-                _userManager.AddToRoleAsync(item, User).GetAwaiter();
+                if (item.UserName == User)
+                {
+                    _userManager.AddToRoleAsync(item, User).GetAwaiter();
+                }
             }
         }
 
         private void InitializationPrintingEdition()
         {
-            var printingEdition = new List<PrintingEdition>()
+            int printingEditionCount = _applicationContext.PrintingEditions.Count();
+            if (printingEditionCount == 0)
+            {
+
+                var printingEdition = new List<PrintingEdition>()
             {
                 new PrintingEdition {Title = "Discword"},
                 new PrintingEdition {Title = "CLR via C#"}
             };
-            foreach (var item in printingEdition)
-            {
-                _applicationContext.PrintingEditions.Add(item);
-                _applicationContext.SaveChanges();
+                foreach (var item in printingEdition)
+                {
+                    _applicationContext.PrintingEditions.Add(item);
+                    _applicationContext.SaveChanges();
+                }
             }
         }
 
         public void InitializationAuthors()
         {
-
-            var author = new Author
+            var authorcount = _applicationContext.Authors.Count();
+            if (authorcount == 0)
             {
-                Id = 1,
-                Name = "Terry Pratchett"
+
+                var author = new List<Author>()
+            {
+               new Author{Name = "Terry Pratchett" }
             };
-            _applicationContext.Authors.Add(author);
-            _applicationContext.SaveChanges();
+                foreach (var item in author)
+                {
+                    _applicationContext.Authors.Add(item);
+                    _applicationContext.SaveChanges();
+                }
+            }
 
         }
     }

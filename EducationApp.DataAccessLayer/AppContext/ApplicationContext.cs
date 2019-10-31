@@ -1,4 +1,5 @@
-﻿using EducationApp.DataAccessLayer.Entities;
+﻿using System;
+using EducationApp.DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,7 @@ namespace BookStore.DataAccess.AppContext
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItems> OrderItems { get; set; }
         public DbSet<Payment> Payments { get; set; }
+
         public DbSet<PrintingEdition> PrintingEditions { get; set; }
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)

@@ -27,4 +27,8 @@
     <ProjectReference Include="..\EducationApp.BusinessLogicLayer\EducationApp.BusinessLogicLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+
 </Project>

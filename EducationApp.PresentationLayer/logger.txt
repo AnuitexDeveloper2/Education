@@ -77,3 +77,86 @@ Request finished in 38.1512ms 200
 Request starting HTTP/2.0 GET https://localhost:44357/favicon.ico  
 Processing request /favicon.ico
 Request finished in 19.6386ms 200 
+Application startup exception
+Application startup exception
+Application startup exception
+Application startup exception
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Processing request /
+Request finished in 56.5675ms 200 
+Request starting HTTP/2.0 GET https://localhost:44357/favicon.ico  
+Processing request /favicon.ico
+Request finished in 23.215300000000003ms 200 
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Processing request /
+Request finished in 23.867ms 200 
+Request starting HTTP/2.0 GET https://localhost:44357/favicon.ico  
+Processing request /favicon.ico
+Request finished in 18.514300000000002ms 200 
+Application startup exception
+Application startup exception
+Application startup exception
+Application startup exception
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Request finished in 30.8133ms 404 
+Request starting HTTP/2.0 GET https://localhost:44357/favicon.ico  
+Request finished in 10.196200000000001ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Request finished in 30.6962ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Request finished in 35.7487ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Request finished in 29.0242ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Request finished in 24.1905ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Request finished in 30.9675ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Request finished in 25.2283ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Request finished in 25.539ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Request finished in 38.0626ms 404 
+Executing DbCommand [Parameters=[@__p_0='?' (DbType = Int64), @__p_1='?' (DbType = Int64)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE (([a].[UserId] = @__p_0) AND @__p_0 IS NOT NULL) AND (([a].[RoleId] = @__p_1) AND @__p_1 IS NOT NULL)
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Connection ID "18230571310386249856", Request ID "80000081-0004-fd00-b63f-84710c7967bb": An unhandled exception was thrown by the application.
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Request finished in 27.742700000000003ms 404 
