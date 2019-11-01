@@ -11,5 +11,11 @@ namespace EducationApp.PresentationLayer.Controllers
     [ApiController]
     public class HomeController : ControllerBase
     {
+        //public async Task<IActionResult> SendMessage()
+        //{
+        //    EmailSender emailService = new EmailSender();
+        //    await emailService.SendingEmailAsync("educationappgoncharuk2019@gmail.com", "Тема письма", "Тест письма: тест!");
+        //    return RedirectToAction("Index");
+        //}
     }
 }

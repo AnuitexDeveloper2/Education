@@ -3,7 +3,8 @@ using EducationApp.DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.Linq;
-using static EducationApp.DataAccessLayer.Entities.Constants.Constants;
+using System.Text;
+using static EducationApp.DataAccessLayer.Entities.Constants.Constants.Roles;
 
 namespace EducationApp.DataAccessLayer.Initialisation
 {
@@ -21,11 +22,11 @@ namespace EducationApp.DataAccessLayer.Initialisation
         }
         public void StartInit()
         {
-            InitialisationRole();
-            InitializationAuthors();
-            InitializationApplicationUser();
-            InitializationPrintingEdition();
-            InitialisationAuthorInPrintingEdition();
+            //InitialisationRole();
+            //InitializationAuthors();
+            //InitializationApplicationUser();
+            //InitializationPrintingEdition();
+            //InitialisationAuthorInPrintingEdition();
         }
 
         private void InitialisationAuthorInPrintingEdition()
@@ -48,16 +49,18 @@ namespace EducationApp.DataAccessLayer.Initialisation
 
             foreach (var item in roles)
             {
-                _roleManager.CreateAsync(item).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(item).GetAwaiter();
             }
         }
 
         private void InitializationApplicationUser()
         {
+            string firstName = "I";
+            string lastName = "am";
             List<ApplicationUser> users = new List<ApplicationUser>()
             {
-                new ApplicationUser{ FirstName = "I" ,LastName = "am",UserName = Admin},
-                new ApplicationUser{ FirstName = "He",LastName = "is",UserName = User}
+                new ApplicationUser{ FirstName = firstName ,LastName = lastName,UserName = $"{firstName} + {lastName }" },
+
             };
             foreach (var item in users)
             {
@@ -106,7 +109,7 @@ namespace EducationApp.DataAccessLayer.Initialisation
                 foreach (var item in author)
                 {
                     _applicationContext.Authors.Add(item);
-                    _applicationContext.SaveChanges();
+                    _applicationContext.SaveChangesAsync().GetAwaiter();
                 }
             }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BookStore.DataAccess.AppContext;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
@@ -9,7 +10,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
     public class BaseEFRepository<TEntity> : IBaseEFRRepository<TEntity> where TEntity : class
     {
         private readonly ApplicationContext _applicationContext;
-        private bool response;
         private readonly DbSet<TEntity> _dbSet;
         public BaseEFRepository(ApplicationContext applicationContext, DbSet<TEntity> dbSet)
         {
@@ -21,31 +21,33 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
         {
             _dbSet.Add(entity);
             await _applicationContext.SaveChangesAsync();
-            return response;
+            return _applicationContext.SaveChangesAsync().IsCompleted;
+            
         }
 
-        public Task<List<TEntity>> GetAsync(TEntity entity)
+        public IEnumerable<TEntity> GetAsync()
         {
-            throw new System.NotImplementedException();
+            return _dbSet.AsNoTracking().ToList();
         }
 
         async Task<bool> IBaseEFRRepository<TEntity>.DeleteAsync(TEntity entity)
         {
             _dbSet.Remove(entity);
             await _applicationContext.SaveChangesAsync();
-            return response;
+            return _applicationContext.SaveChangesAsync().IsCompleted;
         }
-        public async Task<bool> DeleteAsync(ApplicationUser user)
-        {
-            var deleteUser = await _userManager.DeleteAsync(user);
-            return deleteUser.Succeeded;
-        }
+       
 
         async Task<bool> IBaseEFRRepository<TEntity>.EditAsync(TEntity entity)
         {
             _dbSet.Update(entity);
             await _applicationContext.SaveChangesAsync();
-            return response;
+            return _applicationContext.SaveChangesAsync().IsCompleted;
+        }
+
+        public Task<List<TEntity>> GetAsync(TEntity entity)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

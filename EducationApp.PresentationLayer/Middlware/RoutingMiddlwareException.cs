@@ -5,14 +5,15 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 
+
 namespace EducationApp.PresentationLayer.Helpers.Middlware
 {
-    public class RoutingMiddlwareException
+    public class ErrorMiddlware
     {
         private readonly ILogger _logger;
         private readonly RequestDelegate _next;
 
-        public RoutingMiddlwareException(RequestDelegate next, ILoggerFactory logger)
+        public ErrorMiddlware(RequestDelegate next, ILoggerFactory logger)
         {
             _next = next;
             _logger = logger.CreateLogger("Logger");
