@@ -11,6 +11,7 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
         Task ConfirmEmailAsync(string email);
         Task RestorePassword(string newPassword);
         Task<ApplicationUser> GetUserAsync(string userName, string password);
-        Task<ApplicationUser> RegisterAsync();
+        Task<ApplicationUser> RegisterAsync(string name, string email, string password);
+        Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user);
     }
 }

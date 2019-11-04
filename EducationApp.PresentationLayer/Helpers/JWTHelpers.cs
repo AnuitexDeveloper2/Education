@@ -1,4 +1,5 @@
 ﻿using EducationApp.BusinessLogicLayer.Models.Users;
+using EducationApp.PresentationLayer.Helpers.Interfaces;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -12,13 +13,13 @@ using static EducationApp.BusinessLogicLayer.Common.Consts.Consts;
 
 namespace EducationApp.PresentationLayer.Helpers
 {
-    public class JWTHelpers
+    public class JWTHelpers : IJWTHelpers
     {
         public static SymmetricSecurityKey GetSymmetricSecurityKey()
         {
             return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(JWTConsts.Key));
         }
 
-       
+
     }
 }

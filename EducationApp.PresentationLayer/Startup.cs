@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.JWTConsts;
 using EducationApp.PresentationLayer.Helpers;
+using EducationApp.PresentationLayer.Helpers.Interfaces;
 
 namespace EducationApp.PresentationLayer
 {
@@ -44,17 +45,28 @@ namespace EducationApp.PresentationLayer
                         };
                     });
             services.AddMvc(option => option.EnableEndpointRouting = false);
+            services.AddTransient<IJWTHelpers, JWTHelpers>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataBaseInitialisation initializer,  IEmailSender emailSender)
         {
-           /* initializer.StartInit()*/;
+            initializer.StartInit();
 
             app.UseMiddleware<ErrorMiddlware>();
    
+
+            app.UseHttpsRedirection();
+
             app.UseRouting();
 
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
            
+
         }
     }
 }

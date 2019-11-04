@@ -30,3 +30,154 @@ Request starting HTTP/1.1 GET http://localhost:44357/api/account
 Request finished in 109.54570000000001ms 404 
 Request starting HTTP/1.1 GET http://localhost:44357/api/account  
 Request finished in 8.9944ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Request starting HTTP/1.1 GET http://localhost:44357/api/account  
+Request finished in 98.45020000000001ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Request starting HTTP/1.1 GET http://localhost:44357/api/account  
+Request finished in 101.2322ms 404 
+Application started. Press Ctrl+C to shut down.
+Request starting HTTP/1.1 GET http://localhost:44357/api/account  
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Executing endpoint '405 HTTP Method Not Supported'
+Executed endpoint '405 HTTP Method Not Supported'
+Request finished in 747.6701ms 405 
+Request starting HTTP/1.1 GET http://localhost:44357/api/account  
+Executing endpoint '405 HTTP Method Not Supported'
+Executed endpoint '405 HTTP Method Not Supported'
+Request finished in 27.061500000000002ms 405 
+Request starting HTTP/1.1 GET http://localhost:44357/api/account  
+Executing endpoint '405 HTTP Method Not Supported'
+Executed endpoint '405 HTTP Method Not Supported'
+Request finished in 27.7099ms 405 
+Request starting HTTP/1.1 GET http://localhost:44357/api/account  
+Executing endpoint '405 HTTP Method Not Supported'
+Executed endpoint '405 HTTP Method Not Supported'
+Request finished in 29.4007ms 405 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Request starting HTTP/1.1 GET http://localhost:44357/api/account  
+Executing endpoint '405 HTTP Method Not Supported'
+Executed endpoint '405 HTTP Method Not Supported'
+Request finished in 73.7151ms 405 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Request starting HTTP/1.1 GET http://localhost:44357/account  
+Executing endpoint '405 HTTP Method Not Supported'
+Executed endpoint '405 HTTP Method Not Supported'
+Request finished in 64.4697ms 405 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Request starting HTTP/1.1 GET http://localhost:44357/account  
+Executing endpoint '405 HTTP Method Not Supported'
+Executed endpoint '405 HTTP Method Not Supported'
+Request finished in 84.9127ms 405 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Request starting HTTP/1.1 GET http://localhost:44357/account  
+Executing endpoint '405 HTTP Method Not Supported'
+Executed endpoint '405 HTTP Method Not Supported'
+Request finished in 71.9474ms 405 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Request starting HTTP/1.1 GET http://localhost:44357/account  
+Request finished in 103.3319ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44310/account  
+Request finished in 46.907700000000006ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44310/account  
+Request finished in 48.6391ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44310/account  
+Request finished in 57.1351ms 404 
+Request starting HTTP/1.1 POST https://localhost:44310/api/account/register application/json 30
+Executing endpoint 'EducationApp.PresentationLayer.Controllers.AccountController.Register (EducationApp.PresentationLayer)'
+Route matched with {action = "Register", controller = "Account"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] Register(EducationApp.BusinessLogicLayer.Models.Account.RegistrationModel) on controller EducationApp.PresentationLayer.Controllers.AccountController (EducationApp.PresentationLayer).
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44310/account  
+Request finished in 50.3667ms 404 
+Request starting HTTP/2.0 GET https://localhost:44310/api/account  
+Request finished in 20.1839ms 404 
+Request starting HTTP/2.0 GET https://localhost:44310/api/account/register  
+Executing endpoint '405 HTTP Method Not Supported'
+Executed endpoint '405 HTTP Method Not Supported'
+Request finished in 41.8183ms 405 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Request starting HTTP/1.1 POST https://localhost:44310/api/account/register application/json 30
+Request starting HTTP/2.0 GET https://localhost:44310/account  
+Executing endpoint 'EducationApp.PresentationLayer.Controllers.AccountController.Register (EducationApp.PresentationLayer)'
+Request finished in 61.583800000000004ms 404 
+Route matched with {action = "Register", controller = "Account"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] Register(EducationApp.BusinessLogicLayer.Models.Account.RegistrationModel) on controller EducationApp.PresentationLayer.Controllers.AccountController (EducationApp.PresentationLayer).
+Entity Framework Core 3.0.0 initialized 'ApplicationContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Executing DbCommand [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[FirstName], [a].[IsRemoved], [a].[LastName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[Password], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE (([a].[NormalizedEmail] = @__normalizedEmail_0) AND ([a].[NormalizedEmail] IS NOT NULL AND @__normalizedEmail_0 IS NOT NULL)) OR ([a].[NormalizedEmail] IS NULL AND @__normalizedEmail_0 IS NULL)
+Executed action EducationApp.PresentationLayer.Controllers.AccountController.Register (EducationApp.PresentationLayer) in 41767.9197ms
+Executed endpoint 'EducationApp.PresentationLayer.Controllers.AccountController.Register (EducationApp.PresentationLayer)'
+Error
+Request finished in 56543.550800000005ms 500 application/json
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44310/account  
+Request starting HTTP/1.1 POST https://localhost:44310/api/account/register application/json 30
+Executing endpoint 'EducationApp.PresentationLayer.Controllers.AccountController.Register (EducationApp.PresentationLayer)'
+Request finished in 80.75800000000001ms 404 
+Route matched with {action = "Register", controller = "Account"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] Register(EducationApp.BusinessLogicLayer.Models.Account.RegistrationModel) on controller EducationApp.PresentationLayer.Controllers.AccountController (EducationApp.PresentationLayer).
+Entity Framework Core 3.0.0 initialized 'ApplicationContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Executing DbCommand [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[FirstName], [a].[IsRemoved], [a].[LastName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[Password], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE (([a].[NormalizedEmail] = @__normalizedEmail_0) AND ([a].[NormalizedEmail] IS NOT NULL AND @__normalizedEmail_0 IS NOT NULL)) OR ([a].[NormalizedEmail] IS NULL AND @__normalizedEmail_0 IS NULL)
+Executed action EducationApp.PresentationLayer.Controllers.AccountController.Register (EducationApp.PresentationLayer) in 6402.770100000001ms
+Executed endpoint 'EducationApp.PresentationLayer.Controllers.AccountController.Register (EducationApp.PresentationLayer)'
+Error
+Request finished in 24370.488400000002ms 500 application/json
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44310/account  
+Request finished in 54.6263ms 404 
+Request starting HTTP/1.1 POST https://localhost:44310/api/account/register application/json 30
+Executing endpoint 'EducationApp.PresentationLayer.Controllers.AccountController.Register (EducationApp.PresentationLayer)'
+Route matched with {action = "Register", controller = "Account"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] Register(EducationApp.BusinessLogicLayer.Models.Account.RegistrationModel) on controller EducationApp.PresentationLayer.Controllers.AccountController (EducationApp.PresentationLayer).
+Entity Framework Core 3.0.0 initialized 'ApplicationContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Executing DbCommand [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[FirstName], [a].[IsRemoved], [a].[LastName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[Password], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE (([a].[NormalizedEmail] = @__normalizedEmail_0) AND ([a].[NormalizedEmail] IS NOT NULL AND @__normalizedEmail_0 IS NOT NULL)) OR ([a].[NormalizedEmail] IS NULL AND @__normalizedEmail_0 IS NULL)
+Executed action EducationApp.PresentationLayer.Controllers.AccountController.Register (EducationApp.PresentationLayer) in 171.8349ms
+Executed endpoint 'EducationApp.PresentationLayer.Controllers.AccountController.Register (EducationApp.PresentationLayer)'
+Error
+Request finished in 442.7807ms 500 application/json

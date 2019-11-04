@@ -18,14 +18,12 @@ public class UserRepository : IUserRepository
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly ApplicationContext _applicationContext;
-    private readonly RoleManager<Role> _roleManager;
 
-    public UserRepository(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationContext applicationContext, RoleManager<Role> roleManager)
+    public UserRepository(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationContext applicationContext)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _applicationContext = applicationContext;
-        _roleManager = roleManager;
     }
     public async Task<bool> AddAsync(ApplicationUser user, string password)
     {
@@ -60,8 +58,10 @@ public class UserRepository : IUserRepository
         {
             return false;
         }
-        var deleteUser = await _userManager.DeleteAsync(user);
-        return deleteUser.Succeeded;
+        user.IsRemoved = true;
+         _userManager.UpdateAsync(user).GetAwaiter().GetResult();
+        return user.IsRemoved;
+        
     }
     public async Task<Role> CheckRoleAsync(string email)
     {
@@ -101,7 +101,7 @@ public class UserRepository : IUserRepository
         return await _userManager.FindByEmailAsync(email);
     }
 
-    public async Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user)
+    public async Task<string> GenerateEmailConfirmationTokenAsync( ApplicationUser user)
     {
         return await _userManager.GenerateEmailConfirmationTokenAsync(user);
     }
@@ -119,6 +119,11 @@ public class UserRepository : IUserRepository
     {
         var changePassword = await _userManager.ChangeEmailAsync(user, newEmail, token);
         return changePassword.Succeeded;
+    }
+
+    public Task<bool> RemoveAsync(ApplicationUser user)
+    {
+        throw new NotImplementedException();
     }
 }
 

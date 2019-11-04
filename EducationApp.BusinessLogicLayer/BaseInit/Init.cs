@@ -1,7 +1,10 @@
 ﻿using BookStore.DataAccess.AppContext;
 using EducationApp.BusinessLogicLayer.Helpers;
+using EducationApp.BusinessLogicLayer.Services;
+using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Initialisation;
+using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,8 +24,13 @@ namespace EducationApp.BusinessLogicLayer.BaseInit
 
             services.AddTransient<UserManager<ApplicationUser>>();
             services.AddTransient<RoleManager<Role>>();
+            services.AddTransient<SignInManager<ApplicationUser>>();
             services.AddTransient<DataBaseInitialisation>();
             services.AddTransient<IEmailSender,EmailSender>();
+
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            
 
 
         }

@@ -8,6 +8,7 @@
             public const string Host = "smtp.gmail.com";
             public const int Port = 587;
             public const string AdminPassword = "25012005";
+            public const string callbackUrl = "http://localhost:44357"; 
         }
     }
 }

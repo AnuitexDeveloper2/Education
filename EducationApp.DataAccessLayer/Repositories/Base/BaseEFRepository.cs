@@ -2,12 +2,13 @@
 using System.Linq;
 using System.Threading.Tasks;
 using BookStore.DataAccess.AppContext;
+using EducationApp.DataAccessLayer.Entities.Base;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace EducationApp.DataAccessLayer.Ropositories.Base
 {
-    public class BaseEFRepository<TEntity> : IBaseEFRRepository<TEntity> where TEntity : class
+    public class BaseEFRepository<TEntity> : IBaseEFRRepository<TEntity> where TEntity : BaseEntity
     {
         private readonly ApplicationContext _applicationContext;
         private readonly DbSet<TEntity> _dbSet;
@@ -30,12 +31,12 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
             return _dbSet.AsNoTracking().ToList();
         }
 
-        //async Task<bool> IBaseEFRRepository<TEntity>.DeleteAsync(TEntity entity)
-        //{
-        //    _dbSet.Remove(entity);
-        //    await _applicationContext.SaveChangesAsync();
-        //    return _applicationContext.SaveChangesAsync().IsCompleted;
-        //}
+        async Task<bool> IBaseEFRRepository<TEntity>.DeleteAsync(TEntity entity)
+        {
+            entity.IsRemoved = true;
+            await _applicationContext.SaveChangesAsync();
+            return _applicationContext.SaveChangesAsync().IsCompleted;
+        }
         public async Task<TEntity> FindByIdAsync(long id)
         {
             return await _dbSet.FindAsync(id);

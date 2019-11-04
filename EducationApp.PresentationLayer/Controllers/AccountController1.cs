@@ -14,6 +14,7 @@ using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.JWTConsts;
 using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.DataAccessLayer.Entities;
 using System.Security.Claims;
+using EducationApp.BusinessLogicLayer.Services.Interfaces;
 
 namespace EducationApp.PresentationLayer.Controllers
 {
@@ -22,9 +23,9 @@ namespace EducationApp.PresentationLayer.Controllers
     public class AccountController1 : ControllerBase
     {
 
-        private readonly AccountService _accountService;
+        private readonly IAccountService _accountService;
         private readonly UserManager<ApplicationUser> _userManager;
-        public AccountController1(AccountService accountService, UserManager<ApplicationUser> userManager)
+        public AccountController1(IAccountService accountService, UserManager<ApplicationUser> userManager)
         {
             _accountService = accountService;
             _userManager = userManager;

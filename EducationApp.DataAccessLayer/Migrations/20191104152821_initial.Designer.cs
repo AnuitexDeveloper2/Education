@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EducationApp.DataAccessLayer.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20191029213006_Init")]
-    partial class Init
+    [Migration("20191104152821_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,6 +42,15 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -55,6 +64,9 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -174,7 +186,7 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.OrderItem", b =>
+            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.OrderItems", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -245,8 +257,8 @@ namespace EducationApp.DataAccessLayer.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Currency")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CurrencyType")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -259,9 +271,6 @@ namespace EducationApp.DataAccessLayer.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -425,21 +434,21 @@ namespace EducationApp.DataAccessLayer.Migrations
                         .WithMany()
                         .HasForeignKey("ApplicationUserId");
 
-                    b.HasOne("EducationApp.DataAccessLayer.Entities.Payment", "Payments")
+                    b.HasOne("EducationApp.DataAccessLayer.Entities.Payment", "Payment")
                         .WithMany()
                         .HasForeignKey("PaymentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.OrderItem", b =>
+            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.OrderItems", b =>
                 {
                     b.HasOne("EducationApp.DataAccessLayer.Entities.Order", "Orders")
                         .WithMany("OrderItems")
                         .HasForeignKey("OrdersId");
 
                     b.HasOne("EducationApp.DataAccessLayer.Entities.PrintingEdition", "PrintingEdition")
-                        .WithMany("OrderItems")
+                        .WithMany()
                         .HasForeignKey("PrintingEditionId1");
                 });
 

@@ -15,13 +15,11 @@ namespace EducationApp.BusinessLogicLayer.Services
     public class AccountService : IAccountService
     {
         private readonly IUserRepository _userRepository;
-        private readonly EmailSender _emailSender;
-        private readonly UserManager<ApplicationUser> _userManager;
-        public AccountService(IUserRepository userRepository, EmailSender emailSender, UserManager<ApplicationUser> userManager)
+        private readonly IEmailSender _emailSender;
+        public AccountService(IUserRepository userRepository, IEmailSender emailSender)
         {
             _userRepository = userRepository;
             _emailSender = emailSender;
-            _userManager = userManager;
         }
 
         public async Task<bool> ConfirmAccountAsync(string email)
@@ -32,15 +30,16 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return false;
             }
             string token = await _userRepository.GenerateEmailConfirmationTokenAsync(excistUser);
-            await _userManager.ConfirmEmailAsync(excistUser, token);
+            //await _userManager.ConfirmEmailAsync(excistUser, token);
 
             return true;
         }
 
-        public async Task<ApplicationUser> RegisterAsync()
+        public async Task<ApplicationUser> RegisterAsync(string name,string email,string password)
         {
-            var user = new ApplicationUser { };
-            await _userManager.CreateAsync(user);
+            var user = new ApplicationUser { UserName = name,Email = email ,Password = password};
+
+            await _userRepository.AddAsync(user, password);
             string mail = await _userRepository.GenerateEmailConfirmationTokenAsync(user);
             _emailSender.SendingEmailAsync(user.Email, "Theme", "Body");
             return user;
@@ -50,6 +49,12 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
            return await _userRepository.GetByNameAsync(userName);
         }
+
+        public async Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user)
+        {
+           return await _userRepository.GenerateEmailConfirmationTokenAsync(user);
+        }
+       
 
         public Task RestorePassword(string newPassword)
         {
@@ -61,6 +66,5 @@ namespace EducationApp.BusinessLogicLayer.Services
             throw new NotImplementedException();
         }
 
-       
     }
 }
