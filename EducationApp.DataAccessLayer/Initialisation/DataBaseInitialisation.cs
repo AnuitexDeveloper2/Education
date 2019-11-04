@@ -22,22 +22,12 @@ namespace EducationApp.DataAccessLayer.Initialisation
         }
         public void StartInit()
         {
-            //InitialisationRole();
-            //InitializationAuthors();
-            //InitializationApplicationUser();
-            //InitializationPrintingEdition();
-            //InitialisationAuthorInPrintingEdition();
+            InitialisationRole();
+            InitializationAuthors();
+            InitializationApplicationUser();
+            InitializationPrintingEdition();
         }
 
-        private void InitialisationAuthorInPrintingEdition()
-        {
-            var authoirIn = new AuthorInPrintingEdition()
-            {
-                AuthorId = 1,
-                PrintingEditionId = 1
-            };
-            _applicationContext.AuthorInPrintingEditions.Add(authoirIn);
-        }
 
         private void InitialisationRole()
         {
@@ -49,31 +39,18 @@ namespace EducationApp.DataAccessLayer.Initialisation
 
             foreach (var item in roles)
             {
-                _roleManager.CreateAsync(item).GetAwaiter();
+                _roleManager.CreateAsync(item).GetAwaiter().GetResult();
             }
         }
 
         private void InitializationApplicationUser()
         {
-            string firstName = "I";
-            string lastName = "am";
-            List<ApplicationUser> users = new List<ApplicationUser>()
+            var user = new ApplicationUser { FirstName = FirstName, LastName = LastName, UserName = Admin, Email = "morgenshtern1988@gmail.com", EmailConfirmed = true };
+            var createUser = _userManager.CreateAsync(user).GetAwaiter().GetResult();
+            if (createUser.Succeeded == true)
             {
-                new ApplicationUser{ FirstName = firstName ,LastName = lastName,UserName = $"{firstName} + {lastName }" },
-
-            };
-            foreach (var item in users)
-            {
-                _userManager.CreateAsync(item).GetAwaiter().GetResult();
-                if (item.UserName == Admin)
-                {
-                    _userManager.AddToRoleAsync(item, Admin).GetAwaiter();
-                    continue;
-                }
-                if (item.UserName == User)
-                {
-                    _userManager.AddToRoleAsync(item, User).GetAwaiter();
-                }
+                _userManager.AddToRoleAsync(user, Admin).GetAwaiter().GetResult();
+                _applicationContext.SaveChanges();
             }
         }
 

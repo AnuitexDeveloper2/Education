@@ -29,44 +29,19 @@ public class UserRepository : IUserRepository
     }
     public async Task<bool> AddAsync(ApplicationUser user, string password)
     {
-
-        _userManager.CreateAsync(user, password).GetAwaiter().GetResult();
-        var addUser = _userManager.CreateAsync(user).GetAwaiter().GetResult();
-        if (user.UserName == Admin)
+        var excistUser = _userManager.FindByEmailAsync(user.Email);
+        if (excistUser != null)
         {
-            var userRole = new Role { Name = Admin };
-            _roleManager.CreateAsync(userRole).GetAwaiter().GetResult();
+            return false;
         }
-        if (addUser.Succeeded)
+        _userManager.CreateAsync(user, password).GetAwaiter().GetResult();
+        var createUser = _userManager.CreateAsync(user).GetAwaiter().GetResult();
+        if (createUser.Succeeded == true)
         {
+            _userManager.AddToRoleAsync(user, User).GetAwaiter().GetResult();
             await _applicationContext.SaveChangesAsync();
         }
-        return addUser.Succeeded;
-    }
-
-
-    public async Task<Role> CheckRoleAsync(ApplicationUser user)
-    {
-        List<ApplicationUser> allUser = await _applicationContext.Users.ToListAsync();
-        var chekRole = _roleManager.Roles.Where(k => k.Id == user.Id);
-        foreach (var item in allUser)
-        {
-            if (user == null)
-            {
-                return null;
-            }
-            if (chekRole == null)
-            {
-                return null;
-            }
-        }
-        return await _applicationContext.Roles.FindAsync(chekRole);
-    }
-
-    public async Task<List<ApplicationUser>> ListAllAsync()
-    {
-        List<ApplicationUser> allUser = await _applicationContext.Users.ToListAsync();
-        return allUser;
+        return createUser.Succeeded;
     }
 
     public async Task<bool> EditAsync(ApplicationUser user)
@@ -79,13 +54,6 @@ public class UserRepository : IUserRepository
         return edit.Succeeded;
     }
 
-    public async Task<ApplicationUser> GetById(long id)
-    {
-
-        List<ApplicationUser> allUser = await _applicationContext.Users.ToListAsync();
-        return await _userManager.FindByIdAsync(id.ToString());
-    }
-
     async Task<bool> IUserRepository.RemoveAsync(ApplicationUser user)
     {
         if (user == null)
@@ -95,33 +63,63 @@ public class UserRepository : IUserRepository
         var deleteUser = await _userManager.DeleteAsync(user);
         return deleteUser.Succeeded;
     }
-    public Task Autharisation(ApplicationUser user)
+    public async Task<Role> CheckRoleAsync(string email)
     {
-        throw new NotImplementedException();
+        var userEntity = await _userManager.FindByEmailAsync(email);
+        var userRole = await _userManager.GetRolesAsync(userEntity);
+        return await _applicationContext.Roles.FindAsync(userRole);
     }
 
-    public async Task<bool> VerifyAsync(ApplicationUser user,string password)
+    public async Task<bool> VerifyAsync(ApplicationUser user, string password)
     {
         if (user == null)
         {
             return false;
         }
-               return await _signInManager.UserManager.CheckPasswordAsync(user, password);
-
+        return await _signInManager.UserManager.CheckPasswordAsync(user, password);
     }
-
-    public async Task<ApplicationUser> FindNameAsync(string userName)
+    public async Task<ApplicationUser> GetByIdAsync(long id)
     {
-        List<ApplicationUser> allUser = await _applicationContext.Users.ToListAsync();
-
-        var appUser = await _userManager.FindByNameAsync(userName);
-        return appUser;
+        return await _userManager.FindByIdAsync(id.ToString());
     }
 
-    
+    public async Task<ApplicationUser> GetByNameAsync(string userName)
+    {
+        var userEntity = _userManager.FindByNameAsync(userName);
 
-   
+        return await userEntity;
+    }
 
+    public async Task<bool> ChangePassword(ApplicationUser user, string oldPassword, string newPassword)
+    {
+        await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+        return await _userManager.CheckPasswordAsync(user, newPassword);
+    }
+
+    public async Task<ApplicationUser> GetByEmailAsync(string email)
+    {
+        return await _userManager.FindByEmailAsync(email);
+    }
+
+    public async Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user)
+    {
+        return await _userManager.GenerateEmailConfirmationTokenAsync(user);
+    }
+
+    public async Task<string> GeneratePasswordResetTokenAsync(ApplicationUser user)
+    {
+        return await _userManager.GeneratePasswordResetTokenAsync(user);
+    }
+
+    public async Task SignInAsync(ApplicationUser user, bool isPersistent)
+    {
+        await _signInManager.SignInAsync(user, isPersistent: false);
+    }
+    public async Task<bool> ChangeEmailAsync(ApplicationUser user, string newEmail, string token)
+    {
+        var changePassword = await _userManager.ChangeEmailAsync(user, newEmail, token);
+        return changePassword.Succeeded;
+    }
 }
 
 

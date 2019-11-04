@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using EducationApp.BusinessLogicLayer.Common;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -16,6 +17,7 @@ namespace EducationApp.PresentationLayer.Helpers.Middlware
         public ErrorMiddlware(RequestDelegate next, ILoggerFactory logger)
         {
             _next = next;
+            logger.AddProvider(new FileLoggerProvider("Filelogger.txt"));
             _logger = logger.CreateLogger("Logger");
         }
 

@@ -4,14 +4,15 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:51616",
-      "sslPort": 44357
+      "applicationUrl": "http://localhost:44357",
+      "sslPort": 0
     }
   },
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
+      "launchUrl": "api/account",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -19,6 +20,7 @@
     "EducationApp.PresentationLayer": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "api/account",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

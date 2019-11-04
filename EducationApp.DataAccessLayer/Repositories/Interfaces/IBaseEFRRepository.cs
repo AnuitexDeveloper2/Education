@@ -9,7 +9,7 @@ namespace EducationApp.DataAccessLayer.Repositories.Interfaces
     {
         IEnumerable<TEntity> GetAsync();
         Task<bool> CreateAsync(TEntity entity);
-        Task<bool> DeleteAsync(TEntity entity);
         Task<bool> EditAsync(TEntity entity);
+        Task<TEntity> FindByIdAsync(long id);
     }
 }

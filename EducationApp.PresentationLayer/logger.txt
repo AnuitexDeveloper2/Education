@@ -247,3 +247,88 @@ Request finished in 43.3977ms 404
 Application started. Press Ctrl+C to shut down.
 Application started. Press Ctrl+C to shut down.
 Hosting environment: Development
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Request finished in 44.754000000000005ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Request finished in 47.226800000000004ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Request finished in 43.446600000000004ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Request finished in 35.5715ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Request finished in 27.3518ms 404 
+Application startup exception
+Application startup exception
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Request finished in 129.6128ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Request finished in 103.0749ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/2.0 GET https://localhost:44357/  
+Request finished in 31.296100000000003ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Connection ID "18374686494167138437", Request ID "80000086-0003-ff00-b63f-84710c7967bb": An unhandled exception was thrown by the application.
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Connection ID "18302628900129210463", Request ID "80000060-0003-fe00-b63f-84710c7967bb": An unhandled exception was thrown by the application.
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/1.1 GET http://localhost:44357/  
+Request finished in 90.81750000000001ms 404 
+Request starting HTTP/1.1 GET http://localhost:44357/api/account/test  
+Route matched with {action = "Test", controller = "Account"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Test() on controller EducationApp.PresentationLayer.Controllers.AccountController (EducationApp.PresentationLayer).
+Executing HttpStatusCodeResult, setting HTTP status code 200
+Executed action EducationApp.PresentationLayer.Controllers.AccountController.Test (EducationApp.PresentationLayer) in 15.3643ms
+Request finished in 75.0998ms 200 
+Request starting HTTP/1.1 GET http://localhost:44357/api/account/test  
+Route matched with {action = "Test", controller = "Account"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Test() on controller EducationApp.PresentationLayer.Controllers.AccountController (EducationApp.PresentationLayer).
+Executing HttpStatusCodeResult, setting HTTP status code 200
+Executed action EducationApp.PresentationLayer.Controllers.AccountController.Test (EducationApp.PresentationLayer) in 46530.4916ms
+Request finished in 46569.2964ms 200 
+Request starting HTTP/1.1 GET http://localhost:44357/api/account/test  
+Route matched with {action = "Test", controller = "Account"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Test() on controller EducationApp.PresentationLayer.Controllers.AccountController (EducationApp.PresentationLayer).
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/1.1 GET http://localhost:44357/  
+Request finished in 106.36460000000001ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/1.1 GET http://localhost:44357/api/home  
+Request finished in 108.1186ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducationApp\EducationApp.PresentationLayer
+Request starting HTTP/1.1 GET http://localhost:44357/api/home  
+Request finished in 112.8448ms 404 

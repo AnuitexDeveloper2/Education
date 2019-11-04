@@ -5,11 +5,14 @@ using EducationApp.DataAccessLayer.Initialisation;
 using EducationApp.PresentationLayer.Helpers.Middlware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.IO;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.JWTConsts;
+using EducationApp.PresentationLayer.Helpers;
 
 namespace EducationApp.PresentationLayer
 {
@@ -25,19 +28,33 @@ namespace EducationApp.PresentationLayer
         public void ConfigureServices(IServiceCollection services)
         {
             Initializer.Init(services, Configuration.GetConnectionString("DefaultConnection"));
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.RequireHttpsMetadata = false;
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuer = true,
+                            ValidIssuer = Issuer,
+                            ValidateAudience = true,
+                            ValidAudience = Audience,
+                            ValidateLifetime = true,
+                            IssuerSigningKey = JWTHelpers.GetSymmetricSecurityKey(),
+                            ValidateIssuerSigningKey = true,
+                        };
+                    });
+            services.AddMvc(option => option.EnableEndpointRouting = false);
         }
 
-
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataBaseInitialisation initializer, ILoggerFactory logger,IEmailSender emailSender)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataBaseInitialisation initializer,  IEmailSender emailSender)
         {
-            initializer.StartInit();
+           /* initializer.StartInit()*/;
 
-            logger.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "logger.txt"));
-            
             app.UseMiddleware<ErrorMiddlware>();
+   
+            app.UseRouting();
 
-            emailSender.SendingEmailAsync();
-
+           
         }
     }
 }

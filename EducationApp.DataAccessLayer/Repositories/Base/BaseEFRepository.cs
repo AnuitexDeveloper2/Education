@@ -30,13 +30,16 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
             return _dbSet.AsNoTracking().ToList();
         }
 
-        async Task<bool> IBaseEFRRepository<TEntity>.DeleteAsync(TEntity entity)
+        //async Task<bool> IBaseEFRRepository<TEntity>.DeleteAsync(TEntity entity)
+        //{
+        //    _dbSet.Remove(entity);
+        //    await _applicationContext.SaveChangesAsync();
+        //    return _applicationContext.SaveChangesAsync().IsCompleted;
+        //}
+        public async Task<TEntity> FindByIdAsync(long id)
         {
-            _dbSet.Remove(entity);
-            await _applicationContext.SaveChangesAsync();
-            return _applicationContext.SaveChangesAsync().IsCompleted;
+            return await _dbSet.FindAsync(id);
         }
-       
 
         async Task<bool> IBaseEFRRepository<TEntity>.EditAsync(TEntity entity)
         {

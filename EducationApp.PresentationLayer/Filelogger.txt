@@ -1,0 +1,32 @@
+Application started. Press Ctrl+C to shut down.
+Request starting HTTP/1.1 GET http://localhost:44357/api/home  
+Hosting environment: Development
+Content root path: C:\Users\user\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Request finished in 29822.909900000002ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Request starting HTTP/1.1 GET http://localhost:44357/api/home  
+Request finished in 148.9502ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Request starting HTTP/1.1 GET http://localhost:44357/api/home  
+Request finished in 133.9336ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Request starting HTTP/1.1 GET http://localhost:44357/api/account  
+Request finished in 93.51570000000001ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Request starting HTTP/1.1 GET http://localhost:44357/api/account  
+Request finished in 104.6097ms 404 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.MakingUserRepository\EducationApp.PresentationLayer
+Request starting HTTP/1.1 GET http://localhost:44357/api/account  
+Request finished in 109.54570000000001ms 404 
+Request starting HTTP/1.1 GET http://localhost:44357/api/account  
+Request finished in 8.9944ms 404 
