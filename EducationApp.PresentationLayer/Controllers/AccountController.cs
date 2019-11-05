@@ -33,80 +33,109 @@ namespace EducationApp.PresentationLayer.Controllers
             _accountService = accountService;
         }
 
-       
+
 
         [HttpPost("register")]
-        public async Task<ActionResult>  Register(RegistrationModel model)
+        public async Task<ActionResult> Register(RegistrationModel model)
         {
-            var user = await _accountService.RegisterAsync("Name", "educationappgoncharuk2019@gmail.com","Education2019");
+            var user = await _accountService.RegisterAsync(model.FirstName, model.Email, model.Password);
 
             if (user != null)
             {
 
-                var code = _accountService.GenerateEmailConfirmationTokenAsync(user);
                 EmailSender email = new EmailSender();
-                email.SendingEmailAsync("educationappgoncharuk2019@gmail.com", "Registration", $"Подтвердите регистрацию, перейдя по ссылке: <a href='{callbackUrl}'>link</a>");
+                email.SendingEmailAsync(UserEmail, MailSubject, MailBody);
             }
 
             return Content("Для завершения регистрации проверьте электронную почту и перейдите по ссылке, указанной в письме");
         }
 
-        
+        [HttpGet("confirmEmail")]
+        public async Task<ActionResult> ConfirmEmail(UserItemModel model)
+        {
+            var user = await _accountService.GetByEmail(model.Email);
+            var encodedJwt = await _jWTHelpers.GenerateTokenModel(model);
+            await _accountService.ConfirmEmailAsync(UserEmail);
+            HttpContext.Response.Cookies.Append("AccessToken",encodedJwt.AccessToken);
+            HttpContext.Response.Cookies.Append("RefereshToken",encodedJwt.RefreshToken);
+            return Ok();
+        }
 
+        [HttpPost("forgotPassword")]
+        public async Task<ActionResult> ForgotPassword(RegistrationModel model)
+        {
+            var user = await _accountService.GetById(model.Id);
+            await _accountService.RestorePassword(user, "234");
+            return Ok();
+        }
+        [HttpPost("signIn")]
+        public async Task<ActionResult> SignIn(string email,string password)
+        {
+            HttpContext.Response.Cookies.Append(access)
+            return Ok();
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //[HttpGet("token")]
-
-        //public void Token(string userName,string password)
-        //{
-        //    userName = "Education";
-        //    password = "123";
-        //    var identity = GetUser(userName, password);
-        //    var now = DateTime.UtcNow;
-        //    var jwt = new JwtSecurityToken(
-        //            issuer: Issuer,
-        //            audience: Audience,
-        //            notBefore: now,
-        //            claims: identity.Claims,
-        //            expires: now.Add(TimeSpan.FromMinutes(Lifetimew)),
-        //            signingCredentials: new SigningCredentials(JWTHelpers.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-        //    var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-        //}
-
-
-        //private ClaimsIdentity GetUser(string username, string password)
-        //{
-        //    UsersModel usersModel = new UsersModel { Email = "educationappgoncharuk2019@gmail.com",Password= "Education2019" };
-        //    if (usersModel != null)
-        //    {
-        //        var claims = new List<Claim>
-        //        {
-        //            new Claim(ClaimsIdentity.DefaultNameClaimType, usersModel.Email),
-        //            new Claim(ClaimsIdentity.DefaultRoleClaimType, usersModel.Password)
-        //        };
-        //        ClaimsIdentity claimsIdentity =
-        //        new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-        //            ClaimsIdentity.DefaultRoleClaimType);
-        //        return claimsIdentity;
-        //    }
-        //    return  null;
-        //}
+        [HttpPost("signOut")]
+        public async Task<ActionResult> Signout()
+        {
+            await +_accountService.
+            return Ok();
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//[HttpGet("token")]
+
+//public void Token(string userName,string password)
+//{
+//    userName = "Education";
+//    password = "123";
+//    var identity = GetUser(userName, password);
+//    var now = DateTime.UtcNow;
+//    var jwt = new JwtSecurityToken(
+//            issuer: Issuer,
+//            audience: Audience,
+//            notBefore: now,
+//            claims: identity.Claims,
+//            expires: now.Add(TimeSpan.FromMinutes(Lifetimew)),
+//            signingCredentials: new SigningCredentials(JWTHelpers.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+//    var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+//}
+
+
+//private ClaimsIdentity GetUser(string username, string password)
+//{
+//    UsersModel usersModel = new UsersModel { Email = "educationappgoncharuk2019@gmail.com", Password = "Education2019" };
+//    if (usersModel != null)
+//    {
+//        var claims = new List<Claim>
+//                {
+//                    new Claim(ClaimsIdentity.DefaultNameClaimType, usersModel.Email),
+//                    new Claim(ClaimsIdentity.DefaultRoleClaimType, usersModel.Password)
+//                };
+//        ClaimsIdentity claimsIdentity =
+//        new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
+//            ClaimsIdentity.DefaultRoleClaimType);
+//        return claimsIdentity;
+//    }
+//    return null;
+//}

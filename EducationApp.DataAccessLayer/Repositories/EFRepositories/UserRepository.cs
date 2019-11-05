@@ -25,13 +25,14 @@ public class UserRepository : IUserRepository
         _signInManager = signInManager;
         _applicationContext = applicationContext;
     }
-    public async Task<bool> AddAsync(ApplicationUser user, string password)
+    public async Task<bool> AddAsync(string email, string password)
     {
-        var excistUser = _userManager.FindByEmailAsync(user.Email);
+        var excistUser = _userManager.FindByEmailAsync(email);
         if (excistUser != null)
         {
             return false;
         }
+        var user = new ApplicationUser { Email = email, Password = password };
         _userManager.CreateAsync(user, password).GetAwaiter().GetResult();
         var createUser = _userManager.CreateAsync(user).GetAwaiter().GetResult();
         if (createUser.Succeeded == true)
@@ -59,9 +60,9 @@ public class UserRepository : IUserRepository
             return false;
         }
         user.IsRemoved = true;
-         _userManager.UpdateAsync(user).GetAwaiter().GetResult();
+        await _userManager.UpdateAsync(user);
         return user.IsRemoved;
-        
+
     }
     public async Task<Role> CheckRoleAsync(string email)
     {
@@ -90,7 +91,7 @@ public class UserRepository : IUserRepository
         return await userEntity;
     }
 
-    public async Task<bool> ChangePassword(ApplicationUser user, string oldPassword, string newPassword)
+    public async Task<bool> ChangePasswordAsync(ApplicationUser user, string oldPassword, string newPassword)
     {
         await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
         return await _userManager.CheckPasswordAsync(user, newPassword);
@@ -101,7 +102,7 @@ public class UserRepository : IUserRepository
         return await _userManager.FindByEmailAsync(email);
     }
 
-    public async Task<string> GenerateEmailConfirmationTokenAsync( ApplicationUser user)
+    public async Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user)
     {
         return await _userManager.GenerateEmailConfirmationTokenAsync(user);
     }
@@ -121,9 +122,35 @@ public class UserRepository : IUserRepository
         return changePassword.Succeeded;
     }
 
-    public Task<bool> RemoveAsync(ApplicationUser user)
+    public async Task<bool> ConfirmEmailAsync(ApplicationUser user, string token)
     {
-        throw new NotImplementedException();
+        await _userManager.ConfirmEmailAsync(user, token);
+        user.EmailConfirmed = true;
+        var result = user.EmailConfirmed;
+        _applicationContext.SaveChangesAsync().GetAwaiter().GetResult();
+        return result;
+    }
+
+    public async Task<ApplicationUser> FindByEmailAsync(string email)
+    {
+        return await _userManager.FindByEmailAsync(email);
+    }
+
+    public async Task<bool> ConfirmPasswordAsync(ApplicationUser user,string password)
+    {
+        return await _userManager.CheckPasswordAsync(user, password);
+    }
+
+    public async Task SignInAsync(string email,string password)
+    {
+       var user = await _userManager.FindByEmailAsync(email);
+        _signInManager.SignInAsync(user,);
+    }
+
+    public async Task<ApplicationUser> SignOut()
+    {
+        var user = await _signInManager.SignOutAsync();
+
     }
 }
 

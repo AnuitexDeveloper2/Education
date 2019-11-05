@@ -181,3 +181,38 @@ Executed action EducationApp.PresentationLayer.Controllers.AccountController.Reg
 Executed endpoint 'EducationApp.PresentationLayer.Controllers.AccountController.Register (EducationApp.PresentationLayer)'
 Error
 Request finished in 442.7807ms 500 application/json
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.Token\EducationApp.PresentationLayer
+Request starting HTTP/1.1 POST https://localhost:44310/api/account/register application/json 30
+Executing endpoint 'EducationApp.PresentationLayer.Controllers.AccountController.Register (EducationApp.PresentationLayer)'
+Route matched with {action = "Register", controller = "Account"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] Register(EducationApp.BusinessLogicLayer.Models.Account.RegistrationModel) on controller EducationApp.PresentationLayer.Controllers.AccountController (EducationApp.PresentationLayer).
+Entity Framework Core 3.0.0 initialized 'ApplicationContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Executing DbCommand [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[FirstName], [a].[IsRemoved], [a].[LastName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[Password], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE (([a].[NormalizedEmail] = @__normalizedEmail_0) AND ([a].[NormalizedEmail] IS NOT NULL AND @__normalizedEmail_0 IS NOT NULL)) OR ([a].[NormalizedEmail] IS NULL AND @__normalizedEmail_0 IS NULL)
+Executed action EducationApp.PresentationLayer.Controllers.AccountController.Register (EducationApp.PresentationLayer) in 36741.7785ms
+Executed endpoint 'EducationApp.PresentationLayer.Controllers.AccountController.Register (EducationApp.PresentationLayer)'
+Error
+Request finished in 43906.8995ms 500 application/json
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.Token\EducationApp.PresentationLayer
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.Token\EducationApp.PresentationLayer
+Request starting HTTP/1.1 POST https://localhost:44310/api/account/register application/json 30
+Executing endpoint 'EducationApp.PresentationLayer.Controllers.AccountController.Register (EducationApp.PresentationLayer)'
+Route matched with {action = "Register", controller = "Account"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] Register(EducationApp.BusinessLogicLayer.Models.Account.RegistrationModel) on controller EducationApp.PresentationLayer.Controllers.AccountController (EducationApp.PresentationLayer).
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.Token\EducationApp.PresentationLayer
+Connection ID "18374686485577203713", Request ID "80000002-0001-ff00-b63f-84710c7967bb": An unhandled exception was thrown by the application.
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.Token\EducationApp.PresentationLayer
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\Desktop\New folder\EducationApp.Token\EducationApp.PresentationLayer
+Connection ID "18374686494167138307", Request ID "80000004-0003-ff00-b63f-84710c7967bb": An unhandled exception was thrown by the application.

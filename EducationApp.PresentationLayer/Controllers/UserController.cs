@@ -9,8 +9,8 @@ namespace EducationApp.PresentationLayer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HomeController : ControllerBase
+    public class UserController : ControllerBase
     {
-       
+
     }
 }

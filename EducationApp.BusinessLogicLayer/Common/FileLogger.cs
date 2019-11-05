@@ -28,7 +28,7 @@ namespace EducationApp.BusinessLogicLayer.Common
             {
                 lock (_lock)
                 {
-                    File.AppendAllText(filePath, formatter(state, exception) + Environment.NewLine);
+                    //File.AppendAllText(filePath, formatter(state, exception) + Environment.NewLine);
                 }
             }
         }

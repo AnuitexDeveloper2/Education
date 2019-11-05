@@ -1,13 +1,10 @@
 ﻿using EducationApp.BusinessLogicLayer.Helpers;
-using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
-using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.EmailConsts;
 
 
 namespace EducationApp.BusinessLogicLayer.Services
@@ -30,41 +27,76 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return false;
             }
             string token = await _userRepository.GenerateEmailConfirmationTokenAsync(excistUser);
-            //await _userManager.ConfirmEmailAsync(excistUser, token);
+
 
             return true;
         }
 
-        public async Task<ApplicationUser> RegisterAsync(string name,string email,string password)
+        public async Task<bool> CreateUser(string email, string password)
         {
-            var user = new ApplicationUser { UserName = name,Email = email ,Password = password};
 
-            await _userRepository.AddAsync(user, password);
-            string mail = await _userRepository.GenerateEmailConfirmationTokenAsync(user);
-            _emailSender.SendingEmailAsync(user.Email, "Theme", "Body");
+            var userCreate = await _userRepository.AddAsync(email, password);
+            return userCreate;
+        }
+        public async Task<ApplicationUser> RegisterAsync(string name, string email, string password)
+        {
+            var user = new ApplicationUser { UserName = name, Email = email, Password = password };
+
+            var userCreate = await _userRepository.AddAsync(email, password);
+            if (userCreate)
+            {
+                _emailSender.SendingEmailAsync(UserEmail, MailSubject, $"Подтвердите регистрацию, перейдя по ссылке: <a href='{callbackUrl}'>link</a>");
+            }
             return user;
         }
-       
+
         public async Task<ApplicationUser> GetUserAsync(string userName, string password)
         {
-           return await _userRepository.GetByNameAsync(userName);
+            return await _userRepository.GetByNameAsync(userName);
         }
 
         public async Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user)
         {
-           return await _userRepository.GenerateEmailConfirmationTokenAsync(user);
+            return await _userRepository.GenerateEmailConfirmationTokenAsync(user);
         }
-       
 
-        public Task RestorePassword(string newPassword)
+
+        public async Task<bool> RestorePassword(ApplicationUser user, string newPassword)
         {
-            throw new NotImplementedException();
+                await _userRepository.ChangePasswordAsync(user, user.Password, newPassword);
+            return await _userRepository.ConfirmPasswordAsync(user, newPassword);
         }
 
-        public Task ConfirmEmailAsync(string email)
+        public async Task<bool> ConfirmEmailAsync(string email)
         {
-            throw new NotImplementedException();
+            var user = await _userRepository.FindByEmailAsync(email);
+            if (user == null )
+            {
+                return  false;
+            }
+          string token = await _userRepository.GenerateEmailConfirmationTokenAsync(user);
+              return await _userRepository.ConfirmEmailAsync(user,token);
         }
 
+        public async Task<ApplicationUser> GetById(long id)
+        {
+            return await _userRepository.GetByIdAsync(id);
+        }
+
+        public async Task<ApplicationUser> GetByEmail(string email)
+        {
+           return await _userRepository.FindByEmailAsync(email);
+        }
+
+        public Task<ApplicationUser> SignInAsync(string email, string password)
+        {
+            var user = _userRepository.FindByEmailAsync(email);
+            _userRepository.SignInAsync(user,);
+        }
+
+        public Task SignOut()
+        {
+            _userRepository.
+        }
     }
 }
