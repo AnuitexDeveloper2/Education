@@ -25,14 +25,14 @@ public class UserRepository : IUserRepository
         _signInManager = signInManager;
         _applicationContext = applicationContext;
     }
-    public async Task<bool> AddAsync(string email, string password)
+    public async Task<bool> AddAsync(string email, string password, string firstName, string lastName)
     {
         var excistUser = _userManager.FindByEmailAsync(email);
-        if (excistUser != null)
+        if (excistUser.Result != null)
         {
             return false;
         }
-        var user = new ApplicationUser { Email = email, Password = password };
+        var user = new ApplicationUser { Email = email, Password = password, UserName = lastName };
         _userManager.CreateAsync(user, password).GetAwaiter().GetResult();
         var createUser = _userManager.CreateAsync(user).GetAwaiter().GetResult();
         if (createUser.Succeeded == true)
@@ -53,7 +53,7 @@ public class UserRepository : IUserRepository
         return edit.Succeeded;
     }
 
-    async Task<bool> IUserRepository.RemoveAsync(ApplicationUser user)
+    public async Task<bool> RemoveAsync(ApplicationUser user)
     {
         if (user == null)
         {
@@ -118,6 +118,11 @@ public class UserRepository : IUserRepository
     }
     public async Task<bool> ChangeEmailAsync(ApplicationUser user, string newEmail, string token)
     {
+        var result = await _userManager.FindByEmailAsync(newEmail);
+        if (result !=null )
+        {
+            return false;
+        }
         var changePassword = await _userManager.ChangeEmailAsync(user, newEmail, token);
         return changePassword.Succeeded;
     }
@@ -136,21 +141,37 @@ public class UserRepository : IUserRepository
         return await _userManager.FindByEmailAsync(email);
     }
 
-    public async Task<bool> ConfirmPasswordAsync(ApplicationUser user,string password)
+    public async Task<bool> ConfirmPasswordAsync(ApplicationUser user, string password)
     {
         return await _userManager.CheckPasswordAsync(user, password);
     }
 
-    public async Task SignInAsync(string email,string password)
+    public async Task<bool> SignInAsync(string email, string password)
     {
-       var user = await _userManager.FindByEmailAsync(email);
-        _signInManager.SignInAsync(user,);
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null)
+        {
+            return false;
+        }
+        await _signInManager.SignInAsync(user, isPersistent: true);
+        return true;
     }
 
-    public async Task<ApplicationUser> SignOut()
+    public async Task SignOut()
     {
-        var user = await _signInManager.SignOutAsync();
+        await _signInManager.SignOutAsync();
+    }
+    public async Task<IdentityResult> ResetPassword(ApplicationUser user, string token, string newPassword)
+    {
+        await _userManager.UpdateAsync(user);
+        var resetPassword = await _userManager.ResetPasswordAsync(user, token, newPassword);
+        _applicationContext.SaveChangesAsync().GetAwaiter().GetResult();
+        return resetPassword;
+    }
 
+    public async Task<string> GenerateChangeEmailTokenAsync(ApplicationUser user, string newEmail)
+    {
+        return await _userManager.GenerateChangeEmailTokenAsync(user, newEmail);
     }
 }
 

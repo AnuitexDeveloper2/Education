@@ -7,10 +7,6 @@ namespace EducationApp.BusinessLogicLayer.Models.Users
     {
         public ICollection<UserItemModel> Items = new List<UserItemModel>();
 
-        public long Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
+       
     }
 }

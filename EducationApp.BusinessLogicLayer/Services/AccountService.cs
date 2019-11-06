@@ -32,22 +32,23 @@ namespace EducationApp.BusinessLogicLayer.Services
             return true;
         }
 
-        public async Task<bool> CreateUser(string email, string password)
+        public async Task<bool> CreateUserAsync(string email, string password,string firstName,string lastName)
         {
 
-            var userCreate = await _userRepository.AddAsync(email, password);
+            var userCreate = await _userRepository.AddAsync(email, password,firstName,lastName);
             return userCreate;
         }
-        public async Task<ApplicationUser> RegisterAsync(string name, string email, string password)
+        public async Task<ApplicationUser> RegisterAsync(string email, string password,string firstName,string lastName)
         {
-            var user = new ApplicationUser { UserName = name, Email = email, Password = password };
+            var user = new ApplicationUser { FirstName = firstName,LastName = lastName, Email = email, Password = password,UserName = lastName +" "+firstName };
 
-            var userCreate = await _userRepository.AddAsync(email, password);
+            var userCreate = await _userRepository.AddAsync(email, password,firstName,lastName);
             if (userCreate)
             {
-                _emailSender.SendingEmailAsync(UserEmail, MailSubject, $"Подтвердите регистрацию, перейдя по ссылке: <a href='{callbackUrl}'>link</a>");
+                _emailSender.SendingEmailAsync(UserEmail, MailSubject, $"Confirm registration by clicking on the link: <a href='{callbackUrl}'>link</a>");
+                return user;
             }
-            return user;
+            return null;
         }
 
         public async Task<ApplicationUser> GetUserAsync(string userName, string password)
@@ -61,42 +62,49 @@ namespace EducationApp.BusinessLogicLayer.Services
         }
 
 
-        public async Task<bool> RestorePassword(ApplicationUser user, string newPassword)
+        public async Task<bool> RestorePasswordAsync(ApplicationUser user, string token, string newPassword)
         {
-                await _userRepository.ChangePasswordAsync(user, user.Password, newPassword);
+            await _userRepository.ResetPassword(user, token, "Test24");
+            //_emailSender.SendingEmailAsync(user.Email,"Restore Password","234");
             return await _userRepository.ConfirmPasswordAsync(user, newPassword);
         }
 
         public async Task<bool> ConfirmEmailAsync(string email)
         {
             var user = await _userRepository.FindByEmailAsync(email);
-            if (user == null )
+            if (user == null)
             {
-                return  false;
+                return false;
             }
-          string token = await _userRepository.GenerateEmailConfirmationTokenAsync(user);
-              return await _userRepository.ConfirmEmailAsync(user,token);
+            string token = await _userRepository.GenerateEmailConfirmationTokenAsync(user);
+            return await _userRepository.ConfirmEmailAsync(user, token);
         }
 
-        public async Task<ApplicationUser> GetById(long id)
+        public async Task<ApplicationUser> GetByIdAsync(long id)
         {
             return await _userRepository.GetByIdAsync(id);
         }
 
-        public async Task<ApplicationUser> GetByEmail(string email)
+        public async Task<ApplicationUser> GetByEmailAsync(string email)
         {
-           return await _userRepository.FindByEmailAsync(email);
+            return await _userRepository.FindByEmailAsync(email);
         }
 
-        public Task<ApplicationUser> SignInAsync(string email, string password)
+        public async Task<ApplicationUser> SignInAsync(string email, string password)
         {
-            var user = _userRepository.FindByEmailAsync(email);
-            _userRepository.SignInAsync(user,);
+            var user = await _userRepository.FindByEmailAsync(email);
+            await _userRepository.SignInAsync(email, password);
+            return user;
         }
 
-        public Task SignOut()
+        public async Task SignOutAsync()
         {
-            _userRepository.
+            await _userRepository.SignOut();
+        }
+
+        public async Task<string> GeneratePasswordResetTokenAsync(ApplicationUser user)
+        {
+            return await _userRepository.GeneratePasswordResetTokenAsync(user);
         }
     }
 }

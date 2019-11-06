@@ -61,11 +61,13 @@ namespace EducationApp.PresentationLayer
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
+            app.UseMvc(routes =>
             {
-                endpoints.MapControllers();
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
-           
+
 
         }
     }

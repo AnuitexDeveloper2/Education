@@ -1,22 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using EducationApp.BusinessLogicLayer.Helpers;
 using EducationApp.BusinessLogicLayer.Models.Users;
-using EducationApp.BusinessLogicLayer.Services;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
-using EducationApp.PresentationLayer.Helpers;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.JWTConsts;
 using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.EmailConsts;
 using EducationApp.BusinessLogicLayer.Models.Account;
 using EducationApp.PresentationLayer.Helpers.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace EducationApp.PresentationLayer.Controllers
 {
@@ -34,53 +26,63 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
 
-
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegistrationModel model)
         {
-            var user = await _accountService.RegisterAsync(model.FirstName, model.Email, model.Password);
+            await _accountService.RegisterAsync( model.Email, model.Password, model.FirstName,model.LastName);
 
-            if (user != null)
-            {
-
-                EmailSender email = new EmailSender();
-                email.SendingEmailAsync(UserEmail, MailSubject, MailBody);
-            }
-
-            return Content("Для завершения регистрации проверьте электронную почту и перейдите по ссылке, указанной в письме");
+           
+            return Ok();
         }
 
-        [HttpGet("confirmEmail")]
-        public async Task<ActionResult> ConfirmEmail(UserItemModel model)
+        [HttpPost("confirmEmail")]
+        public async Task<ActionResult> ConfirmEmail( UserItemModel model,string token)
         {
-            var user = await _accountService.GetByEmail(model.Email);
-            var encodedJwt = await _jWTHelpers.GenerateTokenModel(model);
-            await _accountService.ConfirmEmailAsync(UserEmail);
-            HttpContext.Response.Cookies.Append("AccessToken",encodedJwt.AccessToken);
-            HttpContext.Response.Cookies.Append("RefereshToken",encodedJwt.RefreshToken);
+            var confirmUser = await _accountService.ConfirmEmailAsync(model.Email);
+            if (!confirmUser)
+            {
+                return Content(Error);
+            }
+            var tokens = _jWTHelpers.GenerateTokenModel(model) ;
+            HttpContext.Response.Cookies.Append("AccessToken", tokens.Result.AccessToken);
+            HttpContext.Response.Cookies.Append("RefereshToken", tokens.Result.RefreshToken);
             return Ok();
         }
 
         [HttpPost("forgotPassword")]
-        public async Task<ActionResult> ForgotPassword(RegistrationModel model)
+        public async Task<ActionResult> ForgotPassword(UserItemModel model)
         {
-            var user = await _accountService.GetById(model.Id);
-            await _accountService.RestorePassword(user, "234");
+            var user = await _accountService.GetByEmailAsync(model.Email);
+            if (user == null )
+            {
+                return Content("ForgotPasswordConfirmation");
+            }
+            var token = await _accountService.GeneratePasswordResetTokenAsync(user);
+            await _accountService.RestorePasswordAsync(user,token, model.Password);
             return Ok();
         }
         [HttpPost("signIn")]
-        public async Task<ActionResult> SignIn(string email,string password)
+        public async Task<ActionResult> SignIn(UserItemModel model)
         {
-            HttpContext.Response.Cookies.Append(access)
+            var user = await _accountService.GetByEmailAsync(model.Email);
+            var tokens = _jWTHelpers.GenerateTokenModel(model);
+            //HttpContext.Response.Cookies.Append("AccessToken", tokens.Result.AccessToken);
+            //HttpContext.Response.Cookies.Append("RefereshToken", tokens.Result.RefreshToken);
+            await _accountService.SignInAsync(model.Email, model.Password);
             return Ok();
         }
 
-        [HttpPost("signOut")]
-        public async Task<ActionResult> Signout()
+        [HttpGet("signOut")]
+        public async Task<ActionResult> SignOut()
         {
-            await +_accountService.
+            await _accountService.SignOutAsync();
             return Ok();
         }
+
+      
+
+
+
     }
 }
 

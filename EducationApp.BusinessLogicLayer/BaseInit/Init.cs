@@ -26,11 +26,12 @@ namespace EducationApp.BusinessLogicLayer.BaseInit
             services.AddTransient<RoleManager<Role>>();
             services.AddTransient<SignInManager<ApplicationUser>>();
             services.AddTransient<DataBaseInitialisation>();
-            services.AddTransient<IEmailSender,EmailSender>();
+            services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IUserRepository, UserRepository>();
-            
+            services.AddScoped<IUserService, UserService>();
+
 
 
         }

@@ -4,6 +4,7 @@
     {
         public class EmailConsts
         {
+            public const string Error = "Error";
             public const string UserPassword = "Education2019";
             public const string MailBody = "Подтвердите регистрацию, перейдя по ссылке: <a href='{callbackUrl}'>link</a>";
             public const string MailSubject = "Registration";
@@ -13,7 +14,7 @@
             public const string Host = "smtp.gmail.com";
             public const int Port = 587;
             public const string AdminPassword = "25012005";
-            public const string callbackUrl = "http://localhost:44310"; 
+            public const string callbackUrl = "https://localhost:44353/account/confirmEmail"; 
         }
     }
 }
