@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
+using EducationApp.DataAccessLayer.Entities.Enums;
 
 namespace EducationApp.DataAccessLayer.Entities.Constants
 {
@@ -10,6 +12,11 @@ namespace EducationApp.DataAccessLayer.Entities.Constants
             public const string User = "User";
             public const string FirstName = "Vladimir";
             public const string LastName = "Goncharuk";
+        }
+
+        public static explicit operator Constants(Enums.Enums.TypeProduct v)
+        {
+            throw new NotImplementedException();
         }
     }
 }

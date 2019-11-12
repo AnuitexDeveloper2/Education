@@ -32,17 +32,16 @@ namespace EducationApp.BusinessLogicLayer.Services
             return true;
         }
 
-        public async Task<bool> CreateUserAsync(string email, string password,string firstName,string lastName)
+        public async Task<bool> CreateUserAsync(string email, string password, string firstName, string lastName)
         {
 
-            var userCreate = await _userRepository.AddAsync(email, password,firstName,lastName);
+            var userCreate = await _userRepository.AddAsync(email, password, firstName, lastName);
             return userCreate;
         }
-        public async Task<ApplicationUser> RegisterAsync(string email, string password,string firstName,string lastName)
+        public async Task<ApplicationUser> RegisterAsync(string email, string password, string firstName, string lastName)
         {
-            var user = new ApplicationUser { FirstName = firstName,LastName = lastName, Email = email, Password = password,UserName = lastName +" "+firstName };
-
-            var userCreate = await _userRepository.AddAsync(email, password,firstName,lastName);
+            var user = new ApplicationUser { FirstName = firstName, LastName = lastName, Email = email, UserName = lastName + " " + firstName };
+            var userCreate = await _userRepository.AddAsync(email, password, firstName, lastName);
             if (userCreate)
             {
                 _emailSender.SendingEmailAsync(UserEmail, MailSubject, $"Confirm registration by clicking on the link: <a href='{callbackUrl}'>link</a>");
@@ -64,9 +63,9 @@ namespace EducationApp.BusinessLogicLayer.Services
 
         public async Task<bool> RestorePasswordAsync(ApplicationUser user, string token, string newPassword)
         {
-            await _userRepository.ResetPassword(user, token, "Test24");
-            //_emailSender.SendingEmailAsync(user.Email,"Restore Password","234");
-            return await _userRepository.ConfirmPasswordAsync(user, newPassword);
+            var result = await _userRepository.ResetPassword(user, token, "Education2019");
+            //_emailSender.SendingEmailAsync(user.Email, "Restore Password", newPassword);
+            return result.Succeeded;
         }
 
         public async Task<bool> ConfirmEmailAsync(string email)
@@ -90,11 +89,10 @@ namespace EducationApp.BusinessLogicLayer.Services
             return await _userRepository.FindByEmailAsync(email);
         }
 
-        public async Task<ApplicationUser> SignInAsync(string email, string password)
+        public async Task<bool> SignInAsync(string email, string password)
         {
-            var user = await _userRepository.FindByEmailAsync(email);
-            await _userRepository.SignInAsync(email, password);
-            return user;
+            var result = await _userRepository.SignInAsync(email, password);
+            return result;
         }
 
         public async Task SignOutAsync()
@@ -105,6 +103,32 @@ namespace EducationApp.BusinessLogicLayer.Services
         public async Task<string> GeneratePasswordResetTokenAsync(ApplicationUser user)
         {
             return await _userRepository.GeneratePasswordResetTokenAsync(user);
+        }
+
+        public async Task<bool> CheckByPassword(string email, string password)
+        {
+            var result = await _userRepository.SignInAsync(email, password);
+            return result;
+        }
+
+        public async Task<string> GetRoleAsync(ApplicationUser user)
+        {
+            if (ExcistUser(user)) { return null; }
+            var role = await _userRepository.GetRoleAsync(user);
+            return role;
+        }
+
+        public async Task<bool> ConfirmPasswordAsync(ApplicationUser user, string password)
+        {
+            return await _userRepository.ConfirmPasswordAsync(user, password);
+        }
+        public bool ExcistUser(ApplicationUser user)
+        {
+            if (user == null || user.IsRemoved == true)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EducationApp.BusinessLogicLayer.Models.Account
+namespace EducationApp.BusinessLogicLayer.Helpers
 {
-    class AccountModel
+    public class FilterUser
     {
+
     }
 }

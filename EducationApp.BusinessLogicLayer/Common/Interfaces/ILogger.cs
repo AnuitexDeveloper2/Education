@@ -1,17 +1,18 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
+using System.Threading.Tasks;
 
 namespace EducationApp.BusinessLogicLayer.Common.Interfaces
 {
-    public interface ILogger
+    public interface ILoggerFile
     {
 
+       
         IDisposable BeginScope<TState>(TState state);
-      
+    
         bool IsEnabled(LogLevel logLevel);
-        
-        void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter);
-        void AddFile(string v);
-        void CreateLogger(string p);
+       
+       
+        Task Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter);
     }
 }

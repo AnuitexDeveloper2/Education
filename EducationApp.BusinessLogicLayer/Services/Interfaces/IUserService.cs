@@ -1,4 +1,6 @@
-﻿using EducationApp.DataAccessLayer.Entities;
+﻿using EducationApp.BusinessLogicLayer.Models.Users;
+using EducationApp.DataAccessLayer.Entities;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,5 +17,10 @@ namespace EducationApp.BusinessLogicLayer.Services
         Task<ApplicationUser> GetByName(string name);
         Task<ApplicationUser> GetByEmail(string email);
         void FilterUsers();
+        Task<bool> BlockUserAsync(long id);
+        Task<UserItemModel> Profile(long id);
+        bool ExcistUser(ApplicationUser user);
+        Task<bool> EditProfile(UserItemModel model);
+
     }
 }

@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BookStore.DataAccess.AppContext;
+using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Entities.Base;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -10,48 +13,78 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
 {
     public class BaseEFRepository<TEntity> : IBaseEFRRepository<TEntity> where TEntity : BaseEntity
     {
-        private readonly ApplicationContext _applicationContext;
-        private readonly DbSet<TEntity> _dbSet;
+        protected readonly ApplicationContext _applicationContext;
+        protected readonly DbSet<TEntity> _dbSet;
+
         public BaseEFRepository(ApplicationContext applicationContext, DbSet<TEntity> dbSet)
         {
             _applicationContext = applicationContext;
-            _dbSet = dbSet;
+            _dbSet = _applicationContext.Set<TEntity>();
         }
 
-        async Task<bool> IBaseEFRRepository<TEntity>.CreateAsync(TEntity entity)
+       
+
+        public async Task<bool> CreateAsync(TEntity entity)
         {
-            _dbSet.Add(entity);
-            await _applicationContext.SaveChangesAsync();
-            return _applicationContext.SaveChangesAsync().IsCompleted;
-            
+            if (entity == null)
+            {
+                return false;
+            }
+            await _applicationContext.AddAsync(entity);
+            var save = await _applicationContext.SaveChangesAsync();
+            if (save > 0)
+            {
+                return true;
+            }
+            return false;
+
         }
 
-        public IEnumerable<TEntity> GetAsync()
-        {
-            return _dbSet.AsNoTracking().ToList();
-        }
-
-        async Task<bool> IBaseEFRRepository<TEntity>.DeleteAsync(TEntity entity)
+        public async Task<bool> RemoveAsync(TEntity entity)
         {
             entity.IsRemoved = true;
             await _applicationContext.SaveChangesAsync();
+
             return _applicationContext.SaveChangesAsync().IsCompleted;
         }
-        public async Task<TEntity> FindByIdAsync(long id)
+       
+
+        public async Task<bool> UpdateAsync(TEntity entity)
         {
-            return await _dbSet.FindAsync(id);
+            try
+            {
+                _applicationContext.Attach(entity).State = EntityState.Modified;
+                var entry = _applicationContext.Entry(entity);
+               
+            }
+            catch (Exception ex)
+            {
+                var e = ex;
+            }
+            
+            var result = await _applicationContext.SaveChangesAsync();
+            if (result > 0)
+            {
+                return true;
+            }
+            return false;
         }
 
-        async Task<bool> IBaseEFRRepository<TEntity>.EditAsync(TEntity entity)
+
+
+        public TEntity FindById(long id)
         {
-            _dbSet.Update(entity);
-            await _applicationContext.SaveChangesAsync();
-            return _applicationContext.SaveChangesAsync().IsCompleted;
+               var result = _dbSet.Find(id);
+            if (result == null)
+            {
+                return null;
+            }
+            return result;
         }
 
-        public Task<List<TEntity>> GetAsync(TEntity entity)
+        public Task<TEntity> GetAsync(TEntity entity)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

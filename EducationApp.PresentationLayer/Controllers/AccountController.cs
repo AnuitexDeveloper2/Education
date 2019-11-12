@@ -5,10 +5,15 @@ using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.EmailConsts;
-using EducationApp.BusinessLogicLayer.Models.Account;
 using EducationApp.PresentationLayer.Helpers.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using System;
+using System.Linq;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Principal;
+using System.Collections.Generic;
 
 namespace EducationApp.PresentationLayer.Controllers
 {
@@ -16,36 +21,36 @@ namespace EducationApp.PresentationLayer.Controllers
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
-        private readonly IJWTHelpers _jWTHelpers;
+        private readonly ITokenFactory _tokenFactory;
         private readonly IAccountService _accountService;
+        private readonly TokenValidationParameters _tokenValidationParameters;
 
-        public AccountController(IJWTHelpers jWTHelpers, IAccountService accountService)
+        public AccountController(ITokenFactory tokenFactory, IAccountService accountService,TokenValidationParameters tokenValidationParameters)
         {
-            _jWTHelpers = jWTHelpers;
+            _tokenFactory = tokenFactory;
             _accountService = accountService;
+            _tokenValidationParameters = tokenValidationParameters;
         }
 
-
         [HttpPost("register")]
-        public async Task<ActionResult> Register(RegistrationModel model)
+        public async Task<ActionResult> Register(UserItemModel model)
         {
-            await _accountService.RegisterAsync( model.Email, model.Password, model.FirstName,model.LastName);
-
-           
+            var user = await _accountService.RegisterAsync(model.Email, model.Password, model.FirstName, model.LastName);
+            if (user == null)
+            {
+                return BadRequest(ModelState);
+            }
             return Ok();
         }
 
         [HttpPost("confirmEmail")]
-        public async Task<ActionResult> ConfirmEmail( UserItemModel model,string token)
+        public async Task<ActionResult> ConfirmEmail(UserItemModel model)
         {
             var confirmUser = await _accountService.ConfirmEmailAsync(model.Email);
             if (!confirmUser)
             {
                 return Content(Error);
             }
-            var tokens = _jWTHelpers.GenerateTokenModel(model) ;
-            HttpContext.Response.Cookies.Append("AccessToken", tokens.Result.AccessToken);
-            HttpContext.Response.Cookies.Append("RefereshToken", tokens.Result.RefreshToken);
             return Ok();
         }
 
@@ -53,91 +58,90 @@ namespace EducationApp.PresentationLayer.Controllers
         public async Task<ActionResult> ForgotPassword(UserItemModel model)
         {
             var user = await _accountService.GetByEmailAsync(model.Email);
-            if (user == null )
+            if (user == null)
             {
-                return Content("ForgotPasswordConfirmation");
+                return BadRequest();
             }
             var token = await _accountService.GeneratePasswordResetTokenAsync(user);
-            await _accountService.RestorePasswordAsync(user,token, model.Password);
+            await _accountService.RestorePasswordAsync(user, token, model.Password);
             return Ok();
         }
         [HttpPost("signIn")]
         public async Task<ActionResult> SignIn(UserItemModel model)
         {
+            if (string.IsNullOrEmpty(model.Email) && string.IsNullOrEmpty(model.Password))
+            {
+                return Content(Invalid);
+            }
             var user = await _accountService.GetByEmailAsync(model.Email);
-            var tokens = _jWTHelpers.GenerateTokenModel(model);
-            //HttpContext.Response.Cookies.Append("AccessToken", tokens.Result.AccessToken);
-            //HttpContext.Response.Cookies.Append("RefereshToken", tokens.Result.RefreshToken);
-            await _accountService.SignInAsync(model.Email, model.Password);
-            return Ok();
+            var passwordValid = await _accountService.ConfirmPasswordAsync(user, model.Password);
+            if (!passwordValid)
+            {
+                return Content(Invalid);
+            }
+            model.Role = await _accountService.GetRoleAsync(user);
+            model.UserName = user.UserName;
+            model.Id = user.Id;
+            model.SecurityStamp = user.SecurityStamp;
+            if (user != null)
+            {
+                var tokens = _tokenFactory.GenerateTokenModel(model);
+                HttpContext.Response.Cookies.Append("RefereshToken", tokens.RefreshToken);
+                HttpContext.Response.Cookies.Append("AccessToken", tokens.AccessToken);
+                CheckJwtToken(tokens.AccessToken, tokens.RefreshToken);
+                await _accountService.SignInAsync(model.Email, model.Password);
+               
+               
+            }
+                    return Ok();
         }
-
-        [HttpGet("signOut")]
-        public async Task<ActionResult> SignOut()
+        [Authorize]
+        [HttpPost("signOut")]
+        public async Task<ActionResult> SignOutAsync()
         {
             await _accountService.SignOutAsync();
             return Ok();
         }
 
-      
+        //public List<UserItemModel> Filter()
+        //{
+        //    return 
+        //}
+        public  ActionResult RefreshToken(string refreshToken)
+        {
+            var expires = new JwtSecurityTokenHandler().ReadToken(refreshToken).ValidTo;
+
+            if (expires >= DateTime.Now)
+            {
+                try
+                {
+
+                var userId = this.HttpContext.User.Claims
+               .FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+                
+            }
+            return Ok();
+        }
+        public bool CheckJwtToken(string accessToken, string refreshToken)
+        {
+            var expiresAccess = new JwtSecurityTokenHandler().ReadToken(accessToken).ValidTo;
+
+            if (expiresAccess > DateTime.Now)
+            {
+                 RefreshToken(accessToken);
+            }
+            return true;
+        }
 
 
 
-    }
+       
+
+        }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//[HttpGet("token")]
-
-//public void Token(string userName,string password)
-//{
-//    userName = "Education";
-//    password = "123";
-//    var identity = GetUser(userName, password);
-//    var now = DateTime.UtcNow;
-//    var jwt = new JwtSecurityToken(
-//            issuer: Issuer,
-//            audience: Audience,
-//            notBefore: now,
-//            claims: identity.Claims,
-//            expires: now.Add(TimeSpan.FromMinutes(Lifetimew)),
-//            signingCredentials: new SigningCredentials(JWTHelpers.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-//    var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-//}
-
-
-//private ClaimsIdentity GetUser(string username, string password)
-//{
-//    UsersModel usersModel = new UsersModel { Email = "educationappgoncharuk2019@gmail.com", Password = "Education2019" };
-//    if (usersModel != null)
-//    {
-//        var claims = new List<Claim>
-//                {
-//                    new Claim(ClaimsIdentity.DefaultNameClaimType, usersModel.Email),
-//                    new Claim(ClaimsIdentity.DefaultRoleClaimType, usersModel.Password)
-//                };
-//        ClaimsIdentity claimsIdentity =
-//        new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-//            ClaimsIdentity.DefaultRoleClaimType);
-//        return claimsIdentity;
-//    }
-//    return null;
-//}

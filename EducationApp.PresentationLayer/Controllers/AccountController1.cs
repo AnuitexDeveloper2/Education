@@ -88,7 +88,6 @@ namespace EducationApp.PresentationLayer.Controllers
                     ClaimsIdentity.DefaultRoleClaimType);
                 return claimsIdentity;
             }
-
             return null;
         }
 
@@ -107,59 +106,39 @@ public class AccountController : ControllerBase
         _jwtHelper = jwtHelper;
     }
 
-    [HttpGet("login")]
-    public async Task<IActionResult> Login(string userName, string password)
+
+
+
+
+
+    public async Task<IActionResult> CheckJwtToken(string accessToken, string refreshToken)
     {
-        var resultModel = new BaseModel();
-        var user = await _accountService.FindByNameAsync(userName);
+        var expiresAccess = new JwtSecurityTokenHandler().ReadToken(accessToken).ValidTo;
 
-        var encodedJwt = await _jwtHelper.GenerateTokenModel(user);
-
-        if (encodedJwt == null)
+        if (expiresAccess < DateTime.Now)
         {
-            resultModel.Errors.Add("some error");
-            return Ok(resultModel);
+            await RefreshToken(refreshToken);
         }
-
-        HttpContext.Response.Cookies.Append("accessToken", encodedJwt.AccessToken);
-        HttpContext.Response.Cookies.Append("refreshToken", encodedJwt.RefreshToken);
-        return Ok(resultModel);
+        return Ok();
     }
-
-    [HttpGet("register")]
-    public async Task<IActionResult> Register()
-    {
-        await _accountService.Register();
-        return Ok(new BaseModel());
-    }
-
-    [HttpGet("confirmEmail")]
-    public async Task<IActionResult> ConfirmEmail(string userId, string token)
-    {
-        return Ok(await _accountService.ConfirmEmail(userId, token));
-    }
-
-    [HttpGet("forgotPassword")]
-    public async Task<IActionResult> ForgotPassword()
-    {
-        return Ok(await _accountService.ForgotPassword(""));
-    }
-
-
-    //public async Task<IActionResult> CheckJwtToken(string accessToken, string refreshToken)
-    //{
-    //    var expiresAccess = new JwtSecurityTokenHandler().ReadToken(accessToken).ValidTo;
-
-    //    if (expiresAccess < DateTime.Now)
-    //    {
-    //        await RefreshToken(refreshToken);
-    //    }
-    //    return Ok();
-    //}
 
     public async Task<IActionResult> RefreshToken(string refreshToken)
     {
-        var expires = new JwtSecurityTokenHandler().ReadToken(refreshToken).ValidTo; //check token from jwtHelper
+        var expires = new JwtSecurityTokenHandler().ReadToken(refreshToken).ValidTo;
+
+        if (expires >= DateTime.Now)
+        {
+            var userId = this.HttpContext.User.Claims
+           .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            var user = await _accountService.FindByNameAsync(userId);
+            var encodedJwt = await _jwtHelper.GenerateTokenModel(user);
+        }
+        return Ok(new BaseModel());
+    }
+
+    public async Task<IActionResult> RefreshToken(string refreshToken)
+    {
+        var expires = new JwtSecurityTokenHandler().ReadToken(refreshToken).ValidTo;
 
         if (expires >= DateTime.Now)
         {

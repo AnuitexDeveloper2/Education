@@ -6,7 +6,5 @@ namespace EducationApp.BusinessLogicLayer.Models.Users
     public class UsersModel : BaseModel
     {
         public ICollection<UserItemModel> Items = new List<UserItemModel>();
-
-       
     }
 }

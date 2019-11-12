@@ -4,10 +4,13 @@ using EducationApp.BusinessLogicLayer.Services;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Initialisation;
+using EducationApp.DataAccessLayer.Ropositories.Base;
+using EducationApp.DataAccessLayer.Ropositories.EFRepositories;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace EducationApp.BusinessLogicLayer.BaseInit
 {
@@ -18,10 +21,18 @@ namespace EducationApp.BusinessLogicLayer.BaseInit
             services.AddDbContext<ApplicationContext>(options =>
    options.UseSqlServer(connectionString));
 
-            services.AddIdentity<ApplicationUser, Role>()
+            services.AddIdentity<ApplicationUser, Role>(o =>
+            {
+                o.Password.RequireDigit = false;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequiredLength = 6;
+            }
+            )
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
-
+            services.AddTransient<TokenValidationParameters>();
             services.AddTransient<UserManager<ApplicationUser>>();
             services.AddTransient<RoleManager<Role>>();
             services.AddTransient<SignInManager<ApplicationUser>>();
@@ -31,8 +42,8 @@ namespace EducationApp.BusinessLogicLayer.BaseInit
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
-
-
+            services.AddScoped<IPrintingEditionRepository, PrintingEditionRepository>();
+            services.AddScoped<IPrintingEditionService, PrintingEditionService>();
 
         }
     }

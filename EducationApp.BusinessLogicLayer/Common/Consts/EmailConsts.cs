@@ -14,7 +14,8 @@
             public const string Host = "smtp.gmail.com";
             public const int Port = 587;
             public const string AdminPassword = "25012005";
-            public const string callbackUrl = "https://localhost:44353/account/confirmEmail"; 
+            public const string callbackUrl = "https://localhost:44353/account/confirmEmail";
+            public const string Invalid = "You entered an invalid / inactive username or password";
         }
     }
 }

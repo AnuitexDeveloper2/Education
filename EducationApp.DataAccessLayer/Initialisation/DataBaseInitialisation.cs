@@ -1,6 +1,7 @@
 ﻿using BookStore.DataAccess.AppContext;
 using EducationApp.DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -59,16 +60,15 @@ namespace EducationApp.DataAccessLayer.Initialisation
             int printingEditionCount = _applicationContext.PrintingEditions.Count();
             if (printingEditionCount == 0)
             {
-
                 var printingEdition = new List<PrintingEdition>()
             {
-                new PrintingEdition {Title = "Discword"},
-                new PrintingEdition {Title = "CLR via C#"}
+                new PrintingEdition {Title = "Discword",Date = DateTime.Now,ProductType = Entities.Enums.Enums.TypeProduct.Book },
+                new PrintingEdition {Title = "CLR via C#", Date = DateTime.Now, ProductType = Entities.Enums.Enums.TypeProduct.Book}
             };
                 foreach (var item in printingEdition)
                 {
                     _applicationContext.PrintingEditions.Add(item);
-                    _applicationContext.SaveChanges();
+                    _applicationContext.SaveChangesAsync().GetAwaiter();
                 }
             }
         }

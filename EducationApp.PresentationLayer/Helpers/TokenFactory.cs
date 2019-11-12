@@ -1,4 +1,5 @@
 ﻿using EducationApp.BusinessLogicLayer.Models.Users;
+using EducationApp.BusinessLogicLayer.Services;
 using EducationApp.PresentationLayer.Helpers.Interfaces;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
@@ -14,14 +15,16 @@ using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.JWTConsts;
 
 namespace EducationApp.PresentationLayer.Helpers
 {
-    public class JWTHelpers : IJWTHelpers
+    public class TokenFactory : ITokenFactory
     {
+       public JwtSecurityToken  securityToken;
         public static SymmetricSecurityKey GetSymmetricSecurityKey()
         {
             return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(JWTConsts.Key));
         }
-        public async Task<TokenModel> GenerateTokenModel(UserItemModel user)
+        public TokenModel GenerateTokenModel(UserItemModel user)
         {
+           
             if (user == null)
             {
                 return null;
@@ -38,12 +41,13 @@ namespace EducationApp.PresentationLayer.Helpers
             var claimsRefresh = new List<Claim>
                 {
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Email,user.Email)
                 };
 
-            var accessToken = await GenerateToken(claimsAccess, 5);
-            var refreshToken = await GenerateToken(claimsRefresh, 30);
-
+            var accessToken =  GenerateToken(claimsAccess, 200.0);
+            var refreshToken =  GenerateToken(claimsRefresh, 450.0);
+            securityToken = refreshToken;
             return new TokenModel
             {
                 AccessToken = new JwtSecurityTokenHandler().WriteToken(accessToken),
@@ -51,23 +55,35 @@ namespace EducationApp.PresentationLayer.Helpers
             };
         }
 
-        public async  Task<JwtSecurityToken> GenerateToken(List<Claim> claims, long expires)
+        public JwtSecurityToken GenerateToken(List<Claim> claims, double expires)
         {
             var token = new JwtSecurityToken(
-            issuer:Issuer,
+            issuer: Issuer,
             audience: Audience,
             claims: claims,
-            expires:  DateTime.Now.AddMinutes(expires),
-            signingCredentials: new SigningCredentials(GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+            expires: DateTime.Now.AddMinutes(expires),
+            signingCredentials: new SigningCredentials(GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256)) ;
             return token;
         }
+    
 
-        
 
         public class TokenModel
         {
             public string AccessToken { get; set; }
             public string RefreshToken { get; set; }
+        }
+
+        public JwtSecurityToken ValidateToken(string token)
+        {
+            string refreshToken = new JwtSecurityTokenHandler().WriteToken(securityToken);
+            
+            return securityToken;
+        }
+
+        private static ClaimsPrincipal GetPrincipal(string token)
+        {
+            throw new NotImplementedException();
         }
     }
 }

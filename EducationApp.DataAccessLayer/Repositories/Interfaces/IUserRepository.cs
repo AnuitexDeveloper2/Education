@@ -11,7 +11,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
         Task<bool> EditAsync(ApplicationUser user);
         Task<bool> RemoveAsync(ApplicationUser user);
         Task<Role> CheckRoleAsync(string email);
-        Task<bool> VerifyAsync(ApplicationUser user, string password);
         Task<ApplicationUser> GetByIdAsync(long id);
         Task<ApplicationUser> GetByNameAsync(string userName);
         Task<bool> ChangePasswordAsync(ApplicationUser user, string oldPasswor, string newPassword);
@@ -26,5 +25,8 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
         Task SignOut();
         Task<IdentityResult> ResetPassword(ApplicationUser user, string token, string newPassword);
         Task<string> GenerateChangeEmailTokenAsync(ApplicationUser user, string newEmail);
+        Task<string> GetRoleAsync(ApplicationUser user);
+
+        
     }
 }

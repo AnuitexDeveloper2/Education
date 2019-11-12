@@ -9,6 +9,6 @@ namespace EducationApp.DataAccessLayer.Entities
         public string Desccription { get; set; }
         public decimal Price { get; set; }
         public CurrencyType CurrencyType { get; set; }
-        public TypeProduct Type { get; set; }
+        public TypeProduct ProductType { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EducationApp.DataAccessLayer.Migrations
 {
-    public partial class initial : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,7 +44,6 @@ namespace EducationApp.DataAccessLayer.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
                     IsRemoved = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -94,7 +93,7 @@ namespace EducationApp.DataAccessLayer.Migrations
                     Desccription = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(nullable: false),
                     CurrencyType = table.Column<int>(nullable: false),
-                    Type = table.Column<int>(nullable: false)
+                    ProductType = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
