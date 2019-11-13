@@ -1,7 +1,12 @@
 ﻿using EducationApp.DataAccessLayer.Entities;
+using EducationApp.DataAccessLayer.Helpers;
 using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
+using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 
 namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
 {
@@ -26,7 +31,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
         Task<IdentityResult> ResetPassword(ApplicationUser user, string token, string newPassword);
         Task<string> GenerateChangeEmailTokenAsync(ApplicationUser user, string newEmail);
         Task<string> GetRoleAsync(ApplicationUser user);
-
-        
+        IEnumerable<ApplicationUser> FilterUsers();
+        IEnumerable<ApplicationUser> SortUser(UserAction state);
     }
 }

@@ -1,5 +1,7 @@
-﻿using EducationApp.BusinessLogicLayer.Models.Users;
+﻿using EducationApp.BusinessLogicLayer.Extention.User;
+using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.DataAccessLayer.Entities;
+using EducationApp.DataAccessLayer.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,7 +18,12 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
                 LastName = model.LastName,
                 Email = model.Email,
                 Id = model.Id,
-                SecurityStamp = model.SecurityStamp
+                SecurityStamp = model.SecurityStamp,
+                AccessFailedCount = model.AccessFailedCount,
+                ConcurrencyStamp = model.ConcurrencyStamp,
+                IsRemoved = model.IsRemoved,
+                LockoutEnabled = model.LockoutEnabled,
+                UserName = model.UserName
             };
             return user;
         }
@@ -30,9 +37,23 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
                 LastName = user.LastName,
                 Email = user.Email,
                 Id = user.Id,
-                SecurityStamp = user.SecurityStamp
+                SecurityStamp = user.SecurityStamp,
+                AccessFailedCount = user.AccessFailedCount,
+                ConcurrencyStamp = user.ConcurrencyStamp,
+                IsRemoved = user.IsRemoved,
+                LockoutEnabled = user.LockoutEnabled,
+                UserName = user.UserName
             };
             return userItemModel;
+        }
+        public static UserAction Map(this SortUser sortUser)
+        {
+            var userAction = new UserAction
+            {
+                SortState = (EducationApp.DataAccessLayer.Entities.Enums.Enums.SortState)sortUser.SortState
+            };
+            return userAction;
+            
         }
     }
 }

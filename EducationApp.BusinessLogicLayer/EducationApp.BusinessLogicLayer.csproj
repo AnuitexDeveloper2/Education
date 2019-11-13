@@ -15,4 +15,8 @@
     <ProjectReference Include="..\EducationApp.DataAccessLayer\EducationApp.DataAccessLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extention\Enums\" />
+  </ItemGroup>
+
 </Project>

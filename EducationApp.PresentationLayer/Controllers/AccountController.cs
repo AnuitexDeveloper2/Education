@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using EducationApp.BusinessLogicLayer.Helpers;
 using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -12,8 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System;
 using System.Linq;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Principal;
-using System.Collections.Generic;
+using EducationApp.BusinessLogicLayer.Helpers.Mapping;
 
 namespace EducationApp.PresentationLayer.Controllers
 {
@@ -25,7 +23,7 @@ namespace EducationApp.PresentationLayer.Controllers
         private readonly IAccountService _accountService;
         private readonly TokenValidationParameters _tokenValidationParameters;
 
-        public AccountController(ITokenFactory tokenFactory, IAccountService accountService,TokenValidationParameters tokenValidationParameters)
+        public AccountController(ITokenFactory tokenFactory, IAccountService accountService, TokenValidationParameters tokenValidationParameters)
         {
             _tokenFactory = tokenFactory;
             _accountService = accountService;
@@ -57,43 +55,22 @@ namespace EducationApp.PresentationLayer.Controllers
         [HttpPost("forgotPassword")]
         public async Task<ActionResult> ForgotPassword(UserItemModel model)
         {
-            var user = await _accountService.GetByEmailAsync(model.Email);
-            if (user == null)
-            {
-                return BadRequest();
-            }
-            var token = await _accountService.GeneratePasswordResetTokenAsync(user);
-            await _accountService.RestorePasswordAsync(user, token, model.Password);
+            await _accountService.RestorePasswordAsync(model);
             return Ok();
         }
         [HttpPost("signIn")]
         public async Task<ActionResult> SignIn(UserItemModel model)
         {
-            if (string.IsNullOrEmpty(model.Email) && string.IsNullOrEmpty(model.Password))
-            {
-                return Content(Invalid);
-            }
             var user = await _accountService.GetByEmailAsync(model.Email);
-            var passwordValid = await _accountService.ConfirmPasswordAsync(user, model.Password);
-            if (!passwordValid)
+            if (user == null)
             {
                 return Content(Invalid);
             }
-            model.Role = await _accountService.GetRoleAsync(user);
-            model.UserName = user.UserName;
-            model.Id = user.Id;
-            model.SecurityStamp = user.SecurityStamp;
-            if (user != null)
-            {
-                var tokens = _tokenFactory.GenerateTokenModel(model);
-                HttpContext.Response.Cookies.Append("RefereshToken", tokens.RefreshToken);
-                HttpContext.Response.Cookies.Append("AccessToken", tokens.AccessToken);
-                CheckJwtToken(tokens.AccessToken, tokens.RefreshToken);
-                await _accountService.SignInAsync(model.Email, model.Password);
-               
-               
-            }
-                    return Ok();
+            var tokens = _tokenFactory.GenerateTokenModel(user);
+            HttpContext.Response.Cookies.Append("RefereshToken", tokens.RefreshToken);
+            HttpContext.Response.Cookies.Append("AccessToken", tokens.AccessToken);
+            await _accountService.SignInAsync(model.Email, model.Password);
+            return Ok();
         }
         [Authorize]
         [HttpPost("signOut")]
@@ -103,45 +80,35 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok();
         }
 
-        //public List<UserItemModel> Filter()
-        //{
-        //    return 
-        //}
-        public  ActionResult RefreshToken(string refreshToken)
+        public async Task<ActionResult> RefreshTokenAsync(string refreshToken)
         {
-            var expires = new JwtSecurityTokenHandler().ReadToken(refreshToken).ValidTo;
+            var token = new JwtSecurityTokenHandler().ReadJwtToken(refreshToken);
 
-            if (expires >= DateTime.Now)
+            if (token.ValidTo >= DateTime.Now)
             {
-                try
-                {
+                var UserId = token.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+                long Id = long.Parse(UserId);
+                var user = await _accountService.GetByIdAsync(Id);
+                var model = UserMaping.Map(user);
+                var encodedJwt = _tokenFactory.GenerateTokenModel(model);
 
-                var userId = this.HttpContext.User.Claims
-               .FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
-                }
-                catch (Exception ex)
-                {
-
-                    throw;
-                }
-                
             }
             return Ok();
         }
-        public bool CheckJwtToken(string accessToken, string refreshToken)
+        public async Task<bool> CheckJwtTokenAsync(string accessToken, string refreshToken)
         {
             var expiresAccess = new JwtSecurityTokenHandler().ReadToken(accessToken).ValidTo;
 
             if (expiresAccess > DateTime.Now)
             {
-                 RefreshToken(accessToken);
+                await RefreshTokenAsync(refreshToken);
             }
             return true;
         }
 
 
 
-       
 
-        }
+
+    }
 }

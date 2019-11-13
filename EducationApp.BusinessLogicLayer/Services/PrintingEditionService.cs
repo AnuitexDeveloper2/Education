@@ -29,10 +29,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             return result;
         }
 
-        public Task<IEnumerable<PrintingEdition>> Filter()
-        {
-            throw new NotImplementedException();
-        }
+       
 
         public async Task<bool> RemoveAsync(PrintingEditionModelItem model)
         {
@@ -57,6 +54,7 @@ namespace EducationApp.BusinessLogicLayer.Services
         public List<PrintingEditionModelItem> PrintingEditionFilter(PrintingEditionModelItem model)
         {
             var printingEdition = PrintingEditionMaping.Map(model);
+            var GetAll = _printingEditionRepository.GetAll();
             List<PrintingEdition> list = _printingEditionRepository.FilterPrintingEditionFilter(model.Price);
             List<PrintingEditionModelItem> List = new List<PrintingEditionModelItem>();
                 for (int i = 0; i < list.Count; i++)
@@ -66,8 +64,22 @@ namespace EducationApp.BusinessLogicLayer.Services
             return List;
         }
 
+        public IQueryable<PrintingEditionModelItem> FilterProductsByName(PrintingEditionModelItem model, string text)
+        {
+            var printingEdition = PrintingEditionMaping.Map(model);
+            var GetAll = _printingEditionRepository.GetAll();
+            var result = _printingEditionRepository.FilterContainsText(GetAll, printingEditions => printingEditions.Title, text);
+            List<PrintingEdition> list = result.ToList<PrintingEdition>();
+            List<PrintingEditionModelItem> List = new List<PrintingEditionModelItem>();
+            for (int i = 0; i < result.Count(); i++)
+            {
+                List.Add(PrintingEditionMaping.Map(list[i]));
+            }
+            return List.AsQueryable();
+        }
 
-}
+       
+    }
 
 
 }

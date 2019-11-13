@@ -22,8 +22,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
             _dbSet = _applicationContext.Set<TEntity>();
         }
 
-       
-
         public async Task<bool> CreateAsync(TEntity entity)
         {
             if (entity == null)
@@ -47,7 +45,12 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
 
             return _applicationContext.SaveChangesAsync().IsCompleted;
         }
-       
+
+        public IQueryable<TEntity> GetAll()
+        {
+            var getAll = _dbSet.ToList<TEntity>();
+            return getAll.AsQueryable();
+        }
 
         public async Task<bool> UpdateAsync(TEntity entity)
         {
@@ -82,9 +85,20 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
             return result;
         }
 
-        public Task<TEntity> GetAsync(TEntity entity)
+        public IQueryable<TEntity> FilterContainsText<TEntity>(IQueryable<TEntity> entities, Expression<Func<TEntity, bool>> getProperty, bool isRemoved)
         {
-            throw new NotImplementedException();
+            return entities.Where(Expression.Lambda<Func<TEntity, bool>>
+            (
+                body: Expression.Call
+                (
+                    getProperty.Body,
+                    nameof(string.Contains),
+                    Type.EmptyTypes,
+                    Expression.Constant(isRemoved)
+                ),
+                parameters: getProperty.Parameters
+            ));
         }
+
     }
 }

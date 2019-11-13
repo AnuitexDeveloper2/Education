@@ -1,12 +1,15 @@
 ﻿using BookStore.DataAccess.AppContext;
 using EducationApp.DataAccessLayer.Entities;
+using EducationApp.DataAccessLayer.Helpers;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using static EducationApp.DataAccessLayer.Entities.Constants.Constants.Roles;
+using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 
 namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 {
@@ -44,16 +47,8 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             {
                 return false;
             }
-            try
-            {
-
-                var edit = await _userManager.UpdateAsync(user);
-                var result = await _applicationContext.SaveChangesAsync();
-            }
-            catch (Exception exp)
-            {
-
-            }
+            await _userManager.UpdateAsync(user);
+            await _applicationContext.SaveChangesAsync();
             return true;
         }
 
@@ -185,12 +180,39 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             return null;
         }
 
-        //public async Task<IEnumerable<ApplicationUser>> Sort()
-        //{
+        public IQueryable<ApplicationUser> GetAll()
+        {
+            var users = _userManager.Users;
+            return users;
+        }
 
-        //}
+        public IEnumerable<ApplicationUser> SortUser(UserAction state )
+        {
+            if (state.SortState == SortState.NameAsc )
+            {
+                var SortUser = _applicationContext.Users.OrderBy(k => k.UserName);
+                return SortUser;
+            }
+            if (state.SortState == SortState.NameDesc)
+            {
+                return _applicationContext.Users.OrderByDescending(k => k.UserName);
+            }
+            if (state.SortState == SortState.EmailAsc)
+            {
+                return _applicationContext.Users.OrderBy(k => k.Email);
+            }
+            if (state.SortState == SortState.EmailDesc)
+            {
+                return _applicationContext.Users.OrderByDescending(k => k.Email);
+            }
+            return null;
+        }
+
+        public IEnumerable<ApplicationUser> FilterUsers()
+        {
+            throw new NotImplementedException();
+        }
     }
-
 }
 
 

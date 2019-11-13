@@ -1,4 +1,6 @@
 ﻿using EducationApp.BusinessLogicLayer.Helpers;
+using EducationApp.BusinessLogicLayer.Helpers.Mapping;
+using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
@@ -55,14 +57,21 @@ namespace EducationApp.BusinessLogicLayer.Services
             return await _userRepository.GetByNameAsync(userName);
         }
 
-        public async Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user)
+        public async Task<string> GenerateEmailConfirmationTokenAsync(UserItemModel model)
         {
+            var user = UserMaping.Map(model);
             return await _userRepository.GenerateEmailConfirmationTokenAsync(user);
         }
 
 
-        public async Task<bool> RestorePasswordAsync(ApplicationUser user, string token, string newPassword)
+        public async Task<bool> RestorePasswordAsync(UserItemModel model)
         {
+            var user = await _userRepository.GetByIdAsync(model.Id);
+            if (user == null)
+            {
+                return false;
+            }
+            var token = await _userRepository.GeneratePasswordResetTokenAsync(user);
             var result = await _userRepository.ResetPassword(user, token, "Education2019");
             //_emailSender.SendingEmailAsync(user.Email, "Restore Password", newPassword);
             return result.Succeeded;
@@ -84,13 +93,26 @@ namespace EducationApp.BusinessLogicLayer.Services
             return await _userRepository.GetByIdAsync(id);
         }
 
-        public async Task<ApplicationUser> GetByEmailAsync(string email)
+        public async Task<UserItemModel> GetByEmailAsync(string email)
         {
-            return await _userRepository.FindByEmailAsync(email);
+            if (email == null)
+            {
+                return null;
+            }
+            var user = await _userRepository.FindByEmailAsync(email);
+            var model = UserMaping.Map(user);
+            model.Role = await _userRepository.GetRoleAsync(user);
+            return model;
         }
 
         public async Task<bool> SignInAsync(string email, string password)
         {
+            var user = await _userRepository.GetByEmailAsync(email);
+            var passwordValid = await _userRepository.ConfirmPasswordAsync(user, password);
+            if (!passwordValid)
+            {
+                return false;
+            }
             var result = await _userRepository.SignInAsync(email, password);
             return result;
         }
@@ -100,10 +122,6 @@ namespace EducationApp.BusinessLogicLayer.Services
             await _userRepository.SignOut();
         }
 
-        public async Task<string> GeneratePasswordResetTokenAsync(ApplicationUser user)
-        {
-            return await _userRepository.GeneratePasswordResetTokenAsync(user);
-        }
 
         public async Task<bool> CheckByPassword(string email, string password)
         {

@@ -5,6 +5,11 @@ using EducationApp.BusinessLogicLayer.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
+using System.Linq;
+using EducationApp.DataAccessLayer.Entities;
+using static EducationApp.BusinessLogicLayer.Extention.Enums.Enums;
+using EducationApp.BusinessLogicLayer.Models;
+using EducationApp.BusinessLogicLayer.Extention.User;
 
 namespace EducationApp.PresentationLayer.Controllers
 {
@@ -24,7 +29,7 @@ namespace EducationApp.PresentationLayer.Controllers
         {
            
             var user = await _userService.GetById(model.Id);
-            await _userService.ChangeEmail(user, model.Email);
+            await _userService.ChangeEmail(model, model.Email);
             return Ok("Ok");
         }
         [Authorize(Roles = "User")]
@@ -32,7 +37,7 @@ namespace EducationApp.PresentationLayer.Controllers
         public async Task<ActionResult> ChangePasswordAsync(UserItemModel model)
         {
             var user = await _userService.GetById(model.Id);
-            await _userService.ChangePassword(user, model.Password, "Education/2019");
+            await _userService.ChangePassword(model, model.Password, "Education/2019");
             return Ok("Ok");
         }
         [Authorize(Roles = "Admin")]
@@ -54,12 +59,12 @@ namespace EducationApp.PresentationLayer.Controllers
         public async Task<bool> RemoveUser(UserItemModel model)
         {
             var user = await _userService.GetById(model.Id);
-            var isRemoved = await _userService.Remove(user);
+            var isRemoved = await _userService.Remove(model);
             return isRemoved;
         }
         [Authorize(Roles= "User")]
         [HttpPost ("EditProfile")]
-        public async Task<ActionResult> EditProfole(UserItemModel model)
+        public async Task<ActionResult> EditProfile(UserItemModel model)
         {
             var result = await _userService.EditProfile(model);
             if (!result)
@@ -70,11 +75,14 @@ namespace EducationApp.PresentationLayer.Controllers
 
         }
 
-        //[HttpPost("filter")]
-        //public async Task<IEnumerable<UserItemModel>> Filter()
-        //{
-        //   return _userService.FilterUsers();
-        //}
+        [HttpGet("sort")]
+        public async Task< IEnumerable<UserItemModel>> SortUsers(SortUser sortUser )
+        {
+            return _userService.SortUsers(sortUser);
+        }
+
+        [HttpGet("filter")]
+        public async Task<IEnumerable<UserItemModel>> FilterUser() 
 
 
     }

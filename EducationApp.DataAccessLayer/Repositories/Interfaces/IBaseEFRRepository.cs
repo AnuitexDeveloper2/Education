@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BookStore.DataAccess.AppContext;
@@ -13,6 +14,8 @@ namespace EducationApp.DataAccessLayer.Repositories.Interfaces
         Task<bool> UpdateAsync(TEntity entity);
         TEntity FindById(long id);
         Task<bool> RemoveAsync(TEntity entity);
-        Task<TEntity> GetAsync(TEntity entity);
+        IQueryable<TEntity> FilterContainsText<TEntity>(IQueryable<TEntity> entities, Expression<Func<TEntity, string>> getProperty, string text);
+        IQueryable<TEntity> GetAll();
+       
     }
 }

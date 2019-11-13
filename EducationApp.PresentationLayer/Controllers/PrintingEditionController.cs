@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace EducationApp.PresentationLayer.Controllers
 {
@@ -41,9 +42,9 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok();
         }
         [HttpGet("Filter")]
-        public async Task<List<PrintingEditionModelItem>> Filter(PrintingEditionModelItem printingEditionModelItem)
+        public async Task<IQueryable<PrintingEditionModelItem>> Filter(PrintingEditionModelItem printingEditionModelItem)
         {
-            var result = _printingEditionService.PrintingEditionFilter(printingEditionModelItem);
+            var result = _printingEditionService.FilterProductsByName(printingEditionModelItem, "Algoritm");
             return result;
 
         }

@@ -6,6 +6,6 @@ namespace EducationApp.BusinessLogicLayer.Helpers
 {
     public class FilterUser
     {
-
+       
     }
 }
