@@ -44,6 +44,7 @@ namespace EducationApp.PresentationLayer.Controllers
         [HttpGet("Filter")]
         public async Task<IQueryable<PrintingEditionModelItem>> Filter(PrintingEditionModelItem printingEditionModelItem)
         {
+           
             var result = _printingEditionService.FilterProductsByName(printingEditionModelItem, "Algoritm");
             return result;
 

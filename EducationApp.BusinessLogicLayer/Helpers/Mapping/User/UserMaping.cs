@@ -2,9 +2,6 @@
 using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
 {
@@ -46,11 +43,12 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
             };
             return userItemModel;
         }
-        public static UserAction Map(this SortUser sortUser)
+        public static UserAction Map(this UserActionModel sortUser)
         {
             var userAction = new UserAction
             {
-                SortState = (EducationApp.DataAccessLayer.Entities.Enums.Enums.SortState)sortUser.SortState
+                SortState = (EducationApp.DataAccessLayer.Entities.Enums.Enums.SortState)sortUser.SortState,
+                FilterUser = (DataAccessLayer.Entities.Enums.Enums.FilterState)sortUser.FilterState
             };
             return userAction;
             

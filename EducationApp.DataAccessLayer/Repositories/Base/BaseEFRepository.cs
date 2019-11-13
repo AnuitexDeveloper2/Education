@@ -85,7 +85,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
             return result;
         }
 
-        public IQueryable<TEntity> FilterContainsText<TEntity>(IQueryable<TEntity> entities, Expression<Func<TEntity, bool>> getProperty, bool isRemoved)
+        public IQueryable<TEntity> FilterContainsText<TEntity>(IQueryable<TEntity> entities, Expression<Func<TEntity, string>> getProperty, string text)
         {
             return entities.Where(Expression.Lambda<Func<TEntity, bool>>
             (
@@ -94,11 +94,11 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
                     getProperty.Body,
                     nameof(string.Contains),
                     Type.EmptyTypes,
-                    Expression.Constant(isRemoved)
+                    Expression.Constant(text)
                 ),
                 parameters: getProperty.Parameters
             ));
         }
-
+      
     }
 }

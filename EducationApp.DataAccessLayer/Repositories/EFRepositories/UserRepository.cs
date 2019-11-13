@@ -186,9 +186,9 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             return users;
         }
 
-        public IEnumerable<ApplicationUser> SortUser(UserAction state )
+        public IEnumerable<ApplicationUser> SortUser(UserAction state)
         {
-            if (state.SortState == SortState.NameAsc )
+            if (state.SortState == SortState.NameAsc)
             {
                 var SortUser = _applicationContext.Users.OrderBy(k => k.UserName);
                 return SortUser;
@@ -208,9 +208,30 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             return null;
         }
 
-        public IEnumerable<ApplicationUser> FilterUsers()
+        public IEnumerable<ApplicationUser> FilterUsers(UserAction state)
         {
-            throw new NotImplementedException();
+            if (state.FilterUser == FilterState.IsRemovedFalse)
+            {
+                var users = _userManager.Users.Where(k => k.IsRemoved == false);
+                return users;
+            }
+            if (state.FilterUser == FilterState.IsRemovedTrue)
+            {
+                var users = _userManager.Users.Where(k => k.IsRemoved == true);
+                return users;
+            }
+            if (state.FilterUser == FilterState.LockoutEnabledFalse)
+            {
+                var users = _userManager.Users.Where(k => k.LockoutEnabled == false);
+                return users;
+            }
+            if (state.FilterUser == FilterState.LockoutEnabledTrue)
+            {
+                var users = _userManager.Users.Where(k => k.LockoutEnabled == true);
+                return users;
+            }
+            return null;
+
         }
     }
 }

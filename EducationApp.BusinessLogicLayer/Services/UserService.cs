@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using EducationApp.BusinessLogicLayer.Extention.User;
+using EducationApp.BusinessLogicLayer.Helpers;
 using EducationApp.BusinessLogicLayer.Helpers.Mapping;
 using EducationApp.BusinessLogicLayer.Models;
 using EducationApp.BusinessLogicLayer.Models.Users;
@@ -106,7 +107,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             return true;
         }
 
-        public List<UserItemModel> SortUsers(SortUser state)
+        public List<UserItemModel> SortUsers(UserActionModel state)
         {
 
             var sort = UserMaping.Map(state);
@@ -119,6 +120,17 @@ namespace EducationApp.BusinessLogicLayer.Services
             return model;
         }
 
+        public List<UserItemModel> FilterModel(UserActionModel filterUser)
+        {
+            var filter = UserMaping.Map(filterUser);
+            var filterUsers = _userRepository.FilterUsers(filter).ToList();
+            List<UserItemModel> model = new List<UserItemModel>();
+            for (int i = 0; i < filterUsers.Count(); i++)
+            {
+                model.Add(UserMaping.Map(filterUsers[i]));
+            }
+            return model;
+        }
 
 
     }

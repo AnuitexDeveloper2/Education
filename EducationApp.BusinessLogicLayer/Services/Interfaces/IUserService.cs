@@ -25,7 +25,8 @@ namespace EducationApp.BusinessLogicLayer.Services
         Task<UserItemModel> Profile(long id);
         bool ExcistUser(ApplicationUser user);
         Task<bool> EditProfile(UserItemModel model);
-        List<UserItemModel> SortUsers(SortUser state);
+        List<UserItemModel> SortUsers(UserActionModel state);
+        List<UserItemModel> FilterModel(UserActionModel filterUser);
 
 
 

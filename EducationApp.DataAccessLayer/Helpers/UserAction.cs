@@ -8,5 +8,6 @@ namespace EducationApp.DataAccessLayer.Helpers
     public class UserAction
     {
         public SortState SortState { get; set; }
+        public FilterState FilterUser { get; set; }
     }
 }

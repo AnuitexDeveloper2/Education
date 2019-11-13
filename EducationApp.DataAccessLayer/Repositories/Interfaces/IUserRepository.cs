@@ -31,7 +31,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
         Task<IdentityResult> ResetPassword(ApplicationUser user, string token, string newPassword);
         Task<string> GenerateChangeEmailTokenAsync(ApplicationUser user, string newEmail);
         Task<string> GetRoleAsync(ApplicationUser user);
-        IEnumerable<ApplicationUser> FilterUsers();
+        IEnumerable<ApplicationUser> FilterUsers(UserAction state);
         IEnumerable<ApplicationUser> SortUser(UserAction state);
     }
 }

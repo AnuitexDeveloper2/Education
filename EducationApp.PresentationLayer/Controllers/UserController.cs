@@ -76,13 +76,16 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [HttpGet("sort")]
-        public async Task< IEnumerable<UserItemModel>> SortUsers(SortUser sortUser )
+        public async Task< IEnumerable<UserItemModel>> SortUsers(UserActionModel sortUser )
         {
             return _userService.SortUsers(sortUser);
         }
 
         [HttpGet("filter")]
-        public async Task<IEnumerable<UserItemModel>> FilterUser() 
+        public async Task<IEnumerable<UserItemModel>> FilterUser(UserActionModel filterUser)
+        {
+           return  _userService.FilterModel(filterUser);
+        }
 
 
     }
