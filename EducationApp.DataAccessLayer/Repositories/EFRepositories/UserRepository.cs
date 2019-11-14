@@ -188,6 +188,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
         public IEnumerable<ApplicationUser> SortUser(UserAction state)
         {
+            //var result = _applicationContext.Users.ToDictionary(k => k.UserName, _applicationContext.Users.OrderBy(k => k.UserName));
             if (state.SortState == SortState.NameAsc)
             {
                 var SortUser = _applicationContext.Users.OrderBy(k => k.UserName);

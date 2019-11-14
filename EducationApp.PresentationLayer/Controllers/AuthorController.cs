@@ -23,9 +23,37 @@ namespace EducationApp.PresentationLayer.Controllers
         [HttpPost("Create")]
         public async Task<ActionResult> Create(AuthorsModelItem model)
         {
+            await _authorService.CreateAsync(model);
             return Ok();
         }
 
+        [HttpPost("remove")]
 
+        public async Task<ActionResult> Remove(AuthorsModelItem model)
+        {
+            await _authorService.RemoveAsync(model);
+            return Ok();
+        }
+
+        [HttpPost("update")]
+        public async Task<ActionResult> Update(AuthorsModelItem model)
+        {
+            await _authorService.UpdateAsync(model);
+            return Ok();
+        }
+
+        [HttpGet("getById")]
+        public async Task<AuthorsModelItem> GetbyId(long id)
+        {
+            var author = await _authorService.GetByIdAsync(id);
+            return author;
+        }
+
+        //[HttpGet("GetAutors")]
+
+        //public async Task<List<AuthorsModelItem>> GetAuthors()
+        //{
+
+        //}
     }
 }

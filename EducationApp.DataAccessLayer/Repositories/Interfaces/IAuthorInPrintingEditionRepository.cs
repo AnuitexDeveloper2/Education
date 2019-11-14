@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using EducationApp.DataAccessLayer.Entities;
+using EducationApp.DataAccessLayer.Repositories.Interfaces;
+using System.Threading.Tasks;
 
 namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
 {
-    interface IAuthorInPrintingEditionRepository
+    public interface IAuthorInPrintingEditionRepository : IBaseEFRRepository<AuthorInPrintingEdition>
     {
+
+        Task GetAsync(string name);
     }
 }

@@ -39,11 +39,14 @@ namespace EducationApp.BusinessLogicLayer.BaseInit
             services.AddTransient<DataBaseInitialisation>();
             services.AddTransient<IEmailSender, EmailSender>();
 
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
+            services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPrintingEditionRepository, PrintingEditionRepository>();
             services.AddScoped<IPrintingEditionService, PrintingEditionService>();
+            services.AddScoped<IAuthorInPrintingEditionRepository, AuthorInPrintingEditionRepository>();
 
         }
     }

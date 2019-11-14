@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -16,7 +17,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
         protected readonly ApplicationContext _applicationContext;
         protected readonly DbSet<TEntity> _dbSet;
 
-        public BaseEFRepository(ApplicationContext applicationContext, DbSet<TEntity> dbSet)
+        public BaseEFRepository(ApplicationContext applicationContext)
         {
             _applicationContext = applicationContext;
             _dbSet = _applicationContext.Set<TEntity>();
@@ -35,36 +36,35 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
                 return true;
             }
             return false;
-
         }
+
 
         public async Task<bool> RemoveAsync(TEntity entity)
         {
             entity.IsRemoved = true;
-            await _applicationContext.SaveChangesAsync();
-
-            return _applicationContext.SaveChangesAsync().IsCompleted;
+            var save = await _applicationContext.SaveChangesAsync();
+            if (save > 0)
+            {
+                return true;
+            }
+            return false;
         }
 
-        public IQueryable<TEntity> GetAll()
+        public List<TEntity> GetAll()
         {
             var getAll = _dbSet.ToList<TEntity>();
-            return getAll.AsQueryable();
+            return getAll;
         }
 
         public async Task<bool> UpdateAsync(TEntity entity)
         {
-            try
-            {
-                _applicationContext.Attach(entity).State = EntityState.Modified;
-                var entry = _applicationContext.Entry(entity);
-               
-            }
-            catch (Exception ex)
-            {
-                var e = ex;
-            }
             
+            if (entity.Id == 0)
+            {
+                return false;
+            }
+            _applicationContext.Attach(entity).State = EntityState.Modified;
+            var entry = _applicationContext.Entry(entity);
             var result = await _applicationContext.SaveChangesAsync();
             if (result > 0)
             {
@@ -73,16 +73,22 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
             return false;
         }
 
-
-
-        public TEntity FindById(long id)
+        public async Task<TEntity> FindByIdAsync(long id)
         {
-               var result = _dbSet.Find(id);
+            var result = await _dbSet.FindAsync(id);
+
             if (result == null)
             {
                 return null;
             }
             return result;
+        }
+
+
+        public IQueryable<TEntity> Get()
+        {
+            var deleted = _dbSet.Where(k =>k.IsRemoved == true);
+            return deleted;
         }
 
         public IQueryable<TEntity> FilterContainsText<TEntity>(IQueryable<TEntity> entities, Expression<Func<TEntity, string>> getProperty, string text)
@@ -96,9 +102,9 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
                     Type.EmptyTypes,
                     Expression.Constant(text)
                 ),
-                parameters: getProperty.Parameters
-            ));
+                parameters: getProperty.Parameters.FirstOrDefault()
+            )) ;
         }
-      
+
     }
 }

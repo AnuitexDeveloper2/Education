@@ -11,5 +11,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
     {
         List<PrintingEdition> FilterPrintingEditionFilter(TypeProduct typeProduct);
         List<PrintingEdition> FilterPrintingEditionFilter(decimal price);
+        Task<PrintingEdition> GetId(string Name);
     }
 }

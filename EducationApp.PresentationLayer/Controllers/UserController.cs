@@ -48,7 +48,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok();
         }
         
-        [HttpPost("profile")]
+        [HttpGet("profile")]
         public async Task<UserItemModel> Profile( UserItemModel model)
         {
             var profile = await _userService.Profile(model.Id);

@@ -1,10 +1,27 @@
-﻿using System;
+﻿using BookStore.DataAccess.AppContext;
+using EducationApp.DataAccessLayer.Entities;
+using EducationApp.DataAccessLayer.Ropositories.Base;
+using EducationApp.DataAccessLayer.Ropositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 {
-    class AuthorRepository
+    public class AuthorRepository : BaseEFRepository<Author>, IAuthorRepository
     {
+
+        public AuthorRepository(ApplicationContext applicationContext) : base(applicationContext)
+        {
+        }
+        public async Task<Author> GetId(string name)
+        {
+            //var authors = _applicationContext.Authors.Where(k => k.Name == name);
+            var author =  _applicationContext.Authors.Where(k => k.Name == name).FirstOrDefault();
+            return author;
+        }
     }
 }

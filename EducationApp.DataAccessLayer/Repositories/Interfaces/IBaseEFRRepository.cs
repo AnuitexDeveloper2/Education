@@ -12,10 +12,10 @@ namespace EducationApp.DataAccessLayer.Repositories.Interfaces
     {
         Task<bool> CreateAsync(TEntity entity);
         Task<bool> UpdateAsync(TEntity entity);
-        TEntity FindById(long id);
+        Task<TEntity> FindByIdAsync(long id);
         Task<bool> RemoveAsync(TEntity entity);
         IQueryable<TEntity> FilterContainsText<TEntity>(IQueryable<TEntity> entities, Expression<Func<TEntity, string>> getProperty, string text);
-        IQueryable<TEntity> GetAll();
+        List<TEntity> GetAll();
        
     }
 }
