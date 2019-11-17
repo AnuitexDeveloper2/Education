@@ -7,11 +7,9 @@ using static EducationApp.BusinessLogicLayer.Models.Enums.Enums;
 
 namespace EducationApp.BusinessLogicLayer.Extention.User
 {
-    public class UserActionModel
+    public class UserFilterModel
     {
-        public SortState SortState { get; set; }
-        public FilterState FilterState { get; set; }
-
-      
+        public UsersFilterStatus UsersFilterStatus { get; set; }
+        public UserSortType UserSortType { get; set; }
     }
 }

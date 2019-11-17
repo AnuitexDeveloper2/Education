@@ -10,6 +10,8 @@ using EducationApp.DataAccessLayer.Entities;
 using static EducationApp.BusinessLogicLayer.Extention.Enums.Enums;
 using EducationApp.BusinessLogicLayer.Models;
 using EducationApp.BusinessLogicLayer.Extention.User;
+using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
+using EducationApp.BusinessLogicLayer.Models.Base;
 
 namespace EducationApp.PresentationLayer.Controllers
 {
@@ -25,48 +27,47 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [HttpPost("changeEmail")]
-        public async Task<ActionResult> ChangeEmailAsync(UserItemModel model)
+        public async Task<ActionResult> ChangeEmail(string email)
         {
-           
-            var user = await _userService.GetById(model.Id);
-            await _userService.ChangeEmail(model, model.Email);
-            return Ok("Ok");
+            var result = await _userService.ChangeEmailAsync(email);
+            return Ok( result); //todo return basemodel with errors
         }
-        [Authorize(Roles = "User")]
-        [HttpPost("changePassword")]
-        public async Task<ActionResult> ChangePasswordAsync(UserItemModel model)
-        {
-            var user = await _userService.GetById(model.Id);
-            await _userService.ChangePassword(model, model.Password, "Education/2019");
-            return Ok("Ok");
-        }
+
+        //[Authorize(Roles = "User")]
+        //[HttpPost("changePassword")]
+        //public async Task<ActionResult> ChangePasswordAsync(UserItemModel model) //todo remove, merge UpdatePassword with UpdateProfile
+        //{
+        //    var user = await _userService.GetByIdAsync(model.Id);
+        //    await _userService.ChangePasswordAsync(model, model.Password, "Education/2019"); //todo set one param
+        //    return Ok("Ok");
+        //}
+
         [Authorize(Roles = "Admin")]
         [HttpPost("blockUser")]
-        public async Task<ActionResult> BlockUserAsync(UserItemModel model)
+        public async Task<IActionResult> BlockUserAsync(long id) //todo get UserId from client
         {
-           await _userService.BlockUserAsync(model.Id);
-            return Ok();
+           var result = await _userService.BlockUserAsync(id);
+            return Ok(result); //todo return result with errorsCollection
         }
-        
-        [HttpGet("profile")]
-        public async Task<UserItemModel> Profile( UserItemModel model)
+
+        [HttpGet("GetProfile")]
+        public async Task<IActionResult> GetProfile(long id) //todo rename, param = id or email
         {
-            var profile = await _userService.Profile(model.Id);
-                return profile;
+            var profile = await _userService.GetProfileAsync(id); //rename
+            return Ok(profile);
         }
-        
-        [HttpPost("Remove")]
-        public async Task<bool> RemoveUser(UserItemModel model)
+
+        [HttpPost("removeUser")] //todo equal names for url and method
+        public async Task<ActionResult> RemoveUser(long id)
         {
-            var user = await _userService.GetById(model.Id);
-            var isRemoved = await _userService.Remove(model);
-            return isRemoved;
+            var user = await _userService.RemoveUserAsync(id);
+            return Ok(user);
         }
-        [Authorize(Roles= "User")]
-        [HttpPost ("EditProfile")]
+        [Authorize(Roles = "User")]
+        [HttpPost("EditProfile")]
         public async Task<ActionResult> EditProfile(UserItemModel model)
         {
-            var result = await _userService.EditProfile(model);
+            var result = await _userService.EditProfileAsync(model);
             if (!result)
             {
                 return BadRequest();
@@ -75,16 +76,12 @@ namespace EducationApp.PresentationLayer.Controllers
 
         }
 
-        [HttpGet("sort")]
-        public async Task< IEnumerable<UserItemModel>> SortUsers(UserActionModel sortUser )
-        {
-            return _userService.SortUsers(sortUser);
-        }
+
 
         [HttpGet("filter")]
-        public async Task<IEnumerable<UserItemModel>> FilterUser(UserActionModel filterUser)
+        public async Task<IEnumerable<UserItemModel>> FilterUser(UserFilterModel filterUser)
         {
-           return  _userService.FilterModel(filterUser);
+            return _userService.UserFilterModel(filterUser);
         }
 
 

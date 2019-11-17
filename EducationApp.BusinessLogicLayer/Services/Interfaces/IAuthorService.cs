@@ -1,5 +1,6 @@
 ﻿using EducationApp.BusinessLogicLayer.Models.Authors;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EducationApp.BusinessLogicLayer.Services.Interfaces
@@ -10,5 +11,6 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
         Task<bool> UpdateAsync(AuthorsModelItem authorModelItem);
         Task<bool> RemoveAsync(AuthorsModelItem authorModelItem);
         Task<AuthorsModelItem> GetByIdAsync(long id);
+        Task<List<AuthorsModelItem>> GetAuthors();
     }
 }

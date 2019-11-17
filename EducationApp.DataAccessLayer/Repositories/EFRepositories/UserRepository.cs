@@ -3,10 +3,8 @@ using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Helpers;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using static EducationApp.DataAccessLayer.Entities.Constants.Constants.Roles;
 using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
@@ -25,30 +23,43 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             _signInManager = signInManager;
             _applicationContext = applicationContext;
         }
-        public async Task<bool> AddAsync(string email, string password, string firstName, string lastName)
+        public async Task<bool> CreateUserAsync(ApplicationUser user) //todo rename createUserAsync
         {
-            var excistUser = _userManager.FindByEmailAsync(email);
-            if (excistUser.Result != null)
+            var excistUser = await _userManager.FindByEmailAsync(user.Email);
+            if (excistUser != null)
             {
                 return false;
             }
-            var user = new ApplicationUser { Email = email, UserName = lastName };
-            var createUser = _userManager.CreateAsync(user, password).GetAwaiter().GetResult();
-            if (createUser.Succeeded == true)
+
+            var createUser = await _userManager.CreateAsync(user);
+            if (!createUser.Succeeded)
             {
-                _userManager.AddToRoleAsync(user, User).GetAwaiter().GetResult();
-                await _applicationContext.SaveChangesAsync();
+                return false;
+            }
+            var result = await _userManager.AddToRoleAsync(user, User); //todo check res
+            if (result == null)
+            {
+                return false;
+            }
+            var saveResult = await _applicationContext.SaveChangesAsync(); //return res
+            if (saveResult < 1)
+            {
+                return false;
             }
             return createUser.Succeeded;
         }
         public async Task<bool> EditAsync(ApplicationUser user)
         {
-            if (user == null)
+            if (user == null) //todo check for null at service
             {
                 return false;
             }
             await _userManager.UpdateAsync(user);
-            await _applicationContext.SaveChangesAsync();
+            var result = await _applicationContext.SaveChangesAsync(); //todo results
+            if (result < 1)
+            {
+                return false;
+            }
             return true;
         }
 
@@ -59,15 +70,15 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                 return false;
             }
             user.IsRemoved = true;
-            await _userManager.UpdateAsync(user);
+            await _userManager.UpdateAsync(user); //todo return result
             return user.IsRemoved;
 
         }
-        public async Task<Role> CheckRoleAsync(string email)
+        public async Task<string> CheckRoleAsync(string email)
         {
-            var userEntity = await _userManager.FindByEmailAsync(email);
-            var userRole = await _userManager.GetRolesAsync(userEntity);
-            return await _applicationContext.Roles.FindAsync(userRole);
+            var user = await _userManager.FindByEmailAsync(email); //todo check null
+            var userRole = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+            return userRole; //todo return string role
         }
 
 
@@ -78,15 +89,14 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
         public async Task<ApplicationUser> GetByNameAsync(string userName)
         {
-            var userEntity = _userManager.FindByNameAsync(userName);
-
-            return await userEntity;
+            var user = await _userManager.FindByNameAsync(userName);
+            return user;
         }
 
         public async Task<bool> ChangePasswordAsync(ApplicationUser user, string oldPassword, string newPassword)
         {
-            var changePassword = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
-            return changePassword.Succeeded;
+            var changePasswordResult = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+            return changePasswordResult.Succeeded;
         }
 
         public async Task<ApplicationUser> GetByEmailAsync(string email)
@@ -104,19 +114,19 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             return await _userManager.GeneratePasswordResetTokenAsync(user);
         }
 
-        public async Task SignInAsync(ApplicationUser user, bool isPersistent)
+        public async Task SignInAsync(ApplicationUser user, bool isPersistent) //todo remove
         {
             await _signInManager.SignInAsync(user, isPersistent: false);
         }
-        public async Task<bool> ChangeEmailAsync(ApplicationUser user, string newEmail, string token)
+        public async Task<bool> ChangeEmailAsync(string oldEmail, string newEmail, string token) //todo param with emails and token
         {
-            var result = await _userManager.FindByEmailAsync(newEmail);
-            if (result != null)
+            var user = await FindByEmailAsync(oldEmail); //todo use oldEmail to get user from DB
+            if (user == null)
             {
                 return false;
             }
-            var changePassword = await _userManager.ChangeEmailAsync(user, newEmail, token);
-            return changePassword.Succeeded;
+            var changePasswordResult = await _userManager.ChangeEmailAsync(user, newEmail, token);
+            return changePasswordResult.Succeeded;
         }
 
         public async Task<bool> ConfirmEmailAsync(ApplicationUser user, string token)
@@ -132,12 +142,12 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
         public async Task<bool> ConfirmPasswordAsync(ApplicationUser user, string password)
         {
-            var check = _userManager.CheckPasswordAsync(user, password);
-            var checkPassword = await _signInManager.CheckPasswordSignInAsync(user, password, lockoutOnFailure: true);
+            var check = _userManager.CheckPasswordAsync(user, password); //todo check result
+            var checkPassword = await _signInManager.CheckPasswordSignInAsync(user, password, lockoutOnFailure: true); //todo Check logic
             return checkPassword.Succeeded;
         }
 
-        public async Task<bool> SignInAsync(string email, string password)
+        public async Task<bool> SignInAsync(string email, string password) //todo check if need
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
@@ -155,7 +165,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         public async Task<IdentityResult> ResetPassword(ApplicationUser user, string token, string newPassword)
         {
             var resetPassword = await _userManager.ResetPasswordAsync(user, token, newPassword);
-            return resetPassword;
+            return resetPassword; //todo return bool
         }
 
         public async Task<string> GenerateChangeEmailTokenAsync(ApplicationUser user, string newEmail)
@@ -180,60 +190,29 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             return null;
         }
 
-        public IQueryable<ApplicationUser> GetAll()
-        {
-            var users = _userManager.Users;
-            return users;
-        }
 
-        public IEnumerable<ApplicationUser> SortUser(UserAction state)
-        {
-            //var result = _applicationContext.Users.ToDictionary(k => k.UserName, _applicationContext.Users.OrderBy(k => k.UserName));
-            if (state.SortState == SortState.NameAsc)
-            {
-                var SortUser = _applicationContext.Users.OrderBy(k => k.UserName);
-                return SortUser;
-            }
-            if (state.SortState == SortState.NameDesc)
-            {
-                return _applicationContext.Users.OrderByDescending(k => k.UserName);
-            }
-            if (state.SortState == SortState.EmailAsc)
-            {
-                return _applicationContext.Users.OrderBy(k => k.Email);
-            }
-            if (state.SortState == SortState.EmailDesc)
-            {
-                return _applicationContext.Users.OrderByDescending(k => k.Email);
-            }
-            return null;
-        }
 
-        public IEnumerable<ApplicationUser> FilterUsers(UserAction state)
+        public List<ApplicationUser> FilterUsers(UsersFilter usersFilter)
         {
-            if (state.FilterUser == FilterState.IsRemovedFalse)
-            {
-                var users = _userManager.Users.Where(k => k.IsRemoved == false);
-                return users;
-            }
-            if (state.FilterUser == FilterState.IsRemovedTrue)
-            {
-                var users = _userManager.Users.Where(k => k.IsRemoved == true);
-                return users;
-            }
-            if (state.FilterUser == FilterState.LockoutEnabledFalse)
-            {
-                var users = _userManager.Users.Where(k => k.LockoutEnabled == false);
-                return users;
-            }
-            if (state.FilterUser == FilterState.LockoutEnabledTrue)
-            {
-                var users = _userManager.Users.Where(k => k.LockoutEnabled == true);
-                return users;
-            }
+            var users = _applicationContext.Users.Where(u => !u.IsRemoved).AsQueryable();
+            //Dictionary<SortState, IQueryable<ApplicationUser>> filterUser = new Dictionary<SortState, IQueryable<ApplicationUser>>();
+            //filterUser.Add(state.SortState, _userManager.Users.Where(k => k.IsRemoved == false));
+            //filterUser.Add(state, _userManager.Users.Where(k => k.IsRemoved == true));
+            //filterUser.Add(state, _userManager.Users.Where(k => k.LockoutEnabled == false));
+            //filterUser.Add(state, _userManager.Users.Where(k => k.LockoutEnabled == false));
+            users = usersFilter.UsersSortType == UsersSortType.EmailAsc ? users.OrderBy(k => k.Email) : users.OrderByDescending(k => k.Email);
+            users = usersFilter.UsersSortType == UsersSortType.NameAsc ? users.OrderBy(k => k.UserName) : users.OrderByDescending(k => k.UserName);
+            
+
+
+            users = users.Skip((usersFilter.PageCount - 1) * usersFilter.PageSize).Take(usersFilter.PageSize);
+            //todo add skip and take, and then ToListAsync()
+            //todo read about IEnumerable and IQueryable
             return null;
 
         }
+
+
     }
 }
 

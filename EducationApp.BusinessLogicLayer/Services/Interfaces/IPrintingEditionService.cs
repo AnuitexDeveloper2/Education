@@ -1,4 +1,5 @@
-﻿using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
+﻿using EducationApp.BusinessLogicLayer.Extention.PrintingEditionFilterState;
+using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
 using EducationApp.DataAccessLayer.Entities;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
         Task<bool> CreateAsync(PrintingEditionModelItem model);
         Task<bool> RemoveAsync(PrintingEditionModelItem model);
         Task<bool> UpdateAsync(PrintingEditionModelItem model);
-        List<PrintingEditionModelItem> PrintingEditionFilter(PrintingEditionModelItem model);
+        Task< List<PrintingEditionModelItem>> GetPrintingEditionAsync(PrintingEditionFilterState state);
         IQueryable<PrintingEditionModelItem> FilterProductsByName(PrintingEditionModelItem model, string text);
     }
 }

@@ -9,7 +9,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors
     public static class AuthorsMapping
     {
 
-        public static Author Map(AuthorsModelItem authorModelItem)
+        public static Author Map(this AuthorsModelItem authorModelItem)
         {
             var author = new Author
             {
@@ -20,7 +20,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors
             return author;
         }
 
-        public static AuthorsModelItem Map(Author author)
+        public static AuthorsModelItem Map(this Author author)
         {
             var authorModelItem = new AuthorsModelItem
             {
@@ -30,5 +30,16 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors
             };
             return authorModelItem;
         }
+
+        public static List<AuthorsModelItem> Map(this List<Author> authors)
+        {
+            List<AuthorsModelItem> authorsModel = new List<AuthorsModelItem>();
+            foreach (var item in authors)
+            {
+                authorsModel.Add(Map(item));
+            }
+            return authorsModel;
+        }
     }
 }
+

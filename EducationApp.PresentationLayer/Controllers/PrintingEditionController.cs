@@ -3,6 +3,9 @@ using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
 using System.Linq;
+using EducationApp.BusinessLogicLayer.Extention.PrintingEditionFilterState;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EducationApp.PresentationLayer.Controllers
 {
@@ -16,14 +19,14 @@ namespace EducationApp.PresentationLayer.Controllers
             _printingEditionService = printingEditionService;
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPost("Create")]
         public async Task<ActionResult> Create(PrintingEditionModelItem printingEditonModelItem)
         {
             await _printingEditionService.CreateAsync(printingEditonModelItem);
             return Ok();
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost("remove")]
 
         public async Task<ActionResult> Remove(PrintingEditionModelItem printingEditonModelItem)
@@ -31,7 +34,7 @@ namespace EducationApp.PresentationLayer.Controllers
             await _printingEditionService.RemoveAsync(printingEditonModelItem);
             return Ok();
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost("update")]
 
         public async Task<ActionResult> Update(PrintingEditionModelItem printingEditionModelItem)
@@ -39,13 +42,19 @@ namespace EducationApp.PresentationLayer.Controllers
             await _printingEditionService.UpdateAsync(printingEditionModelItem);
             return Ok();
         }
+
         [HttpGet("Filter")]
-        public async Task<IQueryable<PrintingEditionModelItem>> Filter(PrintingEditionModelItem printingEditionModelItem)
+        public async Task<List<PrintingEditionModelItem>> Filter(PrintingEditionFilterState printingEditionFilterState)
         {
+            var printingEdition = await _printingEditionService.GetPrintingEditionAsync(printingEditionFilterState);
+            return printingEdition;
+        }
 
-            var result = _printingEditionService.FilterProductsByName(printingEditionModelItem, "Algoritm");
-            return result;
 
+        [HttpGet("buy")]
+        public async Task<ActionResult> Buy()
+        {
+            return Ok();
         }
 
 

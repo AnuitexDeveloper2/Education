@@ -12,14 +12,14 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
 {
     public interface IUserRepository
     {
-        Task<bool> AddAsync(string email, string password,string firstName,string lastName);
+        Task<bool> CreateUserAsync(ApplicationUser user);
         Task<bool> EditAsync(ApplicationUser user);
         Task<bool> RemoveAsync(ApplicationUser user);
-        Task<Role> CheckRoleAsync(string email);
+        Task<string> CheckRoleAsync(string email);
         Task<ApplicationUser> GetByIdAsync(long id);
         Task<ApplicationUser> GetByNameAsync(string userName);
         Task<bool> ChangePasswordAsync(ApplicationUser user, string oldPasswor, string newPassword);
-        Task<bool> ChangeEmailAsync(ApplicationUser user, string newEmail, string token);
+        Task<bool> ChangeEmailAsync( string newEmail, string token);
         Task<ApplicationUser> GetByEmailAsync(string email);
         Task<bool> ConfirmEmailAsync(ApplicationUser user,string token);
         Task<bool> ConfirmPasswordAsync(ApplicationUser user, string password);
@@ -31,7 +31,8 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
         Task<IdentityResult> ResetPassword(ApplicationUser user, string token, string newPassword);
         Task<string> GenerateChangeEmailTokenAsync(ApplicationUser user, string newEmail);
         Task<string> GetRoleAsync(ApplicationUser user);
-        IEnumerable<ApplicationUser> FilterUsers(UserAction state);
-        IEnumerable<ApplicationUser> SortUser(UserAction state);
+        List<ApplicationUser> FilterUsers(UsersFilter state);
+
+
     }
 }

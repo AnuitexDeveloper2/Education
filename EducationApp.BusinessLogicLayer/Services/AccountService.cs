@@ -1,5 +1,6 @@
 ﻿using EducationApp.BusinessLogicLayer.Helpers;
 using EducationApp.BusinessLogicLayer.Helpers.Mapping;
+using EducationApp.BusinessLogicLayer.Models.Base;
 using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Entities;
@@ -33,23 +34,17 @@ namespace EducationApp.BusinessLogicLayer.Services
 
             return true;
         }
-
-        public async Task<bool> CreateUserAsync(string email, string password, string firstName, string lastName)
+      
+        public async Task<bool> CreateUserAsync(UserItemModel userItemModel  )
         {
-
-            var userCreate = await _userRepository.AddAsync(email, password, firstName, lastName);
-            return userCreate;
-        }
-        public async Task<ApplicationUser> RegisterAsync(string email, string password, string firstName, string lastName)
-        {
-            var user = new ApplicationUser { FirstName = firstName, LastName = lastName, Email = email, UserName = lastName + " " + firstName };
-            var userCreate = await _userRepository.AddAsync(email, password, firstName, lastName);
+            var user = UserMapper.Map(userItemModel);
+            var userCreate = await _userRepository.CreateUserAsync(user);
             if (userCreate)
             {
                 _emailSender.SendingEmailAsync(UserEmail, MailSubject, $"Confirm registration by clicking on the link: <a href='{callbackUrl}'>link</a>");
-                return user;
+                return true;
             }
-            return null;
+            return false;
         }
 
         public async Task<ApplicationUser> GetUserAsync(string userName, string password)
@@ -59,7 +54,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
         public async Task<string> GenerateEmailConfirmationTokenAsync(UserItemModel model)
         {
-            var user = UserMaping.Map(model);
+            var user = UserMapper.Map(model);
             return await _userRepository.GenerateEmailConfirmationTokenAsync(user);
         }
 
@@ -100,7 +95,7 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return null;
             }
             var user = await _userRepository.FindByEmailAsync(email);
-            var model = UserMaping.Map(user);
+            var model = UserMapper.Map(user);
             model.Role = await _userRepository.GetRoleAsync(user);
             return model;
         }

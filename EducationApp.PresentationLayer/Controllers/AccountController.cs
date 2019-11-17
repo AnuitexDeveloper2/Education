@@ -31,13 +31,9 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult> Register(UserItemModel model)
+        public async Task<ActionResult> Register(UserItemModel userItemModel)
         {
-            var user = await _accountService.RegisterAsync(model.Email, model.Password, model.FirstName, model.LastName);
-            if (user == null)
-            {
-                return BadRequest(ModelState);
-            }
+             await _accountService.CreateUserAsync(userItemModel);
             return Ok();
         }
 
@@ -89,7 +85,7 @@ namespace EducationApp.PresentationLayer.Controllers
                 var UserId = token.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
                 long Id = long.Parse(UserId);
                 var user = await _accountService.GetByIdAsync(Id);
-                var model = UserMaping.Map(user);
+                var model = UserMapper.Map(user);
                 var encodedJwt = _tokenFactory.GenerateTokenModel(model);
 
             }

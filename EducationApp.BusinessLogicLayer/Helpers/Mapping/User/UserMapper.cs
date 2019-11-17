@@ -2,10 +2,11 @@
 using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Helpers;
+using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 
 namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
 {
-    public static class UserMaping
+    public static class UserMapper
     {
         public static ApplicationUser Map(this UserItemModel model)
         {
@@ -29,7 +30,6 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
         {
             UserItemModel userItemModel = new UserItemModel
             {
-
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
@@ -43,15 +43,14 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
             };
             return userItemModel;
         }
-        public static UserAction Map(this UserActionModel sortUser)
+        public static UsersFilter Map(this UserFilterModel filterUser)
         {
-            var userAction = new UserAction
+            var userFilter = new UsersFilter
             {
-                SortState = (EducationApp.DataAccessLayer.Entities.Enums.Enums.SortState)sortUser.SortState,
-                FilterUser = (DataAccessLayer.Entities.Enums.Enums.FilterState)sortUser.FilterState
+                UsersSortType = (DataAccessLayer.Entities.Enums.Enums.UsersSortType)filterUser.UserSortType,
+                UsersFilterType = (DataAccessLayer.Entities.Enums.Enums.UsersFilterType)filterUser.UsersFilterStatus
             };
-            return userAction;
-            
+            return userFilter;
         }
     }
 }

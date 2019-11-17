@@ -17,11 +17,11 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         public AuthorRepository(ApplicationContext applicationContext) : base(applicationContext)
         {
         }
-        public async Task<Author> GetId(string name)
+        public  Author GetAuthorByName(Author author)
         {
-            //var authors = _applicationContext.Authors.Where(k => k.Name == name);
-            var author =  _applicationContext.Authors.Where(k => k.Name == name).FirstOrDefault();
-            return author;
+            var authors =  _applicationContext.Authors.Where(k => k.Name == author.Name).FirstOrDefault();
+           
+            return authors;
         }
     }
 }

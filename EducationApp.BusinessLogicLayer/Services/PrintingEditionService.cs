@@ -1,5 +1,7 @@
-﻿using EducationApp.BusinessLogicLayer.Helpers.Mapping;
+﻿using EducationApp.BusinessLogicLayer.Extention.PrintingEditionFilterState;
+using EducationApp.BusinessLogicLayer.Helpers.Mapping;
 using EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors;
+using EducationApp.BusinessLogicLayer.Helpers.Mapping.PrintingEditions;
 using EducationApp.BusinessLogicLayer.Models.Authors;
 using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
@@ -27,28 +29,28 @@ namespace EducationApp.BusinessLogicLayer.Services
         public async Task<bool> CreateAsync(PrintingEditionModelItem model)
         {
             var printingEdition = PrintingEditionMaping.Map(model);
-            var authorModel = new AuthorsModelItem { Name = model.Author };
+            List<Author> authors = new List<Author>();
             foreach (var item in model.Authors)
             {
                 var author = AuthorsMapping.Map(item);
-                if (await _authorRepository.GetId(author.Name) == null)
+                var excistAuthor = _authorRepository.GetAuthorByName(author);
+                if (excistAuthor == null)
                 {
                     await _authorRepository.CreateAsync(author);
+                    excistAuthor = _authorRepository.GetAuthorByName(author);
                 }
+                authors.Add(excistAuthor);
             }
             var result = await _printingEditionRepository.CreateAsync(printingEdition);
-            var printingEditionId = _printingEditionRepository.GetId(printingEdition.Title).Result.Id;
-            //var authors = await _authorRepository.GetId(model.Author);
-            //foreach (var item in authors)
-            //{
-            //    var authorPrintingEdition = new AuthorInPrintingEdition { AuthorId = item.Id, PrintingEditionId = printingEditionId };
-            //    await _authorInPrintingEdition.CreateAsync(authorPrintingEdition);
-            //}
+
+            foreach (var item in authors)
+            {
+                var authorPrintingEdition = new AuthorInPrintingEdition { AuthorId = item.Id, PrintingEditionId = printingEdition.Id };
+                await _authorInPrintingEdition.CreateAsync(authorPrintingEdition);
+            }
             await _authorInPrintingEdition.GetAsync(printingEdition.Title);
             return result;
         }
-
-
 
         public async Task<bool> RemoveAsync(PrintingEditionModelItem model)
         {
@@ -69,19 +71,6 @@ namespace EducationApp.BusinessLogicLayer.Services
             return result;
         }
 
-        public List<PrintingEditionModelItem> PrintingEditionFilter(PrintingEditionModelItem model)
-        {
-            var printingEdition = PrintingEditionMaping.Map(model);
-            var GetAll = _printingEditionRepository.GetAll();
-            List<PrintingEdition> list = _printingEditionRepository.FilterPrintingEditionFilter(model.Price);
-            List<PrintingEditionModelItem> List = new List<PrintingEditionModelItem>();
-            for (int i = 0; i < list.Count; i++)
-            {
-                List.Add(PrintingEditionMaping.Map(list[i]));
-            }
-            return List;
-        }
-
         public IQueryable<PrintingEditionModelItem> FilterProductsByName(PrintingEditionModelItem model, string text)
         {
             var printingEdition = PrintingEditionMaping.Map(model);
@@ -97,7 +86,16 @@ namespace EducationApp.BusinessLogicLayer.Services
             return List.AsQueryable();
         }
 
-
+        public async Task<List<PrintingEditionModelItem>> GetPrintingEditionAsync(PrintingEditionFilterState state)
+        {
+            var printingEdition = await _printingEditionRepository.GetPrintingEdition(PrintingEditionFilterStateMapping.Map(state));
+            List<PrintingEditionModelItem> modelItems = new List<PrintingEditionModelItem>();
+            for (int i = 0; i < printingEdition.Count(); i++)
+            {
+                modelItems.Add(PrintingEditionFilterMapping.Map(printingEdition[i]));
+            }
+            return modelItems;
+        }
     }
 
 

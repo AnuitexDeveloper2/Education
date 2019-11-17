@@ -12,7 +12,7 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
         Task<bool> ConfirmEmailAsync(string email);
         Task<bool> RestorePasswordAsync(UserItemModel model);
         Task<ApplicationUser> GetUserAsync(string userName, string password);
-        Task<ApplicationUser> RegisterAsync(string email, string password,string firstName,string lastName);
+        Task<bool> CreateUserAsync(UserItemModel userItemModel);
         Task<string> GenerateEmailConfirmationTokenAsync(UserItemModel user);
         Task<ApplicationUser> GetByIdAsync(long Id);
         Task<UserItemModel> GetByEmailAsync(string email);

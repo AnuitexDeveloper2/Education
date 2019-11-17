@@ -6,12 +6,10 @@ namespace EducationApp.BusinessLogicLayer.Models.Enums
 {
     public partial class Enums
     {
-        public enum FilterState
+        public enum Price
         {
-            IsRemovedTrue = 0,
-            IsRemovedFalse =1,
-            LockoutEnabledTrue = 2,
-            LockoutEnabledFalse =3
+            MinPrice = 0,
+            MaxPrice = 1
         }
     }
 }
