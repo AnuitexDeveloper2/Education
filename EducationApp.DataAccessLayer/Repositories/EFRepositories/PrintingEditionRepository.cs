@@ -33,7 +33,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
         public async Task<PrintingEdition> GetId(string title)
         {
-            var printingEdition =  _applicationContext.PrintingEditions.Where(k => k.Title == title).FirstOrDefault();
+            var printingEdition = _applicationContext.PrintingEditions.Where(k => k.Title == title).FirstOrDefault();
             return printingEdition;
         }
 
@@ -57,9 +57,21 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                                                   }).ToList()
                                    };
 
-            if (printingEditionFilter.Price == printingEditionFilter.Price )
+            if (printingEditionFilter.SearchString == printingEditionFilter.SearchString)
             {
-                printingEditions.Where(k => k.Title == printingEditionFilter.ToString());
+                printingEditions.Where(k => k.Title.Contains(printingEditionFilter.SearchString));
+            }
+            if (printingEditionFilter.TypeProduct == TypeProduct.Book)
+            {
+                printingEditions = printingEditions.Where(k => k.ProductType == 0);
+            }
+            if (printingEditionFilter.TypeProduct == TypeProduct.Journal)
+            {
+                printingEditions = printingEditions.Where(k => k.ProductType == TypeProduct.Journal);
+            }
+            if (printingEditionFilter.TypeProduct == TypeProduct.Journal)
+            {
+                printingEditions = printingEditions.Where(k => k.ProductType == TypeProduct.Newspaper);
             }
 
             return printingEditions.ToList();
