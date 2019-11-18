@@ -1,5 +1,6 @@
 ﻿using EducationApp.BusinessLogicLayer.Helpers;
 using EducationApp.BusinessLogicLayer.Helpers.Mapping;
+using EducationApp.BusinessLogicLayer.Helpers.Mapping.User;
 using EducationApp.BusinessLogicLayer.Models.Base;
 using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
@@ -8,6 +9,7 @@ using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using System;
 using System.Threading.Tasks;
 using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.EmailConsts;
+using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
 
 
 namespace EducationApp.BusinessLogicLayer.Services
@@ -30,57 +32,46 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return false;
             }
             string token = await _userRepository.GenerateEmailConfirmationTokenAsync(excistUser);
-
-
             return true;
         }
-      
-        public async Task<bool> CreateUserAsync(UserItemModel userItemModel  )
+
+        public async Task<BaseModel> CreateUserAsync(UserItemModel userItemModel)
         {
+            var userModel = new UserItemModel();
+            if (string.IsNullOrWhiteSpace(userItemModel.FirstName) || string.IsNullOrWhiteSpace(userItemModel.LastName) || string.IsNullOrWhiteSpace(userItemModel.Email) || string.IsNullOrWhiteSpace(userItemModel.Password))
+            {
+                userModel.Errors.Add(EmptyField);
+                return userModel;
+            }
             var user = UserMapper.Map(userItemModel);
-            var userCreate = await _userRepository.CreateUserAsync(user);
-            if (userCreate)
+            var userCreate = await _userRepository.CreateUserAsync(user, userItemModel.Password);
+            if (!userCreate)
             {
-                _emailSender.SendingEmailAsync(UserEmail, MailSubject, $"Confirm registration by clicking on the link: <a href='{callbackUrl}'>link</a>");
-                return true;
+                userModel.Errors.Add(UserCreate);
+                return userModel;
             }
-            return false;
-        }
-
-        public async Task<ApplicationUser> GetUserAsync(string userName, string password)
-        {
-            return await _userRepository.GetByNameAsync(userName);
-        }
-
-        public async Task<string> GenerateEmailConfirmationTokenAsync(UserItemModel model)
-        {
-            var user = UserMapper.Map(model);
-            return await _userRepository.GenerateEmailConfirmationTokenAsync(user);
+            // _emailSender.SendingEmailAsync(UserEmail, MailSubject, $"Confirm registration by clicking on the link: <a href='{callbackUrl}'>link</a>");
+            return userModel;
         }
 
 
-        public async Task<bool> RestorePasswordAsync(UserItemModel model)
-        {
-            var user = await _userRepository.GetByIdAsync(model.Id);
-            if (user == null)
-            {
-                return false;
-            }
-            var token = await _userRepository.GeneratePasswordResetTokenAsync(user);
-            var result = await _userRepository.ResetPassword(user, token, "Education2019");
-            //_emailSender.SendingEmailAsync(user.Email, "Restore Password", newPassword);
-            return result.Succeeded;
-        }
 
-        public async Task<bool> ConfirmEmailAsync(string email)
+        public async Task<BaseModel> ConfirmEmailAsync(string email)
         {
+            var userModel = new UserItemModel();
             var user = await _userRepository.FindByEmailAsync(email);
             if (user == null)
             {
-                return false;
+                userModel.Errors.Add(NotFound);
+                return userModel;
             }
             string token = await _userRepository.GenerateEmailConfirmationTokenAsync(user);
-            return await _userRepository.ConfirmEmailAsync(user, token);
+            var result = await _userRepository.ConfirmEmailAsync(user, token);
+            if (!result)
+            {
+                userModel.Errors.Add(ConfirmEmail);
+            }
+            return userModel;
         }
 
         public async Task<ApplicationUser> GetByIdAsync(long id)
@@ -100,48 +91,32 @@ namespace EducationApp.BusinessLogicLayer.Services
             return model;
         }
 
-        public async Task<bool> SignInAsync(string email, string password)
+        public async Task<BaseModel> SignIn(string email, string password)
         {
-            var user = await _userRepository.GetByEmailAsync(email);
-            var passwordValid = await _userRepository.ConfirmPasswordAsync(user, password);
-            if (!passwordValid)
+             var usersModel = new UserItemModel();
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
-                return false;
+                usersModel.Errors.Add(EmptyField);
+                return usersModel;
             }
-            var result = await _userRepository.SignInAsync(email, password);
-            return result;
+            var user = await _userRepository.GetByEmailAsync(email);
+            if (user == null)
+            {
+                usersModel.Errors.Add(NotFound);
+                return usersModel;
+            }
+            var checkPassword = await _userRepository.ConfirmPasswordAsync(user, password);
+            if (!checkPassword)
+            {
+                usersModel.Errors.Add(NotValidPassword);
+                return usersModel;
+            }
+            return usersModel;
         }
 
         public async Task SignOutAsync()
         {
             await _userRepository.SignOut();
-        }
-
-
-        public async Task<bool> CheckByPassword(string email, string password)
-        {
-            var result = await _userRepository.SignInAsync(email, password);
-            return result;
-        }
-
-        public async Task<string> GetRoleAsync(ApplicationUser user)
-        {
-            if (ExcistUser(user)) { return null; }
-            var role = await _userRepository.GetRoleAsync(user);
-            return role;
-        }
-
-        public async Task<bool> ConfirmPasswordAsync(ApplicationUser user, string password)
-        {
-            return await _userRepository.ConfirmPasswordAsync(user, password);
-        }
-        public bool ExcistUser(ApplicationUser user)
-        {
-            if (user == null || user.IsRemoved == true)
-            {
-                return true;
-            }
-            return false;
         }
     }
 }

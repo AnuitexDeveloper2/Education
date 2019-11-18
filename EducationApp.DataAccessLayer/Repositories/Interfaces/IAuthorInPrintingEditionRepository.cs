@@ -8,5 +8,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
     {
 
         Task GetAsync(string name);
+        Task<bool> RemoveAuthorInPrintingEditionAsync(long id);
     }
 }

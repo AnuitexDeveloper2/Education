@@ -33,31 +33,28 @@ namespace EducationApp.PresentationLayer.Controllers
         [HttpPost("register")]
         public async Task<ActionResult> Register(UserItemModel userItemModel)
         {
-             await _accountService.CreateUserAsync(userItemModel);
-            return Ok();
+            var result = await _accountService.CreateUserAsync(userItemModel);
+            return Ok(result);
         }
 
         [HttpPost("confirmEmail")]
-        public async Task<ActionResult> ConfirmEmail(UserItemModel model)
+        public async Task<ActionResult> ConfirmEmail(UserItemModel email)
         {
-            var confirmUser = await _accountService.ConfirmEmailAsync(model.Email);
-            if (!confirmUser)
-            {
-                return Content(Error);
-            }
-            return Ok();
+            var confirmUser = await _accountService.ConfirmEmailAsync(email.Email);
+
+            return Ok(confirmUser.Errors);
         }
 
-        [HttpPost("forgotPassword")]
-        public async Task<ActionResult> ForgotPassword(UserItemModel model)
-        {
-            await _accountService.RestorePasswordAsync(model);
-            return Ok();
-        }
+
         [HttpPost("signIn")]
         public async Task<ActionResult> SignIn(UserItemModel model)
         {
+            var errors = await _accountService.SignIn(model.Email, model.Password);
             var user = await _accountService.GetByEmailAsync(model.Email);
+            if (errors.Errors.Count > 0)
+            {
+                return Ok(errors.Errors);
+            }
             if (user == null)
             {
                 return Content(Invalid);
@@ -65,8 +62,7 @@ namespace EducationApp.PresentationLayer.Controllers
             var tokens = _tokenFactory.GenerateTokenModel(user);
             HttpContext.Response.Cookies.Append("RefereshToken", tokens.RefreshToken);
             HttpContext.Response.Cookies.Append("AccessToken", tokens.AccessToken);
-            await _accountService.SignInAsync(model.Email, model.Password);
-            return Ok();
+            return Ok(errors);
         }
         [Authorize]
         [HttpPost("signOut")]

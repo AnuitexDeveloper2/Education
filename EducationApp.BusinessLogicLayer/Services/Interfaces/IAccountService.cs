@@ -1,4 +1,5 @@
-﻿using EducationApp.BusinessLogicLayer.Models.Users;
+﻿using EducationApp.BusinessLogicLayer.Models.Base;
+using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.DataAccessLayer.Entities;
 using System;
 using System.Collections.Generic;
@@ -9,16 +10,11 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
 {
     public interface IAccountService
     {
-        Task<bool> ConfirmEmailAsync(string email);
-        Task<bool> RestorePasswordAsync(UserItemModel model);
-        Task<ApplicationUser> GetUserAsync(string userName, string password);
-        Task<bool> CreateUserAsync(UserItemModel userItemModel);
-        Task<string> GenerateEmailConfirmationTokenAsync(UserItemModel user);
+        Task<BaseModel> ConfirmEmailAsync(string email);
+        Task<BaseModel> CreateUserAsync(UserItemModel userItemModel);
         Task<ApplicationUser> GetByIdAsync(long Id);
         Task<UserItemModel> GetByEmailAsync(string email);
-        Task<bool> SignInAsync(string email, string password);
+        Task<BaseModel> SignIn(string email, string password);
         Task SignOutAsync();
-        Task<string> GetRoleAsync(ApplicationUser user);
-        Task<bool> ConfirmPasswordAsync(ApplicationUser user,string password);
     }
 }

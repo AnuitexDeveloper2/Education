@@ -18,15 +18,12 @@ namespace EducationApp.BusinessLogicLayer.Services
     public interface IUserService
     {
         Task<BaseModel> RemoveUserAsync(long id);
-        Task<bool> ChangePasswordAsync( string oldPassword, string newPassword);
-        Task<bool> ChangeEmailAsync(string email);
         Task<UserItemModel> GetByIdAsync(long Id);
-        Task<ApplicationUser> GetByNameAsync(string name);
-        Task<UserItemModel> GetByEmailAsync(string email);
         Task<BaseModel> BlockUserAsync(long id);
         Task<UserItemModel> GetProfileAsync(long id);
-        Task<BaseModel> EditProfileAsync(UserItemModel model);
-        List<UserItemModel> UserFilterModel(UserFilterModel filter);
+        Task<BaseModel> EditProfileAsync(UserProfileEditModel model);
+        Task <List<UserItemModel>> UserFilterModel(UserFilterModel filter);
+        Task<BaseModel> RestorePasswordAsync(UserItemModel model);
 
 
 

@@ -33,7 +33,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
         public async Task<PrintingEdition> GetId(string title)
         {
-            var printingEdition = _applicationContext.PrintingEditions.Where(k => k.Title == title).FirstOrDefault();
+            var printingEdition =  _applicationContext.PrintingEditions.Where(k => k.Title == title).FirstOrDefault();
             return printingEdition;
         }
 
@@ -57,7 +57,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                                                   }).ToList()
                                    };
 
-            if (printingEditionFilter ==)
+            if (printingEditionFilter.Price == printingEditionFilter.Price )
             {
                 printingEditions.Where(k => k.Title == printingEditionFilter.ToString());
             }

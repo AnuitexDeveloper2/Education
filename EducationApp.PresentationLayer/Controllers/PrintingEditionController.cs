@@ -20,31 +20,31 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpPost("Create")]
-        public async Task<ActionResult> Create(PrintingEditionModelItem printingEditonModelItem)
+        [HttpPost("createPrintingEdition")]
+        public async Task<ActionResult> CreatePrintingEdition(PrintingEditionModelItem printingEditonModelItem)
         {
             await _printingEditionService.CreateAsync(printingEditonModelItem);
             return Ok();
         }
-        [Authorize(Roles = "Admin")]
-        [HttpPost("remove")]
+        //[Authorize(Roles = "Admin")]
+        [HttpPost("removePrintingEdition")]
 
-        public async Task<ActionResult> Remove(PrintingEditionModelItem printingEditonModelItem)
+        public async Task<ActionResult> RemovePrintingEdition(PrintingEditionModelItem printingEditonModelItem)
         {
-            await _printingEditionService.RemoveAsync(printingEditonModelItem);
-            return Ok();
+            var result = await _printingEditionService.RemoveAsync(printingEditonModelItem.Id);
+            return Ok(result);
         }
         [Authorize(Roles = "Admin")]
-        [HttpPost("update")]
+        [HttpPost("updatePrintingEdition")]
 
-        public async Task<ActionResult> Update(PrintingEditionModelItem printingEditionModelItem)
+        public async Task<ActionResult> UpdatePrintingEdition(PrintingEditionModelItem printingEditionModelItem)
         {
             await _printingEditionService.UpdateAsync(printingEditionModelItem);
             return Ok();
         }
 
-        [HttpGet("Filter")]
-        public async Task<List<PrintingEditionModelItem>> Filter(PrintingEditionFilterState printingEditionFilterState)
+        [HttpGet("filterPrintingEditon")]
+        public async Task<List<PrintingEditionModelItem>> FilterPrintingEdition(PrintingEditionFilterState printingEditionFilterState)
         {
             var printingEdition = await _printingEditionService.GetPrintingEditionAsync(printingEditionFilterState);
             return printingEdition;

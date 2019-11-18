@@ -3,9 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using EducationApp.BusinessLogicLayer.Extention.User;
 using EducationApp.BusinessLogicLayer.Helpers.Mapping;
+using EducationApp.BusinessLogicLayer.Helpers.Mapping.User;
 using EducationApp.BusinessLogicLayer.Models.Base;
 using EducationApp.BusinessLogicLayer.Models.Users;
-using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
 
@@ -19,71 +19,67 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             _userRepository = userRepository;
         }
-        public async Task<BaseModel> ChangeEmail(string newEmail) //todo use one param email
+
+        public async Task<BaseModel> EditProfileAsync(UserProfileEditModel model)
         {
-            var returnModel = new UserItemModel();
-            var user = await _userRepository.GetByEmailAsync(newEmail);
+            var userModel = new UserItemModel();
+            if (string.IsNullOrWhiteSpace(model.FirstName)||string.IsNullOrWhiteSpace(model.LastName) || string.IsNullOrWhiteSpace(model.Email)||string.IsNullOrWhiteSpace(model.Password))
+            {
+                userModel.Errors.Add(EmptyField);
+                return userModel;
+            }
+            var user = await _userRepository.GetByIdAsync(model.Id); //todo check for null, rename method to async
             if (user == null)
             {
-                returnModel.Errors.Add(NotFound);
-                return returnModel;
+                userModel.Errors.Add(NotFound);
+                return userModel;
             }
-            //todo get user from DB by id or email and check for null
-            var token = await _userRepository.GenerateChangeEmailTokenAsync(user, newEmail);
-            if (token == null)
+            var tokenEmail = await _userRepository.GenerateChangeEmailTokenAsync(user, model.Email);
+            if (tokenEmail == null)
             {
-                returnModel.Errors.Add(NotFound);
-                return returnModel;
+                userModel.Errors.Add(Token);
+                return userModel;
             }
-            //todo check token for null
-            var result = await _userRepository.ChangeEmailAsync(newEmail, token);
+            var resultChangeEmail = await _userRepository.ChangeEmailAsync(user,model.Email, tokenEmail);
+            if (!resultChangeEmail)
+            {
+                userModel.Errors.Add(ChangeEmailFailure);
+                return userModel;
+            }
+            var tokenPassword = await _userRepository.GeneratePasswordResetTokenAsync(user);
+            if (tokenPassword == null)
+            {
+                userModel.Errors.Add(Token);
+                return userModel;
+            }
+            var changePassword = await _userRepository.ResetPasswordAsync(user, tokenPassword, model.Password);
+            user = UserMapper.Map(model,user); //todo rename UserMapper, add method for update UserEntity from UserModel
+            if (!changePassword)
+            {
+                userModel.Errors.Add(ChangePasswordFailure);
+                return userModel;
+            }
+            var result = await _userRepository.EditAsync(user);
             if (!result)
             {
-                returnModel.Errors.Add(Token);
+                userModel.Errors.Add(EditUserFailure);
+                return userModel;
             }
-            return returnModel;
-        }
+            return userModel; //todo return BaseModel
 
-
-        public async Task<BaseModel> EditProfileAsync(UserItemModel model)
-        {
-            var user = await _userRepository.GetByEmailAsync(model.Email); //todo check for null, rename method to async
-            model = UserMapper.Map(user);
-            user = UserMapper.Map(model); //todo rename UserMapper, add method for update UserEntity from UserModel
-            var result = await _userRepository.EditAsync(user);
-            return result; //todo return BaseModel
-
-        }
-
-        public async Task<UserItemModel> GetByEmailAsync(string email)
-        {
-            var user = await _userRepository.GetByEmailAsync(email);
-            if (user == null)
-            {
-                return null;
-            }
-            var model = UserMapper.Map(user);
-            return model;
         }
 
         public async Task<UserItemModel> GetByIdAsync(long id)
         {
-            var resultModel = new UserItemModel();
+            var userModel = new UserItemModel();
             var user = await _userRepository.GetByIdAsync(id);
             if (user == null)
             {
-                resultModel.Errors.Add(NotFound);
-                return resultModel; //todo return BaseModel with errors (UserNotFound)
+                userModel.Errors.Add(NotFound);
+                return userModel; //todo return BaseModel with errors (UserNotFound)
             }
             var model = UserMapper.Map(user);
             return model;
-        }
-
-        public async Task<ApplicationUser> GetByNameAsync(string name)
-        {
-            var user = await _userRepository.GetByNameAsync(name);
-           
-            return null;
         }
 
         public async Task<BaseModel> RemoveUserAsync(long id) //todo rename RemoveUserAsync, param = id or email
@@ -108,38 +104,67 @@ namespace EducationApp.BusinessLogicLayer.Services
 
         public async Task<BaseModel> BlockUserAsync(long id)
         {
-            var result = new UserItemModel();
+            var userModel = new UserItemModel();
             var user = await _userRepository.GetByIdAsync(id);
             if (user == null)
             {
                 //todo return baseModel with errors
-                result.Errors.Add(NotFound);
+                userModel.Errors.Add(NotFound);
+                return userModel;
             }
-            user.LockoutEnabled = !user.LockoutEnabled;
-            return result; //todo return BaseModel
+            var result = await _userRepository.BlockUserAsync(user);
+            if (!result)
+            {
+                userModel.Errors.Add(Blok);
+            }
+            return userModel; //todo return BaseModel
         }
-
 
 
         public async Task<UserItemModel> GetProfileAsync(long id) //todo rename GetProfileAsync
         {
-            var resultModel = new UserItemModel();
+            var usermodel = new UserItemModel();
             var user = await _userRepository.GetByIdAsync(id);//todo check for null
             if (user == null)
             {
-               resultModel.Errors.Add("User Not Found");
-                return resultModel;
+                usermodel.Errors.Add(NotFound);
+                return usermodel;
             }
             var userItemModel = UserMapper.Map(user);
             return userItemModel; 
         }
 
-
-        public List<UserItemModel> UserFilterModel(UserFilterModel filter) //todo rename model to UserFilterModel
+        public async Task<BaseModel> RestorePasswordAsync(UserItemModel model)
         {
-            var filterUsers = _userRepository.FilterUsers(UserMapper.Map(filter));
+            var userModel = new UserItemModel();
+            var user = await _userRepository.GetByIdAsync(model.Id);
+            if (user == null)
+            {
+                userModel.Errors.Add(NotFound);
+                return userModel;
+            }
+            var token = await _userRepository.GeneratePasswordResetTokenAsync(user);
+            if (token == null)
+            {
+                userModel.Errors.Add(Token);
+                return userModel;
+            }
+            var result = await _userRepository.ResetPasswordAsync(user, token, GeneratePassword.CreateRandomPassword(8));
+            if (!result)
+            {
+                userModel.Errors.Add(Token);
+                return userModel;
+            }
+            //_emailSender.SendingEmailAsync(user.Email, "Restore Password", newPassword);
+            return userModel;
+        }
+
+
+        public async Task <List<UserItemModel>> UserFilterModel(UserFilterModel filter) //todo rename model to UserFilterModel
+        {
+            var filterUsers = await _userRepository.FilterUsers(UserMapper.Map(filter));
             List<UserItemModel> model = new List<UserItemModel>();
-            for (int i = 0; i < filterUsers.Count(); i++)
+            for (int i = 0; i < filterUsers.Count; i++)
             {
                 model.Add(UserMapper.Map(filterUsers[i]));
             }

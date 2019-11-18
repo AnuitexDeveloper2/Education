@@ -2,7 +2,6 @@
 using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Helpers;
-using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 
 namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
 {
@@ -48,9 +47,21 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
             var userFilter = new UsersFilter
             {
                 UsersSortType = (DataAccessLayer.Entities.Enums.Enums.UsersSortType)filterUser.UserSortType,
-                UsersFilterType = (DataAccessLayer.Entities.Enums.Enums.UsersFilterType)filterUser.UsersFilterStatus
+                UsersFilterType = (DataAccessLayer.Entities.Enums.Enums.UsersFilterType)filterUser.UsersFilterStatus,
+                PageCount = filterUser.PageCount,
+                PageSize = filterUser.PageSize,
+                SearchString = filterUser.SearchString
+                
             };
             return userFilter;
+        }
+
+        public static ApplicationUser Map(UserProfileEditModel editUserModel,ApplicationUser user)
+        {
+            user.FirstName = editUserModel.FirstName;
+            user.LastName = editUserModel.LastName;
+            user.UserName = user.FirstName;
+            return user;
         }
     }
 }

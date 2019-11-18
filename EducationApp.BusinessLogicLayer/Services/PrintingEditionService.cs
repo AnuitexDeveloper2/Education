@@ -2,7 +2,7 @@
 using EducationApp.BusinessLogicLayer.Helpers.Mapping;
 using EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors;
 using EducationApp.BusinessLogicLayer.Helpers.Mapping.PrintingEditions;
-using EducationApp.BusinessLogicLayer.Models.Authors;
+using EducationApp.BusinessLogicLayer.Models.Base;
 using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Entities;
@@ -10,6 +10,7 @@ using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
 
 namespace EducationApp.BusinessLogicLayer.Services
 {
@@ -26,8 +27,9 @@ namespace EducationApp.BusinessLogicLayer.Services
             _authorRepository = authorRepository;
         }
 
-        public async Task<bool> CreateAsync(PrintingEditionModelItem model)
+        public async Task<BaseModel> CreateAsync(PrintingEditionModelItem model)
         {
+            var printingEditionModel = new BaseModel();
             var printingEdition = PrintingEditionMaping.Map(model);
             List<Author> authors = new List<Author>();
             foreach (var item in model.Authors)
@@ -42,26 +44,40 @@ namespace EducationApp.BusinessLogicLayer.Services
                 authors.Add(excistAuthor);
             }
             var result = await _printingEditionRepository.CreateAsync(printingEdition);
+            if (!result)
+            {
+                printingEditionModel.Errors.Add(Create);
+                return printingEditionModel;
+            }
 
             foreach (var item in authors)
             {
                 var authorPrintingEdition = new AuthorInPrintingEdition { AuthorId = item.Id, PrintingEditionId = printingEdition.Id };
                 await _authorInPrintingEdition.CreateAsync(authorPrintingEdition);
             }
-            await _authorInPrintingEdition.GetAsync(printingEdition.Title);
-            return result;
+           
+            return printingEditionModel;
         }
 
-        public async Task<bool> RemoveAsync(PrintingEditionModelItem model)
+        public async Task<BaseModel> RemoveAsync(long id)
         {
-            var printingEdition = PrintingEditionMaping.Map(model);
-            var excist = await _printingEditionRepository.FindByIdAsync(printingEdition.Id);
+            var printingEditionModel = new BaseModel();
+            //var printingEdition = PrintingEditionMaping.Map(model);
+            var excist = await _printingEditionRepository.FindByIdAsync(id);
             if (excist == null)
             {
-                return false;
+                printingEditionModel.Errors.Add(PINotFound);
+                return printingEditionModel;
             }
+
             var result = await _printingEditionRepository.RemoveAsync(excist);
-            return result;
+            if (!result)
+            {
+                printingEditionModel.Errors.Add(PIRemove);
+            }
+            await _authorInPrintingEdition.RemoveAuthorInPrintingEditionAsync(id);
+
+            return printingEditionModel;
         }
 
         public async Task<bool> UpdateAsync(PrintingEditionModelItem model)
