@@ -21,13 +21,11 @@ namespace EducationApp.PresentationLayer.Controllers
     {
         private readonly ITokenFactory _tokenFactory;
         private readonly IAccountService _accountService;
-        private readonly TokenValidationParameters _tokenValidationParameters;
 
-        public AccountController(ITokenFactory tokenFactory, IAccountService accountService, TokenValidationParameters tokenValidationParameters)
+        public AccountController(ITokenFactory tokenFactory, IAccountService accountService)
         {
             _tokenFactory = tokenFactory;
             _accountService = accountService;
-            _tokenValidationParameters = tokenValidationParameters;
         }
 
         [HttpPost("register")]

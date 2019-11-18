@@ -8,10 +8,8 @@ namespace EducationApp.DataAccessLayer.Entities.Enums
     {
         public enum UsersSortType
         {
-            NameAsc = 0,
-            NameDesc = 1,
-            EmailAsc = 2,
-            EmailDesc = 3,
+           Email = 0,
+           Name = 1
            
         }
     }

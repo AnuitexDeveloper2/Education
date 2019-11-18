@@ -4,10 +4,8 @@
     {
         public enum UserSortType
         {
-            NameAsc = 0,
-            NameDesc = 1,
-            EmailAsc = 2,
-            EmailDesc = 3,
+           Email = 0,
+           Name = 1
         }
     }
 }

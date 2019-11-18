@@ -64,7 +64,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
                 return false;
             }
             _applicationContext.Attach(entity).State = EntityState.Modified;
-            var entry = _applicationContext.Entry(entity);
             var result = await _applicationContext.SaveChangesAsync();
             if (result > 0)
             {

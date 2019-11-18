@@ -17,11 +17,9 @@ namespace EducationApp.BusinessLogicLayer.Services
     public class AccountService : IAccountService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IEmailSender _emailSender;
         public AccountService(IUserRepository userRepository, IEmailSender emailSender)
         {
             _userRepository = userRepository;
-            _emailSender = emailSender;
         }
 
         public async Task<bool> ConfirmAccountAsync(string email)
@@ -32,12 +30,16 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return false;
             }
             string token = await _userRepository.GenerateEmailConfirmationTokenAsync(excistUser);
+            if (token == null)
+            {
+                return false;
+            }
             return true;
         }
 
         public async Task<BaseModel> CreateUserAsync(UserItemModel userItemModel)
         {
-            var userModel = new UserItemModel();
+            var userModel = new BaseModel();
             if (string.IsNullOrWhiteSpace(userItemModel.FirstName) || string.IsNullOrWhiteSpace(userItemModel.LastName) || string.IsNullOrWhiteSpace(userItemModel.Email) || string.IsNullOrWhiteSpace(userItemModel.Password))
             {
                 userModel.Errors.Add(EmptyField);
@@ -58,7 +60,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
         public async Task<BaseModel> ConfirmEmailAsync(string email)
         {
-            var userModel = new UserItemModel();
+            var userModel = new BaseModel();
             var user = await _userRepository.FindByEmailAsync(email);
             if (user == null)
             {
@@ -93,7 +95,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
         public async Task<BaseModel> SignIn(string email, string password)
         {
-             var usersModel = new UserItemModel();
+             var usersModel = new BaseModel();
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
                 usersModel.Errors.Add(EmptyField);

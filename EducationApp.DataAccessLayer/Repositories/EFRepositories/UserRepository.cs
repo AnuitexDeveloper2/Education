@@ -3,6 +3,7 @@ using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Helpers;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 
 namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository<T> : IUserRepository
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -172,44 +173,40 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             return true;
         }
 
-        public async Task <List<ApplicationUser>> FilterUsers(UsersFilter usersFilter)
+        public async Task<List<ApplicationUser>> FilterUsers(UsersFilter usersFilter)
         {
-            var users = _applicationContext.Users.AsQueryable();
-            if (usersFilter.UsersSortType == UsersSortType.EmailAsc)
+            var users = _applicationContext.Users.Where(k => k.IsRemoved== false).AsQueryable();
+            if (!string.IsNullOrWhiteSpace(usersFilter.SearchString))
             {
-               users = users.Where(l => !l.IsRemoved).OrderBy(k => k.Email);
+                users = users.Where(k => k.UserName.Equals(usersFilter.SearchString));
             }
-            if (usersFilter.UsersSortType == UsersSortType.EmailDesc)
+
+            if (usersFilter.UsersSortType == UsersSortType.Email)
             {
-               users = users.Where(l => !l.IsRemoved).OrderByDescending(k => k.Email);
+                users = usersFilter.SortType == SortType.Increase ? users.OrderBy(k => k.Email) : users.OrderByDescending(k => k.Email);
             }
-            if (usersFilter.UsersSortType == UsersSortType.NameAsc)
+            if (usersFilter.UsersSortType == UsersSortType.Name)
             {
-                users = users.Where(l => !l.IsRemoved).OrderBy(k => k.UserName);
+                users = usersFilter.SortType == SortType.Increase ? users.OrderBy(k => k.UserName) : users.OrderByDescending(k => k.UserName);
             }
-            if (usersFilter.UsersSortType == UsersSortType.NameDesc)
+           
+            if (usersFilter.UsersFilterType == usersFilter.UsersFilterType)
             {
-                users = users.Where(l => !l.IsRemoved).OrderByDescending(k => k.UserName);
-            }
-            if (usersFilter.UsersFilterType == UsersFilterType.Active)
-            {
-                users = users.Where(k => !k.IsRemoved);
+                users = users.Where(k => k.LockoutEnabled == false);
             }
             if (usersFilter.UsersFilterType == UsersFilterType.Blocked)
             {
-               users = users.Where(k => k.LockoutEnabled == false);
+                users = users.Where(k => k.LockoutEnabled == true);
             }
-           
-           
-            users =  users.Skip((usersFilter.PageCount - 1) * usersFilter.PageSize).Take(usersFilter.PageSize);
+
+            users = users.Skip((usersFilter.PageCount - 1) * usersFilter.PageSize).Take(usersFilter.PageSize);
             //todo add skip and take, and then ToListAsync()
             //todo read about IEnumerable and IQueryable
 
-            return users.ToList();
-
+            return await users.ToListAsync();
         }
 
-
+      
     }
 }
 

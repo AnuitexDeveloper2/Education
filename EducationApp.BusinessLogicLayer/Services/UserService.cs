@@ -22,7 +22,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
         public async Task<BaseModel> EditProfileAsync(UserProfileEditModel model)
         {
-            var userModel = new UserItemModel();
+            var userModel = new BaseModel();
             if (string.IsNullOrWhiteSpace(model.FirstName)||string.IsNullOrWhiteSpace(model.LastName) || string.IsNullOrWhiteSpace(model.Email)||string.IsNullOrWhiteSpace(model.Password))
             {
                 userModel.Errors.Add(EmptyField);
@@ -69,9 +69,9 @@ namespace EducationApp.BusinessLogicLayer.Services
 
         }
 
-        public async Task<UserItemModel> GetByIdAsync(long id)
+        public async Task<BaseModel> GetByIdAsync(long id)
         {
-            var userModel = new UserItemModel();
+            var userModel = new BaseModel();
             var user = await _userRepository.GetByIdAsync(id);
             if (user == null)
             {
@@ -104,7 +104,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
         public async Task<BaseModel> BlockUserAsync(long id)
         {
-            var userModel = new UserItemModel();
+            var userModel = new BaseModel();
             var user = await _userRepository.GetByIdAsync(id);
             if (user == null)
             {
@@ -121,9 +121,9 @@ namespace EducationApp.BusinessLogicLayer.Services
         }
 
 
-        public async Task<UserItemModel> GetProfileAsync(long id) //todo rename GetProfileAsync
+        public async Task<BaseModel> GetProfileAsync(long id) //todo rename GetProfileAsync
         {
-            var usermodel = new UserItemModel();
+            var usermodel = new BaseModel();
             var user = await _userRepository.GetByIdAsync(id);//todo check for null
             if (user == null)
             {
@@ -136,7 +136,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
         public async Task<BaseModel> RestorePasswordAsync(UserItemModel model)
         {
-            var userModel = new UserItemModel();
+            var userModel = new BaseModel();
             var user = await _userRepository.GetByIdAsync(model.Id);
             if (user == null)
             {
