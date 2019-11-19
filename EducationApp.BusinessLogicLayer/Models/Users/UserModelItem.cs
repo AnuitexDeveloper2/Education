@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EducationApp.BusinessLogicLayer.Models.Users
 {
-    public class UserItemModel : BaseModel
+    public class UserModelItem : BaseModel //todo rename to UserModelItem
     {
         public string UserName { get; set; }
         public string FirstName { get; set; }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EducationApp.BusinessLogicLayer.Models.Authors;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
+using EducationApp.DataAccessLayer.Helpers.Author;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,39 +22,31 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<ActionResult> Create(AuthorsModelItem model)
+        public async Task<ActionResult> Create(AuthorModelItem model)
         {
-            await _authorService.CreateAsync(model);
-            return Ok();
+            var result = await _authorService.CreateAsync(model);
+            return Ok(result);
         }
 
         [HttpPost("remove")]
-
-        public async Task<ActionResult> Remove(AuthorsModelItem model)
+        public async Task<ActionResult> Remove(AuthorModelItem model)
         {
-            await _authorService.RemoveAsync(model);
-            return Ok();
+            var result =  await _authorService.RemoveAsync(model);
+            return Ok(result);
         }
 
         [HttpPost("update")]
-        public async Task<ActionResult> Update(AuthorsModelItem model)
+        public async Task<ActionResult> Update(AuthorModelItem model)
         {
-            await _authorService.UpdateAsync(model);
-            return Ok();
+            var result = await _authorService.UpdateAsync(model);
+            return Ok(result);
         }
 
-        [HttpGet("getById")]
-        public async Task<AuthorsModelItem> GetbyId(long id)
+        [HttpGet("getAutors")]
+        public async Task<ActionResult>  GetAuthors(AuthorFilterModel authorFilterModel)
         {
-            var author = await _authorService.GetByIdAsync(id);
-            return author;
+            var authors = await _authorService.GetAuthors(authorFilterModel);
+            return Ok(authors);
         }
-
-        //[HttpGet("GetAutors")]
-
-        //public async Task<List<AuthorsModelItem>> GetAuthors()
-        //{
-
-        //}
     }
 }

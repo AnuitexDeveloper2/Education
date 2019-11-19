@@ -1,5 +1,7 @@
 ﻿using BookStore.DataAccess.AppContext;
 using EducationApp.DataAccessLayer.Entities;
+using EducationApp.DataAccessLayer.Helpers.Author;
+using EducationApp.DataAccessLayer.Models;
 using EducationApp.DataAccessLayer.Ropositories.Base;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -17,11 +19,29 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         public AuthorRepository(ApplicationContext applicationContext) : base(applicationContext)
         {
         }
-        public  Author GetAuthorByName(Author author)
+        public List<AuthorModelItem> GetAuthors(AuthorFilterModel authorFilterModel)
         {
-            var authors =  _applicationContext.Authors.Where(k => k.Name == author.Name).FirstOrDefault();
-           
-            return authors;
+            var author = from authors in _applicationContext.Authors
+                         select new AuthorModelItem
+                         {
+                             Id = authors.Id,
+                             Name = authors.Name,
+                             printingEditions = (from authorPrintingEdition in _applicationContext.AuthorInPrintingEditions
+                                                 join printingEdition in _applicationContext.PrintingEditions on authorPrintingEdition.AuthorId equals authors.Id
+                                                 where (authorPrintingEdition.PrintingEditionId == printingEdition.Id)
+                                                 select new PrintingEdition
+                                                 {
+                                                     Title = printingEdition.Title
+                                                 }).ToList()
+
+
+
+                         };
+
+            //author = author.Skip((authorFilterModel.PageCount - 1) * authorFilterModel.PageSize).Take(authorFilterModel.PageSize);
+            return author.ToList();
+
         }
+
     }
 }

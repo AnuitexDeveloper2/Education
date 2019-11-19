@@ -26,36 +26,32 @@ namespace EducationApp.PresentationLayer.Controllers
             await _printingEditionService.CreateAsync(printingEditonModelItem);
             return Ok();
         }
-        //[Authorize(Roles = "Admin")]
-        [HttpPost("removePrintingEdition")]
 
-        public async Task<ActionResult> RemovePrintingEdition(PrintingEditionModelItem printingEditonModelItem)
+        [Authorize(Roles = "Admin")]
+        [HttpPost("removePrintingEdition")]
+        public async Task<ActionResult> RemovePrintingEdition(long id)
         {
-            var result = await _printingEditionService.RemoveAsync(printingEditonModelItem.Id);
+            var result = await _printingEditionService.RemoveAsync(id);
             return Ok(result);
         }
-        [Authorize(Roles = "Admin")]
-        [HttpPost("updatePrintingEdition")]
 
+        //[Authorize(Roles = "Admin")]
+        [HttpPost("updatePrintingEdition")]
         public async Task<ActionResult> UpdatePrintingEdition(PrintingEditionModelItem printingEditionModelItem)
         {
             await _printingEditionService.UpdateAsync(printingEditionModelItem);
             return Ok();
         }
 
-        [HttpGet("filterPrintingEditon")]
-        public async Task<List<PrintingEditionModelItem>> FilterPrintingEdition(PrintingEditionFilterState printingEditionFilterState)
+        [HttpGet("getPrintingEditon")]
+        public async Task<ActionResult> GetPrintingEdition(PrintingEditionFilterState printingEditionFilterState)
         {
             var printingEdition = await _printingEditionService.GetPrintingEditionAsync(printingEditionFilterState);
-            return printingEdition;
+            return Ok(printingEdition);
         }
 
 
-        [HttpGet("buy")]
-        public async Task<ActionResult> Buy()
-        {
-            return Ok();
-        }
+
 
 
     }

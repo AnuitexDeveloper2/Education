@@ -13,8 +13,8 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
     {
         Task<BaseModel> CreateAsync(PrintingEditionModelItem model);
         Task<BaseModel> RemoveAsync(long id);
-        Task<bool> UpdateAsync(PrintingEditionModelItem model);
-        Task< List<PrintingEditionModelItem>> GetPrintingEditionAsync(PrintingEditionFilterState state);
-        IQueryable<PrintingEditionModelItem> FilterProductsByName(PrintingEditionModelItem model, string text);
+        Task<BaseModel> UpdateAsync(PrintingEditionModelItem printingEditionModelItem);
+        Task<PrintingEditionModel> GetPrintingEditionAsync(PrintingEditionFilterState state);
+      
     }
 }

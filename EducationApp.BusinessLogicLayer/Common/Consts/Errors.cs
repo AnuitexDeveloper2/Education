@@ -18,6 +18,12 @@
             public const string Create = "Create PrintingEdition is failed";
             public const string PINotFound = "PrintingEdition Not Found";
             public const string PIRemove = "PrintingEdition Remove is failed";
+            public const string PIUpdate = "PrintingEdition Update is failed";
+            public const string APICreate = "API Create is failed";
+            public const string AuthorCreate = "Author Create is failed";
+            public const string AuthorUpdate = "Author Update is failed";
+            public const string AuthorNotFound = "Author NOT Found";
+            public const string AuthorRemove = "Author Remove is failed";
         }
 
     }

@@ -21,47 +21,47 @@ namespace EducationApp.PresentationLayer.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost("blockUser")]
-        public async Task<IActionResult> BlockUser(long id) //todo get UserId from client
+        public async Task<IActionResult> BlockUser(long id)
         {
            var result = await _userService.BlockUserAsync(id);
-            return Ok(result.Errors); //todo return result with errorsCollection
+            return Ok(result);
         }
 
         [HttpGet("getProfile")]
-        public async Task<IActionResult> GetProfile(long id) //todo rename, param = id or email
+        public async Task<UserModelItem> GetProfile(long id)
         {
-            var profile = await _userService.GetProfileAsync(id); //rename
-            return Ok(profile);
+            var profile = await _userService.GetProfileAsync(id);
+            return profile;
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpPost("removeUser")] //todo equal names for url and method
+        [HttpPost("removeUser")]
         public async Task<ActionResult> RemoveUser(long id)
         {
-            var user = await _userService.RemoveUserAsync(id);
-            return Ok(user);
+            var result = await _userService.RemoveUserAsync(id);
+            return Ok(result);
         }
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         [HttpPost("EditProfile")]
         public async Task<ActionResult> EditProfile(UserProfileEditModel model)
         {
-            var result = await _userService.EditProfileAsync(model);
-           
-            return Ok(result.Errors);
+            var result = await _userService.EditProfileAsync(model);       
+            return Ok(result);
         }
 
 
         [HttpPost("forgotPassword")]
-        public async Task<ActionResult> ForgotPassword(UserItemModel model)
+        public async Task<ActionResult> ForgotPassword(UserModelItem model)
         {
-            await _userService.RestorePasswordAsync(model);
-            return Ok();
+            var result = await _userService.RestorePasswordAsync(model);
+            return Ok(result);
         }
 
-        [HttpGet("filter")]
-        public async Task<IEnumerable<UserItemModel>> FilterUser(UserFilterModel filterUser)
+        [HttpGet("GetUser")]
+        public async Task<UserModel> GetUser(UserFilterModel filterUser) //todo return UserModel
         {
-            return await _userService.UserFilterModel(filterUser);
+            var users = await _userService.GetUsersAsync(filterUser);
+            return users;
         }
 
 

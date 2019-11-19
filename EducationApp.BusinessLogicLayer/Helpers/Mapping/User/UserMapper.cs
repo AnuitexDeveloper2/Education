@@ -7,7 +7,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
 {
     public static class UserMapper
     {
-        public static ApplicationUser Map(this UserItemModel model)
+        public static ApplicationUser Map(this UserModelItem model)
         {
             ApplicationUser user = new ApplicationUser
             {
@@ -25,9 +25,9 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
             return user;
         }
 
-        public static UserItemModel Map(this ApplicationUser user)
+        public static UserModelItem Map(this ApplicationUser user)
         {
-            UserItemModel userItemModel = new UserItemModel
+            UserModelItem userItemModel = new UserModelItem
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -42,9 +42,9 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
             };
             return userItemModel;
         }
-        public static UsersFilter Map(this UserFilterModel filterUser)
+        public static UsersFilterModel Map(this UserFilterModel filterUser)
         {
-            var userFilter = new UsersFilter
+            var userFilter = new UsersFilterModel
             {
                 UsersSortType = (DataAccessLayer.Entities.Enums.Enums.UsersSortType)filterUser.UserSortType,
                 UsersFilterType = (DataAccessLayer.Entities.Enums.Enums.UsersFilterType)filterUser.UsersFilterStatus,
@@ -60,7 +60,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
         {
             user.FirstName = editUserModel.FirstName;
             user.LastName = editUserModel.LastName;
-            user.UserName = user.FirstName;
+            user.UserName = user.UserName;
             return user;
         }
     }

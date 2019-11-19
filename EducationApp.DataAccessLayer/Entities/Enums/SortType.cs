@@ -5,7 +5,8 @@
         public enum SortType
         {
             Increase = 0,
-            Decrease = 1
+            Decrease = 1, //todo add none
+            None = 2
         }
     }
 }

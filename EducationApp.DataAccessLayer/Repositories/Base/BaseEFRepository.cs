@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BookStore.DataAccess.AppContext;
-using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Entities.Base;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -23,21 +21,22 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
             _dbSet = _applicationContext.Set<TEntity>();
         }
 
-        public async Task<bool> CreateAsync(TEntity entity)
+        public async Task<long> CreateAsync(TEntity entity)
         {
             if (entity == null)
             {
-                return false;
+                return 0;
             }
-            await _applicationContext.AddAsync(entity);
-            var save = await _applicationContext.SaveChangesAsync();
-            if (save > 0)
-            {
-                return true;
-            }
-            return false;
-        }
+            var resultId = await _applicationContext.AddAsync(entity);
 
+            var save = await _applicationContext.SaveChangesAsync();
+            if (save < 1)
+            {
+                return 0;
+            }
+
+            return resultId.Entity.Id;
+        }
 
         public async Task<bool> RemoveAsync(TEntity entity)
         {
@@ -58,7 +57,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
 
         public async Task<bool> UpdateAsync(TEntity entity)
         {
-            
+
             if (entity.Id == 0)
             {
                 return false;
@@ -84,12 +83,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
         }
 
 
-        public IQueryable<TEntity> Get()
-        {
-            var deleted = _dbSet.Where(k =>k.IsRemoved == true);
-            return deleted;
-        }
-
         public IQueryable<TEntity> FilterContainsText<TEntity>(IQueryable<TEntity> entities, Expression<Func<TEntity, string>> getProperty, string text)
         {
             return entities.Where(Expression.Lambda<Func<TEntity, bool>>
@@ -102,7 +95,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
                     Expression.Constant(text)
                 ),
                 parameters: getProperty.Parameters.FirstOrDefault()
-            )) ;
+            ));
         }
 
     }

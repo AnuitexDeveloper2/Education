@@ -17,7 +17,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
                 Title = model.Title,
                 Desccription = model.Desccription,
                 Price = model.Price,
-                ProductType = (DataAccessLayer.Entities.Enums.Enums.TypeProduct)model.TypeProduct,
+                ProductType = (TypeProduct)model.TypeProduct,
                 
             };
             return printingEdition;
@@ -33,9 +33,18 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
                 Title = printingEditions.Title,
                 Desccription = printingEditions.Desccription,
                 Price = printingEditions.Price,
-                TypeProduct = (EducationApp.BusinessLogicLayer.Models.Enums.Enums.TypeProduct)printingEditions.ProductType
+                TypeProduct = (Models.Enums.Enums.TypeProduct)printingEditions.ProductType
                 
             };
+            return printingEdition;
+        }
+
+        public static PrintingEdition Map(this PrintingEdition printingEdition,PrintingEditionModelItem printingEditionModelItem)
+        {
+            printingEdition.Title = printingEditionModelItem.Title;
+            printingEdition.Desccription = printingEditionModelItem.Desccription;
+            printingEdition.Price = printingEditionModelItem.Price;
+            printingEdition.ProductType = (TypeProduct)printingEditionModelItem.TypeProduct;
             return printingEdition;
         }
 

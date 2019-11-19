@@ -19,6 +19,6 @@ namespace EducationApp.PresentationLayer.Helpers
         public bool InValided { get; set; }
         public long UserId { get; set; }
         [ForeignKey(nameof(UserId))]
-        public UserItemModel UserItemModel { get; set; }
+        public UserModelItem UserItemModel { get; set; }
     }
 }

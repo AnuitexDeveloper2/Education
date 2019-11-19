@@ -8,7 +8,7 @@ namespace EducationApp.DataAccessLayer.Entities.Enums
     {
         public enum UsersFilterType
         {
-            AllUsers = 0,
+            All = 0, //todo All
             Active = 1,
             Blocked = 2
         }

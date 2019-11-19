@@ -1,28 +1,25 @@
 ﻿using EducationApp.BusinessLogicLayer.Models.Authors;
 using EducationApp.DataAccessLayer.Entities;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors
 {
     public static class AuthorsMapping
     {
 
-        public static Author Map(this AuthorsModelItem authorModelItem)
+        public static Author Map(this AuthorModelItem authorModelItem)
         {
             var author = new Author
             {
                 Name = authorModelItem.Name,
                 Id = authorModelItem.Id,
-                IsRemoved = authorModelItem.IsRemoved
             };
             return author;
         }
 
-        public static AuthorsModelItem Map(this Author author)
+        public static AuthorModelItem Map(this Author author)
         {
-            var authorModelItem = new AuthorsModelItem
+            var authorModelItem = new AuthorModelItem
             {
                 Name = author.Name,
                 Id = author.Id,
@@ -31,14 +28,29 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors
             return authorModelItem;
         }
 
-        public static List<AuthorsModelItem> Map(this List<Author> authors)
+        public static AuthorModel Map(this List<Author> authors)
         {
-            List<AuthorsModelItem> authorsModel = new List<AuthorsModelItem>();
+            AuthorModel authorsModel = new AuthorModel();
             foreach (var item in authors)
             {
-                authorsModel.Add(Map(item));
+                authorsModel.Items.Add(Map(item));
             }
             return authorsModel;
+        }
+
+        public static AuthorModelItem Map(this DataAccessLayer.Models.AuthorModelItem authorModelItem)
+        {
+            var author = new AuthorModelItem
+            {
+                Name = authorModelItem.Name,
+                Id = authorModelItem.Id,
+            };
+            author.PrintingEditions = new Models.PrintingEditions.PrintingEditionModel();
+            for (int i = 0; i < authorModelItem.printingEditions.Count; i++)
+            {
+                author.PrintingEditions.Items.Add(PrintingEditionMaping.Map(authorModelItem.printingEditions[i]));
+            }
+            return author;
         }
     }
 }

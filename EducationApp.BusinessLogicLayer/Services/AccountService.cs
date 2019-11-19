@@ -37,7 +37,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             return true;
         }
 
-        public async Task<BaseModel> CreateUserAsync(UserItemModel userItemModel)
+        public async Task<BaseModel> CreateUserAsync(UserModelItem userItemModel)
         {
             var userModel = new BaseModel();
             if (string.IsNullOrWhiteSpace(userItemModel.FirstName) || string.IsNullOrWhiteSpace(userItemModel.LastName) || string.IsNullOrWhiteSpace(userItemModel.Email) || string.IsNullOrWhiteSpace(userItemModel.Password))
@@ -81,7 +81,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             return await _userRepository.GetByIdAsync(id);
         }
 
-        public async Task<UserItemModel> GetByEmailAsync(string email)
+        public async Task<UserModelItem> GetByEmailAsync(string email)
         {
             if (email == null)
             {

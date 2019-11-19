@@ -11,9 +11,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
 {
     public interface IPrintingEditionRepository : IBaseEFRRepository<PrintingEdition>
     {
-        List<PrintingEdition> FilterPrintingEditionFilter(TypeProduct typeProduct);
-        List<PrintingEdition> FilterPrintingEditionFilter(decimal price);
-        Task<PrintingEdition> GetId(string Name);
-        Task<List<PrintingEditionFilterModel>> GetPrintingEdition(PrintingEditionFilter printingEditionFilterModel);
+        Task<List<Models.PrintingEditionModel>> GetPrintingEditionAsync(Helpers.PrintingEditionFilter.PrintingEditionFilterModel printingEditionFilterModel);
     }
 }

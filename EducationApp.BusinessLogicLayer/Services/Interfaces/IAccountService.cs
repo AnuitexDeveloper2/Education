@@ -11,9 +11,9 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
     public interface IAccountService
     {
         Task<BaseModel> ConfirmEmailAsync(string email);
-        Task<BaseModel> CreateUserAsync(UserItemModel userItemModel);
+        Task<BaseModel> CreateUserAsync(UserModelItem userItemModel);
         Task<ApplicationUser> GetByIdAsync(long Id);
-        Task<UserItemModel> GetByEmailAsync(string email);
+        Task<UserModelItem> GetByEmailAsync(string email);
         Task<BaseModel> SignIn(string email, string password);
         Task SignOutAsync();
     }

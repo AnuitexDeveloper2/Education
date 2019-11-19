@@ -1,17 +1,11 @@
 ﻿using EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors;
 using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
-using EducationApp.DataAccessLayer.Helpers.PrintingEditionFilter;
-using EducationApp.DataAccessLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using static EducationApp.BusinessLogicLayer.Models.Enums.Enums;
 
 namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.PrintingEditions
 {
     public class PrintingEditionFilterMapping
     {
-        public static PrintingEditionModelItem Map(PrintingEditionFilterModel model)
+        public static PrintingEditionModelItem Map(DataAccessLayer.Models.PrintingEditionModel model)
         {
            
                 PrintingEditionModelItem printingEdition = new PrintingEditionModelItem

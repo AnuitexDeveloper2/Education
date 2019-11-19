@@ -3,7 +3,6 @@ using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Ropositories.Base;
 using BookStore.DataAccess.AppContext;
 using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -19,28 +18,10 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
         }
 
-        public List<PrintingEdition> FilterPrintingEditionFilter(TypeProduct typeProduct)
-        {
-            var result = _applicationContext.PrintingEditions.Where(k => k.ProductType == typeProduct);
-            return result.ToList();
-        }
-
-        public List<PrintingEdition> FilterPrintingEditionFilter(decimal price)
-        {
-            var result = _applicationContext.PrintingEditions.Where(k => k.Price > price);
-            return result.ToList();
-        }
-
-        public async Task<PrintingEdition> GetId(string title)
-        {
-            var printingEdition = _applicationContext.PrintingEditions.Where(k => k.Title == title).FirstOrDefault();
-            return printingEdition;
-        }
-
-        public async Task<List<PrintingEditionFilterModel>> GetPrintingEdition(PrintingEditionFilter printingEditionFilter)
+        public async Task<List<PrintingEditionModel>> GetPrintingEditionAsync(PrintingEditionFilterModel printingEditionFilter)
         {
             var printingEditions = from printingEdition in _applicationContext.PrintingEditions
-                                   select new PrintingEditionFilterModel
+                                   select new Models.PrintingEditionModel
                                    {
                                        Id = printingEdition.Id,
                                        Title = printingEdition.Title,
@@ -57,9 +38,9 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                                                   }).ToList()
                                    };
 
-            if (printingEditionFilter.SearchString == printingEditionFilter.SearchString)
+            if (!string.IsNullOrWhiteSpace(printingEditionFilter.SearchString))
             {
-                printingEditions.Where(k => k.Title.Contains(printingEditionFilter.SearchString));
+                printingEditions = printingEditions.Where(k => k.Title.Contains(printingEditionFilter.SearchString));
             }
             if (printingEditionFilter.TypeProduct == TypeProduct.Book)
             {
@@ -73,6 +54,16 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             {
                 printingEditions = printingEditions.Where(k => k.ProductType == TypeProduct.Newspaper);
             }
+            if (printingEditionFilter.Price == Price.PriceAsc)
+            {
+                printingEditions = printingEditions.OrderBy(k => k.Price);
+            }
+            if (printingEditionFilter.Price == Price.PriceDesc)
+            {
+                printingEditions = printingEditions.OrderByDescending(k => k.Price);
+            }
+
+            printingEditions = printingEditions.Skip((printingEditionFilter.PageCount - 1) * printingEditionFilter.PageSize).Take(printingEditionFilter.PageSize);
 
             return printingEditions.ToList();
         }

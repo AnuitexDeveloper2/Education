@@ -7,7 +7,7 @@ namespace EducationApp.BusinessLogicLayer.Extention.User
 {
     public class UserViewModel
     {
-        public IEnumerable<UserItemModel> Users { get; set; }
+        public IEnumerable<UserModelItem> Users { get; set; }
         public string Email { get; set; }
         public string UserName { get; set; }
     }

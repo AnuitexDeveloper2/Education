@@ -6,7 +6,7 @@ using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 
 namespace EducationApp.DataAccessLayer.Models
 {
-    public class PrintingEditionFilterModel
+    public class PrintingEditionModel
     {
         public long Id { get; set; }
         public string Title { get; set; }

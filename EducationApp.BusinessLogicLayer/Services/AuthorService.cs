@@ -1,10 +1,12 @@
 ﻿using EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors;
 using EducationApp.BusinessLogicLayer.Models.Authors;
+using EducationApp.BusinessLogicLayer.Models.Base;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
-using EducationApp.DataAccessLayer.Entities;
+using EducationApp.DataAccessLayer.Helpers.Author;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
 
 namespace EducationApp.BusinessLogicLayer.Services
 {
@@ -17,49 +19,58 @@ namespace EducationApp.BusinessLogicLayer.Services
             _authorRepository = authorRepository;
         }
 
-
-        public async Task<bool> CreateAsync(AuthorsModelItem authorModelItem)
+        public async Task<BaseModel> CreateAsync(AuthorModelItem authorModelItem)
         {
+            var authorModel = new BaseModel();
             var author = AuthorsMapping.Map(authorModelItem);
             var result = await _authorRepository.CreateAsync(author);
-            return result;
+            if (result < 1)
+            {
+                authorModel.Errors.Add(AuthorCreate);
+                return authorModel;
+            }
+            return authorModel;
         }
 
-        public async Task<bool> UpdateAsync(AuthorsModelItem authorModelItem)
+        public async Task<BaseModel> UpdateAsync(AuthorModelItem authorModelItem)
         {
+            var resultModel = new BaseModel();
             var author = AuthorsMapping.Map(authorModelItem);
             var result = await _authorRepository.UpdateAsync(author);
-            return result;
-        }
-
-        public async Task<bool> RemoveAsync(AuthorsModelItem authorModelItem)
-        {
-            var printingEdition = AuthorsMapping.Map(authorModelItem);
-            var excist = await _authorRepository.FindByIdAsync(printingEdition.Id);
-            if (excist == null)
+            if (!result)
             {
-                return false;
+                resultModel.Errors.Add(AuthorUpdate);
             }
-            var result = await _authorRepository.RemoveAsync(excist);
-            return result;
+            return resultModel;
         }
 
-        public async Task<AuthorsModelItem> GetByIdAsync(long id)
+        public async Task<BaseModel> RemoveAsync(AuthorModelItem authorModelItem)
         {
-            var author = await _authorRepository.FindByIdAsync(id);
-            return AuthorsMapping.Map(author);
+            var resultModel = new BaseModel();
+            var author = AuthorsMapping.Map(authorModelItem);
+            var excistAuthor = await _authorRepository.FindByIdAsync(author.Id);
+            if (excistAuthor == null)
+            {
+                resultModel.Errors.Add(AuthorNotFound);
+                return resultModel;
+            }
+            var result = await _authorRepository.RemoveAsync(excistAuthor);
+            if (!result)
+            {
+                resultModel.Errors.Add(AuthorRemove);
+            }
+            return resultModel;
         }
 
-
-        public async Task<List<AuthorsModelItem>> GetAuthors()
+        public async Task<AuthorModel> GetAuthors(AuthorFilterModel authorFilterModel)
         {
-            var authors = _authorRepository.GetAll();
-            List<AuthorsModelItem> authorsModelItems = new List<AuthorsModelItem>();
+            var authors = _authorRepository.GetAuthors(authorFilterModel);
+            AuthorModel authorsModel = new AuthorModel();
             for (int i = 0; i < authors.Count; i++)
             {
-                authorsModelItems.Add(AuthorsMapping.Map(authors[i]));
+                authorsModel.Items.Add(AuthorsMapping.Map(authors[i]));
             }
-            return authorsModelItems;
+            return authorsModel;
         }
     }
 }

@@ -29,14 +29,14 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult> Register(UserItemModel userItemModel)
+        public async Task<ActionResult> Register(UserModelItem userItemModel)
         {
             var result = await _accountService.CreateUserAsync(userItemModel);
             return Ok(result);
         }
 
         [HttpPost("confirmEmail")]
-        public async Task<ActionResult> ConfirmEmail(UserItemModel email)
+        public async Task<ActionResult> ConfirmEmail(UserModelItem email)
         {
             var confirmUser = await _accountService.ConfirmEmailAsync(email.Email);
 
@@ -45,7 +45,7 @@ namespace EducationApp.PresentationLayer.Controllers
 
 
         [HttpPost("signIn")]
-        public async Task<ActionResult> SignIn(UserItemModel model)
+        public async Task<ActionResult> SignIn(UserModelItem model)
         {
             var errors = await _accountService.SignIn(model.Email, model.Password);
             var user = await _accountService.GetByEmailAsync(model.Email);
@@ -53,10 +53,7 @@ namespace EducationApp.PresentationLayer.Controllers
             {
                 return Ok(errors.Errors);
             }
-            if (user == null)
-            {
-                return Content(Invalid);
-            }
+            
             var tokens = _tokenFactory.GenerateTokenModel(user);
             HttpContext.Response.Cookies.Append("RefereshToken", tokens.RefreshToken);
             HttpContext.Response.Cookies.Append("AccessToken", tokens.AccessToken);

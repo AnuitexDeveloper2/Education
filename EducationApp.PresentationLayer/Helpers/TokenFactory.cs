@@ -22,7 +22,7 @@ namespace EducationApp.PresentationLayer.Helpers
         {
             return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(JWTConsts.Key));
         }
-        public TokenModel GenerateTokenModel(UserItemModel user)
+        public TokenModel GenerateTokenModel(UserModelItem user)
         {
            
             if (user == null)

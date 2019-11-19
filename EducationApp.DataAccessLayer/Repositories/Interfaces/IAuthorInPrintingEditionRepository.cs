@@ -7,7 +7,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
     public interface IAuthorInPrintingEditionRepository : IBaseEFRRepository<AuthorInPrintingEdition>
     {
 
-        Task GetAsync(string name);
         Task<bool> RemoveAuthorInPrintingEditionAsync(long id);
+        Task<bool> ConfirmAuthorInPrintingEdition(long printingEditionId, long authorId);
     }
 }

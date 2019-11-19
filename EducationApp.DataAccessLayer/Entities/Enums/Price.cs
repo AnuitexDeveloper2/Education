@@ -8,8 +8,8 @@ namespace EducationApp.DataAccessLayer.Entities.Enums
     {
         public enum Price 
         {
-            MinPrice = 0,
-            MaxPrice = 1
+            PriceDesc = 0,
+            PriceAsc = 1
         }
     }
 }

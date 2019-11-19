@@ -10,13 +10,14 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.PrintingEditions
 {
     public  class PrintingEditionFilterStateMapping
     {
-        public static PrintingEditionFilter Map(PrintingEditionFilterState printingEditionFilterState)
+        public static PrintingEditionFilterModel Map(PrintingEditionFilterState printingEditionFilterState)
         {
-            var printingEditionFilter = new PrintingEditionFilter
+            var printingEditionFilter = new PrintingEditionFilterModel
             {
                 TypeProduct = (DataAccessLayer.Entities.Enums.Enums.TypeProduct)printingEditionFilterState.TypeProduct,
-                PageNumber = printingEditionFilterState.PageNumber,
+                PageCount = printingEditionFilterState.PageCount,
                 PageSize = printingEditionFilterState.PageSize,
+                SearchString = printingEditionFilterState.SearchString,
                 Price = (DataAccessLayer.Entities.Enums.Enums.Price)printingEditionFilterState.Price
             };
             return printingEditionFilter;

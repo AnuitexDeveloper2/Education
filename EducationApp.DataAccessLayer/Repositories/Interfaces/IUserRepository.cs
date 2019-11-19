@@ -19,19 +19,18 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
         Task<ApplicationUser> GetByIdAsync(long id);
         Task<ApplicationUser> GetByNameAsync(string userName);
         Task<bool> ChangePasswordAsync(ApplicationUser user, string oldPasswor, string newPassword);
-        Task<bool> ChangeEmailAsync(ApplicationUser user ,string newEmail, string token);
+        Task<bool> ChangeEmailAsync(ApplicationUser user ,string newEmail);
         Task<ApplicationUser> GetByEmailAsync(string email);
         Task<bool> ConfirmEmailAsync(ApplicationUser user,string token);
-        Task<bool> ConfirmPasswordAsync(ApplicationUser user, string password);
         Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user);
+        Task<bool> ConfirmPasswordAsync(ApplicationUser user, string password);
         Task<string> GeneratePasswordResetTokenAsync(ApplicationUser user);
         Task<ApplicationUser> FindByEmailAsync(string email);
-        Task<bool> ResetPasswordAsync(ApplicationUser user, string token, string newPassword);
-        Task<string> GenerateChangeEmailTokenAsync(ApplicationUser user, string newEmail);
+        Task<bool> ResetPasswordAsync(ApplicationUser user, string newPassword);
         Task<string> GetRoleAsync(ApplicationUser user);
         Task<bool> BlockUserAsync(ApplicationUser user);
         Task SignOut();
-        Task<List<ApplicationUser>> FilterUsers(UsersFilter state);
+        Task<List<ApplicationUser>> FilterUsers(UsersFilterModel state);
 
 
     }

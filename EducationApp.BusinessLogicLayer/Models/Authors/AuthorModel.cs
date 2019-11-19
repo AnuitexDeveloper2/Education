@@ -4,8 +4,8 @@ using System.Text;
 
 namespace EducationApp.BusinessLogicLayer.Models.Authors
 {
-    public class AuthorsModel
+    public class AuthorModel
     {
-        public ICollection<AuthorsModelItem> Items = new List<AuthorsModelItem>();
+        public ICollection<AuthorModelItem> Items = new List<AuthorModelItem>();
     }
 }

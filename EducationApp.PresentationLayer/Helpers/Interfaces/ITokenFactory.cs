@@ -12,7 +12,7 @@ namespace EducationApp.PresentationLayer.Helpers.Interfaces
 {
     public interface ITokenFactory
     {
-        TokenModel GenerateTokenModel(UserItemModel user);
+        TokenModel GenerateTokenModel(UserModelItem user);
         JwtSecurityToken GenerateToken(List<Claim> claims, double expires);
         JwtSecurityToken ValidateToken(string token);
     }

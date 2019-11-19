@@ -1,7 +1,4 @@
 ﻿using EducationApp.BusinessLogicLayer.Extention.BaseFilter;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using static EducationApp.BusinessLogicLayer.Models.Enums.Enums;
 
 namespace EducationApp.BusinessLogicLayer.Extention.PrintingEditionFilterState

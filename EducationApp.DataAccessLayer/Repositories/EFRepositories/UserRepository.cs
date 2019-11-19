@@ -13,7 +13,7 @@ using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 
 namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 {
-    public class UserRepository<T> : IUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -25,7 +25,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             _signInManager = signInManager;
             _applicationContext = applicationContext;
         }
-        public async Task<bool> CreateUserAsync(ApplicationUser user, string password) //todo rename createUserAsync
+        public async Task<bool> CreateUserAsync(ApplicationUser user, string password)
         {
             var excistUser = await _userManager.FindByEmailAsync(user.Email);
             if (excistUser != null)
@@ -38,17 +38,11 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             {
                 return false;
             }
-            var result = await _userManager.AddToRoleAsync(user, User); //todo check res
-            if (result == null)
-            {
-                return false;
-            }
-            return createUser.Succeeded;
+            var result = await _userManager.AddToRoleAsync(user, User);
+            return result.Succeeded;
         }
         public async Task<bool> EditAsync(ApplicationUser user)
         {
-            //todo check for null at service
-
             var result = await _userManager.UpdateAsync(user);
             return result.Succeeded;
         }
@@ -56,23 +50,20 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         public async Task<bool> RemoveAsync(ApplicationUser user)
         {
             user.IsRemoved = true;
-            var result = await _applicationContext.SaveChangesAsync(); //todo return result
-            if (result < 1)
-            {
-                return false;
-            }
-            return true;
+            //todo use updateAsync
+            var result = await _userManager.UpdateAsync(user);
+            return result.Succeeded;
 
         }
         public async Task<string> CheckRoleAsync(string email)
         {
-            var user = await _userManager.FindByEmailAsync(email); //todo check null
+            var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
                 return null;
             }
             var userRole = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
-            return userRole; //todo return string role
+            return userRole;
         }
 
 
@@ -111,9 +102,9 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         }
 
 
-        public async Task<bool> ChangeEmailAsync(ApplicationUser user, string newEmail, string token) //todo param with emails and token
+        public async Task<bool> ChangeEmailAsync(ApplicationUser user, string newEmail)
         {
-            //todo use oldEmail to get user from DB
+            var token = await _userManager.GenerateChangeEmailTokenAsync(user, newEmail);
             var changeEmailResult = await _userManager.ChangeEmailAsync(user, newEmail, token);
             return changeEmailResult.Succeeded;
         }
@@ -131,12 +122,8 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
         public async Task<bool> ConfirmPasswordAsync(ApplicationUser user, string password)
         {
-            var check = await _userManager.CheckPasswordAsync(user, password); //todo check result
-            if (!check)
-            {
-                return false;
-            }
-            return true;
+            var result = await _userManager.CheckPasswordAsync(user, password);
+            return result;
         }
 
 
@@ -144,15 +131,15 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         {
             await _signInManager.SignOutAsync();
         }
-        public async Task<bool> ResetPasswordAsync(ApplicationUser user, string token, string newPassword)
+        public async Task<bool> ResetPasswordAsync(ApplicationUser user, string newPassword)
         {
-            var resetPassword = await _userManager.ResetPasswordAsync(user, token, newPassword);
-            return resetPassword.Succeeded; //todo return bool
-        }
-
-        public async Task<string> GenerateChangeEmailTokenAsync(ApplicationUser user, string newEmail)
-        {
-            return await _userManager.GenerateChangeEmailTokenAsync(user, newEmail);
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            if (token == null)
+            {
+                return false;
+            }
+            var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+            return result.Succeeded;
         }
 
         public async Task<string> GetRoleAsync(ApplicationUser user)
@@ -173,12 +160,12 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             return true;
         }
 
-        public async Task<List<ApplicationUser>> FilterUsers(UsersFilter usersFilter)
+        public async Task<List<ApplicationUser>> FilterUsers(UsersFilterModel usersFilter)
         {
             var users = _applicationContext.Users.Where(k => k.IsRemoved== false).AsQueryable();
             if (!string.IsNullOrWhiteSpace(usersFilter.SearchString))
             {
-                users = users.Where(k => k.UserName.Equals(usersFilter.SearchString));
+                users = users.Where(k => k.UserName.Contains(usersFilter.SearchString));
             }
 
             if (usersFilter.UsersSortType == UsersSortType.Email)
@@ -192,18 +179,14 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
            
             if (usersFilter.UsersFilterType == usersFilter.UsersFilterType)
             {
-                users = users.Where(k => k.LockoutEnabled == false);
+                users = users.Where(k => k.LockoutEnabled == true);
             }
             if (usersFilter.UsersFilterType == UsersFilterType.Blocked)
             {
                 users = users.Where(k => k.LockoutEnabled == true);
             }
-
             users = users.Skip((usersFilter.PageCount - 1) * usersFilter.PageSize).Take(usersFilter.PageSize);
-            //todo add skip and take, and then ToListAsync()
-            //todo read about IEnumerable and IQueryable
-
-            return await users.ToListAsync();
+            return await users.ToListAsync(); //todo yoy will need usersCount for pagination in ClientSide
         }
 
       

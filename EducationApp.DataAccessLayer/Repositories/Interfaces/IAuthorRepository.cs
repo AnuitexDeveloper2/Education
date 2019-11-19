@@ -1,4 +1,6 @@
 ﻿using EducationApp.DataAccessLayer.Entities;
+using EducationApp.DataAccessLayer.Helpers.Author;
+using EducationApp.DataAccessLayer.Models;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
 {
     public interface IAuthorRepository :IBaseEFRRepository<Author>
     {
-       Author GetAuthorByName(Author author); 
+        List<AuthorModelItem> GetAuthors(AuthorFilterModel authorFilterModel);
     }
 }

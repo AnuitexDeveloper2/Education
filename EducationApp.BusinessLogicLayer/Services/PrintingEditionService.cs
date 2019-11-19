@@ -14,101 +14,104 @@ using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
 
 namespace EducationApp.BusinessLogicLayer.Services
 {
-    class PrintingEditionService : IPrintingEditionService
+    public class PrintingEditionService : IPrintingEditionService
     {
         private readonly IPrintingEditionRepository _printingEditionRepository;
-        private readonly IAuthorInPrintingEditionRepository _authorInPrintingEdition;
+        private readonly IAuthorInPrintingEditionRepository _authorInPrintingEditionRepository;
         private readonly IAuthorRepository _authorRepository;
 
         public PrintingEditionService(IPrintingEditionRepository printingEditionRepository, IAuthorInPrintingEditionRepository authorInPrintingEditionRepository, IAuthorRepository authorRepository)
         {
-            _authorInPrintingEdition = authorInPrintingEditionRepository;
+            _authorInPrintingEditionRepository = authorInPrintingEditionRepository;
             _printingEditionRepository = printingEditionRepository;
             _authorRepository = authorRepository;
         }
 
-        public async Task<BaseModel> CreateAsync(PrintingEditionModelItem model)
+        public async Task<BaseModel> CreateAsync(PrintingEditionModelItem model) //todo get list with authorId from client
         {
-            var printingEditionModel = new BaseModel();
+            var resultModel = new BaseModel();
             var printingEdition = PrintingEditionMaping.Map(model);
-            List<Author> authors = new List<Author>();
-            foreach (var item in model.Authors)
+
+            var printingEditionId = await _printingEditionRepository.CreateAsync(printingEdition);
+            if (printingEditionId < 1)
             {
-                var author = AuthorsMapping.Map(item);
-                var excistAuthor = _authorRepository.GetAuthorByName(author);
-                if (excistAuthor == null)
-                {
-                    await _authorRepository.CreateAsync(author);
-                    excistAuthor = _authorRepository.GetAuthorByName(author);
-                }
-                authors.Add(excistAuthor);
+                resultModel.Errors.Add(Create);
+                return resultModel;
             }
-            var result = await _printingEditionRepository.CreateAsync(printingEdition);
-            if (!result)
+            foreach (var item in model.Authors.Items)
             {
-                printingEditionModel.Errors.Add(Create);
-                return printingEditionModel;
+                var authorPrintingEdition = new AuthorInPrintingEdition { AuthorId = item.Id, PrintingEditionId = printingEditionId };
+                var result = await _authorInPrintingEditionRepository.CreateAsync(authorPrintingEdition);
+                if (result < 1)
+                {
+                    resultModel.Errors.Add(Create);
+                }
             }
 
-            foreach (var item in authors)
-            {
-                var authorPrintingEdition = new AuthorInPrintingEdition { AuthorId = item.Id, PrintingEditionId = printingEdition.Id };
-                await _authorInPrintingEdition.CreateAsync(authorPrintingEdition);
-            }
-           
-            return printingEditionModel;
+            return resultModel;
         }
 
         public async Task<BaseModel> RemoveAsync(long id)
         {
-            var printingEditionModel = new BaseModel();
-            //var printingEdition = PrintingEditionMaping.Map(model);
+            var errorsModel = new BaseModel();
             var excist = await _printingEditionRepository.FindByIdAsync(id);
             if (excist == null)
             {
-                printingEditionModel.Errors.Add(PINotFound);
-                return printingEditionModel;
+                errorsModel.Errors.Add(PINotFound);
+                return errorsModel;
             }
 
             var result = await _printingEditionRepository.RemoveAsync(excist);
             if (!result)
             {
-                printingEditionModel.Errors.Add(PIRemove);
+                errorsModel.Errors.Add(PIRemove);
+                return errorsModel;
             }
-            await _authorInPrintingEdition.RemoveAuthorInPrintingEditionAsync(id);
+            await _authorInPrintingEditionRepository.RemoveAuthorInPrintingEditionAsync(id);
 
-            return printingEditionModel;
+            return errorsModel;
         }
 
-        public async Task<bool> UpdateAsync(PrintingEditionModelItem model)
+        public async Task<BaseModel> UpdateAsync(PrintingEditionModelItem printingEditionModelItem)
         {
-            var author = PrintingEditionMaping.Map(model);
-            var result = await _printingEditionRepository.UpdateAsync(author);
-            return result;
-        }
-
-        public IQueryable<PrintingEditionModelItem> FilterProductsByName(PrintingEditionModelItem model, string text)
-        {
-            var printingEdition = PrintingEditionMaping.Map(model);
-            var GetAll = _printingEditionRepository.GetAll();
-            var all = GetAll.AsQueryable();
-            var result = _printingEditionRepository.FilterContainsText(all, printingEditions => printingEditions.Title, text);
-            List<PrintingEdition> list = result.ToList<PrintingEdition>();
-            List<PrintingEditionModelItem> List = new List<PrintingEditionModelItem>();
-            for (int i = 0; i < result.Count(); i++)
+            var errorsModel = new BaseModel();
+            var printingEdition = await _printingEditionRepository.FindByIdAsync(printingEditionModelItem.Id);
+            if (printingEdition == null || printingEdition.IsRemoved)
             {
-                List.Add(PrintingEditionMaping.Map(list[i]));
+                errorsModel.Errors.Add(PINotFound);
             }
-            return List.AsQueryable();
+            printingEdition = PrintingEditionMaping.Map(printingEdition, printingEditionModelItem);
+            var result = await _printingEditionRepository.UpdateAsync(printingEdition);
+            if (!result)
+            {
+                errorsModel.Errors.Add(PIUpdate);
+                return errorsModel;
+            }
+            foreach (var item in printingEditionModelItem.Authors.Items)
+            {
+                result = await _authorInPrintingEditionRepository.ConfirmAuthorInPrintingEdition(printingEdition.Id, item.Id);
+                if (!result)
+                {
+                    var authorPrintingEdition = new AuthorInPrintingEdition { AuthorId = item.Id, PrintingEditionId = printingEdition.Id };
+                    var create = await _authorInPrintingEditionRepository.CreateAsync(authorPrintingEdition);
+                    if (create < 1)
+                    {
+                        errorsModel.Errors.Add(APICreate);
+                    }
+                }
+            }
+            return errorsModel;
         }
 
-        public async Task<List<PrintingEditionModelItem>> GetPrintingEditionAsync(PrintingEditionFilterState state)
+
+
+        public async Task<PrintingEditionModel> GetPrintingEditionAsync(PrintingEditionFilterState state)
         {
-            var printingEdition = await _printingEditionRepository.GetPrintingEdition(PrintingEditionFilterStateMapping.Map(state));
-            List<PrintingEditionModelItem> modelItems = new List<PrintingEditionModelItem>();
+            var printingEdition = await _printingEditionRepository.GetPrintingEditionAsync(PrintingEditionFilterStateMapping.Map(state));
+            PrintingEditionModel modelItems = new PrintingEditionModel();
             for (int i = 0; i < printingEdition.Count(); i++)
             {
-                modelItems.Add(PrintingEditionFilterMapping.Map(printingEdition[i]));
+                modelItems.Items.Add(PrintingEditionFilterMapping.Map(printingEdition[i]));
             }
             return modelItems;
         }

@@ -1,4 +1,6 @@
 ﻿using EducationApp.BusinessLogicLayer.Models.Authors;
+using EducationApp.BusinessLogicLayer.Models.Base;
+using EducationApp.DataAccessLayer.Helpers.Author;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,10 +9,9 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
 {
     public interface IAuthorService 
     {
-        Task<bool> CreateAsync(AuthorsModelItem authorModelItem);
-        Task<bool> UpdateAsync(AuthorsModelItem authorModelItem);
-        Task<bool> RemoveAsync(AuthorsModelItem authorModelItem);
-        Task<AuthorsModelItem> GetByIdAsync(long id);
-        Task<List<AuthorsModelItem>> GetAuthors();
+        Task<BaseModel> CreateAsync(AuthorModelItem authorModelItem);
+        Task<BaseModel> UpdateAsync(AuthorModelItem authorModelItem);
+        Task<BaseModel> RemoveAsync(AuthorModelItem authorModelItem);
+        Task<AuthorModel> GetAuthors(AuthorFilterModel authorFilterModel);
     }
 }

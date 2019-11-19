@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace EducationApp.BusinessLogicLayer.Models.Users
 {
-    public class UsersModel : BaseModel
+    public class UserModel : BaseModel
     {
-        public ICollection<UserItemModel> Items = new List<UserItemModel>();
+        public ICollection<UserModelItem> Items = new List<UserModelItem>();
     }
 }
