@@ -1,4 +1,5 @@
 ﻿using EducationApp.BusinessLogicLayer.Models.Authors;
+using EducationApp.BusinessLogicLayer.Models.Users;
 using System;
 using System.Collections.Generic;
 using static EducationApp.BusinessLogicLayer.Models.Enums.Enums;
@@ -18,6 +19,5 @@ namespace EducationApp.BusinessLogicLayer.Models.PrintingEditions
         public DateTime Date { get; set; }
         public AuthorModel Authors { get; set; }
 
-       
     }
 }

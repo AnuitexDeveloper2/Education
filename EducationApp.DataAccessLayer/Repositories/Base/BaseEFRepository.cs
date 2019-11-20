@@ -81,7 +81,21 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
             }
             return result;
         }
+        public async Task<bool> CreateRangeAsync(List<TEntity> entity)
+        {
+            await _applicationContext.AddRangeAsync(entity);
+            var result = await _applicationContext.SaveChangesAsync();
+            if (result < 1)
+            {
+                return false;
+            }
+            return true;
+        }
 
+        //public List<TEntity> GetEntity<TEntity>(TEntity entity, Expression<Func<TEntity, string>> getPropety)
+        //{
+        //    _applicationContext
+        //}
 
         public IQueryable<TEntity> FilterContainsText<TEntity>(IQueryable<TEntity> entities, Expression<Func<TEntity, string>> getProperty, string text)
         {

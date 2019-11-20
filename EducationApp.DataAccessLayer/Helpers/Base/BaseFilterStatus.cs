@@ -2,7 +2,7 @@
 
 namespace EducationApp.DataAccessLayer.Helpers.Base
 {
-    public class BaseFilterModel
+    public class BaseFilterStatus
     {
         public string SearchString { get; set; }
         public int PageCount { get; set; }

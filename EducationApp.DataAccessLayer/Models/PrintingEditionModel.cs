@@ -1,12 +1,11 @@
 ﻿using EducationApp.DataAccessLayer.Entities;
-using System;
+using EducationApp.DataAccessLayer.Models.Base;
 using System.Collections.Generic;
-using System.Text;
 using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 
 namespace EducationApp.DataAccessLayer.Models
 {
-    public class PrintingEditionModel
+    public class PrintingEditionModel : BaseFilterModel<Author>
     {
         public long Id { get; set; }
         public string Title { get; set; }
@@ -14,6 +13,5 @@ namespace EducationApp.DataAccessLayer.Models
         public decimal Price { get; set; }
         public CurrencyType CurrencyType { get; set; }
         public TypeProduct ProductType { get; set; }
-        public List<Author> Authors { get; set; }
     }
 }

@@ -101,7 +101,7 @@ namespace EducationApp.BusinessLogicLayer.Services
                 resultModel.Errors.Add(NotFound);
                 return resultModel;
             }
-            resultModel = UserMapper.Map(user); //todo return ???
+            resultModel = UserMapper.Map(user);
             return resultModel; 
         }
 
@@ -114,7 +114,7 @@ namespace EducationApp.BusinessLogicLayer.Services
                 resultModel.Errors.Add(NotFound);
                 return resultModel;
             }
-            var result = await _userRepository.ResetPasswordAsync(user, GeneratePassword.CreateRandomPassword()); //todo replace token generation to repository
+            var result = await _userRepository.ResetPasswordAsync(user, GeneratePassword.CreateRandomPassword());
             if (!result)
             {
                 resultModel.Errors.Add(Token);
@@ -124,14 +124,15 @@ namespace EducationApp.BusinessLogicLayer.Services
         }
 
 
-        public async Task <UserModel> GetUsersAsync(UserFilterModel filter) //todo rename method to GetUsersAsync, return UsersModel
+        public async Task <UserModel> GetUsersAsync(UserFilterModel filter)
         {
-            var getUsers = await _userRepository.FilterUsers(UserMapper.Map(filter));
-            UserModel model = new UserModel();
-            for (int i = 0; i < getUsers.Count; i++)
+            var getUsers = await _userRepository.GetUserAsync(UserMapper.Map(filter));
+            var model = new UserModel();
+            for (int i = 0; i < getUsers.Data.Count; i++)
             {
-                model.Items.Add(UserMapper.Map(getUsers[i]));
+                model.Items.Add(UserMapper.Map(getUsers.Data[i]));
             }
+            model.Count = getUsers.Count;
             return model;
         }
 

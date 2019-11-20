@@ -7,7 +7,5 @@ namespace EducationApp.BusinessLogicLayer.Models.Authors
     {
         public string Name { get; set; }
         public long Id { get; set; }
-        public bool IsRemoved { get; set; }
-        public PrintingEditionModel PrintingEditions { get; set; }
     }
 }

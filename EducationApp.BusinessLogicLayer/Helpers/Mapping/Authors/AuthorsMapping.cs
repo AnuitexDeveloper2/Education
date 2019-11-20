@@ -23,7 +23,6 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors
             {
                 Name = author.Name,
                 Id = author.Id,
-                IsRemoved = author.IsRemoved
             };
             return authorModelItem;
         }
@@ -45,11 +44,11 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors
                 Name = authorModelItem.Name,
                 Id = authorModelItem.Id,
             };
-            author.PrintingEditions = new Models.PrintingEditions.PrintingEditionModel();
-            for (int i = 0; i < authorModelItem.printingEditions.Count; i++)
-            {
-                author.PrintingEditions.Items.Add(PrintingEditionMaping.Map(authorModelItem.printingEditions[i]));
-            }
+            //author.PrintingEditions = new Models.PrintingEditions.PrintingEditionModel();
+            //for (int i = 0; i < authorModelItem.printingEditions.Count; i++)
+            //{
+            //    author.PrintingEditions.Items.Add(PrintingEditionMaping.Map(authorModelItem.printingEditions[i]));
+            //}
             return author;
         }
     }

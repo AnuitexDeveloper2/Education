@@ -2,9 +2,7 @@
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
-using System.Linq;
 using EducationApp.BusinessLogicLayer.Extention.PrintingEditionFilterState;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 
 namespace EducationApp.PresentationLayer.Controllers
@@ -19,19 +17,19 @@ namespace EducationApp.PresentationLayer.Controllers
             _printingEditionService = printingEditionService;
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost("createPrintingEdition")]
         public async Task<ActionResult> CreatePrintingEdition(PrintingEditionModelItem printingEditonModelItem)
         {
-            await _printingEditionService.CreateAsync(printingEditonModelItem);
-            return Ok();
+           var result = await _printingEditionService.CreateAsync(printingEditonModelItem);
+            return Ok(result); //todo where result
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost("removePrintingEdition")]
-        public async Task<ActionResult> RemovePrintingEdition(long id)
+        public async Task<ActionResult> RemovePrintingEdition(PrintingEditionModelItem printingEditionModel)
         {
-            var result = await _printingEditionService.RemoveAsync(id);
+            var result = await _printingEditionService.RemoveAsync(printingEditionModel.Id);
             return Ok(result);
         }
 
@@ -39,8 +37,8 @@ namespace EducationApp.PresentationLayer.Controllers
         [HttpPost("updatePrintingEdition")]
         public async Task<ActionResult> UpdatePrintingEdition(PrintingEditionModelItem printingEditionModelItem)
         {
-            await _printingEditionService.UpdateAsync(printingEditionModelItem);
-            return Ok();
+            var result = await _printingEditionService.UpdateAsync(printingEditionModelItem);
+            return Ok(result); //todo where result
         }
 
         [HttpGet("getPrintingEditon")]

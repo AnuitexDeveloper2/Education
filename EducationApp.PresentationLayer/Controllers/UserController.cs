@@ -3,7 +3,6 @@ using EducationApp.BusinessLogicLayer.Models.Users;
 using Microsoft.AspNetCore.Mvc;
 using EducationApp.BusinessLogicLayer.Services;
 using Microsoft.AspNetCore.Authorization;
-using System.Collections.Generic;
 using EducationApp.BusinessLogicLayer.Extention.User;
 
 namespace EducationApp.PresentationLayer.Controllers
@@ -41,7 +40,7 @@ namespace EducationApp.PresentationLayer.Controllers
             var result = await _userService.RemoveUserAsync(id);
             return Ok(result);
         }
-        //[Authorize(Roles = "User")]
+        [Authorize(Roles = "User")]
         [HttpPost("EditProfile")]
         public async Task<ActionResult> EditProfile(UserProfileEditModel model)
         {
@@ -58,7 +57,7 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [HttpGet("GetUser")]
-        public async Task<UserModel> GetUser(UserFilterModel filterUser) //todo return UserModel
+        public async Task<UserModel> GetUser(UserFilterModel filterUser)
         {
             var users = await _userService.GetUsersAsync(filterUser);
             return users;

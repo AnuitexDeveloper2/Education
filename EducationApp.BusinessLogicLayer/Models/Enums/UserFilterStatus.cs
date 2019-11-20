@@ -4,7 +4,7 @@
     {
         public enum UsersFilterStatus
         {
-            AllUsers = 0,
+            All = 0,
             Active = 1,
             Blocked = 2
         }

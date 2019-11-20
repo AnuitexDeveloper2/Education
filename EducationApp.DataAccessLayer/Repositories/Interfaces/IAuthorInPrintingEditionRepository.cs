@@ -1,5 +1,6 @@
 ﻿using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
@@ -8,6 +9,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
     {
 
         Task<bool> RemoveAuthorInPrintingEditionAsync(long id);
-        Task<bool> ConfirmAuthorInPrintingEdition(long printingEditionId, long authorId);
+        Task<bool> RemoveRange(List<AuthorInPrintingEdition> authorInPrintingEditions);
     }
 }

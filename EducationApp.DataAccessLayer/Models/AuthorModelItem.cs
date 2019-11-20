@@ -1,8 +1,5 @@
 ﻿using EducationApp.DataAccessLayer.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace EducationApp.DataAccessLayer.Models
 {
@@ -10,6 +7,6 @@ namespace EducationApp.DataAccessLayer.Models
     {
         public long Id { get; set; }
         public string Name { get; set; }
-        public List<PrintingEdition> printingEditions { get; set; }
+        public IEnumerable<PrintingEdition> printingEditions { get; set; }
     }
 }

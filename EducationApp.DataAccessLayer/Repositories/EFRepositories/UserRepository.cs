@@ -1,11 +1,10 @@
 ﻿using BookStore.DataAccess.AppContext;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Helpers;
+using EducationApp.DataAccessLayer.Models;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using static EducationApp.DataAccessLayer.Entities.Constants.Constants.Roles;
@@ -50,10 +49,8 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         public async Task<bool> RemoveAsync(ApplicationUser user)
         {
             user.IsRemoved = true;
-            //todo use updateAsync
             var result = await _userManager.UpdateAsync(user);
             return result.Succeeded;
-
         }
         public async Task<string> CheckRoleAsync(string email)
         {
@@ -160,7 +157,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             return true;
         }
 
-        public async Task<List<ApplicationUser>> FilterUsers(UsersFilterModel usersFilter)
+        public async Task<UserPresentationModel> GetUserAsync(UserFilterModel usersFilter)
         {
             var users = _applicationContext.Users.Where(k => k.IsRemoved== false).AsQueryable();
             if (!string.IsNullOrWhiteSpace(usersFilter.SearchString))
@@ -168,25 +165,26 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                 users = users.Where(k => k.UserName.Contains(usersFilter.SearchString));
             }
 
-            if (usersFilter.UsersSortType == UsersSortType.Email)
+            if (usersFilter.UsersSortType == UserSortType.Email)
             {
                 users = usersFilter.SortType == SortType.Increase ? users.OrderBy(k => k.Email) : users.OrderByDescending(k => k.Email);
             }
-            if (usersFilter.UsersSortType == UsersSortType.Name)
+            if (usersFilter.UsersSortType == UserSortType.Name)
             {
                 users = usersFilter.SortType == SortType.Increase ? users.OrderBy(k => k.UserName) : users.OrderByDescending(k => k.UserName);
             }
-           
             if (usersFilter.UsersFilterType == usersFilter.UsersFilterType)
             {
                 users = users.Where(k => k.LockoutEnabled == true);
             }
-            if (usersFilter.UsersFilterType == UsersFilterType.Blocked)
+            if (usersFilter.UsersFilterType == UserFilterType.Blocked)
             {
                 users = users.Where(k => k.LockoutEnabled == true);
             }
+            var count = await users.CountAsync();
             users = users.Skip((usersFilter.PageCount - 1) * usersFilter.PageSize).Take(usersFilter.PageSize);
-            return await users.ToListAsync(); //todo yoy will need usersCount for pagination in ClientSide
+            var presentationModel = new UserPresentationModel { Data = users.ToList(), Count = count };
+            return presentationModel;
         }
 
       

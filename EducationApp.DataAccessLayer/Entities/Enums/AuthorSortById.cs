@@ -6,11 +6,10 @@ namespace EducationApp.DataAccessLayer.Entities.Enums
 {
     public partial class Enums
     {
-        public enum UserSortType
+        public enum AuthorSortById
         {
-           Email = 0,
-           Name = 1
-           
+            IdAsc = 0,
+            IdDesc = 1
         }
     }
 }

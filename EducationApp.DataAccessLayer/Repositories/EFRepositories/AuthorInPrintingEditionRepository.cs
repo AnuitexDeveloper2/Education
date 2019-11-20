@@ -2,6 +2,7 @@
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Ropositories.Base;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,31 +16,30 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
         }
 
-        public async Task<bool> ConfirmAuthorInPrintingEdition(long printingEditionId, long authorId)
+        public async Task<bool> RemoveRange(List<AuthorInPrintingEdition> authorInPrintingEditions )
         {
-            var authorInPrtintingEdition = _applicationContext.AuthorInPrintingEditions.Where(k=>k.AuthorId ==authorId).Where(l=>l.PrintingEditionId ==printingEditionId);
-            var count = authorInPrtintingEdition.Count();
-            if (authorInPrtintingEdition.Count() == 0)
+            _applicationContext.RemoveRange(authorInPrintingEditions);
+            var result = await _applicationContext.SaveChangesAsync();
+            if (result<1)
             {
                 return false;
             }
-                return true;
+            return true;
+
         }
 
         public async Task<bool> RemoveAuthorInPrintingEditionAsync(long id)
         {
-           
             var authorInPrintingEdition = _applicationContext.AuthorInPrintingEditions.Where(k => k.PrintingEditionId == id).ToList();
-
-
             foreach (var item in authorInPrintingEdition)
             {
-                item.IsRemoved = true;
-                var result = await _applicationContext.SaveChangesAsync();
-                if (result < 1)
+
+                var resultRemove = _applicationContext.Remove(item); //todo remove from DB
+                if (resultRemove.State != EntityState.Deleted)
                 {
-                    return false;
+                    return true;
                 }
+
             }
             return true;
         }

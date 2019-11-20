@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using EducationApp.DataAccessLayer.Helpers.PrintingEditionFilter;
 using EducationApp.DataAccessLayer.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 {
@@ -28,7 +29,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                                        Price = printingEdition.Price,
                                        Desccription = printingEdition.Desccription,
                                        ProductType = printingEdition.ProductType,
-                                       Authors = (from authorInPrintingEdition in _applicationContext.AuthorInPrintingEditions
+                                       Data = (from authorInPrintingEdition in _applicationContext.AuthorInPrintingEditions
                                                   join author in _applicationContext.Authors on authorInPrintingEdition.AuthorId equals author.Id
                                                   where (authorInPrintingEdition.PrintingEditionId == printingEdition.Id)
                                                   select new Author
@@ -38,34 +39,22 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                                                   }).ToList()
                                    };
 
-            if (!string.IsNullOrWhiteSpace(printingEditionFilter.SearchString))
+            if (!string.IsNullOrWhiteSpace(printingEditionFilter.SearchString)) //todo add search by author
             {
                 printingEditions = printingEditions.Where(k => k.Title.Contains(printingEditionFilter.SearchString));
             }
-            if (printingEditionFilter.TypeProduct == TypeProduct.Book)
+            //todo use collection of types
+            //todo change
+            var category = printingEditionFilter.TypeProduct;
+            foreach (var item in printingEditionFilter.TypeProduct)
             {
-                printingEditions = printingEditions.Where(k => k.ProductType == 0);
-            }
-            if (printingEditionFilter.TypeProduct == TypeProduct.Journal)
-            {
-                printingEditions = printingEditions.Where(k => k.ProductType == TypeProduct.Journal);
-            }
-            if (printingEditionFilter.TypeProduct == TypeProduct.Journal)
-            {
-                printingEditions = printingEditions.Where(k => k.ProductType == TypeProduct.Newspaper);
-            }
-            if (printingEditionFilter.Price == Price.PriceAsc)
-            {
-                printingEditions = printingEditions.OrderBy(k => k.Price);
-            }
-            if (printingEditionFilter.Price == Price.PriceDesc)
-            {
-                printingEditions = printingEditions.OrderByDescending(k => k.Price);
+                printingEditions = printingEditions.Where(k => k.ProductType == item);
             }
 
-            printingEditions = printingEditions.Skip((printingEditionFilter.PageCount - 1) * printingEditionFilter.PageSize).Take(printingEditionFilter.PageSize);
-
-            return printingEditions.ToList();
+            printingEditions = printingEditionFilter.Price == Price.PriceAsc? printingEditions.OrderBy(k => k.Price): printingEditions.OrderBy(k => k.Price);
+            //todo may be you can update sort logic withour If?
+            printingEditions = printingEditions.Skip((printingEditionFilter.PageCount - 1) * printingEditionFilter.PageSize).Take(printingEditionFilter.PageSize); //todo where is count?
+            return await printingEditions.ToListAsync();
         }
 
 

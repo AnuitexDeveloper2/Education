@@ -1,12 +1,7 @@
 ﻿using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Helpers;
-using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
+using EducationApp.DataAccessLayer.Models;
 using System.Threading.Tasks;
-using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 
 namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
 {
@@ -30,7 +25,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
         Task<string> GetRoleAsync(ApplicationUser user);
         Task<bool> BlockUserAsync(ApplicationUser user);
         Task SignOut();
-        Task<List<ApplicationUser>> FilterUsers(UsersFilterModel state);
+        Task<UserPresentationModel> GetUserAsync(UserFilterModel state);
 
 
     }

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using EducationApp.BusinessLogicLayer.Models.Authors;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Helpers.Author;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EducationApp.PresentationLayer.Controllers
@@ -21,31 +18,33 @@ namespace EducationApp.PresentationLayer.Controllers
             _authorService = authorService;
         }
 
-        [HttpPost("Create")]
-        public async Task<ActionResult> Create(AuthorModelItem model)
+        //todo authorize attrs
+        [Authorize(Roles = "Admin")]
+        [HttpPost("createAuthor")]
+        public async Task<ActionResult> CreateAuthor(AuthorModelItem model)
         {
             var result = await _authorService.CreateAsync(model);
             return Ok(result);
         }
-
-        [HttpPost("remove")]
-        public async Task<ActionResult> Remove(AuthorModelItem model)
+        [Authorize(Roles = "Admin")]
+        [HttpPost("removeAuthor")]
+        public async Task<ActionResult> RemoveAuthor(long id)
         {
-            var result =  await _authorService.RemoveAsync(model);
+            var result =  await _authorService.RemoveAsync(id);
             return Ok(result);
         }
-
-        [HttpPost("update")]
-        public async Task<ActionResult> Update(AuthorModelItem model)
+        [Authorize(Roles = "Admin")]
+        [HttpPost("updateAuthor")]
+        public async Task<ActionResult> UpdateAuthor(long id)
         {
-            var result = await _authorService.UpdateAsync(model);
+            var result = await _authorService.UpdateAsync(id);
             return Ok(result);
         }
 
         [HttpGet("getAutors")]
         public async Task<ActionResult>  GetAuthors(AuthorFilterModel authorFilterModel)
         {
-            var authors = await _authorService.GetAuthors(authorFilterModel);
+            var authors = await _authorService.GetAuthorsAsync(authorFilterModel);
             return Ok(authors);
         }
     }

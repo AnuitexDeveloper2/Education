@@ -5,11 +5,10 @@ using EducationApp.DataAccessLayer.Models;
 using EducationApp.DataAccessLayer.Ropositories.Base;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
+using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 
 namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 {
@@ -19,7 +18,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         public AuthorRepository(ApplicationContext applicationContext) : base(applicationContext)
         {
         }
-        public List<AuthorModelItem> GetAuthors(AuthorFilterModel authorFilterModel)
+        public async Task<List<AuthorModelItem>> GetAuthorsAsync(AuthorFilterModel authorFilterModel) //toao add async
         {
             var author = from authors in _applicationContext.Authors
                          select new AuthorModelItem
@@ -32,14 +31,17 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                                                  select new PrintingEdition
                                                  {
                                                      Title = printingEdition.Title
-                                                 }).ToList()
-
-
-
+                                                 }) //todo check without .ToList()
                          };
-
-            //author = author.Skip((authorFilterModel.PageCount - 1) * authorFilterModel.PageSize).Take(authorFilterModel.PageSize);
-            return author.ToList();
+            //todo sort by id
+            if (!string.IsNullOrEmpty(authorFilterModel.SearchString))
+            {
+                author = author.Where(k => k.Name.Contains(authorFilterModel.SearchString));
+            }
+            author = authorFilterModel.SortById == AuthorSortById.IdAsc ? author.OrderBy(k => k.Id) : author.OrderByDescending(k => k.Id);
+            //author = author.Skip((authorFilterModel.PageCount - 1) * authorFilterModel.PageSize).Take(authorFilterModel.PageSize); //todo where count
+           
+            return await author.ToListAsync();
 
         }
 

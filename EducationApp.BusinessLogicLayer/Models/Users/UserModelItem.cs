@@ -1,11 +1,8 @@
 ﻿using EducationApp.BusinessLogicLayer.Models.Base;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EducationApp.BusinessLogicLayer.Models.Users
 {
-    public class UserModelItem : BaseModel //todo rename to UserModelItem
+    public class UserModelItem : BaseModel
     {
         public string UserName { get; set; }
         public string FirstName { get; set; }
@@ -18,6 +15,7 @@ namespace EducationApp.BusinessLogicLayer.Models.Users
         public int AccessFailedCount { get; set; }
         public string ConcurrencyStamp { get; set; }
         public bool EmailConfirmed { get; set; }
+        public int count { get; set; }
         public bool IsRemoved { get; set; }
         public bool LockoutEnabled { get; set; }
 

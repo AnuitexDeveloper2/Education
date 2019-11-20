@@ -23,11 +23,10 @@ namespace EducationApp.DataAccessLayer.Initialisation
         }
         public void StartInit()
         {
-            //Init();
-            //InitialisationRole();
-            //InitializationAuthors();
-            //InitializationApplicationUser();
-            //InitializationPrintingEdition();
+            InitialisationRole();
+            InitializationAuthors();
+            InitializationApplicationUser();
+            InitializationPrintingEdition();
         }
 
 
@@ -92,11 +91,5 @@ namespace EducationApp.DataAccessLayer.Initialisation
             }
         }
 
-        public void Init()
-        {
-            var lhj = new AuthorInPrintingEdition { AuthorId = 1, PrintingEditionId = 1 };
-            var iner = _applicationContext.AuthorInPrintingEditions.Add(lhj);
-            var result = _applicationContext.SaveChangesAsync().GetAwaiter().GetResult();
-        }
     }
 }
