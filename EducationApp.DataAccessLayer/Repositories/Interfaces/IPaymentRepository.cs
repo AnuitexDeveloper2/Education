@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EducationApp.DataAccessLayer.Repositories.Interfaces
 {
-    interface IPaymentRepository : IBaseEFRRepository<Payment>
+    public interface IPaymentRepository : IBaseEFRRepository<Payment>
     {
     }
 }

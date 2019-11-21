@@ -26,6 +26,7 @@
             public const string AuthorRemove = "Author Remove is failed";
             public const string AuthorInPECreate = "AuthorInPrintingEdition Create is failed";
             public const string AuthorInPERemove = "AuthorInPrintingEdition Remove is failed";
+            public const string PaymentsNotFound = "PaymentsNotFound";
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using EducationApp.BusinessLogicLayer.Services;
+﻿using EducationApp.BusinessLogicLayer.Models.Payments;
+using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -8,16 +9,18 @@ namespace EducationApp.PresentationLayer.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private readonly OrderService _orderService ;
+        private readonly IOrderService _orderService ;
 
-        public OrderController(OrderService orderService)
+        public OrderController(IOrderService orderService)
         {
             _orderService = orderService;
         }
 
         [HttpPost("createOrder")]
-         public async Task<ActionResult> CreateOrder()
+         public async Task<ActionResult> CreateOrder(PaymentsModel paymentsModel)
         {
+            var result = await _orderService.CreateAsync(paymentsModel);
+            return Ok(result);
             return Ok();
         }
     }

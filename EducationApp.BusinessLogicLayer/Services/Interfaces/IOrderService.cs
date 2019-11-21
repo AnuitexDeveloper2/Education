@@ -1,10 +1,15 @@
-﻿using System;
+﻿using EducationApp.BusinessLogicLayer.Models.Base;
+using EducationApp.BusinessLogicLayer.Models.Payments;
+using EducationApp.DataAccessLayer.Repositories.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace EducationApp.BusinessLogicLayer.Services.Interfaces
 {
-    interface IOrderService
+    public interface IOrderService 
     {
+        Task<BaseModel> CreateAsync(PaymentsModel paymentsModel);
     }
 }

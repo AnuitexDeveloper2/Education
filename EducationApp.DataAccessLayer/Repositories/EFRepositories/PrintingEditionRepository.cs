@@ -43,13 +43,18 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             {
                 printingEditions = printingEditions.Where(k => k.Title.Contains(printingEditionFilter.SearchString));
             }
+            //var allCategories = (Enum.GetValues(typeof(TypePrintingEdition))).OfType<TypePrintingEdition>().ToList();
+            //allCategories = allCategories.Where(x => !printingEditionsFilterModel.Categories.Contains(x)).ToList();
+          
             //todo use collection of types
             //todo change
             var category = printingEditionFilter.TypeProduct;
             foreach (var item in printingEditionFilter.TypeProduct)
             {
                 printingEditions = printingEditions.Where(k => k.ProductType == item);
+                printingEditions.Union(printingEditions);
             }
+           
 
             printingEditions = printingEditionFilter.Price == Price.PriceAsc? printingEditions.OrderBy(k => k.Price): printingEditions.OrderBy(k => k.Price);
             //todo may be you can update sort logic withour If?

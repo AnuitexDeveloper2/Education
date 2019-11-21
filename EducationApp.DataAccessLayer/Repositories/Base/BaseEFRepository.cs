@@ -23,17 +23,26 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
 
         public async Task<long> CreateAsync(TEntity entity)
         {
+           
             if (entity == null)
             {
                 return 0;
             }
             var resultId = await _applicationContext.AddAsync(entity);
-
-            var save = await _applicationContext.SaveChangesAsync();
-            if (save < 1)
+            try
             {
-                return 0;
+            var save = await _applicationContext.SaveChangesAsync();
+
             }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            //if (save < 1)
+            //{
+            //    return 0;
+            //}
 
             return resultId.Entity.Id;
         }
