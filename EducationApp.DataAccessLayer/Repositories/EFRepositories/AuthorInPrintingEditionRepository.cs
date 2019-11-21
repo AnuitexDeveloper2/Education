@@ -30,16 +30,13 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
         public async Task<bool> RemoveAuthorInPrintingEditionAsync(long id)
         {
-            var authorInPrintingEdition = _applicationContext.AuthorInPrintingEditions.Where(k => k.PrintingEditionId == id).ToList();
-            foreach (var item in authorInPrintingEdition)
+            var authorInPrintingEdition = await _applicationContext.AuthorInPrintingEditions.Where(k => k.AuthorId == id).ToListAsync();
+            _applicationContext.RemoveRange(authorInPrintingEdition);
+            var result = await _applicationContext.SaveChangesAsync();
+            //todo remove from DB
+            if (result<1)
             {
-
-                var resultRemove = _applicationContext.Remove(item); //todo remove from DB
-                if (resultRemove.State != EntityState.Deleted)
-                {
-                    return true;
-                }
-
+                return false;
             }
             return true;
         }

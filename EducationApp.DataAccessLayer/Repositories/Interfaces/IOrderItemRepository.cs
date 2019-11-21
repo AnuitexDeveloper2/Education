@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using EducationApp.DataAccessLayer.Entities;
+using EducationApp.DataAccessLayer.Repositories.Interfaces;
 
 namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
 {
-    interface IOrderItemRepository
+    public interface IOrderItemRepository : IBaseEFRRepository<OrderItem>
     {
     }
 }

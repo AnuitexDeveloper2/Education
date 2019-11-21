@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using EducationApp.DataAccessLayer.Helpers.PrintingEditionFilter;
 using EducationApp.DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using System;
 
 namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 {
@@ -29,7 +31,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                                        Price = printingEdition.Price,
                                        Desccription = printingEdition.Desccription,
                                        ProductType = printingEdition.ProductType,
-                                       Data = (from authorInPrintingEdition in _applicationContext.AuthorInPrintingEditions
+                                       Authors = (from authorInPrintingEdition in _applicationContext.AuthorInPrintingEditions
                                                   join author in _applicationContext.Authors on authorInPrintingEdition.AuthorId equals author.Id
                                                   where (authorInPrintingEdition.PrintingEditionId == printingEdition.Id)
                                                   select new Author
@@ -41,19 +43,21 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
             if (!string.IsNullOrWhiteSpace(printingEditionFilter.SearchString)) //todo add search by author
             {
-                printingEditions = printingEditions.Where(k => k.Title.Contains(printingEditionFilter.SearchString));
-            }
+                printingEditions = printingEditions.Where(k => k.Title.Contains(printingEditionFilter.SearchString)).Union(printingEditions.Where(f => f.Authors.Any(b => b.Name == printingEditionFilter.SearchString)));
+            }  
+            
             //todo use collection of types
             //todo change
-            var category = printingEditionFilter.TypeProduct;
-            foreach (var item in printingEditionFilter.TypeProduct)
+            List<TypeProduct> types = Enum.GetValues(typeof(TypeProduct)).OfType<TypeProduct>().Except(printingEditionFilter.TypeProduct).ToList();
+            foreach (var item in types)
             {
-                printingEditions = printingEditions.Where(k => k.ProductType == item);
+                printingEditions = printingEditions.Where(k => k.ProductType != item);
             }
-
-            printingEditions = printingEditionFilter.Price == Price.PriceAsc? printingEditions.OrderBy(k => k.Price): printingEditions.OrderBy(k => k.Price);
             //todo may be you can update sort logic withour If?
+            printingEditions = printingEditionFilter.Price == Price.PriceAsc ? printingEditions.OrderBy(k => k.Price) : printingEditions.OrderBy(k => k.Price);
+            var count = await printingEditions.CountAsync();
             printingEditions = printingEditions.Skip((printingEditionFilter.PageCount - 1) * printingEditionFilter.PageSize).Take(printingEditionFilter.PageSize); //todo where is count?
+            var result = new PrintingEditionModel { Data = printingEditions.ToList(), Count = count };
             return await printingEditions.ToListAsync();
         }
 

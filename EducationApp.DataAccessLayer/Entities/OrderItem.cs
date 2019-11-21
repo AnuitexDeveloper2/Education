@@ -3,11 +3,11 @@ using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 
 namespace EducationApp.DataAccessLayer.Entities
 {
-    public class OrderItems : BaseEntity
+    public class OrderItem : BaseEntity
     {
-        public int Amount { get; set; }
+        public decimal Amount { get; set; }
         public CurrencyType Currency { get; set; }
-        public int PrintingEditionId { get; set; }
+        public long PrintingEditionId { get; set; }
         public int OrderId { get; set; }
         public int Count { get; set; }
         public PrintingEdition PrintingEdition { get; set; }

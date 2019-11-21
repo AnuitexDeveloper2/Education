@@ -15,7 +15,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.PrintingEditions
                     Desccription = model.Desccription,
                     Price = model.Price,
                     TypeProduct = (EducationApp.BusinessLogicLayer.Models.Enums.Enums.TypeProduct)model.ProductType,
-                    Authors = AuthorsMapping.Map(model.Data)
+                    Authors = AuthorsMapping.Map(model.Authors)
                 };
             return printingEdition;
         }

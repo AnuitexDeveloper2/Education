@@ -4,8 +4,8 @@
     {
         public enum StatusType
         {
-            Paid,
-            Unpaid
+            Paid = 0,
+            Unpaid = 1
         }
     }
 }

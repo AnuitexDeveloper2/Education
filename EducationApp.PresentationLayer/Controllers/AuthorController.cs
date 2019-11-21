@@ -26,11 +26,11 @@ namespace EducationApp.PresentationLayer.Controllers
             var result = await _authorService.CreateAsync(model);
             return Ok(result);
         }
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost("removeAuthor")]
-        public async Task<ActionResult> RemoveAuthor(long id)
+        public async Task<ActionResult> RemoveAuthor(AuthorModelItem authorModel)
         {
-            var result =  await _authorService.RemoveAsync(id);
+            var result =  await _authorService.RemoveAsync(authorModel.Id);
             return Ok(result);
         }
         [Authorize(Roles = "Admin")]

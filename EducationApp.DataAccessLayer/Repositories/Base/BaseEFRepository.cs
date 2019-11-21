@@ -91,26 +91,5 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
             }
             return true;
         }
-
-        //public List<TEntity> GetEntity<TEntity>(TEntity entity, Expression<Func<TEntity, string>> getPropety)
-        //{
-        //    _applicationContext
-        //}
-
-        public IQueryable<TEntity> FilterContainsText<TEntity>(IQueryable<TEntity> entities, Expression<Func<TEntity, string>> getProperty, string text)
-        {
-            return entities.Where(Expression.Lambda<Func<TEntity, bool>>
-            (
-                body: Expression.Call
-                (
-                    getProperty.Body,
-                    nameof(string.Contains),
-                    Type.EmptyTypes,
-                    Expression.Constant(text)
-                ),
-                parameters: getProperty.Parameters.FirstOrDefault()
-            ));
-        }
-
     }
 }

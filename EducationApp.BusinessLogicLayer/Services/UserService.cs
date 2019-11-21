@@ -127,8 +127,9 @@ namespace EducationApp.BusinessLogicLayer.Services
         public async Task <UserModel> GetUsersAsync(UserFilterModel filter)
         {
             var getUsers = await _userRepository.GetUserAsync(UserMapper.Map(filter));
+            var user = getUsers.Data;
             var model = new UserModel();
-            for (int i = 0; i < getUsers.Data.Count; i++)
+            for (int i = 0; i < user.Count; i++)
             {
                 model.Items.Add(UserMapper.Map(getUsers.Data[i]));
             }

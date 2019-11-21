@@ -67,7 +67,7 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return resultModel;
             }
             var removeAIP = await _authorInPrintingEditionRepository.RemoveAuthorInPrintingEditionAsync(id);
-            if (removeAIP)
+            if (!removeAIP)
             {
                 resultModel.Errors.Add(errors.PIRemove);
             }

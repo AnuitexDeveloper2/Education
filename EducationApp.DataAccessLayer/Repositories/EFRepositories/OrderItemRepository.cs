@@ -5,7 +5,7 @@ using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 
 namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 {
-    public class OrderItemRepository : BaseEFRepository<OrderItems>, IOrderItemRepository
+    public class OrderItemRepository : BaseEFRepository<OrderItem>, IOrderItemRepository
     {
         public OrderItemRepository(ApplicationContext applicationContext) : base(applicationContext)
         {
