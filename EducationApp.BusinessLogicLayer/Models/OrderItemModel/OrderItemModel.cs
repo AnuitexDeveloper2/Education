@@ -5,6 +5,6 @@ namespace EducationApp.BusinessLogicLayer.Models.OrderItemModelItem
 {
     public class OrderItemModel : BaseModel 
     {
-        public ICollection<OrderItemModelItem> Items = new List<OrderItemModelItem>();
+        public ICollection<OrderItemModelItem> Items { get; set; } = new List<OrderItemModelItem>();
     }
 }

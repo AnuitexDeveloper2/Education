@@ -9,8 +9,8 @@ namespace EducationApp.BusinessLogicLayer.Models.Enums
 
         public enum OrderStatus
         {
-            Paid = 0,
-            Unpaid = 1
+            Unpaid = 0,
+            Paid = 1
         }
     }
 }

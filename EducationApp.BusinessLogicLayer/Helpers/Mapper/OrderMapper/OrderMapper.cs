@@ -1,19 +1,23 @@
-﻿using EducationApp.BusinessLogicLayer.Models.Payments;
+﻿using EducationApp.BusinessLogicLayer.Models.Orders;
 using EducationApp.DataAccessLayer.Entities;
 
 namespace EducationApp.BusinessLogicLayer.Helpers.Mapper.OrderMapper
 {
     public static class OrderMapper
     {
-        public static Order Map(PaymentsModel paymentModel,long id)
+        public static Order Map(OrdersItemModel ordersItemModel,long id)
         {
             var order = new Order
             {
-                Description = paymentModel.Description,
+                Description = ordersItemModel.Description,
                 PaymentId = id,
-                UserId = paymentModel.UserId
+                UserId = ordersItemModel.UserId,
+                Status = (DataAccessLayer.Entities.Enums.Enums.StatusType)ordersItemModel.OrderStatus
             };
             return order;
         }
     }
 }
+
+
+

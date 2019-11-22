@@ -6,7 +6,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.AuthorInPrintingEditio
 {
     public static class AuthorInPrintingEditionMapper
     {
-        public static List<AuthorInPrintingEdition> Map(long printingEditionId,List< AuthorModelItem> authors)
+        public static List<AuthorInPrintingEdition> Map(long printingEditionId,ICollection< AuthorModelItem> authors)
         {
             var result = new List<AuthorInPrintingEdition>();
             foreach (var item in authors)

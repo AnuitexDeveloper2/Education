@@ -44,11 +44,8 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
             if (!string.IsNullOrWhiteSpace(printingEditionFilter.SearchString)) //todo add search by author
             {
-                var searchByAuthor = _applicationContext.Authors.Where(k => k.Name == printingEditionFilter.SearchString).FirstOrDefault();
-                var PEId = await _authorInPrintingEditionRepository.GetPEId(searchByAuthor.Id);
-              
-                printingEditions = printingEditions.Where(k => EF.Functions.Like(k.Title, printingEditionFilter.SearchString));
-
+                var person = _applicationContext.Authors.Join(_applicationContext.AuthorInPrintingEditions, emp => emp.Id, per => per.Id, (emp, per) => new { emp, per }).Where(k => k.emp.Name == printingEditionFilter.SearchString);
+                var PE = printingEditions.Where(k => k.Authors.Equals(person)).Concat(printingEditions.Where(l => l.Title == printingEditionFilter.SearchString)) ;
             }
 
             //todo use collection of types

@@ -16,19 +16,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
         }
 
-        public async Task<bool> RemoveRange(List<AuthorInPrintingEdition> authorInPrintingEditions )
-        {
-            _applicationContext.RemoveRange(authorInPrintingEditions);
-            var result = await _applicationContext.SaveChangesAsync();
-            if (result<1)
-            {
-                return false;
-            }
-            return true;
-
-        }
-
-        public async Task<bool> RemoveAuthorInPrintingEditionAsync(long id)
+        public async Task<bool> RemoveByAuthorId(long id)
         {
             var authorInPrintingEdition = await _applicationContext.AuthorInPrintingEditions.Where(k => k.AuthorId == id).ToListAsync();
             _applicationContext.RemoveRange(authorInPrintingEdition);
@@ -40,15 +28,17 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             }
             return true;
         }
-        public async Task<List<long>> GetPEId(long id)
+
+        public async Task<bool> RemoveByPrintingEditionId(long id)
         {
-            var authorInPrintingEdition = await _applicationContext.AuthorInPrintingEditions.Where(k => k.AuthorId == id).ToListAsync();
-            var result = new List<long>();
-            foreach (var item in authorInPrintingEdition)
+            var authorInPrintingEdition = await _applicationContext.AuthorInPrintingEditions.Where(k => k.PrintingEditionId == id).ToListAsync();
+            _applicationContext.RemoveRange(authorInPrintingEdition);
+            var result = await _applicationContext.SaveChangesAsync();
+            if (result < 1)
             {
-                result.Add(item.PrintingEditionId);
+                return false;
             }
-            return result;
+            return true;
         }
     }
 }

@@ -14,9 +14,10 @@ namespace EducationApp.DataAccessLayer.Repositories.Interfaces
         Task<bool> UpdateAsync(TEntity entity);
         Task<TEntity> FindByIdAsync(long id);
         Task<bool> RemoveAsync(TEntity entity);
-        //IQueryable<TEntity> FilterContainsText<TEntity>(IQueryable<TEntity> entities, Expression<Func<TEntity, string>> getProperty, string text);
         List<TEntity> GetAll();
         Task<bool> CreateRangeAsync(List<TEntity> entity);
+        Task<bool> RemoveRange(List<TEntity> entity);
+
 
 
     }

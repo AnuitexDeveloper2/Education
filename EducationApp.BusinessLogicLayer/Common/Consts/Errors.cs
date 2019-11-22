@@ -30,6 +30,7 @@
             public const string PaymentCreate = "Payment create is failed";
             public const string OrderCreate = "OrderCreate is Failed";
             public const string OrderItemCreate = "OrderItem Create is failed";
+            public const string OrderItem = "Order is null";
         }
 
     }

@@ -8,8 +8,8 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
     public interface IAuthorInPrintingEditionRepository : IBaseEFRRepository<AuthorInPrintingEdition>
     {
 
-        Task<bool> RemoveAuthorInPrintingEditionAsync(long id);
-        Task<bool> RemoveRange(List<AuthorInPrintingEdition> authorInPrintingEditions);
-        Task<List<long>> GetPEId(long id);
+        Task<bool> RemoveByAuthorId(long id);
+       
+        Task<bool> RemoveByPrintingEditionId(long id);
     }
 }
