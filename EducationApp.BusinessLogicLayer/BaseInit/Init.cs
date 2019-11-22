@@ -4,7 +4,8 @@ using EducationApp.BusinessLogicLayer.Services;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Initialisation;
-using EducationApp.DataAccessLayer.Ropositories.Base;
+using EducationApp.DataAccessLayer.Repositories.EFRepositories;
+using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using EducationApp.DataAccessLayer.Ropositories.EFRepositories;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -39,6 +40,10 @@ namespace EducationApp.BusinessLogicLayer.BaseInit
             services.AddTransient<DataBaseInitialisation>();
             services.AddTransient<IEmailSender, EmailSender>();
 
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<IAccountService, AccountService>();

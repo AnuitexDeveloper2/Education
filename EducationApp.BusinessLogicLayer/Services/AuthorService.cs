@@ -80,7 +80,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             var authorsModel = new AuthorModel();
             for (int i = 0; i < authors.Count; i++)
             {
-                authorsModel.Items.Add(AuthorsMapping.Map(authors[i]));
+                authorsModel.Items.Add(AuthorsMapping.Map(authors.Data[i]));
             }
             return authorsModel;
         }

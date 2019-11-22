@@ -28,11 +28,19 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
                 return 0;
             }
             var resultId = await _applicationContext.AddAsync(entity);
+            try
+            {
 
             var save = await _applicationContext.SaveChangesAsync();
             if (save < 1)
             {
                 return 0;
+            }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
 
             return resultId.Entity.Id;

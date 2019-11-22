@@ -12,7 +12,7 @@ namespace EducationApp.DataAccessLayer.Models
         public string Desccription { get; set; }
         public decimal Price { get; set; }
         public CurrencyType CurrencyType { get; set; }
-        public List<Author> Authors { get; set; }
+        public List<AuthorModel> Authors { get; set; }
         public TypeProduct ProductType { get; set; }
         
     }

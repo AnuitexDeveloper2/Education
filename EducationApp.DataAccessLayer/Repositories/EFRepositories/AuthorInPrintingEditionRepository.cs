@@ -40,5 +40,15 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             }
             return true;
         }
+        public async Task<List<long>> GetPEId(long id)
+        {
+            var authorInPrintingEdition = await _applicationContext.AuthorInPrintingEditions.Where(k => k.AuthorId == id).ToListAsync();
+            var result = new List<long>();
+            foreach (var item in authorInPrintingEdition)
+            {
+                result.Add(item.PrintingEditionId);
+            }
+            return result;
+        }
     }
 }

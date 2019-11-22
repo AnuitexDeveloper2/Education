@@ -12,5 +12,6 @@ namespace EducationApp.DataAccessLayer.Entities
         public int Count { get; set; }
         public PrintingEdition PrintingEdition { get; set; }
         public Order Orders { get; set; }
+        public string UserName { get; set; }
     }
 }

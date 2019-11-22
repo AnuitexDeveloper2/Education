@@ -16,9 +16,10 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 {
     public class PrintingEditionRepository : BaseEFRepository<PrintingEdition>, IPrintingEditionRepository
     {
-        public PrintingEditionRepository(ApplicationContext applicationContext) : base(applicationContext)
+        private readonly IAuthorInPrintingEditionRepository _authorInPrintingEditionRepository;
+        public PrintingEditionRepository(ApplicationContext applicationContext, IAuthorInPrintingEditionRepository authorInPrintingEditionRepository) : base(applicationContext)
         {
-
+            _authorInPrintingEditionRepository = authorInPrintingEditionRepository;
         }
 
         public async Task<List<PrintingEditionModel>> GetPrintingEditionAsync(PrintingEditionFilterModel printingEditionFilter)
@@ -34,7 +35,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                                        Authors = (from authorInPrintingEdition in _applicationContext.AuthorInPrintingEditions
                                                   join author in _applicationContext.Authors on authorInPrintingEdition.AuthorId equals author.Id
                                                   where (authorInPrintingEdition.PrintingEditionId == printingEdition.Id)
-                                                  select new Author
+                                                  select new AuthorModel
                                                   {
                                                       Id = author.Id,
                                                       Name = author.Name
@@ -43,9 +44,13 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
             if (!string.IsNullOrWhiteSpace(printingEditionFilter.SearchString)) //todo add search by author
             {
-                printingEditions = printingEditions.Where(k => k.Title.Contains(printingEditionFilter.SearchString)).Union(printingEditions.Where(f => f.Authors.Any(b => b.Name == printingEditionFilter.SearchString)));
-            }  
-            
+                var searchByAuthor = _applicationContext.Authors.Where(k => k.Name == printingEditionFilter.SearchString).FirstOrDefault();
+                var PEId = await _authorInPrintingEditionRepository.GetPEId(searchByAuthor.Id);
+              
+                printingEditions = printingEditions.Where(k => EF.Functions.Like(k.Title, printingEditionFilter.SearchString));
+
+            }
+
             //todo use collection of types
             //todo change
             List<TypeProduct> types = Enum.GetValues(typeof(TypeProduct)).OfType<TypeProduct>().Except(printingEditionFilter.TypeProduct).ToList();
@@ -60,8 +65,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             var result = new PrintingEditionModel { Data = printingEditions.ToList(), Count = count };
             return await printingEditions.ToListAsync();
         }
-
-
-
     }
 }
+
+

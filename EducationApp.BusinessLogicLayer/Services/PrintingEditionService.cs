@@ -36,7 +36,7 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return resultModel;
             }
 
-            var authorPrintingEdition = AuthorInPrintingEditionMapper.Map(printingEditionId,model.Authors); //todo use mapper
+            var authorPrintingEdition = AuthorInPrintingEditionMapper.Map(printingEditionId,model.Authors.Items.ToList()); //todo use mapper
             var result = await _authorInPrintingEditionRepository.CreateRangeAsync(authorPrintingEdition); //todo see to AddRangeAsync
             if (!result)
             {
@@ -67,30 +67,30 @@ namespace EducationApp.BusinessLogicLayer.Services
         public async Task<BaseModel> UpdateAsync(PrintingEditionModelItem printingEditionModelItem)
         {
             var errorsModel = new BaseModel();
-            var printingEdition = await _printingEditionRepository.FindByIdAsync(printingEditionModelItem.Id);
-            if (printingEdition == null || printingEdition.IsRemoved)
-            {
-                errorsModel.Errors.Add(errors.PINotFound);
-            }
-            printingEdition = PrintingEditionMaping.Map(printingEdition, printingEditionModelItem);
-            var result = await _printingEditionRepository.UpdateAsync(printingEdition);
-            if (!result)
-            {
-                errorsModel.Errors.Add(errors.PIUpdate);
-                return errorsModel;
-            }
-            var oldAuthorInPE = AuthorInPrintingEditionMapper.Map(printingEdition.Id, printingEditionModelItem.Authors);
-            var removeAuthorPE = await _authorInPrintingEditionRepository.RemoveRange(oldAuthorInPE);
-            if (!removeAuthorPE)
-            {
-                errorsModel.Errors.Add(errors.AuthorInPERemove);
-            }
-            var newAuthorInPE = AuthorInPrintingEditionMapper.Map(printingEdition.Id, printingEditionModelItem.Authors);
-            var CreateAuthorPE = await _authorInPrintingEditionRepository.CreateRangeAsync(newAuthorInPE);
-            if (!CreateAuthorPE)
-            {
-                errorsModel.Errors.Add(errors.AuthorInPECreate);
-            }
+            //var printingEdition = await _printingEditionRepository.FindByIdAsync(printingEditionModelItem.Id);
+            //if (printingEdition == null || printingEdition.IsRemoved)
+            //{
+            //    errorsModel.Errors.Add(errors.PINotFound);
+            //}
+            //printingEdition = PrintingEditionMaping.Map(printingEdition, printingEditionModelItem);
+            //var result = await _printingEditionRepository.UpdateAsync(printingEdition);
+            //if (!result)
+            //{
+            //    errorsModel.Errors.Add(errors.PIUpdate);
+            //    return errorsModel;
+            //}
+            //var oldAuthorInPE = AuthorInPrintingEditionMapper.Map(printingEdition.Id, printingEditionModelItem.Authors);
+            //var removeAuthorPE = await _authorInPrintingEditionRepository.RemoveRange(oldAuthorInPE);
+            //if (!removeAuthorPE)
+            //{
+            //    errorsModel.Errors.Add(errors.AuthorInPERemove);
+            //}
+            //var newAuthorInPE = AuthorInPrintingEditionMapper.Map(printingEdition.Id, printingEditionModelItem.Authors);
+            //var CreateAuthorPE = await _authorInPrintingEditionRepository.CreateRangeAsync(newAuthorInPE);
+            //if (!CreateAuthorPE)
+            //{
+            //    errorsModel.Errors.Add(errors.AuthorInPECreate);
+            //}
                 //todo if if
                     //todo mapper, change this logic
             

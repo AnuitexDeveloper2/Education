@@ -10,5 +10,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
 
         Task<bool> RemoveAuthorInPrintingEditionAsync(long id);
         Task<bool> RemoveRange(List<AuthorInPrintingEdition> authorInPrintingEditions);
+        Task<List<long>> GetPEId(long id);
     }
 }

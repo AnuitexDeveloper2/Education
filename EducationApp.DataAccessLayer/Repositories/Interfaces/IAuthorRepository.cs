@@ -9,6 +9,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
 {
     public interface IAuthorRepository :IBaseEFRRepository<Author>
     {
-       Task <List<AuthorModelItem>> GetAuthorsAsync(AuthorFilterModel authorFilterModel);
+       Task <AuthorModelItem> GetAuthorsAsync(AuthorFilterModel authorFilterModel);
     }
 }
