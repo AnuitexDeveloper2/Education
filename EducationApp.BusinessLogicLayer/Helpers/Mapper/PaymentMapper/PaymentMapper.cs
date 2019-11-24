@@ -1,4 +1,5 @@
 ﻿using EducationApp.DataAccessLayer.Entities;
+using System;
 
 namespace EducationApp.BusinessLogicLayer.Helpers.Mapper.PaymentMapper
 {
@@ -8,7 +9,8 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapper.PaymentMapper
         {
             var payment = new Payment
             {
-                TransactionId = id
+                TransactionId = id,
+                Date = DateTime.Now
             };
             return payment;
         }

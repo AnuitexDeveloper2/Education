@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 
 namespace EducationApp.DataAccessLayer.Models

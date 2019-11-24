@@ -31,7 +31,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             {
                 return false;
             }
-            user.UserName = user.FirstName + user.LastName;
+            user.UserName = user.FirstName /*+ user.LastName*/;
             var createUser = await _userManager.CreateAsync(user, password);
             if (!createUser.Succeeded)
             {

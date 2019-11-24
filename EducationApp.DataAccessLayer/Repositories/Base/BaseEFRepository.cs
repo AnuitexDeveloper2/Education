@@ -27,21 +27,15 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
             {
                 return 0;
             }
+          
             var resultId = await _applicationContext.AddAsync(entity);
-            try
-            {
 
             var save = await _applicationContext.SaveChangesAsync();
             if (save < 1)
             {
                 return 0;
             }
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+          
 
             return resultId.Entity.Id;
         }
@@ -89,15 +83,36 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
             }
             return result;
         }
-        public async Task<bool> CreateRangeAsync(List<TEntity> entity)
+        public async Task<bool> CreateRangeAsync(List<TEntity> entities)
         {
-            await _applicationContext.AddRangeAsync(entity);
+            try
+            {
+
+            await _applicationContext.AddRangeAsync(entities);
+            var result = await _applicationContext.SaveChangesAsync();
+            if (result < 1)
+            {
+                return false;
+            }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return true;
+        }
+
+        public async Task<bool> RemoveRange(List<TEntity> entities)
+        {
+            _applicationContext.RemoveRange(entities);
             var result = await _applicationContext.SaveChangesAsync();
             if (result < 1)
             {
                 return false;
             }
             return true;
+
         }
     }
 }

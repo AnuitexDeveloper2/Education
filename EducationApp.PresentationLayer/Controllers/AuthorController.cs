@@ -19,7 +19,7 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         //todo authorize attrs
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost("createAuthor")]
         public async Task<ActionResult> CreateAuthor(AuthorModelItem model)
         {

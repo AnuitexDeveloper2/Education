@@ -22,7 +22,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             _authorInPrintingEditionRepository = authorInPrintingEditionRepository;
         }
 
-        public async Task<List<PrintingEditionModel>> GetPrintingEditionAsync(PrintingEditionFilterModel printingEditionFilter)
+        public async Task<PrintingEditionModel> GetPrintingEditionAsync(PrintingEditionFilterModel printingEditionFilter)
         {
             var printingEditions = from printingEdition in _applicationContext.PrintingEditions
                                    select new Models.PrintingEditionModel
@@ -35,7 +35,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                                        Authors = (from authorInPrintingEdition in _applicationContext.AuthorInPrintingEditions
                                                   join author in _applicationContext.Authors on authorInPrintingEdition.AuthorId equals author.Id
                                                   where (authorInPrintingEdition.PrintingEditionId == printingEdition.Id)
-                                                  select new AuthorModel
+                                                  select new Author
                                                   {
                                                       Id = author.Id,
                                                       Name = author.Name
@@ -44,26 +44,40 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
             if (!string.IsNullOrWhiteSpace(printingEditionFilter.SearchString)) //todo add search by author
             {
-                var searchByAuthor = _applicationContext.Authors.Where(k => k.Name == printingEditionFilter.SearchString).FirstOrDefault();
-                var PEId = await _authorInPrintingEditionRepository.GetPEId(searchByAuthor.Id);
-              
-                printingEditions = printingEditions.Where(k => EF.Functions.Like(k.Title, printingEditionFilter.SearchString));
 
+                var author = _applicationContext.Authors.Where(k => k.Name == printingEditionFilter.SearchString).FirstOrDefault();
+                var AInPE = _applicationContext.AuthorInPrintingEditions.Where(a => a.AuthorId == author.Id);
+                var List = new List<PrintingEditionModel>();
+                foreach (var item in AInPE)
+                {
+                    List.Add(printingEditions.Where(j => j.Id == item.PrintingEditionId).FirstOrDefault());
+                }
+                printingEditions = printingEditions
+                    .Where(k => k.Title == printingEditionFilter.SearchString)
+                    .ToList()
+                    .Concat(List)
+                    .AsQueryable();
             }
 
             //todo use collection of types
             //todo change
-            List<TypeProduct> types = Enum.GetValues(typeof(TypeProduct)).OfType<TypeProduct>().Except(printingEditionFilter.TypeProduct).ToList();
+            List<TypeProduct> types = Enum.GetValues(typeof(TypeProduct))
+                .OfType<TypeProduct>()
+                .Except(printingEditionFilter.TypeProduct)
+                .ToList();
             foreach (var item in types)
             {
                 printingEditions = printingEditions.Where(k => k.ProductType != item);
             }
             //todo may be you can update sort logic withour If?
-            printingEditions = printingEditionFilter.Price == Price.PriceAsc ? printingEditions.OrderBy(k => k.Price) : printingEditions.OrderBy(k => k.Price);
-            var count = await printingEditions.CountAsync();
-            printingEditions = printingEditions.Skip((printingEditionFilter.PageCount - 1) * printingEditionFilter.PageSize).Take(printingEditionFilter.PageSize); //todo where is count?
+            printingEditions = printingEditionFilter.Price == Price.PriceAsc ? printingEditions.OrderBy(k => k.Price) : printingEditions
+                .OrderBy(k => k.Price);
+            var count =  printingEditions.Count();
+            //printingEditions = printingEditions
+            //    .Skip((printingEditionFilter.PageCount - 1) * printingEditionFilter.PageSize)
+            //    .Take(printingEditionFilter.PageSize); //todo where is count?
             var result = new PrintingEditionModel { Data = printingEditions.ToList(), Count = count };
-            return await printingEditions.ToListAsync();
+            return  result;
         }
     }
 }

@@ -13,8 +13,11 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapper
             {
                 var result = new OrderItem
                 {
-                    PrintingEditionId = item.printingEditionId,
+                    PrintingEditionId = item.PrintingEditionId,
                     Count = item.Count,
+                    OrderId = item.OrderId,
+                    Amount = item.Amount,
+                    Currency = (DataAccessLayer.Entities.Enums.Enums.CurrencyType)item.Currency
                 };
                 orderItem.Add(result);
             }

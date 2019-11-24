@@ -1,6 +1,7 @@
-﻿using EducationApp.BusinessLogicLayer.Models.Payments;
-using EducationApp.BusinessLogicLayer.Services;
+﻿using EducationApp.BusinessLogicLayer.Models.Orders;
+using EducationApp.BusinessLogicLayer.Models.Payments;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
+using EducationApp.DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -18,9 +19,9 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [HttpPost("createOrder")]
-        public async Task<ActionResult> CreateOrder(PaymentsModel paymentsModel)
+        public async Task<ActionResult> CreateOrder(OrdersItemModel ordersItemModel)
         {
-            var result = await _orderService.CreateAsync(paymentsModel);
+            var result = await _orderService.CreateAsync(ordersItemModel);
             return Ok(result);
         }
     }
