@@ -21,14 +21,19 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         public async Task<List<OrderModel>> GetOrderAsync(AuthorFilterModel authorFilterModel)
         {
             var orders = from order in _applicationContext.Orders
-                         join printingEdition in _applicationContext.PrintingEditions on order.Id equals printingEdition.Id
                          join user in _applicationContext.Users on order.Id equals user.Id
+                         join printingEdition in _applicationContext.PrintingEditions on order.Id equals printingEdition.Id
+                         join orderItem in _applicationContext.OrderItems on order.Id equals orderItem.OrderId
                          select new OrderModel
                          {
                              Id = order.Id,
                              Title = printingEdition.Title,
                              TypeProduct = printingEdition.ProductType,
                              Status = order.Status,
+                             Count = orderItem.Count,
+                             Amount = orderItem.Amount,
+                             
+                             
                          };
             return orders.ToList();
         }
