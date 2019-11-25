@@ -1,4 +1,4 @@
-using EducationApp.BusinessLogicLayer.BaseInit;
+﻿using EducationApp.BusinessLogicLayer.BaseInit;
 using EducationApp.BusinessLogicLayer.Common;
 using EducationApp.BusinessLogicLayer.Helpers;
 using EducationApp.DataAccessLayer.Initialisation;
@@ -51,6 +51,7 @@ namespace EducationApp.PresentationLayer
                 };
             });
             services.AddMvc(option => option.EnableEndpointRouting = false);
+            services.AddSwaggerGen();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataBaseInitialisation initializer, IEmailSender emailSender)
@@ -74,6 +75,8 @@ namespace EducationApp.PresentationLayer
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
         }
     }

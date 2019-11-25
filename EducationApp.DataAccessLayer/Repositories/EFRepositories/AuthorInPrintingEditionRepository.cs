@@ -16,17 +16,13 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
         }
 
-        public async Task<bool> RemoveByAuthorId(long id)
+        public async Task<bool> RemoveByAuthorId(long id) //todo get Expression as param, remove copypaste
         {
             var authorInPrintingEdition = await _applicationContext.AuthorInPrintingEditions.Where(k => k.AuthorId == id).ToListAsync();
+            //todo check for null
             _applicationContext.RemoveRange(authorInPrintingEdition);
             var result = await _applicationContext.SaveChangesAsync();
-            //todo remove from DB
-            if (result<1)
-            {
-                return false;
-            }
-            return true;
+            return result < 1 ? false : true;
         }
 
         public async Task<bool> RemoveByPrintingEditionId(long id)

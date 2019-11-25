@@ -6,6 +6,7 @@ namespace EducationApp.BusinessLogicLayer.Models.Orders
     public class OrdersModel : BaseModel
     {
         public ICollection<OrdersItemModel> Items = new List<OrdersItemModel>();
+        public int ItemsCount { get; set; }
 
     }
 }

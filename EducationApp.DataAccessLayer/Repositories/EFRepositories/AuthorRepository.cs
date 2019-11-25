@@ -18,7 +18,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         public AuthorRepository(ApplicationContext applicationContext) : base(applicationContext)
         {
         }
-        public async Task <AuthorModelItem> GetAuthorsAsync(AuthorFilterModel authorFilterModel) //toao add async
+        public async Task <AuthorModelItem> GetAuthorsAsync(AuthorFilterModel authorFilterModel)
         {
             var author = from authors in _applicationContext.Authors
                          select new AuthorModelItem
@@ -31,19 +31,21 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                                                  select new PrintingEdition
                                                  {
                                                      Title = printingEdition.Title
-                                                 }) //todo check without .ToList()
+                                                 })
                          };
-            //todo sort by id
             if (!string.IsNullOrEmpty(authorFilterModel.SearchString))
             {
                 author = author.Where(k => k.Name.Contains(authorFilterModel.SearchString));
             }
             author = authorFilterModel.SortById == AuthorSortById.IdAsc ? author.OrderBy(k => k.Id) : author.OrderByDescending(k => k.Id);
             var count = await author.CountAsync();
-            author = author.Skip((authorFilterModel.PageCount - 1) * authorFilterModel.PageSize).Take(authorFilterModel.PageSize); //todo where count
-            var authorModelItems = new AuthorModelItem { Data = author.ToList(), Count = count };
-
-            return authorModelItems;
+            author = author.Skip((authorFilterModel.PageCount - 1) * authorFilterModel.PageSize).Take(authorFilterModel.PageSize);
+            var resultModel = new AuthorModelItem
+            { 
+                Data = author.ToList(),
+                Count = count 
+            };
+            return resultModel;
 
         }
 

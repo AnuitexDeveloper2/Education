@@ -6,7 +6,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapper
 {
     public static class OrderItemMapper
     {
-        public static List<OrderItem> Map(OrderItemModel orderItemModel)
+        public static List<OrderItem> Map(OrderItemModel orderItemModel,long id)
         {
             var orderItem = new List<OrderItem>();
             foreach (var item in orderItemModel.Items)
@@ -15,7 +15,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapper
                 {
                     PrintingEditionId = item.PrintingEditionId,
                     Count = item.Count,
-                    OrderId = item.OrderId,
+                    OrderId = id,
                     Amount = item.Amount,
                     Currency = (DataAccessLayer.Entities.Enums.Enums.CurrencyType)item.Currency
                 };

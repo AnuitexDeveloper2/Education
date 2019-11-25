@@ -35,7 +35,6 @@ namespace EducationApp.BusinessLogicLayer.Services
         public async Task<BaseModel> UpdateAsync(long id)
         {
             var resultModel = new BaseModel();
-            //todo get entity from DB or Return model with Id from client
             var author = await _authorRepository.FindByIdAsync(id);
             if (author == null)
             {
@@ -53,20 +52,19 @@ namespace EducationApp.BusinessLogicLayer.Services
         public async Task<BaseModel> RemoveAsync(long id)
         {
             var resultModel = new BaseModel();
-             //todo remove this mapping
             var excistAuthor = await _authorRepository.FindByIdAsync(id);
             if (excistAuthor == null)
             {
                 resultModel.Errors.Add(errors.AuthorNotFound);
                 return resultModel;
             }
-            var removeAuthor = await _authorRepository.RemoveAsync(excistAuthor); //todo how about AuthorInPE?
+            var removeAuthor = await _authorRepository.RemoveAsync(excistAuthor); //todo rename to result
             if (!removeAuthor)
             {
                 resultModel.Errors.Add(errors.AuthorRemove);
                 return resultModel;
             }
-            var removeAIP = await _authorInPrintingEditionRepository.RemoveByAuthorId(id);
+            var removeAIP = await _authorInPrintingEditionRepository.RemoveByAuthorId(id); //todo rename
             if (!removeAIP)
             {
                 resultModel.Errors.Add(errors.PIRemove);
@@ -76,7 +74,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
         public async Task<AuthorModel> GetAuthorsAsync(AuthorFilterModel authorFilterModel)
         {
-            var authors = await _authorRepository.GetAuthorsAsync(authorFilterModel); //todo add await
+            var authors = await _authorRepository.GetAuthorsAsync(authorFilterModel);
             var authorsModel = new AuthorModel();
             for (int i = 0; i < authors.Count; i++)
             {

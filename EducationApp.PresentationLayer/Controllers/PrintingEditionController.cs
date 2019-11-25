@@ -17,28 +17,28 @@ namespace EducationApp.PresentationLayer.Controllers
             _printingEditionService = printingEditionService;
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost("createPrintingEdition")]
         public async Task<ActionResult> CreatePrintingEdition(PrintingEditionModelItem printingEditonModelItem)
         {
            var result = await _printingEditionService.CreateAsync(printingEditonModelItem);
-            return Ok(result); //todo where result
-        }
-
-        //[Authorize(Roles = "Admin")]
-        [HttpPost("removePrintingEdition")]
-        public async Task<ActionResult> RemovePrintingEdition(PrintingEditionModelItem printingEditionModel)
-        {
-            var result = await _printingEditionService.RemoveAsync(printingEditionModel.Id);
             return Ok(result);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
+        [HttpPost("removePrintingEdition")]
+        public async Task<ActionResult> RemovePrintingEdition(PrintingEditionModelItem printingEditonModelItem)
+        {
+            var result = await _printingEditionService.RemoveAsync(printingEditonModelItem.Id);
+            return Ok(result);
+        }
+
+        [Authorize(Roles = "Admin")]
         [HttpPost("updatePrintingEdition")]
         public async Task<ActionResult> UpdatePrintingEdition(PrintingEditionModelItem printingEditionModelItem)
         {
             var result = await _printingEditionService.UpdateAsync(printingEditionModelItem);
-            return Ok(result); //todo where result
+            return Ok(result);
         }
 
         [HttpGet("getPrintingEditon")]

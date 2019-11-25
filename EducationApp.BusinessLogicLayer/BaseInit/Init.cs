@@ -53,6 +53,7 @@ namespace EducationApp.BusinessLogicLayer.BaseInit
             services.AddScoped<IPrintingEditionService, PrintingEditionService>();
             services.AddScoped<IAuthorInPrintingEditionRepository, AuthorInPrintingEditionRepository>();
 
+           
         }
     }
 }

@@ -31,6 +31,8 @@
             public const string OrderCreate = "OrderCreate is Failed";
             public const string OrderItemCreate = "OrderItem Create is failed";
             public const string OrderItem = "Order is null";
+            public static string OrderIsNotFound = "Order Is Not Found";
+            public static string NotPaid = "Order is Not Paid";
         }
 
     }

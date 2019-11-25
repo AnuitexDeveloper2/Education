@@ -7,6 +7,7 @@ namespace EducationApp.BusinessLogicLayer.Models.Payments
     public class PaymentsModel : BaseModel
     {
         public long TransactionId { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } //todo remove
+        public long Id { get; set; } //todo remove?
     }
 }

@@ -36,9 +36,9 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return resultModel;
             }
 
-            var authorPrintingEdition = AuthorInPrintingEditionMapper.Map(printingEditionId, model.Authors.Items.ToList()); //todo use mapper
-            var result = await _authorInPrintingEditionRepository.CreateRangeAsync(authorPrintingEdition); //todo see to AddRangeAsync
-            if (!result)
+            var authorPrintingEdition = AuthorInPrintingEditionMapper.Map(printingEditionId, model.Authors.Items.ToList()); //todo rename ...s
+            var hasCreated = await _authorInPrintingEditionRepository.CreateRangeAsync(authorPrintingEdition);
+            if (!hasCreated)
             {
                 resultModel.Errors.Add(errors.Create);
             }
@@ -66,51 +66,47 @@ namespace EducationApp.BusinessLogicLayer.Services
 
         public async Task<BaseModel> UpdateAsync(PrintingEditionModelItem printingEditionModelItem)
         {
-            var errorsModel = new BaseModel();
+            var resultModel = new BaseModel();
             var printingEdition = await _printingEditionRepository.FindByIdAsync(printingEditionModelItem.Id);
             if (printingEdition == null || printingEdition.IsRemoved)
             {
-                errorsModel.Errors.Add(errors.PINotFound);
-                return errorsModel;
+                resultModel.Errors.Add(errors.PINotFound);
+                return resultModel;
             }
             printingEdition = PrintingEditionMaping.Map(printingEdition, printingEditionModelItem);
             var removeAuthorInPE = await _authorInPrintingEditionRepository.RemoveByPrintingEditionId(printingEdition.Id);
             if (!removeAuthorInPE)
             {
-                errorsModel.Errors.Add(errors.AuthorInPERemove);
-                return errorsModel;
+                resultModel.Errors.Add(errors.AuthorInPERemove);
+                return resultModel;
             }
             var result = await _printingEditionRepository.UpdateAsync(printingEdition);
             if (!result)
             {
-                errorsModel.Errors.Add(errors.PIUpdate);
-                return errorsModel;
+                resultModel.Errors.Add(errors.PIUpdate);
+                return resultModel;
             }
             var newAuthorInPE = AuthorInPrintingEditionMapper.Map(printingEdition.Id, printingEditionModelItem.Authors.Items);
-            var CreateAuthorPE = await _authorInPrintingEditionRepository.CreateRangeAsync(newAuthorInPE);
-            if (!CreateAuthorPE)
+            var createAuthorPE = await _authorInPrintingEditionRepository.CreateRangeAsync(newAuthorInPE);
+            if (!createAuthorPE)
             {
-                errorsModel.Errors.Add(errors.AuthorInPECreate);
+                resultModel.Errors.Add(errors.AuthorInPECreate);
             }
-            //todo if if
-            //todo mapper, change this logic
-
-            return errorsModel;
+            return resultModel;
         }
 
         public async Task<PrintingEditionModel> GetPrintingEditionAsync(PrintingEditionFilterState state)
         {
             var filterModel = PrintingEditionFilterStateMapping.Map(state);
-            
-                var printingEdition = await _printingEditionRepository.GetPrintingEditionAsync(filterModel);
-                var modelItems = new PrintingEditionModel();
-                for (int i = 0; i < printingEdition.Data.Count(); i++)
-                {
-                    modelItems.Items.Add(PrintingEditionFilterMapping.Map(printingEdition.Data[i]));
-                }
+            var printingEdition = await _printingEditionRepository.GetPrintingEditionAsync(filterModel);
+            var modelItems = new PrintingEditionModel();
+            for (int i = 0; i < printingEdition.Data.Count(); i++)
+            {
+                modelItems.Items.Add(PrintingEditionFilterMapping.Map(printingEdition.Data[i]));
+            }
             modelItems.Count = printingEdition.Count;
-            
-           
+
+
             return modelItems;
         }
     }

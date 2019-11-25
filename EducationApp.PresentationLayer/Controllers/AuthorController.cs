@@ -18,15 +18,15 @@ namespace EducationApp.PresentationLayer.Controllers
             _authorService = authorService;
         }
 
-        //todo authorize attrs
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost("createAuthor")]
         public async Task<ActionResult> CreateAuthor(AuthorModelItem model)
         {
             var result = await _authorService.CreateAsync(model);
             return Ok(result);
         }
-        //[Authorize(Roles = "Admin")]
+
+        [Authorize(Roles = "Admin")]
         [HttpPost("removeAuthor")]
         public async Task<ActionResult> RemoveAuthor(AuthorModelItem authorModel)
         {

@@ -40,7 +40,8 @@ namespace EducationApp.PresentationLayer.Controllers
             var result = await _userService.RemoveUserAsync(id);
             return Ok(result);
         }
-        //[Authorize(Roles = "User")]
+
+        [Authorize(Roles = "User")]
         [HttpPost("EditProfile")]
         public async Task<ActionResult> EditProfile(UserProfileEditModel model)
         {
