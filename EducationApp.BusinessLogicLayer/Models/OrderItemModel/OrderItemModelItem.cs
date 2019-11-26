@@ -11,6 +11,6 @@ namespace EducationApp.BusinessLogicLayer.Models.OrderItemModelItem
         public long PrintingEditionId { get; set; }
         public long OrderId { get; set; }
         public int Count { get; set; }
-        public OrderStatus Status { get; set; }
+        public OrderStatusType Status { get; set; }
     }
 }

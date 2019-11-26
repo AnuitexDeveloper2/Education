@@ -1,6 +1,7 @@
 ﻿using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Helpers.PrintingEditionFilter;
 using EducationApp.DataAccessLayer.Models;
+using EducationApp.DataAccessLayer.Models.Base;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
 {
     public interface IPrintingEditionRepository : IBaseEFRRepository<PrintingEdition>
     {
-        Task<PrintingEditionModel> GetPrintingEditionAsync(Helpers.PrintingEditionFilter.PrintingEditionFilterModel printingEditionFilterModel);
+        Task<ResponseModel<PrintingEdition>> GetPrintingEditionsAsync(PrintingEditionFilterModel printingEditionFilterModel);
     }
 }

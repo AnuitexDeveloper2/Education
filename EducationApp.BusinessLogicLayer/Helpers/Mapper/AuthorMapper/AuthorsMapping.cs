@@ -6,16 +6,16 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors
 {
     public static class AuthorsMapping
     {
-
-        public static Author Map(this AuthorModelItem authorModelItem)
+        public static Author Map(this AuthorModelItem author)
         {
-            var author = new Author
+            var authorModelItem = new Author
             {
-                Name = authorModelItem.Name,
-                Id = authorModelItem.Id,
+                Name = author.Name,
+                Id = author.Id,
             };
-            return author;
+            return authorModelItem;
         }
+
 
         public static AuthorModelItem Map(this Author author)
         {
@@ -24,10 +24,15 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors
                 Name = author.Name,
                 Id = author.Id,
             };
+            authorModelItem.BooksTitle = new List<string>();
+            foreach (var item in author.PrintingEditions)
+            {
+                authorModelItem.BooksTitle.Add(item.Title);
+            }
             return authorModelItem;
         }
 
-        public static AuthorModel Map(this List<Author> authors)
+        public static AuthorModel Map(this IEnumerable<Author> authors)
         {
             AuthorModel authorsModel = new AuthorModel();
             foreach (var item in authors)

@@ -9,7 +9,7 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
     public interface IOrderService
     {
         Task<BaseModel> CreateAsync(OrdersItemModel ordersItemModel);
-        Task<OrdersPresentationModel> GetOrder(OrderFilterModel orderFilterModel);
+        Task<OrdersPresentationModel> GetOrdersAsync(OrderFilterModel orderFilterModel);
         Task<BaseModel> PaymentAsync(PaymentsModel paymentsModel);
     }
 }

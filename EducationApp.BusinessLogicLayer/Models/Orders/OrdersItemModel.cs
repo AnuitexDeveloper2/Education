@@ -11,7 +11,7 @@ namespace EducationApp.BusinessLogicLayer.Models.Orders
         public long UserId { get; set; }
         public  PaymentsModel PaymentModel { get; set; }
         public OrderItemModel OrderItemModel{get;set;}
-        public OrderStatus OrderStatus { get; set; }
+        public OrderStatusType OrderStatus { get; set; }
        public long TransactionId { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Helpers.OrderFilterModel;
 using EducationApp.DataAccessLayer.Models;
+using EducationApp.DataAccessLayer.Models.Base;
 using EducationApp.DataAccessLayer.Ropositories.Base;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -24,20 +25,19 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             var orders = from order in _applicationContext.Orders
                          join user in _applicationContext.Users on order.UserId equals user.Id
                          join orderItem in _applicationContext.OrderItems on order.Id equals orderItem.OrderId
-                         select new OrderModel
+                         select new Order
                          {
                              Id = order.Id,
-                             DateTime = orderItem.Date,
-                             Status = order.Status,
+                             Date = orderItem.Date,
+                             Status = order.OrderStatusType,
                              UserName = user.UserName,
                              UserEmail = user.Email,
                              CountOrdersModel = orderItem.Count,
-                             PrintingEdition = _applicationContext.PrintingEditions.Where(k => k.Id == orderItem.Id).ToList(),
                          };
             var test = orders.ToList();
             if (orderFilterModel.Id > 0)
             {
-                orders = orders.Where(k => k.Id == orderFilterModel.Id).OrderBy(l => l.DateTime);
+                orders = orders.Where(k => k.Id == orderFilterModel.Id).OrderBy(l => l.Date);
                 var myOrders = new OrderModel { Data = await orders.ToListAsync(), Count = orders.Count() };
                 return myOrders;
             }
@@ -47,15 +47,15 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             }
             if (orderFilterModel.SortOrder == SortOrder.Data)
             {
-                orders = orderFilterModel.SortType == SortType.Increase ? orders.OrderBy(k => k.DateTime) : orders.OrderByDescending(k => k.DateTime);
+                orders = orderFilterModel.SortType == SortType.Increase ? orders.OrderBy(k => k.Date) : orders.OrderByDescending(k => k.Date);
             }
             if (orderFilterModel.SortOrder == SortOrder.Amount)
             {
                 orders = orderFilterModel.SortType == SortType.Increase ? orders.OrderBy(k => k.Amount) : orders.OrderByDescending(k => k.Amount);
             }
 
-            List<StatusType> types = Enum.GetValues(typeof(StatusType))
-               .OfType<StatusType>()
+            List<OrderStatusType> types = Enum.GetValues(typeof(OrderStatusType))
+               .OfType<OrderStatusType>()
                .Except(orderFilterModel.StatusOrder)
                .ToList();
             foreach (var item in orderFilterModel.StatusOrder)
@@ -70,7 +70,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         public async Task<Order> Payment(long id)
         {
             var order = _applicationContext.Orders.Where(l => l.PaymentId == id).FirstOrDefault();
-            order.Status = StatusType.Paid;
+            order.OrderStatusType = OrderStatusType.Paid;
             return order;
         }
     }

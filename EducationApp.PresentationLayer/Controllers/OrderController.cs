@@ -29,18 +29,10 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [HttpPost("getOrders")]
-        public async Task<ActionResult> GetOrder(/*OrderFilterModel orderFilterModel*/)
+        public async Task<ActionResult> GetOrders(OrderFilterModel orderFilterModel)
         {
-            //var result = await _orderService.GetOrder(orderFilterModel);
-            var result = await _orderService.GetOrder(new OrderFilterModel 
-            { 
-                PageCount = 1, 
-                PageSize = 5, 
-                SearchString = "", 
-                SortOrder = BusinessLogicLayer.Models.Enums.Enums.SortOrder.Id, 
-                SortType = DataAccessLayer.Entities.Enums.Enums.SortType.Increase, 
-                StatusOrder = new System.Collections.Generic.List<BusinessLogicLayer.Models.Enums.Enums.OrderStatus> { BusinessLogicLayer.Models.Enums.Enums.OrderStatus.Paid }
-            });
+            var result = await _orderService.GetOrdersAsync(orderFilterModel);
+           
             return Ok(result);
         }
         [HttpPost("payment")]

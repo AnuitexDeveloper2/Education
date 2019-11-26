@@ -11,7 +11,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.PrintingEditions
         {
             var printingEditionFilter = new PrintingEditionFilterModel
             {
-                PageCount = printingEditionFilterState.PageCount,
+                PageNumber = printingEditionFilterState.PageNumber,
                 PageSize = printingEditionFilterState.PageSize,
                 SearchString = printingEditionFilterState.SearchString,
                 Price = (Price)printingEditionFilterState.Price,

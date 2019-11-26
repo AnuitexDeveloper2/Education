@@ -17,11 +17,11 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapper.OrderMapper
                 PaymentId = id,
                 Description = ordersItemModel.Description,
                 UserId = ordersItemModel.UserId,
-                Status = (StatusType)ordersItemModel.OrderStatus
+                Status = (OrderStatusType)ordersItemModel.OrderStatus
             };
             return order;
         }
-        public static OrderFilterModel Map(EducationApp.BusinessLogicLayer.Extention.Order.OrderFilterModel orderFilterModel)
+        public static OrderFilterModel Map(Extention.Order.OrderFilterModel orderFilterModel)
         {
             var resultFilter = new OrderFilterModel
             {
@@ -31,31 +31,32 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapper.OrderMapper
             };
             return resultFilter;
         }
-        private static List<StatusType> MapList(EducationApp.BusinessLogicLayer.Extention.Order.OrderFilterModel orderFilterModel)
+        private static List<OrderStatusType> MapList(Extention.Order.OrderFilterModel orderFilterModel)
         {
-            var statusOrder = new StatusType();
-            List<StatusType> result = new List<StatusType>();
+            var statusOrder = new OrderStatusType();
+            List<OrderStatusType> result = new List<OrderStatusType>();
             foreach (var item in orderFilterModel.StatusOrder)
             {
-                statusOrder = (DataAccessLayer.Entities.Enums.Enums.StatusType)item;
+                statusOrder = (OrderStatusType)item;
                 result.Add(statusOrder);
             }
             return result;
         }
 
-        public static OrdersPresentationModelItem Map(OrderModel orderModel)
+        public static OrdersPresentationModelItem Map(Order orderModel)
         {
             var result = new OrdersPresentationModelItem
             {
                 Amount = orderModel.Amount,
                 CountOrdersModel = orderModel.CountOrdersModel,
-                DateTime = orderModel.DateTime,
+                DateTime = orderModel.Date,
                 Id = orderModel.Id,
                 //Title = orderModel.Title,
                 //TypeProduct = orderModel.TypeProduct,
                 UserName = orderModel.UserName,
                 UserEmail = orderModel.UserEmail,
-                Status = (StatusType) orderModel.Status
+                OrderStatusType = (Models.Enums.Enums.OrderStatusType) orderModel.OrderStatusType,
+                
             };
             return result;
         }

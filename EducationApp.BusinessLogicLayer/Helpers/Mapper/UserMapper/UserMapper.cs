@@ -49,7 +49,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
             {
                 UsersSortType = (DataAccessLayer.Entities.Enums.Enums.UserSortType)filterUser.UserSortType,
                 UsersFilterType = (DataAccessLayer.Entities.Enums.Enums.UserFilterType)filterUser.UsersFilterStatus,
-                PageCount = filterUser.PageCount,
+                PageNumber = filterUser.PageNumber,
                 PageSize = filterUser.PageSize,
                 SearchString = filterUser.SearchString
                 

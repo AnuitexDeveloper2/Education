@@ -24,8 +24,8 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             var resultModel = new BaseModel();
             var author = AuthorsMapping.Map(authorModelItem);
-            var result = await _authorRepository.CreateAsync(author);
-            if (result < 1)
+            var resultCreate = await _authorRepository.CreateAsync(author);
+            if (resultCreate < 1)
             {
                 resultModel.Errors.Add(errors.AuthorCreate);
             }
@@ -41,8 +41,8 @@ namespace EducationApp.BusinessLogicLayer.Services
                 resultModel.Errors.Add(errors.AuthorNotFound);
                 return resultModel;
             }
-            var result = await _authorRepository.UpdateAsync(author);
-            if (!result)
+            var wasUpdateAuthor = await _authorRepository.UpdateAsync(author);
+            if (!wasUpdateAuthor)
             {
                 resultModel.Errors.Add(errors.AuthorUpdate);
             }
@@ -58,14 +58,14 @@ namespace EducationApp.BusinessLogicLayer.Services
                 resultModel.Errors.Add(errors.AuthorNotFound);
                 return resultModel;
             }
-            var removeAuthor = await _authorRepository.RemoveAsync(excistAuthor); //todo rename to result
-            if (!removeAuthor)
+            var wasRemoveAuthor = await _authorRepository.RemoveAsync(excistAuthor); //todo rename to result
+            if (!wasRemoveAuthor)
             {
                 resultModel.Errors.Add(errors.AuthorRemove);
                 return resultModel;
             }
-            var removeAIP = await _authorInPrintingEditionRepository.RemoveByAuthorId(id); //todo rename
-            if (!removeAIP)
+            var wasRemoveAuthorInPrintingEdition = await _authorInPrintingEditionRepository.RemoveByAuthorId(id); //todo rename
+            if (!wasRemoveAuthorInPrintingEdition)
             {
                 resultModel.Errors.Add(errors.PIRemove);
             }

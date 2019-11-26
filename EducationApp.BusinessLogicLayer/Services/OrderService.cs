@@ -1,11 +1,11 @@
 ﻿using EducationApp.BusinessLogicLayer.Extention.Order;
 using EducationApp.BusinessLogicLayer.Helpers.Mapper;
 using EducationApp.BusinessLogicLayer.Helpers.Mapper.OrderMapper;
-using EducationApp.BusinessLogicLayer.Helpers.Mapper.PaymentMapper;
 using EducationApp.BusinessLogicLayer.Models.Base;
 using EducationApp.BusinessLogicLayer.Models.Orders;
 using EducationApp.BusinessLogicLayer.Models.Payments;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
+using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using System.Collections.Generic;
@@ -33,7 +33,7 @@ namespace EducationApp.BusinessLogicLayer.Services
                 resultModel.Errors.Add(errors.OrderItem);
                 return resultModel;
             }
-            var payment = PaymentMapper.Map(ordersItemModel.PaymentModel); //todo create entity directly
+            var payment = new Payment { TransactionId = ordersItemModel.TransactionId}; //todo create entity directly
             var paymentId = await _paymentRepository.CreateAsync(payment);
             if (paymentId < 1)
             {
@@ -57,7 +57,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             return resultModel;
         }
 
-        public async Task<OrdersPresentationModel> GetOrder(OrderFilterModel orderFilterModel) //todo async
+        public async Task<OrdersPresentationModel> GetOrdersAsync(OrderFilterModel orderFilterModel) //todo async
         {
             var filter = OrderMapper.Map(orderFilterModel);
             var filterdOrderModel = await _orderRepository.GetOrderAsync(filter);
@@ -71,32 +71,10 @@ namespace EducationApp.BusinessLogicLayer.Services
             return resultModel;
         }
 
-        public async Task<BaseModel> PaymentAsync(PaymentsModel paymentsModel) //todo rename to Update, why you use this method
+        public async Task<BaseModel> PaymentAsync(PaymentsModel paymentsModel) //todo rename to Update, why you use this method Update Order(Status) and Payment(TransactionId)
         {
             var resultModel = new BaseModel();
-            if (paymentsModel.TransactionId < 1)
-            {
-                resultModel.Errors.Add(errors.PaymentCreate);
-                return resultModel;
-            }
-            var payment =  PaymentMapper.Map(paymentsModel);
-            var resultPayment = await _paymentRepository.UpdateAsync(payment);
-            if (!resultPayment)
-            {
-                resultModel.Errors.Add(errors.PaymentCreate);
-                return resultModel;
-            }
-            var order = await _orderRepository.Payment(payment.Id);
-            if (order == null)
-            {
-                resultModel.Errors.Add(errors.OrderIsNotFound);
-                return resultModel;
-            }
-            var isUpdate = await _orderRepository.UpdateAsync(order);
-            if (!isUpdate)
-            {
-                resultModel.Errors.Add(errors.NotPaid);
-            }
+          
             return resultModel;
         }
 

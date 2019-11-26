@@ -36,8 +36,8 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return resultModel;
             }
 
-            var authorPrintingEdition = AuthorInPrintingEditionMapper.Map(printingEditionId, model.Authors.Items.ToList()); //todo rename ...s
-            var hasCreated = await _authorInPrintingEditionRepository.CreateRangeAsync(authorPrintingEdition);
+            var authorPrintingEditions = AuthorInPrintingEditionMapper.Map(printingEditionId, model.Authors.Items.ToList()); //todo rename ...s
+            var hasCreated = await _authorInPrintingEditionRepository.CreateRangeAsync(authorPrintingEditions);
             if (!hasCreated)
             {
                 resultModel.Errors.Add(errors.Create);
@@ -74,21 +74,21 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return resultModel;
             }
             printingEdition = PrintingEditionMaping.Map(printingEdition, printingEditionModelItem);
-            var removeAuthorInPE = await _authorInPrintingEditionRepository.RemoveByPrintingEditionId(printingEdition.Id);
-            if (!removeAuthorInPE)
+            var wasRemoveAuthorInPrintingEdition = await _authorInPrintingEditionRepository.RemoveByPrintingEditionId(printingEdition.Id);
+            if (!wasRemoveAuthorInPrintingEdition)
             {
                 resultModel.Errors.Add(errors.AuthorInPERemove);
                 return resultModel;
             }
-            var result = await _printingEditionRepository.UpdateAsync(printingEdition);
-            if (!result)
+            var wasUpdatePrintingEdition = await _printingEditionRepository.UpdateAsync(printingEdition);
+            if (!wasUpdatePrintingEdition)
             {
                 resultModel.Errors.Add(errors.PIUpdate);
                 return resultModel;
             }
             var newAuthorInPE = AuthorInPrintingEditionMapper.Map(printingEdition.Id, printingEditionModelItem.Authors.Items);
-            var createAuthorPE = await _authorInPrintingEditionRepository.CreateRangeAsync(newAuthorInPE);
-            if (!createAuthorPE)
+            var wasCreateAuthorInPrintingEdition = await _authorInPrintingEditionRepository.CreateRangeAsync(newAuthorInPE);
+            if (!wasCreateAuthorInPrintingEdition)
             {
                 resultModel.Errors.Add(errors.AuthorInPECreate);
             }
@@ -98,7 +98,7 @@ namespace EducationApp.BusinessLogicLayer.Services
         public async Task<PrintingEditionModel> GetPrintingEditionAsync(PrintingEditionFilterState state)
         {
             var filterModel = PrintingEditionFilterStateMapping.Map(state);
-            var printingEdition = await _printingEditionRepository.GetPrintingEditionAsync(filterModel);
+            var printingEdition = await _printingEditionRepository.GetPrintingEditionsAsync(filterModel);
             var modelItems = new PrintingEditionModel();
             for (int i = 0; i < printingEdition.Data.Count(); i++)
             {

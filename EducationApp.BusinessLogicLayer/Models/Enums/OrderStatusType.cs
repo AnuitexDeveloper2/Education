@@ -2,7 +2,7 @@
 {
     public partial class Enums
     {
-        public enum OrderStatus
+        public enum OrderStatusType
         {
             Unpaid = 0,
             Paid = 1

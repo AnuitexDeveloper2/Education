@@ -1,15 +1,15 @@
-﻿using EducationApp.DataAccessLayer.Ropositories.Interfaces;
+﻿using BookStore.DataAccess.AppContext;
 using EducationApp.DataAccessLayer.Entities;
-using EducationApp.DataAccessLayer.Ropositories.Base;
-using BookStore.DataAccess.AppContext;
-using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
-using System.Linq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using EducationApp.DataAccessLayer.Helpers.PrintingEditionFilter;
-using EducationApp.DataAccessLayer.Models;
+using EducationApp.DataAccessLayer.Models.Base;
+using EducationApp.DataAccessLayer.Ropositories.Base;
+using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 
 namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 {
@@ -17,44 +17,55 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
     {
         public PrintingEditionRepository(ApplicationContext applicationContext) : base(applicationContext)
         {
-           
+
         }
 
-        public async Task<PrintingEditionModel> GetPrintingEditionAsync(PrintingEditionFilterModel printingEditionFilter) //toso rename ...s
+        public async Task<ResponseModel<PrintingEdition>> GetPrintingEditionsAsync(PrintingEditionFilterModel printingEditionFilter) //toso rename ...s
         {
-            var printingEditions = from printingEdition in _applicationContext.PrintingEditions //todo use AuthorInPE table
-                                   select new PrintingEditionModel
-                                   {
-                                       Id = printingEdition.Id,
-                                       Title = printingEdition.Title,
-                                       Price = printingEdition.Price,
-                                       Desccription = printingEdition.Desccription,
-                                       ProductType = printingEdition.ProductType,
-                                       Authors = (from authorInPrintingEdition in _applicationContext.AuthorInPrintingEditions
-                                                  join author in _applicationContext.Authors on authorInPrintingEdition.AuthorId equals author.Id
-                                                  where (authorInPrintingEdition.PrintingEditionId == printingEdition.Id)
-                                                  select new Author
-                                                  {
-                                                      Id = author.Id,
-                                                      Name = author.Name
-                                                  }).ToList()
-                                   };
+            var printingEditions = (from printingEdition in _applicationContext.PrintingEditions
+                                    join authorInPrintingEdition in _applicationContext.AuthorInPrintingEditions on printingEdition.Id equals authorInPrintingEdition.PrintingEditionId
+                                    where printingEdition.Id == authorInPrintingEdition.PrintingEditionId
+                                    select new PrintingEdition
+                                    {
+                                        Id = printingEdition.Id,
+                                        Title = printingEdition.Title,
+                                        //Authors = from author in _applicationContext.Authors join authorInPrintingEdition in _applicationContext.AuthorInPrintingEditions
+                                        //          on author.Id equals authorInPrintingEdition.AuthorId where printingEdition.Id == authorInPrintingEdition.PrintingEditionId
+                                        //          select author
+                                        
+                                    }).Distinct();
+
+            //var printingEditions = (from authorInPrintingEdition in _applicationContext.AuthorInPrintingEditions
+            //                        join printingEdition in _applicationContext.PrintingEditions on authorInPrintingEdition.PrintingEditionId equals printingEdition.Id
+            //                        join author in _applicationContext.Authors on authorInPrintingEdition.AuthorId equals author.Id
+            //                        select new PrintingEdition
+            //                        {
+            //                            Id = printingEdition.Id,
+            //                            Title = printingEdition.Title,
+            //                            Authors = _applicationContext.Authors.Where(k => k.Id == authorInPrintingEdition.AuthorId)
+            //                        }).Distinct();
+
+            //var printingEditions = (from authorInPrintingEdition in _applicationContext.AuthorInPrintingEditions
+            //                        join printingEdition in _applicationContext.PrintingEditions on authorInPrintingEdition.PrintingEditionId equals printingEdition.Id
+            //                        select new PrintingEdition
+            //                        {
+            //                            Id = printingEdition.Id,
+            //                            Title = printingEdition.Title,
+            //                            Authors = (from author in _applicationContext.Authors
+            //                                       join aip in _applicationContext.AuthorInPrintingEditions on author.Id equals aip.AuthorId
+            //                                       where(authorInPrintingEdition.PrintingEditionId == printingEdition.Id)
+            //                                       select new Author
+            //                                       {
+            //                                           Id = author.Id,
+            //                                           Name = author.Name
+            //                                       }
+            //                                       )
+            //                        }
+            //                       ).Distinct().AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(printingEditionFilter.SearchString))
             {
-
-                var author = _applicationContext.Authors.Where(k => k.Name == printingEditionFilter.SearchString).FirstOrDefault();
-                var AInPE = _applicationContext.AuthorInPrintingEditions.Where(a => a.AuthorId == author.Id);
-                var printingEditionSearchByName = new List<PrintingEditionModel>();
-                foreach (var item in AInPE)
-                {
-                    printingEditionSearchByName.Add(printingEditions.Where(j => j.Id == item.PrintingEditionId).FirstOrDefault());
-                }
-                printingEditions = printingEditions
-                    .Where(k => k.Title == printingEditionFilter.SearchString)
-                    .ToList()
-                    .Concat(printingEditionSearchByName)
-                    .AsQueryable();
+                printingEditions = printingEditions.Where(l => l.Title == printingEditionFilter.SearchString);
             }
 
             List<TypeProduct> types = Enum.GetValues(typeof(TypeProduct))
@@ -68,12 +79,12 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             //todo may be you can update sort logic withour If (use Reflection)?
             printingEditions = printingEditionFilter.Price == Price.PriceAsc ? printingEditions.OrderBy(k => k.Price) : printingEditions
                 .OrderBy(k => k.Price);
-            var count =  printingEditions.Count();
+            var count = printingEditions.Count();
             printingEditions = printingEditions
-                .Skip((printingEditionFilter.PageCount - 1) * printingEditionFilter.PageSize)
+                .Skip((printingEditionFilter.PageNumber - 1) * printingEditionFilter.PageSize)
                 .Take(printingEditionFilter.PageSize);
-            var result = new PrintingEditionModel { Data = await printingEditions.ToListAsync(), Count = count};
-            return  result;
+            var result = new ResponseModel<PrintingEdition>() { Data = await printingEditions.ToListAsync(), Count = count };
+            return result;
 
             //return new ResponseModel<RpintingEditionModel>() { Data = }
         }

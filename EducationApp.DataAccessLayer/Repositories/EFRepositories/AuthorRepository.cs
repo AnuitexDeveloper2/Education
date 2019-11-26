@@ -2,6 +2,7 @@
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Helpers.Author;
 using EducationApp.DataAccessLayer.Models;
+using EducationApp.DataAccessLayer.Models.Base;
 using EducationApp.DataAccessLayer.Ropositories.Base;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -18,19 +19,20 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         public AuthorRepository(ApplicationContext applicationContext) : base(applicationContext)
         {
         }
-        public async Task <AuthorModelItem> GetAuthorsAsync(AuthorFilterModel authorFilterModel)
+        public async Task <ResponseModel<Author>> GetAuthorsAsync(AuthorFilterModel authorFilterModel)
         {
             var author = from authors in _applicationContext.Authors
-                         select new AuthorModelItem
+                         select new Author
                          {
                              Id = authors.Id,
                              Name = authors.Name,
-                             printingEditions = (from authorPrintingEdition in _applicationContext.AuthorInPrintingEditions
+                             PrintingEditions = (from authorPrintingEdition in _applicationContext.AuthorInPrintingEditions
                                                  join printingEdition in _applicationContext.PrintingEditions on authorPrintingEdition.AuthorId equals authors.Id
                                                  where (authorPrintingEdition.PrintingEditionId == printingEdition.Id)
                                                  select new PrintingEdition
                                                  {
-                                                     Title = printingEdition.Title
+                                                     Title = printingEdition.Title,
+                                                     Id = printingEdition.Id
                                                  })
                          };
             if (!string.IsNullOrEmpty(authorFilterModel.SearchString))
@@ -39,8 +41,8 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             }
             author = authorFilterModel.SortById == AuthorSortById.IdAsc ? author.OrderBy(k => k.Id) : author.OrderByDescending(k => k.Id);
             var count = await author.CountAsync();
-            author = author.Skip((authorFilterModel.PageCount - 1) * authorFilterModel.PageSize).Take(authorFilterModel.PageSize);
-            var resultModel = new AuthorModelItem
+            //author = author.Skip((authorFilterModel.PageNumber - 1) * authorFilterModel.PageSize).Take(authorFilterModel.PageSize);
+            var resultModel = new ResponseModel<Author>
             { 
                 Data = author.ToList(),
                 Count = count 

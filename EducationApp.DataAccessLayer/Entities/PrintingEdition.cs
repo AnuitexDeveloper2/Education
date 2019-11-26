@@ -14,5 +14,6 @@ namespace EducationApp.DataAccessLayer.Entities
         public TypeProduct ProductType { get; set; }
         [NotMapped]
         public IEnumerable<Author> Authors { get; set; }
+
     }
 }

@@ -182,7 +182,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                 users = users.Where(k => k.LockoutEnabled == true);
             }
             var count = await users.CountAsync();
-            users = users.Skip((usersFilter.PageCount - 1) * usersFilter.PageSize).Take(usersFilter.PageSize);
+            users = users.Skip((usersFilter.PageNumber - 1) * usersFilter.PageSize).Take(usersFilter.PageSize);
             var presentationModel = new UserPresentationModel { Data = users.ToList(), Count = count };
             return presentationModel;
         }

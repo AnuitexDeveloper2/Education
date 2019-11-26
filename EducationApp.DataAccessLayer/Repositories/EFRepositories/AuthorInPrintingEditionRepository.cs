@@ -20,6 +20,10 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         {
             var authorInPrintingEdition = await _applicationContext.AuthorInPrintingEditions.Where(k => k.AuthorId == id).ToListAsync();
             //todo check for null
+            if (authorInPrintingEdition == null)
+            {
+                return false;
+            }
             _applicationContext.RemoveRange(authorInPrintingEdition);
             var result = await _applicationContext.SaveChangesAsync();
             return result < 1 ? false : true;

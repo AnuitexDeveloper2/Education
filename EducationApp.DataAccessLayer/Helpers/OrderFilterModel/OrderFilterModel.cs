@@ -8,7 +8,7 @@ namespace EducationApp.DataAccessLayer.Helpers.OrderFilterModel
     public class OrderFilterModel : BaseFilterStatus
     {
         public SortOrder SortOrder { get; set; }
-        public List< StatusType> StatusOrder { get; set; }
+        public List< OrderStatusType> StatusOrder { get; set; }
         public long Id { get; set; }
     }
 }
