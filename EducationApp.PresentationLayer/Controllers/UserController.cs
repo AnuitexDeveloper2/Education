@@ -33,7 +33,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return profile;
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost("removeUser")]
         public async Task<ActionResult> RemoveUser(long id)
         {
@@ -57,8 +57,8 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetUser")]
-        public async Task<UserModel> GetUser(UserFilterModel filterUser)
+        [HttpGet("GetUsers")]
+        public async Task<UserModel> GetUsers(UserFilterModel filterUser)
         {
             var users = await _userService.GetUsersAsync(filterUser);
             return users;

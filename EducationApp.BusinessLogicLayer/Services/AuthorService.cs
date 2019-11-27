@@ -52,19 +52,19 @@ namespace EducationApp.BusinessLogicLayer.Services
         public async Task<BaseModel> RemoveAsync(long id)
         {
             var resultModel = new BaseModel();
-            var excistAuthor = await _authorRepository.FindByIdAsync(id);
-            if (excistAuthor == null)
+            var author = await _authorRepository.FindByIdAsync(id);
+            if (author == null)
             {
                 resultModel.Errors.Add(errors.AuthorNotFound);
                 return resultModel;
             }
-            var wasRemoveAuthor = await _authorRepository.RemoveAsync(excistAuthor); //todo rename to result
+            var wasRemoveAuthor = await _authorRepository.RemoveAsync(author); //todo rename to result
             if (!wasRemoveAuthor)
             {
                 resultModel.Errors.Add(errors.AuthorRemove);
                 return resultModel;
             }
-            var wasRemoveAuthorInPrintingEdition = await _authorInPrintingEditionRepository.RemoveByAuthorId(id); //todo rename
+            var wasRemoveAuthorInPrintingEdition = await _authorInPrintingEditionRepository.RemoveAuthorInPrintingEditionAsync(x=>x.AuthorId == author.Id ); //todo rename
             if (!wasRemoveAuthorInPrintingEdition)
             {
                 resultModel.Errors.Add(errors.PIRemove);

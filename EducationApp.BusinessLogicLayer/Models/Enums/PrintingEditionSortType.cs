@@ -2,10 +2,10 @@
 {
     public partial class Enums
     {
-        public enum Price
+        public enum PrintingEditionSortType
         {
-            MinPrice = 0,
-            MaxPrice = 1
+            Price = 0,
+            Id = 1
         }
     }
 }

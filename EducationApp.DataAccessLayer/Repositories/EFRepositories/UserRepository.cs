@@ -159,35 +159,47 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
         public async Task<UserPresentationModel> GetUserAsync(UserFilterModel usersFilter)
         {
-            var users = _applicationContext.Users.Where(k => k.IsRemoved== false).AsQueryable();
+            var users = _applicationContext.Users.Where(k => k.IsRemoved == false).AsEnumerable();
+
             if (!string.IsNullOrWhiteSpace(usersFilter.SearchString))
             {
                 users = users.Where(k => k.UserName.Contains(usersFilter.SearchString));
             }
-
-            if (usersFilter.UsersSortType == UserSortType.Email)
+            if (usersFilter.UsersFilterType != UserFilterType.All)
             {
-                users = usersFilter.SortType == SortType.Increase ? users.OrderBy(k => k.Email) : users.OrderByDescending(k => k.Email);
+                users = usersFilter.UsersFilterType == UserFilterType.Active ? users.Where(k => k.LockoutEnabled == true) : users.Where(k => k.LockoutEnabled == false);
             }
-            if (usersFilter.UsersSortType == UserSortType.Name)
-            {
-                users = usersFilter.SortType == SortType.Increase ? users.OrderBy(k => k.UserName) : users.OrderByDescending(k => k.UserName);
-            }
-            if (usersFilter.UsersFilterType == usersFilter.UsersFilterType)
-            {
-                users = users.Where(k => k.LockoutEnabled == true);
-            }
-            if (usersFilter.UsersFilterType == UserFilterType.Blocked)
-            {
-                users = users.Where(k => k.LockoutEnabled == true);
-            }
-            var count = await users.CountAsync();
+            var propertyInfo = users.First().GetType().GetProperty(usersFilter.UsersSortType.ToString());
+            users = users.OrderBy(e => propertyInfo.GetValue(e, null));
+            var count = users.Count();
             users = users.Skip((usersFilter.PageNumber - 1) * usersFilter.PageSize).Take(usersFilter.PageSize);
-            var presentationModel = new UserPresentationModel { Data = users.ToList(), Count = count };
+            var presentationModel = new UserPresentationModel { Data =  users.ToList(), Count = count };
             return presentationModel;
         }
 
-      
+        //var result = (from order in _applicationContext.Orders
+        //              join user in _applicationContext.Users on order.UserId equals user.Id
+        //              where (user.Id == order.UserId)
+        //              //join orderItem in _applicationContext.OrderItems on order.Id equals orderItem.OrderId
+        //              select new Order
+        //              {
+        //                  Id = order.Id,
+        //                  Date = order.Date,
+        //                  OrderStatusType = order.OrderStatusType,
+        //                  UserName = user.UserName,
+        //                  UserEmail = user.Email,
+        //                  Amount = order.Amount,
+        //                  OrderItems = (from orderItem in _applicationContext.OrderItems
+        //                                join printingEdition in _applicationContext.PrintingEditions on orderItem.PrintingEditionId equals printingEdition.Id
+        //                                where (orderItem.OrderId == order.Id)
+        //                                select new OrderItem
+        //                                {
+        //                                    Id = orderItem.Id,
+        //                                    Count = orderItem.Count,
+        //                                    PrintingEditionTitle = printingEdition.Title,
+        //                                    TypeProduct = printingEdition.ProductType
+        //                                }).ToList()
+        //              });
     }
 }
 

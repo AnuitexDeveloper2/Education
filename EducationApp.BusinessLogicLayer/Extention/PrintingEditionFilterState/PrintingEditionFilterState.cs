@@ -7,6 +7,6 @@ namespace EducationApp.BusinessLogicLayer.Extention.PrintingEditionFilterState
     public class PrintingEditionFilterState : BaseFilterModel
     {
         public List<TypeProduct> TypeProduct { get; set; }
-        public Price Price { get; set; }
+        public PrintingEditionSortType PrintingEditionSortType { get; set; }
     }
 }

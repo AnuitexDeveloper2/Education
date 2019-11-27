@@ -9,6 +9,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
     public interface IOrderRepository : IBaseEFRRepository<Order>
     {
         Task<OrderModel> GetOrderAsync(OrderFilterModel orderFilterModel);
-        Task<Order> Payment(long id);
+       
     }
 }

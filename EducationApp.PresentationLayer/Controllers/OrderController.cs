@@ -20,7 +20,7 @@ namespace EducationApp.PresentationLayer.Controllers
             _orderService = orderService;
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost("createOrder")]
         public async Task<ActionResult> CreateOrder(OrdersItemModel ordersItemModel)
         {
@@ -36,9 +36,9 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
         [HttpPost("payment")]
-        public async Task<ActionResult> Payment(PaymentsModel paymentsModel)
+        public async Task<ActionResult> Payment(long TransactoinId,long orderId)
         {
-            var result = _orderService.PaymentAsync(paymentsModel);
+            var result =await _orderService.UpdateOrderAsync(TransactoinId,orderId);
             return Ok(result);
         }
     }

@@ -3,8 +3,10 @@ using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Ropositories.Base;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
@@ -15,30 +17,20 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         {
 
         }
-
-        public async Task<bool> RemoveByAuthorId(long id) //todo get Expression as param, remove copypaste
+        //todo get Expression as param, remove copypaste
+        //todo check for null
+        public async Task<bool> RemoveAuthorInPrintingEditionAsync(Expression<Func<AuthorInPrintingEdition, bool>> predicate)
         {
-            var authorInPrintingEdition = await _applicationContext.AuthorInPrintingEditions.Where(k => k.AuthorId == id).ToListAsync();
-            //todo check for null
-            if (authorInPrintingEdition == null)
+            var authorInPrintingEdition = _applicationContext.AuthorInPrintingEditions.Where(predicate);
+            if (authorInPrintingEdition.Count() == 0)
             {
                 return false;
             }
             _applicationContext.RemoveRange(authorInPrintingEdition);
             var result = await _applicationContext.SaveChangesAsync();
             return result < 1 ? false : true;
+
         }
 
-        public async Task<bool> RemoveByPrintingEditionId(long id)
-        {
-            var authorInPrintingEdition = await _applicationContext.AuthorInPrintingEditions.Where(k => k.PrintingEditionId == id).ToListAsync();
-            _applicationContext.RemoveRange(authorInPrintingEdition);
-            var result = await _applicationContext.SaveChangesAsync();
-            if (result < 1)
-            {
-                return false;
-            }
-            return true;
-        }
     }
 }

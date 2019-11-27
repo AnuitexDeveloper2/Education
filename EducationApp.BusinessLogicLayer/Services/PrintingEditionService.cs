@@ -7,6 +7,7 @@ using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using errors = EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
@@ -47,21 +48,28 @@ namespace EducationApp.BusinessLogicLayer.Services
 
         public async Task<BaseModel> RemoveAsync(long id)
         {
-            var errorsModel = new BaseModel();
-            var excist = await _printingEditionRepository.FindByIdAsync(id);
-            if (excist == null)
+            var resultModel = new BaseModel();
+            var printingEdition = await _printingEditionRepository.FindByIdAsync(id);
+            if (printingEdition == null)
             {
-                errorsModel.Errors.Add(errors.PINotFound);
-                return errorsModel;
+                resultModel.Errors.Add(errors.PINotFound);
+                return resultModel;
             }
-            var result = await _printingEditionRepository.RemoveAsync(excist);
+            var result = await _printingEditionRepository.RemoveAsync(printingEdition);
             if (!result)
             {
-                errorsModel.Errors.Add(errors.PIRemove);
-                return errorsModel;
+                resultModel.Errors.Add(errors.PIRemove);
+                return resultModel;
             }
-            await _authorInPrintingEditionRepository.RemoveByAuthorId(id);
-            return errorsModel;
+            var wasRemoveAuthorInPrintingEdition = await _authorInPrintingEditionRepository.RemoveAuthorInPrintingEditionAsync(x => x.AuthorId == printingEdition.Id);
+            if (true)
+            {
+                if (!wasRemoveAuthorInPrintingEdition)
+                {
+                    resultModel.Errors.Add(errors.AuthorInPERemove);
+                }
+            }
+            return resultModel;
         }
 
         public async Task<BaseModel> UpdateAsync(PrintingEditionModelItem printingEditionModelItem)
@@ -74,7 +82,7 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return resultModel;
             }
             printingEdition = PrintingEditionMaping.Map(printingEdition, printingEditionModelItem);
-            var wasRemoveAuthorInPrintingEdition = await _authorInPrintingEditionRepository.RemoveByPrintingEditionId(printingEdition.Id);
+            var wasRemoveAuthorInPrintingEdition = await _authorInPrintingEditionRepository.RemoveAuthorInPrintingEditionAsync(x => x.PrintingEditionId == printingEdition.Id);
             if (!wasRemoveAuthorInPrintingEdition)
             {
                 resultModel.Errors.Add(errors.AuthorInPERemove);

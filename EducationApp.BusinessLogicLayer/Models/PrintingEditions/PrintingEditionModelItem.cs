@@ -8,7 +8,6 @@ namespace EducationApp.BusinessLogicLayer.Models.PrintingEditions
 {
     public class PrintingEditionModelItem
     {
-        public string Author { get; set; }
         public long Id { get; set; }
         public bool IsRemoved { get; set; }
         public string Title { get; set; }

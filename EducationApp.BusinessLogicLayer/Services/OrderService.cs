@@ -49,32 +49,52 @@ namespace EducationApp.BusinessLogicLayer.Services
             }
 
             var orderItem = OrderItemMapper.Map(ordersItemModel.OrderItemModel, order.Id);
-            var createResult = await _orderItemRepository.CreateRangeAsync(orderItem);
-            if (!createResult)
+            var wasCreate = await _orderItemRepository.CreateRangeAsync(orderItem);
+            if (!wasCreate)
             {
                 resultModel.Errors.Add(errors.OrderItemCreate);
             }
             return resultModel;
         }
 
-        public async Task<OrdersPresentationModel> GetOrdersAsync(OrderFilterModel orderFilterModel) //todo async
+        public async Task<OrdersModel> GetOrdersAsync(OrderFilterModel orderFilterModel) //todo async
         {
             var filter = OrderMapper.Map(orderFilterModel);
-            var filterdOrderModel = await _orderRepository.GetOrderAsync(filter);
-            var resultModel = new OrdersPresentationModel(); //todo change model
-            foreach (var item in filterdOrderModel.Data)
+            var getOrders = await _orderRepository.GetOrderAsync(filter);
+            var resultModel = new OrdersModel(); //todo change model
+            foreach (var item in getOrders.Data)
             {
                 resultModel.Items.Add(OrderMapper.Map(item));
+               
             }
-            resultModel.Count = filterdOrderModel.Count;
+            resultModel.ItemsCount = getOrders.Count;
 
             return resultModel;
         }
 
-        public async Task<BaseModel> PaymentAsync(PaymentsModel paymentsModel) //todo rename to Update, why you use this method Update Order(Status) and Payment(TransactionId)
+        public async Task<BaseModel> UpdateOrderAsync(long TransactoinId, long orderId) //todo rename to Update, why you use this method Update Order(Status) and Payment(TransactionId)
         {
             var resultModel = new BaseModel();
-          
+            var payment = new Payment { TransactionId = TransactoinId }; 
+            var wasUpdate = await _paymentRepository.UpdateAsync(payment);
+            if (!wasUpdate)
+            {
+                resultModel.Errors.Add(errors.PaymentCreate);
+                return resultModel;
+            }
+            var order = await _orderRepository.FindByIdAsync(orderId);
+            if (order == null)
+            {
+
+                resultModel.Errors.Add(errors.OrderIsNotFound);
+                return resultModel;
+            }
+            order.OrderStatusType = DataAccessLayer.Entities.Enums.Enums.OrderStatusType.Paid;
+            wasUpdate = await _orderRepository.UpdateAsync(order);
+            if (!wasUpdate)
+            {
+                resultModel.Errors.Add(errors.OrderIsNotFound);
+            }
             return resultModel;
         }
 

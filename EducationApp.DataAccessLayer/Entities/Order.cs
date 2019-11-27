@@ -12,9 +12,8 @@ namespace EducationApp.DataAccessLayer.Entities
         public long UserId { get; set; }
         [ForeignKey("Payment")]
         public long PaymentId { get; set; }
-        public OrderStatusType Status { get; set; }
         [NotMapped]
-        public List<OrderItem> OrderItems { get; set; } //todo add NoptMapped, Add User
+        public IEnumerable<OrderItem> OrderItems { get; set; } //todo add NoptMapped, Add User
         public OrderStatusType OrderStatusType { get; set; } //todo OrderStatusType
         public Payment Payment { get; set; }
         [NotMapped]

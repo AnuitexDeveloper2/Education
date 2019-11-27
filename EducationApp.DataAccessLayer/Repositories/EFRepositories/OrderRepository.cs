@@ -22,19 +22,28 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         }
         public async Task<OrderModel> GetOrderAsync(OrderFilterModel orderFilterModel)
         {
-            var orders = from order in _applicationContext.Orders
-                         join user in _applicationContext.Users on order.UserId equals user.Id
-                         join orderItem in _applicationContext.OrderItems on order.Id equals orderItem.OrderId
-                         select new Order
-                         {
-                             Id = order.Id,
-                             Date = orderItem.Date,
-                             Status = order.OrderStatusType,
-                             UserName = user.UserName,
-                             UserEmail = user.Email,
-                             CountOrdersModel = orderItem.Count,
-                         };
-            var test = orders.ToList();
+            var orders = (from order in _applicationContext.Orders
+                          join user in _applicationContext.Users on order.UserId equals user.Id
+                          where (user.Id == order.UserId)
+                          select new Order
+                          {
+                              Id = order.Id,
+                              Date = order.Date,
+                              OrderStatusType = order.OrderStatusType,
+                              UserName = user.UserName,
+                              UserEmail = user.Email,
+                              Amount = order.Amount,
+                              OrderItems = (from orderItem in _applicationContext.OrderItems
+                                            join printingEdition in _applicationContext.PrintingEditions on orderItem.PrintingEditionId equals printingEdition.Id
+                                            where (orderItem.OrderId == order.Id)
+                                            select new OrderItem
+                                            {
+                                                Id = orderItem.Id,
+                                                Count = orderItem.Count,
+                                                PrintingEditionTitle = printingEdition.Title,
+                                                TypeProduct = printingEdition.ProductType
+                                            })
+                          });
             if (orderFilterModel.Id > 0)
             {
                 orders = orders.Where(k => k.Id == orderFilterModel.Id).OrderBy(l => l.Date);
@@ -60,18 +69,13 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                .ToList();
             foreach (var item in orderFilterModel.StatusOrder)
             {
-                orders.Where(k => k.Status != item);
+                orders.Where(k => k.OrderStatusType != item);
             }
             //orders = orders.Skip((orderFilterModel.PageCount - 1) * orderFilterModel.PageSize).Take(orderFilterModel.PageSize);
             var result = new OrderModel { Data = await orders.ToListAsync(), Count = orders.Count() };
             return result;
         }
 
-        public async Task<Order> Payment(long id)
-        {
-            var order = _applicationContext.Orders.Where(l => l.PaymentId == id).FirstOrDefault();
-            order.OrderStatusType = OrderStatusType.Paid;
-            return order;
-        }
+       
     }
 }

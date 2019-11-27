@@ -1,7 +1,9 @@
-﻿using EducationApp.BusinessLogicLayer.Models.Orders;
+﻿using EducationApp.BusinessLogicLayer.Models.OrderItemModelItem;
+using EducationApp.BusinessLogicLayer.Models.Orders;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Helpers.OrderFilterModel;
 using EducationApp.DataAccessLayer.Models;
+using System;
 using System.Collections.Generic;
 using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 //using statusType = EducationApp.DataAccessLayer.Entities.Enums.Enums;
@@ -17,7 +19,8 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapper.OrderMapper
                 PaymentId = id,
                 Description = ordersItemModel.Description,
                 UserId = ordersItemModel.UserId,
-                Status = (OrderStatusType)ordersItemModel.OrderStatus
+                OrderStatusType = (OrderStatusType)ordersItemModel.OrderStatus,
+                Date = DateTime.Now
             };
             return order;
         }
@@ -43,22 +46,39 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapper.OrderMapper
             return result;
         }
 
-        public static OrdersPresentationModelItem Map(Order orderModel)
+        public static OrdersItemModel Map(Order order)
         {
-            var result = new OrdersPresentationModelItem
+            var resultModel = new OrdersItemModel
             {
-                Amount = orderModel.Amount,
-                CountOrdersModel = orderModel.CountOrdersModel,
-                DateTime = orderModel.Date,
-                Id = orderModel.Id,
-                //Title = orderModel.Title,
-                //TypeProduct = orderModel.TypeProduct,
-                UserName = orderModel.UserName,
-                UserEmail = orderModel.UserEmail,
-                OrderStatusType = (Models.Enums.Enums.OrderStatusType) orderModel.OrderStatusType,
-                
+                Id = order.Id,
+                DateTime = order.Date,
+                UserName = order.UserName,
+                UserEmail = order.UserEmail,
+                OrderStatus = (Models.Enums.Enums.OrderStatusType)order.OrderStatusType,
+                AmountOrder = order.Amount,
+                OrderItemModel = MapList(order.OrderItems)
+            };
+            return resultModel;
+        }
+
+        private static OrderItemModel MapList(IEnumerable<OrderItem> orderItems)
+        {
+            var result = new OrderItemModel();
+            foreach (var item in orderItems)
+            {
+                result.Items.Add(MapNecessary(item));
             };
             return result;
+        }
+
+        private static OrderItemModelItem MapNecessary(OrderItem item)
+        {
+            var result = new OrderItemModelItem
+            {
+                TypeProduct = (Models.Enums.Enums.TypeProduct)item.TypeProduct,
+                PrintingEditionName = item.PrintingEditionTitle
+            };
+          return result;
         }
     }
 }

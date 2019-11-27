@@ -16,7 +16,6 @@ namespace EducationApp.DataAccessLayer.Repositories.Interfaces
         Task<bool> RemoveAsync(TEntity entity);
         List<TEntity> GetAll();
         Task<bool> CreateRangeAsync(List<TEntity> entity);
-        Task<bool> RemoveRange(List<TEntity> entity);
 
 
 
