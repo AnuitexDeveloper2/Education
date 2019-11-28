@@ -165,6 +165,10 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             {
                 users = users.Where(k => k.UserName.Contains(usersFilter.SearchString));
             }
+            if (users.Count() == 0)
+            {
+                return null;
+            }
             if (usersFilter.UsersFilterType != UserFilterType.All)
             {
                 users = usersFilter.UsersFilterType == UserFilterType.Active ? users.Where(k => k.LockoutEnabled == true) : users.Where(k => k.LockoutEnabled == false);

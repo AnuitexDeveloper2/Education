@@ -10,7 +10,6 @@ namespace EducationApp.DataAccessLayer.Entities.Enums
         {
            Email = 0,
            Name = 1
-           
         }
     }
 }

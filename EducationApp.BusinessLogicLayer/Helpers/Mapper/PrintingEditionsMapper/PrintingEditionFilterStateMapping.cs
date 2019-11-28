@@ -15,6 +15,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.PrintingEditions
                 PageSize = printingEditionFilterState.PageSize,
                 SearchString = printingEditionFilterState.SearchString,
                 PrintingEditionSortType = (PrintingEditionSortType)printingEditionFilterState.PrintingEditionSortType,
+                SortType = (SortType)printingEditionFilterState.SortType
             };
             printingEditionFilter.TypeProduct = MapList(printingEditionFilterState);
             return printingEditionFilter;

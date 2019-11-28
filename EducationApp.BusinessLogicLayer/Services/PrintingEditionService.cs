@@ -5,9 +5,7 @@ using EducationApp.BusinessLogicLayer.Helpers.Mapping.PrintingEditions;
 using EducationApp.BusinessLogicLayer.Models.Base;
 using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
-using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using errors = EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
@@ -105,16 +103,19 @@ namespace EducationApp.BusinessLogicLayer.Services
 
         public async Task<PrintingEditionModel> GetPrintingEditionsAsync(PrintingEditionFilterState state)
         {
+            
             var filterModel = PrintingEditionFilterStateMapping.Map(state);
             var printingEdition = await _printingEditionRepository.GetPrintingEditionsAsync(filterModel);
             var modelItems = new PrintingEditionModel();
+            if (printingEdition == null)
+            {
+                modelItems.Errors.Add(errors.PINotFound);
+            }
             for (int i = 0; i < printingEdition.Data.Count(); i++)
             {
                 modelItems.Items.Add(PrintingEditionFilterMapping.Map(printingEdition.Data[i]));
             }
             modelItems.Count = printingEdition.Count;
-
-
             return modelItems;
         }
     }

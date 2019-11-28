@@ -4,7 +4,6 @@ using EducationApp.DataAccessLayer.Helpers.PrintingEditionFilter;
 using EducationApp.DataAccessLayer.Models.Base;
 using EducationApp.DataAccessLayer.Ropositories.Base;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +42,10 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             if (!string.IsNullOrWhiteSpace(printingEditionFilter.SearchString))
             {
                 printingEditions = printingEditions.Where(l => l.Title == printingEditionFilter.SearchString).Concat(printingEditions.Where(k => k.Authors.Any(l => l.Name == printingEditionFilter.SearchString)));
+            }
+            if (printingEditions.Count() == 0)
+            {
+                return null;
             }
             List<TypeProduct> types = Enum.GetValues(typeof(TypeProduct))
                 .OfType<TypeProduct>()

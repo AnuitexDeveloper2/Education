@@ -50,7 +50,8 @@ namespace EducationApp.PresentationLayer
                     ValidateIssuerSigningKey = true,
                 };
             });
-            services.AddMvc(option => option.EnableEndpointRouting = false);
+            services.AddMvc();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
@@ -71,6 +72,7 @@ namespace EducationApp.PresentationLayer
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
             });
 
             app.UseRouting();

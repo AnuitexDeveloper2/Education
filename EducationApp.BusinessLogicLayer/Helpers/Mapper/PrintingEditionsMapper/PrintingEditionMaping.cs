@@ -23,23 +23,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
             return printingEdition;
         }
 
-        public static PrintingEditionModelItem Map(this PrintingEdition printingEditions)
-        {
-            PrintingEditionModelItem printingEdition = new PrintingEditionModelItem
-            {
-                Date = DateTime.Now,
-                Id = printingEditions.Id,
-                IsRemoved = printingEditions.IsRemoved,
-                Title = printingEditions.Title,
-                Desccription = printingEditions.Desccription,
-                Price = printingEditions.Price,
-                TypeProduct = (Models.Enums.Enums.TypeProduct)printingEditions.ProductType
-                
-            };
-            return printingEdition;
-        }
-
-        public static PrintingEdition Map(this PrintingEdition printingEdition,PrintingEditionModelItem printingEditionModelItem)
+              public static PrintingEdition Map(this PrintingEdition printingEdition,PrintingEditionModelItem printingEditionModelItem)
         {
             printingEdition.Title = printingEditionModelItem.Title;
             printingEdition.Desccription = printingEditionModelItem.Desccription;

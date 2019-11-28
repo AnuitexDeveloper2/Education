@@ -14,8 +14,6 @@ namespace EducationApp.BusinessLogicLayer.Models.Users
         public string SecurityStamp { get; set; }
         public int AccessFailedCount { get; set; }
         public string ConcurrencyStamp { get; set; }
-        public bool EmailConfirmed { get; set; }
-        public int count { get; set; }
         public bool IsRemoved { get; set; }
         public bool LockoutEnabled { get; set; }
 

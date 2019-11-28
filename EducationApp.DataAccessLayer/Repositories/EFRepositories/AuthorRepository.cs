@@ -39,8 +39,12 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             {
                 author = author.Where(k => k.Name.Contains(authorFilterModel.SearchString));
             }
+            if (author.Count() == 0)
+            {
+                return null;
+            }
           
-            author = authorFilterModel.SortById == AuthorSortById.IdAsc ? author.OrderBy(k => k.Id) : author.OrderByDescending(k => k.Id);
+            author = authorFilterModel.SortType == SortType.Increase ? author.OrderBy(k => k.Id) : author.OrderByDescending(k => k.Id);
             var count = await author.CountAsync();
             author = author.Skip((authorFilterModel.PageNumber - 1) * authorFilterModel.PageSize).Take(authorFilterModel.PageSize);
             var resultModel = new ResponseModel<Author>

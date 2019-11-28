@@ -38,17 +38,17 @@ namespace EducationApp.PresentationLayer.Controllers
         [HttpPost("confirmEmail")]
         public async Task<ActionResult> ConfirmEmail(UserModelItem email)
         {
-            var confirmUser = await _accountService.ConfirmEmailAsync(email.Email);
+            var resultConfirmEmail = await _accountService.ConfirmEmailAsync(email.Email);
 
-            return Ok(confirmUser.Errors);
+            return Ok(resultConfirmEmail.Errors);
         }
 
 
         [HttpPost("signIn")]
-        public async Task<ActionResult> SignIn(UserModelItem model)
+        public async Task<ActionResult> SignIn(string email,string password)
         {
-            var errors = await _accountService.SignIn(model.Email, model.Password);
-            var user = await _accountService.GetByEmailAsync(model.Email);
+            var errors = await _accountService.SignIn(email, password);
+            var user = await _accountService.GetByEmailAsync(email);
             if (errors.Errors.Count > 0)
             {
                 return Ok(errors.Errors);
@@ -66,8 +66,7 @@ namespace EducationApp.PresentationLayer.Controllers
             await _accountService.SignOutAsync();
             return Ok();
         }
-
-        public async Task<ActionResult> RefreshTokenAsync(string refreshToken)
+        private async Task<ActionResult> RefreshTokenAsync(string refreshToken)
         {
             var token = new JwtSecurityTokenHandler().ReadJwtToken(refreshToken);
 
@@ -78,11 +77,10 @@ namespace EducationApp.PresentationLayer.Controllers
                 var user = await _accountService.GetByIdAsync(Id);
                 var model = UserMapper.Map(user);
                 var encodedJwt = _tokenFactory.GenerateTokenModel(model);
-
             }
             return Ok();
         }
-        public async Task<bool> CheckJwtTokenAsync(string accessToken, string refreshToken)
+        private async Task<bool> CheckJwtTokenAsync(string accessToken, string refreshToken)
         {
             var expiresAccess = new JwtSecurityTokenHandler().ReadToken(accessToken).ValidTo;
 

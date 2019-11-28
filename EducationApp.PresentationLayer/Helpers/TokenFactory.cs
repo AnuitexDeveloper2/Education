@@ -17,14 +17,14 @@ namespace EducationApp.PresentationLayer.Helpers
 {
     public class TokenFactory : ITokenFactory
     {
-       public JwtSecurityToken  securityToken;
+        public JwtSecurityToken securityToken;
         public static SymmetricSecurityKey GetSymmetricSecurityKey()
         {
             return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(JWTConsts.Key));
         }
         public TokenModel GenerateTokenModel(UserModelItem user)
         {
-           
+
             if (user == null)
             {
                 return null;
@@ -45,8 +45,8 @@ namespace EducationApp.PresentationLayer.Helpers
                     new Claim(ClaimTypes.Email,user.Email)
                 };
 
-            var accessToken =  GenerateToken(claimsAccess, 200.0);
-            var refreshToken =  GenerateToken(claimsRefresh, 450.0);
+            var accessToken = GenerateToken(claimsAccess, 200.0);
+            var refreshToken = GenerateToken(claimsRefresh, 450.0);
             securityToken = refreshToken;
             return new TokenModel
             {
@@ -62,10 +62,10 @@ namespace EducationApp.PresentationLayer.Helpers
             audience: Audience,
             claims: claims,
             expires: DateTime.Now.AddMinutes(expires),
-            signingCredentials: new SigningCredentials(GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256)) ;
+            signingCredentials: new SigningCredentials(GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             return token;
         }
-    
+
 
 
         public class TokenModel
@@ -77,13 +77,9 @@ namespace EducationApp.PresentationLayer.Helpers
         public JwtSecurityToken ValidateToken(string token)
         {
             string refreshToken = new JwtSecurityTokenHandler().WriteToken(securityToken);
-            
+
             return securityToken;
         }
 
-        private static ClaimsPrincipal GetPrincipal(string token)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

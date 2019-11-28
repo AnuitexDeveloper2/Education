@@ -1,8 +1,8 @@
-﻿using EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors;
+﻿using EducationApp.BusinessLogicLayer.Extention.Author;
+using EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors;
 using EducationApp.BusinessLogicLayer.Models.Authors;
 using EducationApp.BusinessLogicLayer.Models.Base;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
-using EducationApp.DataAccessLayer.Helpers.Author;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using System.Threading.Tasks;
 using errors = EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
@@ -23,7 +23,7 @@ namespace EducationApp.BusinessLogicLayer.Services
         public async Task<BaseModel> CreateAsync(AuthorModelItem authorModelItem)
         {
             var resultModel = new BaseModel();
-            var author = AuthorsMapping.Map(authorModelItem);
+            var author = AuthorsMapper.Map(authorModelItem);
             var resultCreate = await _authorRepository.CreateAsync(author);
             if (resultCreate < 1)
             {
@@ -74,12 +74,19 @@ namespace EducationApp.BusinessLogicLayer.Services
 
         public async Task<AuthorModel> GetAuthorsAsync(AuthorFilterModel authorFilterModel)
         {
-            var authors = await _authorRepository.GetAuthorsAsync(authorFilterModel);
+            var filter = AuthorsMapper.Map(authorFilterModel);
+            var authors = await _authorRepository.GetAuthorsAsync(filter);
             var authorsModel = new AuthorModel();
+            if (authors == null)
+            {
+                authorsModel.Errors.Add(errors.AuthorNotFound);
+                return authorsModel;
+            }
             for (int i = 0; i < authors.Data.Count; i++)
             {
-                authorsModel.Items.Add(AuthorsMapping.Map(authors.Data[i]));
+                authorsModel.Items.Add(AuthorsMapper.Map(authors.Data[i]));
             }
+            authorsModel.Count = authors.Count;
             return authorsModel;
         }
     }

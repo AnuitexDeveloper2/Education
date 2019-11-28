@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using static EducationApp.DataAccessLayer.Entities.Constants.Constants.Roles;
 
 namespace EducationApp.DataAccessLayer.Initialisation
@@ -44,7 +43,7 @@ namespace EducationApp.DataAccessLayer.Initialisation
 
         private void InitializationApplicationUser()
         {
-            var user = new ApplicationUser { FirstName = FirstName, LastName = LastName, UserName = Admin, Email = "morgenshtern1988@gmail.com", EmailConfirmed = true };
+            var user = new ApplicationUser { FirstName = FirstName, LastName = LastName, UserName = Admin, Email = UserEmail, EmailConfirmed = true };
             var createUser = _userManager.CreateAsync(user).GetAwaiter().GetResult();
             if (createUser.Succeeded == true)
             {
@@ -60,8 +59,8 @@ namespace EducationApp.DataAccessLayer.Initialisation
             {
                 var printingEdition = new List<PrintingEdition>()
             {
-                new PrintingEdition {Title = "Discword",Date = DateTime.Now,ProductType = Entities.Enums.Enums.TypeProduct.Book },
-                new PrintingEdition {Title = "CLR via C#", Date = DateTime.Now, ProductType = Entities.Enums.Enums.TypeProduct.Book}
+                new PrintingEdition {Title = PrintingEditionName,Date = DateTime.Now,ProductType = Entities.Enums.Enums.TypeProduct.Book },
+                new PrintingEdition {Title = PrintingEditionName1, Date = DateTime.Now, ProductType = Entities.Enums.Enums.TypeProduct.Book}
             };
                 foreach (var item in printingEdition)
                 {
@@ -79,7 +78,7 @@ namespace EducationApp.DataAccessLayer.Initialisation
 
                 var author = new List<Author>()
             {
-               new Author{Name = "Terry Pratchett" }
+               new Author{Name = AuthorName }
             };
                 foreach (var item in author)
                 {

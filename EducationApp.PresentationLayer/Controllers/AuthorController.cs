@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
+using EducationApp.BusinessLogicLayer.Extention.Author;
 using EducationApp.BusinessLogicLayer.Models.Authors;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
-using EducationApp.DataAccessLayer.Helpers.Author;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,7 +41,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        [HttpGet("getAutors")]
+        [HttpPost("getAutors")]
         public async Task<ActionResult>  GetAuthors(AuthorFilterModel authorFilterModel)
         {
             var authors = await _authorService.GetAuthorsAsync(authorFilterModel);

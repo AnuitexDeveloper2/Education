@@ -1,6 +1,6 @@
-﻿using EducationApp.BusinessLogicLayer.Models.Authors;
+﻿using EducationApp.BusinessLogicLayer.Extention.Author;
+using EducationApp.BusinessLogicLayer.Models.Authors;
 using EducationApp.BusinessLogicLayer.Models.Base;
-using EducationApp.DataAccessLayer.Helpers.Author;
 using System.Threading.Tasks;
 
 namespace EducationApp.BusinessLogicLayer.Services.Interfaces

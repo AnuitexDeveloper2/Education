@@ -1,10 +1,12 @@
-﻿using EducationApp.BusinessLogicLayer.Models.Authors;
+﻿using EducationApp.BusinessLogicLayer.Extention.Author;
+using EducationApp.BusinessLogicLayer.Models.Authors;
 using EducationApp.DataAccessLayer.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors
 {
-    public static class AuthorsMapping
+    public static class AuthorsMapper
     {
         public static Author Map(this AuthorModelItem author)
         {
@@ -46,19 +48,16 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors
             return authorsModel;
         }
 
-        public static AuthorModelItem Map(this DataAccessLayer.Models.AuthorModelItem authorModelItem)
+        internal static DataAccessLayer.Helpers.Author.AuthorFilterModel Map(AuthorFilterModel authorFilterModel)
         {
-            var author = new AuthorModelItem
+            var resultModel = new DataAccessLayer.Helpers.Author.AuthorFilterModel
             {
-                Name = authorModelItem.Name,
-                Id = authorModelItem.Id,
+                SortType = (DataAccessLayer.Entities.Enums.Enums.SortType)authorFilterModel.SortType,
+                PageNumber = authorFilterModel.PageNumber,
+                PageSize = authorFilterModel.PageSize,
+                SearchString = authorFilterModel.SearchString
             };
-            //author.PrintingEditions = new Models.PrintingEditions.PrintingEditionModel();
-            //for (int i = 0; i < authorModelItem.printingEditions.Count; i++)
-            //{
-            //    author.PrintingEditions.Items.Add(PrintingEditionMaping.Map(authorModelItem.printingEditions[i]));
-            //}
-            return author;
+            return resultModel;
         }
     }
 }

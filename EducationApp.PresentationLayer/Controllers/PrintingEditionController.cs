@@ -41,7 +41,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        [HttpGet("getPrintingEditons")]
+        [HttpPost("getPrintingEditons")]
         public async Task<ActionResult> GetPrintingEditions(PrintingEditionFilterState printingEditionFilterState)
         {
             var printingEdition = await _printingEditionService.GetPrintingEditionsAsync(printingEditionFilterState);

@@ -62,13 +62,16 @@ namespace EducationApp.BusinessLogicLayer.Services
             var filter = OrderMapper.Map(orderFilterModel);
             var getOrders = await _orderRepository.GetOrderAsync(filter);
             var resultModel = new OrdersModel(); //todo change model
+            if (getOrders == null)
+            {
+                resultModel.Errors.Add(errors.OrderIsNotFound);
+                return resultModel;
+            }
             foreach (var item in getOrders.Data)
             {
                 resultModel.Items.Add(OrderMapper.Map(item));
-               
             }
             resultModel.ItemsCount = getOrders.Count;
-
             return resultModel;
         }
 

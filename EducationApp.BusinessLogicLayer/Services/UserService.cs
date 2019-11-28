@@ -6,7 +6,7 @@ using EducationApp.BusinessLogicLayer.Helpers.Mapping.User;
 using EducationApp.BusinessLogicLayer.Models.Base;
 using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
-using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
+using errors = EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
 
 namespace EducationApp.BusinessLogicLayer.Services
 {
@@ -24,19 +24,19 @@ namespace EducationApp.BusinessLogicLayer.Services
             var resultModel = new BaseModel();
             if (model == null)
             {
-                resultModel.Errors.Add(EmptyField);
+                resultModel.Errors.Add(errors.EmptyField);
                 return resultModel;
             }
             var user = await _userRepository.GetByIdAsync(model.Id);
             if (user == null)
             {
-                resultModel.Errors.Add(NotFound);
+                resultModel.Errors.Add(errors.NotFound);
                 return resultModel;
             }
             var resultChangeEmail = await _userRepository.ChangeEmailAsync(user,model.Email);
             if (!resultChangeEmail)
             {
-                resultModel.Errors.Add(ChangeEmailFailure);
+                resultModel.Errors.Add(errors.ChangeEmailFailure);
                 return resultModel;
             }
            
@@ -44,13 +44,13 @@ namespace EducationApp.BusinessLogicLayer.Services
             user = UserMapper.Map(model,user);
             if (!changePassword)
             {
-                resultModel.Errors.Add(ChangePasswordFailure);
+                resultModel.Errors.Add(errors.ChangePasswordFailure);
                 return resultModel;
             }
             var result = await _userRepository.EditAsync(user);
             if (!result)
             {
-                resultModel.Errors.Add(EditUserFailure);
+                resultModel.Errors.Add(errors.EditUserFailure);
                 return resultModel;
             }
             return resultModel;
@@ -62,14 +62,14 @@ namespace EducationApp.BusinessLogicLayer.Services
             var user = await _userRepository.GetByIdAsync(id);
             if (user == null)
             {
-                resultModel.Errors.Add(NotFound);
+                resultModel.Errors.Add(errors.NotFound);
                 return resultModel; 
             }
            
             var result = await _userRepository.RemoveAsync(user);
             if (!result)
             {
-                resultModel.Errors.Add(Remove);
+                resultModel.Errors.Add(errors.Remove);
             }
             return resultModel;
         }
@@ -80,13 +80,13 @@ namespace EducationApp.BusinessLogicLayer.Services
             var user = await _userRepository.GetByIdAsync(id);
             if (user == null)
             {
-                resultModel.Errors.Add(NotFound);
+                resultModel.Errors.Add(errors.NotFound);
                 return resultModel;
             }
             var result = await _userRepository.BlockUserAsync(user);
             if (!result)
             {
-                resultModel.Errors.Add(Blok);
+                resultModel.Errors.Add(errors.Blok);
             }
             return resultModel;
         }
@@ -98,7 +98,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             var user = await _userRepository.GetByIdAsync(id);
             if (user == null)
             {
-                resultModel.Errors.Add(NotFound);
+                resultModel.Errors.Add(errors.NotFound);
                 return resultModel;
             }
             resultModel = UserMapper.Map(user);
@@ -111,30 +111,35 @@ namespace EducationApp.BusinessLogicLayer.Services
             var user = await _userRepository.GetByIdAsync(model.Id);
             if (user == null)
             {
-                resultModel.Errors.Add(NotFound);
+                resultModel.Errors.Add(errors.NotFound);
                 return resultModel;
             }
             var result = await _userRepository.ResetPasswordAsync(user, GeneratePassword.CreateRandomPassword());
             if (!result)
             {
-                resultModel.Errors.Add(Token);
+                resultModel.Errors.Add(errors.Token);
             }
             //_emailSender.SendingEmailAsync(user.Email, "Restore Password", newPassword);
             return resultModel;
         }
 
 
-        public async Task <UserModel> GetUsersAsync(UserFilterModel filter)
+        public async Task <UserModel> GetUsersAsync(UserFilterModel userFilter)
         {
-            var getUsers = await _userRepository.GetUsersAsync(UserMapper.Map(filter));
-            var user = getUsers.Data;
-            var model = new UserModel();
-            for (int i = 0; i < user.Count; i++)
+            var filter = UserMapper.Map(userFilter);
+            var users = await _userRepository.GetUsersAsync(filter);
+            var usersModel = new UserModel();
+            if (users == null)
             {
-                model.Items.Add(UserMapper.Map(getUsers.Data[i]));
+                usersModel.Errors.Add(errors.NotFound);
+                return usersModel;
             }
-            model.Count = getUsers.Count;
-            return model;
+            for (int i = 0; i < users.Data.Count; i++)
+            {
+                usersModel.Items.Add(UserMapper.Map(users.Data[i]));
+            }
+            usersModel.Count = users.Count;
+            return usersModel;
         }
 
 

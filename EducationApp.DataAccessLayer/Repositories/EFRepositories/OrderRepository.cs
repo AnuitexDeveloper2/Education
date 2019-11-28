@@ -49,6 +49,10 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             {
                 orders = orders.Where(k => k.UserId == orderFilterModel.Id);
             }
+            if (orders.Count() == 0)
+            {
+                return null;
+            }
             var propertyInfo = orders.First().GetType().GetProperty(orderFilterModel.SortOrder.ToString());
             orders = orderFilterModel.SortType == SortType.Decrease ? orders
                 .OrderBy(e => propertyInfo.GetValue(e, null)) : orders.OrderByDescending(e => propertyInfo.GetValue(e, null));
