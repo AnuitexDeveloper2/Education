@@ -8,6 +8,7 @@ using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Entities.Base;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 
 namespace EducationApp.DataAccessLayer.Ropositories.Base
 {
@@ -91,6 +92,24 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
                 return false;
             }
             return true;
+        }
+
+        public async Task<IQueryable<TEntity>> SortEntityAsync(IQueryable<TEntity> entities,string sortProperty,string sortType)
+        {
+            var property = typeof(PrintingEdition).GetProperty(sortProperty);
+            var parameterExpr = Expression.Parameter(typeof(PrintingEdition), "k");
+            var propertyExpr = Expression.Property(parameterExpr, property);
+            var selectorExpr = Expression.Lambda(propertyExpr, parameterExpr);
+            Expression queryExpr = entities.Expression;
+            queryExpr = Expression.Call(
+          typeof(Queryable),
+          sortType == SortType.Increase.ToString() ? "OrderBy" : "OrderByDescending",
+          new Type[] {
+                entities.ElementType,
+                property.PropertyType },
+          queryExpr,
+          selectorExpr);
+           return entities.Provider.CreateQuery<TEntity>(queryExpr);
         }
     }
 }

@@ -16,6 +16,7 @@ namespace EducationApp.DataAccessLayer.Repositories.Interfaces
         Task<bool> RemoveAsync(TEntity entity);
         List<TEntity> GetAll();
         Task<bool> CreateRangeAsync(List<TEntity> entity);
+        Task<IQueryable<TEntity>> SortEntityAsync(IQueryable<TEntity> entities, string sortProperty, string sortType);
 
 
 

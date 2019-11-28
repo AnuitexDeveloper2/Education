@@ -59,38 +59,14 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                 printingEditions = printingEditions.Where(k => k.ProductType != item);
             }
             //todo may be you can update sort logic withour If (use Reflection)?
-
-            var property = typeof(PrintingEdition).GetProperty(printingEditionFilter.PrintingEditionSortType.ToString());
-            var parameterExpr = Expression.Parameter(typeof(PrintingEdition), "k");
-           
-            var propertyExpr = Expression.Property(parameterExpr, property);
-            var selectorExpr = Expression.Lambda(propertyExpr, parameterExpr);
-            Expression queryExpr = printingEditions.Expression;
-            queryExpr = Expression.Call(
-          //type to call method on
-          typeof(Queryable),
-          //method to call
-          printingEditionFilter.SortType== SortType.Increase ? "OrderBy" : "OrderByDescending",
-          //generic types of the order by method
-          new Type[] {
-                printingEditions.ElementType,
-                property.PropertyType },
-          //existing expression to call method on
-          queryExpr,
-          //method parameter, in our case which property to order on
-          selectorExpr);
-            // printingEditions = printingEditions.OrderBy(selectorExpr);
-            printingEditions = printingEditions.Provider.CreateQuery<PrintingEdition>(queryExpr);
-
-            //var propertyInfo = printingEditions.First().GetType().GetProperty(printingEditionFilter.PrintingEditionSortType.ToString());
-            //printingEditions = printingEditionFilter.SortType == SortType.Decrease ? printingEditions
-            //    .OrderBy(e => propertyInfo.GetValue(e, null)) : printingEditions.OrderByDescending(e => propertyInfo.GetValue(e, null));
-
+            printingEditions = await SortEntityAsync(printingEditions
+                , printingEditionFilter.PrintingEditionSortType.ToString()
+                , printingEditionFilter.SortType.ToString());
             var count = printingEditions.Count();
             printingEditions = printingEditions
                 .Skip((printingEditionFilter.PageNumber - 1) * printingEditionFilter.PageSize)
                 .Take(printingEditionFilter.PageSize);
-            var result = new ResponseModel<PrintingEdition>() { Data = printingEditions.ToList(), Count = count };
+            var result = new ResponseModel<PrintingEdition>() { Data = await printingEditions.ToListAsync(), Count = count };
             return result;
         }
     }
