@@ -31,7 +31,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             {
                 return false;
             }
-            user.UserName = user.FirstName /*+ user.LastName*/;
+            user.UserName = user.FirstName;
             var createUser = await _userManager.CreateAsync(user, password);
             if (!createUser.Succeeded)
             {
@@ -157,7 +157,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             return true;
         }
 
-        public async Task<UserPresentationModel> GetUserAsync(UserFilterModel usersFilter)
+        public async Task<UserModel> GetUsersAsync(UserFilterModel usersFilter)
         {
             var users = _applicationContext.Users.Where(k => k.IsRemoved == false).AsEnumerable();
 
@@ -173,33 +173,11 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             users = users.OrderBy(e => propertyInfo.GetValue(e, null));
             var count = users.Count();
             users = users.Skip((usersFilter.PageNumber - 1) * usersFilter.PageSize).Take(usersFilter.PageSize);
-            var presentationModel = new UserPresentationModel { Data =  users.ToList(), Count = count };
+            var presentationModel = new UserModel { Data =  users.ToList(), Count = count };
             return presentationModel;
         }
 
-        //var result = (from order in _applicationContext.Orders
-        //              join user in _applicationContext.Users on order.UserId equals user.Id
-        //              where (user.Id == order.UserId)
-        //              //join orderItem in _applicationContext.OrderItems on order.Id equals orderItem.OrderId
-        //              select new Order
-        //              {
-        //                  Id = order.Id,
-        //                  Date = order.Date,
-        //                  OrderStatusType = order.OrderStatusType,
-        //                  UserName = user.UserName,
-        //                  UserEmail = user.Email,
-        //                  Amount = order.Amount,
-        //                  OrderItems = (from orderItem in _applicationContext.OrderItems
-        //                                join printingEdition in _applicationContext.PrintingEditions on orderItem.PrintingEditionId equals printingEdition.Id
-        //                                where (orderItem.OrderId == order.Id)
-        //                                select new OrderItem
-        //                                {
-        //                                    Id = orderItem.Id,
-        //                                    Count = orderItem.Count,
-        //                                    PrintingEditionTitle = printingEdition.Title,
-        //                                    TypeProduct = printingEdition.ProductType
-        //                                }).ToList()
-        //              });
+      
     }
 }
 

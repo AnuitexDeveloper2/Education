@@ -28,6 +28,8 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                                         Id = printingEdition.Id,
                                         Title = printingEdition.Title,
                                         ProductType = printingEdition.ProductType,
+                                        Price = printingEdition.Price,
+                                        Date = printingEdition.Date,
                                         Authors = (from authorPrintingEdition in _applicationContext.AuthorInPrintingEditions
                                                    join author in _applicationContext.Authors on authorPrintingEdition.AuthorId equals author.Id
                                                    where (authorPrintingEdition.PrintingEditionId == printingEdition.Id)
@@ -52,7 +54,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             }
             //todo may be you can update sort logic withour If (use Reflection)?
             var propertyInfo = printingEditions.First().GetType().GetProperty(printingEditionFilter.PrintingEditionSortType.ToString());
-            printingEditions = printingEditionFilter.SortType == SortType.Increase ? printingEditions
+            printingEditions = printingEditionFilter.SortType == SortType.Decrease ? printingEditions
                 .OrderBy(e => propertyInfo.GetValue(e, null)) : printingEditions.OrderByDescending(e => propertyInfo.GetValue(e, null));
 
             var count = printingEditions.Count();
@@ -61,8 +63,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                 .Take(printingEditionFilter.PageSize);
             var result = new ResponseModel<PrintingEdition>() { Data = printingEditions.ToList(), Count = count };
             return result;
-
-            //return new ResponseModel<RpintingEditionModel>() { Data = }
         }
     }
 }

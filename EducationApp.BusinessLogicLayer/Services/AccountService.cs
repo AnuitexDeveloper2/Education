@@ -1,14 +1,11 @@
 ﻿using EducationApp.BusinessLogicLayer.Helpers;
 using EducationApp.BusinessLogicLayer.Helpers.Mapping;
-using EducationApp.BusinessLogicLayer.Helpers.Mapping.User;
 using EducationApp.BusinessLogicLayer.Models.Base;
 using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
-using System;
 using System.Threading.Tasks;
-using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.EmailConsts;
 using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
 
 

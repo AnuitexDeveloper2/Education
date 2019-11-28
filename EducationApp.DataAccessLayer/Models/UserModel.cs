@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace EducationApp.DataAccessLayer.Models
 {
-    public class UserPresentationModel :ResponseModel<ApplicationUser>
+    public class UserModel :ResponseModel<ApplicationUser>
     {
        
     }

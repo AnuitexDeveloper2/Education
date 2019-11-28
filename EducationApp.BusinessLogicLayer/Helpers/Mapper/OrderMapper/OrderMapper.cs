@@ -28,6 +28,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapper.OrderMapper
         {
             var resultFilter = new OrderFilterModel
             {
+                Id = orderFilterModel.Id,
                 SortOrder = (SortOrder)orderFilterModel.SortOrder,
                 StatusOrder = MapList(orderFilterModel),
                 SortType = (SortType)orderFilterModel.SortType //todo check types
@@ -75,7 +76,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapper.OrderMapper
         {
             var result = new OrderItemModelItem
             {
-                TypeProduct = (Models.Enums.Enums.TypeProduct)item.TypeProduct,
+                TypeProduct = item.TypeProduct,
                 PrintingEditionName = item.PrintingEditionTitle
             };
           return result;

@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.JWTConsts;
 using EducationApp.PresentationLayer.Helpers;
 using EducationApp.PresentationLayer.Helpers.Interfaces;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.OpenApi.Models;
 
 namespace EducationApp.PresentationLayer
 {
@@ -31,10 +31,10 @@ namespace EducationApp.PresentationLayer
         {
             Initializer.Init(services, Configuration.GetConnectionString("DefaultConnection"));
             services.AddTransient<ITokenFactory, TokenFactory>();
-           
+
             services.AddAuthentication(options =>
             {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; 
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
             {
@@ -51,7 +51,10 @@ namespace EducationApp.PresentationLayer
                 };
             });
             services.AddMvc(option => option.EnableEndpointRouting = false);
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataBaseInitialisation initializer, IEmailSender emailSender)
@@ -60,23 +63,21 @@ namespace EducationApp.PresentationLayer
 
             app.UseMiddleware<ErrorMiddlware>();
 
-
             app.UseHttpsRedirection();
 
-            app.UseRouting();
-
-          
             app.UseAuthentication();
 
-            app.UseMvc(routes =>
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
-            app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
         }
     }

@@ -76,7 +76,7 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             var authors = await _authorRepository.GetAuthorsAsync(authorFilterModel);
             var authorsModel = new AuthorModel();
-            for (int i = 0; i < authors.Count; i++)
+            for (int i = 0; i < authors.Data.Count; i++)
             {
                 authorsModel.Items.Add(AuthorsMapping.Map(authors.Data[i]));
             }

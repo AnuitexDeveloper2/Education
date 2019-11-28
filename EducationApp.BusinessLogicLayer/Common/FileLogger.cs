@@ -7,8 +7,8 @@ namespace EducationApp.BusinessLogicLayer.Common
 {
     public class FileLogger : ILogger
     {
-        private string filePath;
-        private object _lock = new object();
+        private readonly string filePath;
+        private readonly object _lock = new object();
         public FileLogger(string path)
         {
             filePath = path;

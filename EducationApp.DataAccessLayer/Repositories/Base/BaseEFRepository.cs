@@ -92,9 +92,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
             }
             return true;
         }
-
-   
-
     }
 }
 

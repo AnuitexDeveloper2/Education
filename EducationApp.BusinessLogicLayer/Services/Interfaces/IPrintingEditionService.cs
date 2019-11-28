@@ -14,7 +14,7 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
         Task<BaseModel> CreateAsync(PrintingEditionModelItem model);
         Task<BaseModel> RemoveAsync(long id);
         Task<BaseModel> UpdateAsync(PrintingEditionModelItem printingEditionModelItem);
-        Task<PrintingEditionModel> GetPrintingEditionAsync(PrintingEditionFilterState state);
+        Task<PrintingEditionModel> GetPrintingEditionsAsync(PrintingEditionFilterState state);
       
     }
 }

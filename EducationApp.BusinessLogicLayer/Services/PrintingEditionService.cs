@@ -103,7 +103,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             return resultModel;
         }
 
-        public async Task<PrintingEditionModel> GetPrintingEditionAsync(PrintingEditionFilterState state)
+        public async Task<PrintingEditionModel> GetPrintingEditionsAsync(PrintingEditionFilterState state)
         {
             var filterModel = PrintingEditionFilterStateMapping.Map(state);
             var printingEdition = await _printingEditionRepository.GetPrintingEditionsAsync(filterModel);

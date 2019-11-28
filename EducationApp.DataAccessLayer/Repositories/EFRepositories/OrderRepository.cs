@@ -27,6 +27,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                           where (user.Id == order.UserId)
                           select new Order
                           {
+                              UserId = user.Id,
                               Id = order.Id,
                               Date = order.Date,
                               OrderStatusType = order.OrderStatusType,
@@ -41,27 +42,16 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                                                 Id = orderItem.Id,
                                                 Count = orderItem.Count,
                                                 PrintingEditionTitle = printingEdition.Title,
-                                                TypeProduct = printingEdition.ProductType
+                                                TypeProduct = printingEdition.ProductType.ToString()
                                             })
-                          });
+                          }).AsEnumerable();
             if (orderFilterModel.Id > 0)
             {
-                orders = orders.Where(k => k.Id == orderFilterModel.Id).OrderBy(l => l.Date);
-                var myOrders = new OrderModel { Data = await orders.ToListAsync(), Count = orders.Count() };
-                return myOrders;
+                orders = orders.Where(k => k.UserId == orderFilterModel.Id);
             }
-            if (orderFilterModel.SortOrder == SortOrder.Id)
-            {
-                orders = orderFilterModel.SortType == SortType.Increase ? orders.OrderBy(k => k.Id) : orders.OrderByDescending(k => k.Id);
-            }
-            if (orderFilterModel.SortOrder == SortOrder.Data)
-            {
-                orders = orderFilterModel.SortType == SortType.Increase ? orders.OrderBy(k => k.Date) : orders.OrderByDescending(k => k.Date);
-            }
-            if (orderFilterModel.SortOrder == SortOrder.Amount)
-            {
-                orders = orderFilterModel.SortType == SortType.Increase ? orders.OrderBy(k => k.Amount) : orders.OrderByDescending(k => k.Amount);
-            }
+            var propertyInfo = orders.First().GetType().GetProperty(orderFilterModel.SortOrder.ToString());
+            orders = orderFilterModel.SortType == SortType.Decrease ? orders
+                .OrderBy(e => propertyInfo.GetValue(e, null)) : orders.OrderByDescending(e => propertyInfo.GetValue(e, null));
 
             List<OrderStatusType> types = Enum.GetValues(typeof(OrderStatusType))
                .OfType<OrderStatusType>()
@@ -71,8 +61,8 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             {
                 orders.Where(k => k.OrderStatusType != item);
             }
-            //orders = orders.Skip((orderFilterModel.PageCount - 1) * orderFilterModel.PageSize).Take(orderFilterModel.PageSize);
-            var result = new OrderModel { Data = await orders.ToListAsync(), Count = orders.Count() };
+            orders = orders.Skip((orderFilterModel.PageNumber - 1) * orderFilterModel.PageSize).Take(orderFilterModel.PageSize);
+            var result = new OrderModel { Data = orders.ToList(), Count = orders.Count() };
             return result;
         }
 

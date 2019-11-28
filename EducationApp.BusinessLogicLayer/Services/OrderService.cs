@@ -97,7 +97,5 @@ namespace EducationApp.BusinessLogicLayer.Services
             }
             return resultModel;
         }
-
-        
     }
 }

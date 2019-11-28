@@ -24,6 +24,10 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors
                 Name = author.Name,
                 Id = author.Id,
             };
+            if (author.PrintingEditions == null)
+            {
+                return authorModelItem;
+            }
             authorModelItem.BooksTitle = new List<string>();
             foreach (var item in author.PrintingEditions)
             {

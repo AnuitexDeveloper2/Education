@@ -16,9 +16,8 @@ namespace EducationApp.DataAccessLayer.Entities
         public int Count { get; set; }
         public PrintingEdition PrintingEdition { get; set; }
         [NotMapped]
-        public IEnumerable<PrintingEdition> PrintingEditions { get; set; }
-        public Order Orders { get; set; }
         public string PrintingEditionTitle { get; set; }
-        public TypeProduct TypeProduct { get; set; }
+        [NotMapped]
+        public string TypeProduct { get; set; }
     }
 }

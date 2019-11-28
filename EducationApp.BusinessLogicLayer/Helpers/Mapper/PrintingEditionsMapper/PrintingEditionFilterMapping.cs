@@ -8,19 +8,23 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.PrintingEditions
     {
         public static PrintingEditionModelItem Map(PrintingEdition printingEdition)
         {
-           
-                PrintingEditionModelItem printingEditionModel = new PrintingEditionModelItem
-                {
-                    Id = printingEdition.Id,
-                    Title = printingEdition.Title,
-                    Desccription = printingEdition.Desccription,
-                    Price = printingEdition.Price,
-                    TypeProduct = (EducationApp.BusinessLogicLayer.Models.Enums.Enums.TypeProduct)printingEdition.ProductType,
-                    Authors = AuthorsMapping.Map(printingEdition.Authors)
-                };
-            return printingEditionModel;
-        }
 
+
+
+            PrintingEditionModelItem printingEditionModel = new PrintingEditionModelItem
+            {
+                Id = printingEdition.Id,
+                Title = printingEdition.Title,
+                Desccription = printingEdition.Desccription,
+                Price = printingEdition.Price,
+                TypeProduct = (EducationApp.BusinessLogicLayer.Models.Enums.Enums.TypeProduct)printingEdition.ProductType,
+                Authors = AuthorsMapping.Map(printingEdition.Authors)
+            };
+
+
+            return printingEditionModel;
+
+        }
 
     }
 }

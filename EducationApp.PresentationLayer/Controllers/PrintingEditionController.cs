@@ -33,7 +33,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost("updatePrintingEdition")]
         public async Task<ActionResult> UpdatePrintingEdition(PrintingEditionModelItem printingEditionModelItem)
         {
@@ -44,7 +44,7 @@ namespace EducationApp.PresentationLayer.Controllers
         [HttpGet("getPrintingEditons")]
         public async Task<ActionResult> GetPrintingEditions(PrintingEditionFilterState printingEditionFilterState)
         {
-            var printingEdition = await _printingEditionService.GetPrintingEditionAsync(printingEditionFilterState);
+            var printingEdition = await _printingEditionService.GetPrintingEditionsAsync(printingEditionFilterState);
             return Ok(printingEdition);
         }
 

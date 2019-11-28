@@ -25,7 +25,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
         Task<string> GetRoleAsync(ApplicationUser user);
         Task<bool> BlockUserAsync(ApplicationUser user);
         Task SignOut();
-        Task<UserPresentationModel> GetUserAsync(UserFilterModel state);
+        Task<UserModel> GetUsersAsync(UserFilterModel state);
 
 
     }
