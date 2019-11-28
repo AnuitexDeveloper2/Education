@@ -6,7 +6,7 @@ namespace EducationApp.BusinessLogicLayer.Models.Enums
 {
     public partial class Enums
     {
-        public enum SortOrder
+        public enum SortOrderType
         {
             Id = 0,
             Data = 1,

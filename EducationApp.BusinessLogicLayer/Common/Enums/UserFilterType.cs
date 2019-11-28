@@ -2,10 +2,11 @@
 {
     public partial class Enums
     {
-        public enum Price
+        public enum UsersFilterType
         {
-            MinPrice = 0,
-            MaxPrice = 1
+            All = 0,
+            Active = 1,
+            Blocked = 2
         }
     }
 }

@@ -5,6 +5,8 @@ namespace EducationApp.BusinessLogicLayer.Helpers
 {
     public class ConvertorCarrency
     {
-        Dictionary<CurrencyType, string> openWith = new Dictionary<CurrencyType, string>();
+        public Dictionary<CurrencyType, string> convertor = new Dictionary<CurrencyType, string>();
+        
+
     }
 }

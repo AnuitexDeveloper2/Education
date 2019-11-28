@@ -2,7 +2,7 @@
 {
     public partial class Enums
     {
-        public enum Price 
+        public enum PrintingEditionPrice 
         {
             PriceDesc = 0,
             PriceAsc = 1

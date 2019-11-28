@@ -6,7 +6,7 @@ namespace EducationApp.BusinessLogicLayer.Extention.Order
 {
     public class OrderFilterModel : BaseFilterModel
     {
-        public SortOrder SortOrder { get; set; }
+        public SortOrderType SortOrder { get; set; }
         public List<OrderStatusType> StatusOrder  { get; set; }
         public long Id { get; set; }
     }
