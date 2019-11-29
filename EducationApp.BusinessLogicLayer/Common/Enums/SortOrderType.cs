@@ -9,7 +9,7 @@ namespace EducationApp.BusinessLogicLayer.Models.Enums
         public enum SortOrderType
         {
             Id = 0,
-            Data = 1,
+            Date = 1,
             Amount = 2
         }
     }

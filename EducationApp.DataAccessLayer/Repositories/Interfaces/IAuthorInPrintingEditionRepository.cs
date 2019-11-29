@@ -10,6 +10,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
     public interface IAuthorInPrintingEditionRepository : IBaseEFRRepository<AuthorInPrintingEdition>
     {
 
-        Task<bool> RemoveAuthorInPrintingEditionAsync(Expression<Func<AuthorInPrintingEdition, bool>> predicate);
+        Task<bool> RemoveRangeAsync(Expression<Func<AuthorInPrintingEdition, bool>> predicate);
     }
 }

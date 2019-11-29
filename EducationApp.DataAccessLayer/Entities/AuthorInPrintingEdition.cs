@@ -6,7 +6,7 @@ namespace EducationApp.DataAccessLayer.Entities
     public class AuthorInPrintingEdition : BaseEntity
     {
         [ForeignKey("Author")]
-        public long AuthorId { get; set; } //todo Add ForeignKey attrs
+        public long AuthorId { get; set; }
         [ForeignKey("PrintingEdition")]
         public long PrintingEditionId { get; set; }
         public Author Author { get; set; }

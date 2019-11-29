@@ -30,10 +30,10 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors
             {
                 return authorModelItem;
             }
-            authorModelItem.BooksTitle = new List<string>();
+            authorModelItem.BookTitles = new List<string>();
             foreach (var item in author.PrintingEditions)
             {
-                authorModelItem.BooksTitle.Add(item.Title);
+                authorModelItem.BookTitles.Add(item.Title);
             }
             return authorModelItem;
         }

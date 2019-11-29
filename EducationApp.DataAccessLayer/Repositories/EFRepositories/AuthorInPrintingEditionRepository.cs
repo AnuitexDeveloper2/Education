@@ -15,12 +15,11 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         {
 
         }
-        //todo get Expression as param, remove copypaste
-        //todo check for null
-        public async Task<bool> RemoveAuthorInPrintingEditionAsync(Expression<Func<AuthorInPrintingEdition, bool>> predicate)
+
+        public async Task<bool> RemoveRangeAsync(Expression<Func<AuthorInPrintingEdition, bool>> predicate) //todo rename to RemoveFullAsync
         {
             var authorInPrintingEditions = _applicationContext.AuthorInPrintingEditions.Where(predicate);
-            if (authorInPrintingEditions.Count() == 0)
+            if (!authorInPrintingEditions.Any())
             {
                 return false;
             }

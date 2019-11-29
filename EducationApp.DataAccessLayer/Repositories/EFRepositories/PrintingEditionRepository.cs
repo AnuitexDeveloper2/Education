@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 
@@ -42,31 +42,38 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                                     });
             if (!string.IsNullOrWhiteSpace(printingEditionFilter.SearchString))
             {
-                var searchByName = await printingEditions.Where(k => k.Authors.Any(l => l.Name == "Barbara Liskov")).ToListAsync();
-                var printingEditio = await printingEditions.Where(l => l.Title == "Barbara Liskov").ToListAsync();
+                var searchByName = await printingEditions.Where(k => k.Authors.Any(l => l.Name == printingEditionFilter.SearchString)).ToListAsync();
+                var printingEditio = await printingEditions.Where(l => l.Title == printingEditionFilter.SearchString).ToListAsync();
                 printingEditions = Enumerable.Concat(searchByName, printingEditio).AsQueryable();
             }
+
             if (printingEditions.Count() == 0)
             {
                 return null;
             }
+
             List<TypeProduct> types = Enum.GetValues(typeof(TypeProduct))
                 .OfType<TypeProduct>()
                 .Except(printingEditionFilter.TypeProduct)
                 .ToList();
+
             foreach (var item in types)
             {
                 printingEditions = printingEditions.Where(k => k.ProductType != item);
             }
-            //todo may be you can update sort logic withour If (use Reflection)?
-            printingEditions = await SortEntityAsync(printingEditions
-                , printingEditionFilter.PrintingEditionSortType.ToString()
-                , printingEditionFilter.SortType.ToString());
+
+            var property = typeof(PrintingEdition).GetProperty(printingEditionFilter.PrintingEditionSortType.ToString()); //todo replace to extantion
+            printingEditions = printingEditionFilter.SortType == SortType.Decrease ? printingEditions
+                .OrderBy(property.Name, printingEditionFilter.PrintingEditionSortType.ToString()): printingEditions.OrderBy(property.Name + " descending"); 
             var count = printingEditions.Count();
-            printingEditions = printingEditions
-                .Skip((printingEditionFilter.PageNumber - 1) * printingEditionFilter.PageSize)
-                .Take(printingEditionFilter.PageSize);
-            var result = new ResponseModel<PrintingEdition>() { Data = await printingEditions.ToListAsync(), Count = count };
+
+            printingEditions = printingEditions.Skip((printingEditionFilter.PageNumber - 1) * printingEditionFilter.PageSize).Take(printingEditionFilter.PageSize);
+
+            var result = new ResponseModel<PrintingEdition>()
+            { 
+                Data = await printingEditions.ToListAsync(),
+                Count = count
+            };
             return result;
         }
     }

@@ -58,14 +58,14 @@ namespace EducationApp.BusinessLogicLayer.Services
                 resultModel.Errors.Add(errors.AuthorNotFound);
                 return resultModel;
             }
-            var wasRemoveAuthor = await _authorRepository.RemoveAsync(author); //todo rename to result
-            if (!wasRemoveAuthor)
+            var hasRemoved = await _authorRepository.MarkRemoveAsync(author);
+            if (!hasRemoved)
             {
                 resultModel.Errors.Add(errors.AuthorRemove);
                 return resultModel;
             }
-            var wasRemoveAuthorInPrintingEdition = await _authorInPrintingEditionRepository.RemoveAuthorInPrintingEditionAsync(x=>x.AuthorId == author.Id ); //todo rename
-            if (!wasRemoveAuthorInPrintingEdition)
+            hasRemoved = await _authorInPrintingEditionRepository.RemoveRangeAsync(x=>x.AuthorId == author.Id );
+            if (!hasRemoved)
             {
                 resultModel.Errors.Add(errors.PIRemove);
             }

@@ -1,21 +1,18 @@
-﻿using EducationApp.BusinessLogicLayer.Models.Users;
-using EducationApp.BusinessLogicLayer.Services;
+﻿using EducationApp.BusinessLogicLayer.Models.Token;
+using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.PresentationLayer.Helpers.Interfaces;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using static EducationApp.BusinessLogicLayer.Common.Consts.Consts;
 using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.JWTConsts;
 
 namespace EducationApp.PresentationLayer.Helpers
 {
-    public class TokenFactory : ITokenFactory
+    public class JwtHelper : IJwtHelper
     {
         public JwtSecurityToken securityToken;
         public static SymmetricSecurityKey GetSymmetricSecurityKey()
@@ -30,20 +27,17 @@ namespace EducationApp.PresentationLayer.Helpers
                 return null;
             }
 
-            var claimsAccess = new List<Claim>
-                {
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim(ClaimTypes.Role, user.Role),
-                    new Claim(ClaimTypes.Name, user.UserName),
-                };
-
             var claimsRefresh = new List<Claim>
                 {
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim(ClaimTypes.Email,user.Email)
                 };
+            var claimsAccess = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Role, user.Role),
+                    new Claim(ClaimTypes.Name, user.UserName)
+                 };
+            claimsRefresh.AddRange(claimsRefresh);
 
             var accessToken = GenerateToken(claimsAccess, 200.0);
             var refreshToken = GenerateToken(claimsRefresh, 450.0);
@@ -55,7 +49,7 @@ namespace EducationApp.PresentationLayer.Helpers
             };
         }
 
-        public JwtSecurityToken GenerateToken(List<Claim> claims, double expires)
+        private JwtSecurityToken GenerateToken(List<Claim> claims, double expires) //todo private
         {
             var token = new JwtSecurityToken(
             issuer: Issuer,
@@ -66,18 +60,10 @@ namespace EducationApp.PresentationLayer.Helpers
             return token;
         }
 
-
-
-        public class TokenModel
-        {
-            public string AccessToken { get; set; }
-            public string RefreshToken { get; set; }
-        }
-
         public JwtSecurityToken ValidateToken(string token)
         {
             string refreshToken = new JwtSecurityTokenHandler().WriteToken(securityToken);
-
+            //todo chech for valid
             return securityToken;
         }
 

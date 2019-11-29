@@ -4,11 +4,13 @@ using EducationApp.DataAccessLayer.Helpers;
 using EducationApp.DataAccessLayer.Models;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using System.Linq.Dynamic.Core;
 using System.Linq;
 using System.Threading.Tasks;
 using static EducationApp.DataAccessLayer.Entities.Constants.Constants.Roles;
 using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
+using Microsoft.EntityFrameworkCore;
+using EducationApp.DataAccessLayer.Models.Base;
 
 namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 {
@@ -157,9 +159,9 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             return true;
         }
 
-        public async Task<UserModel> GetUsersAsync(UserFilterModel usersFilter)
+        public async Task<ResponseModel<ApplicationUser>> GetUsersAsync(UserFilterModel usersFilter)
         {
-            var users = _applicationContext.Users.Where(k => k.IsRemoved == false).AsEnumerable();
+            var users = _applicationContext.Users.Where(k => k.IsRemoved == false);
 
             if (!string.IsNullOrWhiteSpace(usersFilter.SearchString))
             {
@@ -173,11 +175,13 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             {
                 users = usersFilter.UsersFilterType == UserFilterType.Active ? users.Where(k => k.LockoutEnabled == true) : users.Where(k => k.LockoutEnabled == false);
             }
-            var propertyInfo = users.First().GetType().GetProperty(usersFilter.UsersSortType.ToString());
-            users = users.OrderBy(e => propertyInfo.GetValue(e, null));
+
+            var property = typeof(ApplicationUser).GetProperty(usersFilter.UsersSortType.ToString());
+            users = usersFilter.SortType == SortType.Decrease ? users
+                .OrderBy(property.Name, usersFilter.UsersSortType.ToString()) : users.OrderBy(property.Name + " descending");
             var count = users.Count();
             users = users.Skip((usersFilter.PageNumber - 1) * usersFilter.PageSize).Take(usersFilter.PageSize);
-            var presentationModel = new UserModel { Data =  users.ToList(), Count = count };
+            var presentationModel = new ResponseModel<ApplicationUser> { Data = await users.ToListAsync(), Count = count };
             return presentationModel;
         }
 

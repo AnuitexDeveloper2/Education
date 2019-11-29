@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace EducationApp.BusinessLogicLayer.Models.Orders
 {
-    public class OrdersModel : BaseModel
+    public class OrderModel : BaseModel //todo OrderModel
     {
-        public ICollection<OrdersItemModel> Items = new List<OrdersItemModel>();
+        public ICollection<OrderModelItem> Items = new List<OrderModelItem>();
         public int ItemsCount { get; set; }
 
     }

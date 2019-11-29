@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BookStore.DataAccess.AppContext;
-using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Entities.Base;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 
 namespace EducationApp.DataAccessLayer.Ropositories.Base
 {
@@ -38,8 +33,8 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
             return resultId.Entity.Id;
         }
 
-       
-        public async Task<bool> RemoveAsync(TEntity entity)
+
+        public async Task<bool> MarkRemoveAsync(TEntity entity)
         {
             entity.IsRemoved = true;
             var save = await _applicationContext.SaveChangesAsync();
@@ -48,12 +43,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
                 return true;
             }
             return false;
-        }
-
-        public List<TEntity> GetAll()
-        {
-            var getAll = _dbSet.ToList<TEntity>();
-            return getAll;
         }
 
         public async Task<bool> UpdateAsync(TEntity entity)
@@ -92,24 +81,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
                 return false;
             }
             return true;
-        }
-
-        public async Task<IQueryable<TEntity>> SortEntityAsync(IQueryable<TEntity> entities,string sortProperty,string sortType)
-        {
-            var property = typeof(PrintingEdition).GetProperty(sortProperty);
-            var parameterExpr = Expression.Parameter(typeof(PrintingEdition), "k");
-            var propertyExpr = Expression.Property(parameterExpr, property);
-            var selectorExpr = Expression.Lambda(propertyExpr, parameterExpr);
-            Expression queryExpr = entities.Expression;
-            queryExpr = Expression.Call(
-          typeof(Queryable),
-          sortType == SortType.Increase.ToString() ? "OrderBy" : "OrderByDescending",
-          new Type[] {
-                entities.ElementType,
-                property.PropertyType },
-          queryExpr,
-          selectorExpr);
-           return entities.Provider.CreateQuery<TEntity>(queryExpr);
         }
     }
 }

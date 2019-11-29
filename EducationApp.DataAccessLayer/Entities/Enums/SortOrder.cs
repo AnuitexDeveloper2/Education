@@ -5,7 +5,7 @@
         public enum SortOrder
         {
             Id = 0,
-            Data = 1,
+            Date = 1,
             Amount = 2
         }
     }

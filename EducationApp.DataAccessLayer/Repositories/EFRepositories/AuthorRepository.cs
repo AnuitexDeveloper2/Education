@@ -19,7 +19,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         public AuthorRepository(ApplicationContext applicationContext) : base(applicationContext)
         {
         }
-        public async Task <ResponseModel<Author>> GetAuthorsAsync(AuthorFilterModel authorFilterModel)
+        public async Task<ResponseModel<Author>> GetAuthorsAsync(AuthorFilterModel authorFilterModel)
         {
             var author = from authors in _applicationContext.Authors
                          select new Author
@@ -43,15 +43,10 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             {
                 return null;
             }
-          
             author = authorFilterModel.SortType == SortType.Increase ? author.OrderBy(k => k.Id) : author.OrderByDescending(k => k.Id);
             var count = await author.CountAsync();
             author = author.Skip((authorFilterModel.PageNumber - 1) * authorFilterModel.PageSize).Take(authorFilterModel.PageSize);
-            var resultModel = new ResponseModel<Author>
-            { 
-                Data = author.ToList(),
-                Count = count 
-            };
+            var resultModel = new ResponseModel<Author> { Data = author.ToList(), Count = count };
             return resultModel;
 
         }

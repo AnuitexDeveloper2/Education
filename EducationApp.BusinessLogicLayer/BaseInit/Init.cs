@@ -43,17 +43,17 @@ namespace EducationApp.BusinessLogicLayer.BaseInit
             services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddScoped<IOrderItemRepository, OrderItemRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
-            services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPrintingEditionRepository, PrintingEditionRepository>();
+            services.AddScoped<IAuthorInPrintingEditionRepository, AuthorInPrintingEditionRepository>();
+            services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IPrintingEditionRepository, PrintingEditionRepository>();
             services.AddScoped<IPrintingEditionService, PrintingEditionService>();
-            services.AddScoped<IAuthorInPrintingEditionRepository, AuthorInPrintingEditionRepository>();
 
-           
+           //todo init in layers
         }
     }
 }

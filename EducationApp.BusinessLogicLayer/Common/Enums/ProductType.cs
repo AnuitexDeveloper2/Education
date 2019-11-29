@@ -6,7 +6,7 @@ namespace EducationApp.BusinessLogicLayer.Models.Enums
 {
     public partial class Enums
     {
-        public enum TypeProduct
+        public enum ProductType
         {
             Book = 0,
             Journal = 1,

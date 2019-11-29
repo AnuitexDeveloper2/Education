@@ -2,7 +2,6 @@
 using EducationApp.BusinessLogicLayer.Models.Orders;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Helpers.OrderFilterModel;
-using EducationApp.DataAccessLayer.Models;
 using System;
 using System.Collections.Generic;
 using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
@@ -12,14 +11,14 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapper.OrderMapper
 {
     public static class OrderMapper
     {
-        public static Order Map(OrdersItemModel ordersItemModel,long id)
+        public static Order Map(OrderModelItem ordersItemModel,long id)
         {
             var order = new Order
             {
                 PaymentId = id,
                 Description = ordersItemModel.Description,
                 UserId = ordersItemModel.UserId,
-                OrderStatusType = (OrderStatusType)ordersItemModel.OrderStatus,
+                Status = (OrderStatusType)ordersItemModel.Status,
                 Date = DateTime.Now
             };
             return order;
@@ -31,7 +30,9 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapper.OrderMapper
                 Id = orderFilterModel.Id,
                 SortOrder = (SortOrder)orderFilterModel.SortOrder,
                 StatusOrder = MapList(orderFilterModel),
-                SortType = (SortType)orderFilterModel.SortType //todo check types
+                SortType = (SortType)orderFilterModel.SortType,
+                PageNumber = orderFilterModel.PageNumber,
+                PageSize = orderFilterModel.PageSize
             };
             return resultFilter;
         }
@@ -47,17 +48,17 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapper.OrderMapper
             return result;
         }
 
-        public static OrdersItemModel Map(Order order)
+        public static OrderModelItem Map(Order order)
         {
-            var resultModel = new OrdersItemModel
+            var resultModel = new OrderModelItem
             {
                 Id = order.Id,
-                DateTime = order.Date,
+                Date = order.Date,
                 UserName = order.UserName,
                 UserEmail = order.UserEmail,
-                OrderStatus = (Models.Enums.Enums.OrderStatusType)order.OrderStatusType,
+                Status = (Models.Enums.Enums.OrderStatusType)order.Status,
                 AmountOrder = order.Amount,
-                OrderItemModel = MapList(order.OrderItems)
+                OrderItems = MapList(order.OrderItems)
             };
             return resultModel;
         }
@@ -76,7 +77,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapper.OrderMapper
         {
             var result = new OrderItemModelItem
             {
-                TypeProduct = item.TypeProduct,
+                PrintingEditionType = item.TypeProduct,
                 PrintingEditionName = item.PrintingEditionTitle
             };
           return result;

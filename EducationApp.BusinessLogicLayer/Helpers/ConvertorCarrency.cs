@@ -7,6 +7,5 @@ namespace EducationApp.BusinessLogicLayer.Helpers
     {
         public Dictionary<CurrencyType, string> convertor = new Dictionary<CurrencyType, string>();
         
-
     }
 }

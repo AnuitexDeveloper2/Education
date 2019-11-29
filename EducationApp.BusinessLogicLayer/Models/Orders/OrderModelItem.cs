@@ -6,15 +6,15 @@ using static EducationApp.BusinessLogicLayer.Models.Enums.Enums;
 
 namespace EducationApp.BusinessLogicLayer.Models.Orders
 {
-    public class OrdersItemModel : BaseModel
+    public class OrderModelItem : BaseModel //todo OrderModelItem
     {
         public long Id { get; set; }
         public string Description { get; set; }
         public long UserId { get; set; }
-        public OrderItemModel OrderItemModel { get; set; }
-        public OrderStatusType OrderStatus { get; set; }
-        public long TransactionId { get; set; }
-        public DateTime DateTime { get; set; }
+        public OrderItemModel OrderItems { get; set; } //todo rename prop OrderItems, 
+        public OrderStatusType Status { get; set; } //todo rename prop to Staus
+        public string TransactionId { get; set; }
+        public DateTime Date { get; set; } //todo CreationDate od Date
         public string UserName { get; set; }
         public string UserEmail { get; set; }
         public decimal AmountOrder { get; set; }

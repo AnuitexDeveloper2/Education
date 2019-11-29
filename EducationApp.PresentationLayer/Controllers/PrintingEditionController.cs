@@ -9,6 +9,7 @@ namespace EducationApp.PresentationLayer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class PrintingEditionController : ControllerBase
     {
         private readonly IPrintingEditionService _printingEditionService;
@@ -17,7 +18,7 @@ namespace EducationApp.PresentationLayer.Controllers
             _printingEditionService = printingEditionService;
         }
 
-        [Authorize(Roles = "Admin")]
+       /* [Authorize(Roles = "Admin")]*/ //todo check
         [HttpPost("createPrintingEdition")]
         public async Task<ActionResult> CreatePrintingEdition(PrintingEditionModelItem printingEditonModelItem)
         {
@@ -25,15 +26,13 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost("removePrintingEdition")]
-        public async Task<ActionResult> RemovePrintingEdition(PrintingEditionModelItem printingEditonModelItem)
+        public async Task<ActionResult> RemovePrintingEdition(long id) //todo param is Id
         {
-            var result = await _printingEditionService.RemoveAsync(printingEditonModelItem.Id);
+            var result = await _printingEditionService.RemoveAsync(id);
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost("updatePrintingEdition")]
         public async Task<ActionResult> UpdatePrintingEdition(PrintingEditionModelItem printingEditionModelItem)
         {
@@ -41,6 +40,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
+        [AllowAnonymous]
         [HttpPost("getPrintingEditons")]
         public async Task<ActionResult> GetPrintingEditions(PrintingEditionFilterState printingEditionFilterState)
         {

@@ -8,6 +8,6 @@ namespace EducationApp.BusinessLogicLayer.Models.Authors
     {
         public string Name { get; set; }
         public long Id { get; set; }
-        public List<string> BooksTitle { get; set; }
+        public List<string> BookTitles { get; set; } //todo bookTitles
     }
 }

@@ -34,16 +34,16 @@ namespace EducationApp.BusinessLogicLayer.Services
             return true;
         }
 
-        public async Task<BaseModel> CreateUserAsync(UserModelItem userItemModel)
+        public async Task<BaseModel> CreateUserAsync(UserModelItem userItemModel,string password)
         {
             var userModel = new BaseModel();
-            if (string.IsNullOrWhiteSpace(userItemModel.FirstName) || string.IsNullOrWhiteSpace(userItemModel.LastName) || string.IsNullOrWhiteSpace(userItemModel.Email) || string.IsNullOrWhiteSpace(userItemModel.Password))
+            if (string.IsNullOrWhiteSpace(userItemModel.FirstName) || string.IsNullOrWhiteSpace(userItemModel.LastName) || string.IsNullOrWhiteSpace(userItemModel.Email))
             {
                 userModel.Errors.Add(EmptyField);
                 return userModel;
             }
             var user = UserMapper.Map(userItemModel);
-            var userCreate = await _userRepository.CreateUserAsync(user, userItemModel.Password);
+            var userCreate = await _userRepository.CreateUserAsync(user, password);
             if (!userCreate)
             {
                 userModel.Errors.Add(UserCreate);
@@ -73,9 +73,11 @@ namespace EducationApp.BusinessLogicLayer.Services
             return userModel;
         }
 
-        public async Task<ApplicationUser> GetByIdAsync(long id)
+        public async Task<UserModelItem> GetByIdAsync(long id)
         {
-            return await _userRepository.GetByIdAsync(id);
+            var user = await _userRepository.GetByIdAsync(id);
+            var userModel = UserMapper.Map(user);
+            return userModel;
         }
 
         public async Task<UserModelItem> GetByEmailAsync(string email)

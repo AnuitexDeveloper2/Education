@@ -2,7 +2,7 @@
 
 namespace EducationApp.DataAccessLayer.Helpers.Author
 {
-    public class AuthorFilterModel : BaseFilterStatus
+    public class AuthorFilterModel : BaseFilterModel
     {
        
     }

@@ -9,7 +9,7 @@ namespace EducationApp.BusinessLogicLayer.Models.OrderItemModelItem
         public CurrencyType Currency { get; set; }
         public long PrintingEditionId { get; set; }
         public int Count { get; set; }
-        public string TypeProduct { get; set; }
-        public string PrintingEditionName { get; set; }
+        public string PrintingEditionType { get; set; } //todo PrintingEditionType
+        public string PrintingEditionName { get; set; } 
     }
 }

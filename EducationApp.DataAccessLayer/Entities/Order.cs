@@ -13,8 +13,8 @@ namespace EducationApp.DataAccessLayer.Entities
         [ForeignKey("Payment")]
         public long PaymentId { get; set; }
         [NotMapped]
-        public IEnumerable<OrderItem> OrderItems { get; set; } //todo add NoptMapped, Add User
-        public OrderStatusType OrderStatusType { get; set; } //todo OrderStatusType
+        public IEnumerable<OrderItem> OrderItems { get; set; }
+        public OrderStatusType Status { get; set; } //todo rename property to Status
         public Payment Payment { get; set; }
         [NotMapped]
         public decimal Amount { get; set; }

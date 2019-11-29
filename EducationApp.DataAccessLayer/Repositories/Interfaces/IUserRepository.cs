@@ -1,6 +1,7 @@
 ﻿using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Helpers;
 using EducationApp.DataAccessLayer.Models;
+using EducationApp.DataAccessLayer.Models.Base;
 using System.Threading.Tasks;
 
 namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
@@ -25,7 +26,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
         Task<string> GetRoleAsync(ApplicationUser user);
         Task<bool> BlockUserAsync(ApplicationUser user);
         Task SignOut();
-        Task<UserModel> GetUsersAsync(UserFilterModel state);
+        Task<ResponseModel<ApplicationUser>> GetUsersAsync(UserFilterModel state);
 
 
     }

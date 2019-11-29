@@ -30,7 +30,7 @@ namespace EducationApp.PresentationLayer
         public void ConfigureServices(IServiceCollection services)
         {
             Initializer.Init(services, Configuration.GetConnectionString("DefaultConnection"));
-            services.AddTransient<ITokenFactory, TokenFactory>();
+            services.AddTransient<IJwtHelper, JwtHelper>();
 
             services.AddAuthentication(options =>
             {
@@ -46,7 +46,7 @@ namespace EducationApp.PresentationLayer
                     ValidateAudience = true,
                     ValidAudience = Audience,
                     ValidateLifetime = true,
-                    IssuerSigningKey = TokenFactory.GetSymmetricSecurityKey(),
+                    IssuerSigningKey = JwtHelper.GetSymmetricSecurityKey(),
                     ValidateIssuerSigningKey = true,
                 };
             });
