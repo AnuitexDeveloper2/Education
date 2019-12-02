@@ -76,7 +76,13 @@ namespace EducationApp.BusinessLogicLayer.Services
         public async Task<UserModelItem> GetByIdAsync(long id)
         {
             var user = await _userRepository.GetByIdAsync(id);
+
+            var role = await _userRepository.GetRoleAsync(user);
+
             var userModel = UserMapper.Map(user);
+
+            userModel.Role = role;
+
             return userModel;
         }
 

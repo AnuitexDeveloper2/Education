@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 using System.Linq.Dynamic.Core;
+using System.Linq.Expressions;
 
 namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 {
@@ -21,7 +22,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         public OrderRepository(ApplicationContext applicationContext) : base(applicationContext)
         {
         }
-        public async Task<ResponseModel<Order>> GetOrderAsync(OrderFilterModel orderFilterModel)
+        public async Task<ResponseModel<Order>> GetOrdersAsync(OrderFilterModel orderFilterModel)
         {
             var orders = from order in _applicationContext.Orders
                          join user in _applicationContext.Users on order.UserId equals user.Id
@@ -49,30 +50,33 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             if (orderFilterModel.Id > 0)
             {
                 orders = orders.Where(k => k.UserId == orderFilterModel.Id);
-            }
-            if (orders.Count() == 0)
-            {
-                return null;
+                var userOrders = new ResponseModel<Order> { Data = await orders.ToListAsync(), Count = orders.Count() };
+                return userOrders;
             }
 
-            List<OrderStatusType> types = Enum.GetValues(typeof(OrderStatusType))
-               .OfType<OrderStatusType>()
-               .Except(orderFilterModel.StatusOrder)
-               .ToList();
+            List<OrderStatusType> types = Enum.GetValues(typeof(OrderStatusType)).OfType<OrderStatusType>().Except(orderFilterModel.StatusOrder).ToList();
+
             foreach (var item in orderFilterModel.StatusOrder)
             {
                 orders.Where(k => k.Status != item);
             }
-            var property = typeof(Order).GetProperty(orderFilterModel.SortOrder.ToString());
-            orders = orderFilterModel.SortType == SortType.Decrease ? orders
-                .OrderBy(property.Name, orderFilterModel.SortType.ToString()) : orders.OrderBy(property.Name + " descending"); 
-            var count = orders.Count();
-            orders = orders.Skip((orderFilterModel.PageNumber - 1) * orderFilterModel.PageSize).Take(orderFilterModel.PageSize);
-            var result = new ResponseModel<Order> { Data = await orders.ToListAsync(), Count = count };
-            return result;
 
+            orders = this.Sorting(orders, orderFilterModel.SortOrder.ToString(), orderFilterModel.SortType);
+
+            var count = orders.Count();
+
+            orders = orders.Skip((orderFilterModel.PageNumber - 1) * orderFilterModel.PageSize).Take(orderFilterModel.PageSize);
+
+            var result = new ResponseModel<Order> { Data = await orders.ToListAsync(), Count = count };
+
+            return result;
         }
 
+        public Order GetOrder(long id)
+        {
+            var result = _applicationContext.Orders.Where(p=>p.PaymentId == id).FirstOrDefault();
 
+            return result;
+        }
     }
 }

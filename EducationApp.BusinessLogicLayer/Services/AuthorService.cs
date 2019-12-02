@@ -35,7 +35,7 @@ namespace EducationApp.BusinessLogicLayer.Services
         public async Task<BaseModel> UpdateAsync(long id)
         {
             var resultModel = new BaseModel();
-            var author = await _authorRepository.FindByIdAsync(id);
+            var author = await _authorRepository.GetByIdAsync(id);
             if (author == null)
             {
                 resultModel.Errors.Add(errors.AuthorNotFound);
@@ -52,7 +52,7 @@ namespace EducationApp.BusinessLogicLayer.Services
         public async Task<BaseModel> RemoveAsync(long id)
         {
             var resultModel = new BaseModel();
-            var author = await _authorRepository.FindByIdAsync(id);
+            var author = await _authorRepository.GetByIdAsync(id);
             if (author == null)
             {
                 resultModel.Errors.Add(errors.AuthorNotFound);

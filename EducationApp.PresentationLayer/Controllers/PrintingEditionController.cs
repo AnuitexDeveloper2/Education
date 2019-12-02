@@ -4,12 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
 using EducationApp.BusinessLogicLayer.Extention.PrintingEditionFilterState;
 using Microsoft.AspNetCore.Authorization;
+using role = EducationApp.BusinessLogicLayer.Common.Consts.Consts.UserRoles;
 
 namespace EducationApp.PresentationLayer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+   
     public class PrintingEditionController : ControllerBase
     {
         private readonly IPrintingEditionService _printingEditionService;
@@ -18,25 +19,30 @@ namespace EducationApp.PresentationLayer.Controllers
             _printingEditionService = printingEditionService;
         }
 
-       /* [Authorize(Roles = "Admin")]*/ //todo check
+        [Authorize(Roles = role.Admin)] //todo check
         [HttpPost("createPrintingEdition")]
         public async Task<ActionResult> CreatePrintingEdition(PrintingEditionModelItem printingEditonModelItem)
         {
-           var result = await _printingEditionService.CreateAsync(printingEditonModelItem);
+            var result = await _printingEditionService.CreateAsync(printingEditonModelItem);
+
             return Ok(result);
         }
 
+        //[Authorize(Roles = role.Admin)]
         [HttpPost("removePrintingEdition")]
         public async Task<ActionResult> RemovePrintingEdition(long id) //todo param is Id
         {
             var result = await _printingEditionService.RemoveAsync(id);
+
             return Ok(result);
         }
+
 
         [HttpPost("updatePrintingEdition")]
         public async Task<ActionResult> UpdatePrintingEdition(PrintingEditionModelItem printingEditionModelItem)
         {
             var result = await _printingEditionService.UpdateAsync(printingEditionModelItem);
+
             return Ok(result);
         }
 
@@ -45,6 +51,7 @@ namespace EducationApp.PresentationLayer.Controllers
         public async Task<ActionResult> GetPrintingEditions(PrintingEditionFilterState printingEditionFilterState)
         {
             var printingEdition = await _printingEditionService.GetPrintingEditionsAsync(printingEditionFilterState);
+
             return Ok(printingEdition);
         }
 

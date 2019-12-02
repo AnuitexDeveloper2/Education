@@ -21,13 +21,13 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         }
         public async Task<ResponseModel<Author>> GetAuthorsAsync(AuthorFilterModel authorFilterModel)
         {
-            var author = from authors in _applicationContext.Authors
+            var authors = from author in _applicationContext.Authors
                          select new Author
                          {
-                             Id = authors.Id,
-                             Name = authors.Name,
+                             Id = author.Id,
+                             Name = author.Name,
                              PrintingEditions = (from authorPrintingEdition in _applicationContext.AuthorInPrintingEditions
-                                                 join printingEdition in _applicationContext.PrintingEditions on authorPrintingEdition.AuthorId equals authors.Id
+                                                 join printingEdition in _applicationContext.PrintingEditions on authorPrintingEdition.AuthorId equals author.Id
                                                  where (authorPrintingEdition.PrintingEditionId == printingEdition.Id)
                                                  select new PrintingEdition
                                                  {
@@ -37,16 +37,22 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                          };
             if (!string.IsNullOrEmpty(authorFilterModel.SearchString))
             {
-                author = author.Where(k => k.Name.Contains(authorFilterModel.SearchString));
+                authors = authors.Where(k => k.Name.Contains(authorFilterModel.SearchString));
             }
-            if (author.Count() == 0)
+
+            if (!authors.Any())
             {
                 return null;
             }
-            author = authorFilterModel.SortType == SortType.Increase ? author.OrderBy(k => k.Id) : author.OrderByDescending(k => k.Id);
-            var count = await author.CountAsync();
-            author = author.Skip((authorFilterModel.PageNumber - 1) * authorFilterModel.PageSize).Take(authorFilterModel.PageSize);
-            var resultModel = new ResponseModel<Author> { Data = author.ToList(), Count = count };
+
+            authors = authorFilterModel.SortType == SortType.Increase ? authors.OrderBy(k => k.Id) : authors.OrderByDescending(k => k.Id);
+
+            var count = await authors.CountAsync();
+
+            authors = authors.Skip((authorFilterModel.PageNumber - 1) * authorFilterModel.PageSize).Take(authorFilterModel.PageSize);
+
+            var resultModel = new ResponseModel<Author> { Data = authors.ToList(), Count = count };
+
             return resultModel;
 
         }

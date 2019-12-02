@@ -29,7 +29,7 @@ namespace EducationApp.PresentationLayer
 
         public void ConfigureServices(IServiceCollection services)
         {
-            Initializer.Init(services, Configuration.GetConnectionString("DefaultConnection"));
+            Initializer.InitServices(services, Configuration.GetConnectionString("DefaultConnection"));
             services.AddTransient<IJwtHelper, JwtHelper>();
 
             services.AddAuthentication(options =>
@@ -58,9 +58,9 @@ namespace EducationApp.PresentationLayer
             });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataBaseInitialisation initializer, IEmailSender emailSender)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IEmailSender emailSender)
         {
-            initializer.StartInit();
+           
 
             app.UseMiddleware<ErrorMiddlware>();
 

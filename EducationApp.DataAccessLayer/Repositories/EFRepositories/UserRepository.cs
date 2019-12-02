@@ -1,7 +1,6 @@
 ﻿using BookStore.DataAccess.AppContext;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Helpers;
-using EducationApp.DataAccessLayer.Models;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using System.Linq.Dynamic.Core;
@@ -167,21 +166,27 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             {
                 users = users.Where(k => k.UserName.Contains(usersFilter.SearchString));
             }
-            if (users.Count() == 0)
+
+            if (!users.Any())
             {
                 return null;
             }
+
             if (usersFilter.UsersFilterType != UserFilterType.All)
             {
                 users = usersFilter.UsersFilterType == UserFilterType.Active ? users.Where(k => k.LockoutEnabled == true) : users.Where(k => k.LockoutEnabled == false);
             }
 
             var property = typeof(ApplicationUser).GetProperty(usersFilter.UsersSortType.ToString());
-            users = usersFilter.SortType == SortType.Decrease ? users
-                .OrderBy(property.Name, usersFilter.UsersSortType.ToString()) : users.OrderBy(property.Name + " descending");
+
+            users = usersFilter.SortType == SortType.Decrease ? users.OrderBy(property.Name, usersFilter.UsersSortType.ToString()) : users.OrderBy(property.Name + " descending");
+
             var count = users.Count();
+
             users = users.Skip((usersFilter.PageNumber - 1) * usersFilter.PageSize).Take(usersFilter.PageSize);
+
             var presentationModel = new ResponseModel<ApplicationUser> { Data = await users.ToListAsync(), Count = count };
+
             return presentationModel;
         }
 

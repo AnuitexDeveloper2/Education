@@ -19,12 +19,16 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         public async Task<bool> RemoveRangeAsync(Expression<Func<AuthorInPrintingEdition, bool>> predicate) //todo rename to RemoveFullAsync
         {
             var authorInPrintingEditions = _applicationContext.AuthorInPrintingEditions.Where(predicate);
+
             if (!authorInPrintingEditions.Any())
             {
                 return false;
             }
+
             _applicationContext.RemoveRange(authorInPrintingEditions);
+
             var result = await _applicationContext.SaveChangesAsync();
+
             return result < 1 ? false : true;
 
         }

@@ -9,7 +9,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
 {
     public interface IOrderRepository : IBaseEFRRepository<Order>
     {
-        Task<ResponseModel<Order>> GetOrderAsync(OrderFilterModel orderFilterModel);
-       
+        Task<ResponseModel<Order>> GetOrdersAsync(OrderFilterModel orderFilterModel);
+        Order GetOrder(long id);
     }
 }

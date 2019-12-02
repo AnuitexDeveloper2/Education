@@ -27,7 +27,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.PrintingEditions
             List<TypeProduct> result = new List<TypeProduct>();
             foreach (var item in printingEditionFilterState.TypeProduct)
             {
-                typeProduct = (DataAccessLayer.Entities.Enums.Enums.TypeProduct)item;
+                typeProduct = (TypeProduct)item;
                 result.Add(typeProduct);
             }
             return result;

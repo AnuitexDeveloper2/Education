@@ -7,7 +7,7 @@ namespace EducationApp.DataAccessLayer.Repositories.Interfaces
     {
         Task<long> CreateAsync(TEntity entity);
         Task<bool> UpdateAsync(TEntity entity);
-        Task<TEntity> FindByIdAsync(long id);
+        Task<TEntity> GetByIdAsync(long id);
         Task<bool> MarkRemoveAsync(TEntity entity);
         Task<bool> CreateRangeAsync(List<TEntity> entity);
     }

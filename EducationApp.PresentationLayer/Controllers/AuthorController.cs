@@ -4,6 +4,7 @@ using EducationApp.BusinessLogicLayer.Models.Authors;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using role = EducationApp.BusinessLogicLayer.Common.Consts.Consts.UserRoles;
 
 namespace EducationApp.PresentationLayer.Controllers
 {
@@ -18,26 +19,29 @@ namespace EducationApp.PresentationLayer.Controllers
             _authorService = authorService;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = role.Admin)]
         [HttpPost("createAuthor")]
         public async Task<ActionResult> CreateAuthor(AuthorModelItem model)
         {
             var result = await _authorService.CreateAsync(model);
+
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = role.Admin)]
         [HttpPost("removeAuthor")]
         public async Task<ActionResult> RemoveAuthor(AuthorModelItem authorModel)
         {
-            var result =  await _authorService.RemoveAsync(authorModel.Id);
+            var result = await _authorService.RemoveAsync(authorModel.Id);
+
             return Ok(result);
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = role.Admin)]
         [HttpPost("updateAuthor")]
         public async Task<ActionResult> UpdateAuthor(long id)
         {
             var result = await _authorService.UpdateAsync(id);
+
             return Ok(result);
         }
 
@@ -45,6 +49,7 @@ namespace EducationApp.PresentationLayer.Controllers
         public async Task<ActionResult>  GetAuthors(AuthorFilterModel authorFilterModel)
         {
             var authors = await _authorService.GetAuthorsAsync(authorFilterModel);
+
             return Ok(authors);
         }
     }

@@ -1,14 +1,11 @@
-﻿using EducationApp.BusinessLogicLayer.Extention.User;
-using EducationApp.BusinessLogicLayer.Models.Users;
+﻿using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.DataAccessLayer.Entities;
-using EducationApp.DataAccessLayer.Helpers;
-using EducationApp.DataAccessLayer.Models;
 
 namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
 {
     public static class UserMapper
     {
-        public static ApplicationUser Map(this UserModelItem model)
+        public static ApplicationUser Map(UserModelItem model)
         {
             ApplicationUser user = new ApplicationUser
             {
@@ -21,7 +18,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
             return user;
         }
 
-        public static UserModelItem Map(this ApplicationUser user)
+        public static UserModelItem Map( ApplicationUser user)
         {
             UserModelItem userItemModel = new UserModelItem
             {
@@ -33,7 +30,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
             };
             return userItemModel;
         }
-        public static DataAccessLayer.Helpers.UserFilterModel Map(this Extention.User.UserFilterModel filterUser)
+        public static DataAccessLayer.Helpers.UserFilterModel Map( Extention.User.UserFilterModel filterUser)
         {
             var userFilter = new DataAccessLayer.Helpers.UserFilterModel
             {

@@ -63,6 +63,10 @@ namespace EducationApp.PresentationLayer.Helpers
         public JwtSecurityToken ValidateToken(string token)
         {
             string refreshToken = new JwtSecurityTokenHandler().WriteToken(securityToken);
+            if (token != refreshToken)
+            {
+                return null;
+            }
             //todo chech for valid
             return securityToken;
         }

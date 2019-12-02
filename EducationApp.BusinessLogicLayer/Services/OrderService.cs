@@ -23,9 +23,9 @@ namespace EducationApp.BusinessLogicLayer.Services
             _orderRepository = orderRepository;
             _paymentRepository = paymentRepository;
         }
-        public async Task<BaseModel> CreateAsync(OrderModelItem ordersItemModel)
+        public async Task<OrderModel> CreateAsync(OrderModelItem ordersItemModel)
         {
-            var resultModel = new BaseModel();
+            var resultModel = new OrderModel();
 
             if (ordersItemModel == null)
             {
@@ -64,7 +64,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             {
                 resultModel.Errors.Add(errors.OrderItemCreate);
             }
-
+            resultModel.PaymentId = paymentId;
             return resultModel;
         }
 
@@ -72,7 +72,7 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             var filter = OrderMapper.Map(orderFilterModel);
 
-            var getOrders = await _orderRepository.GetOrderAsync(filter);
+            var getOrders = await _orderRepository.GetOrdersAsync(filter);
 
             var resultModel = new OrderModel();
 
@@ -92,14 +92,18 @@ namespace EducationApp.BusinessLogicLayer.Services
             return resultModel;
         }
 
-        public async Task<BaseModel> UpdateOrderAsync(string TransactoinId)
+        public async Task<BaseModel> UpdateOrderAsync(string transactoinId,long paymentId)
         {
             var resultModel = new BaseModel();
 
-            var payment = new Payment 
+            var payment = await _paymentRepository.GetByIdAsync(paymentId);
+            if (payment == null)
             {
-                TransactionId = TransactoinId 
-            }; 
+                resultModel.Errors.Add(errors.PaymentNotFound);
+                return resultModel;
+            }
+
+            payment.TransactionId = transactoinId;
 
             var wasUpdate = await _paymentRepository.UpdateAsync(payment);
 
@@ -109,7 +113,7 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return resultModel;
             }
 
-            var order = await _orderRepository.FindByIdAsync(orderId);
+            var order =  _orderRepository.GetOrder(paymentId);
 
             if (order == null)
             {

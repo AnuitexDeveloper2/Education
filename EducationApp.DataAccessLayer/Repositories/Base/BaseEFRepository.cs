@@ -1,9 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BookStore.DataAccess.AppContext;
 using EducationApp.DataAccessLayer.Entities.Base;
+using EducationApp.DataAccessLayer.Helpers.Base;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
+using System.Linq.Dynamic.Core;
 
 namespace EducationApp.DataAccessLayer.Ropositories.Base
 {
@@ -61,7 +65,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
             return false;
         }
 
-        public async Task<TEntity> FindByIdAsync(long id)
+        public async Task<TEntity> GetByIdAsync(long id)
         {
             var result = await _dbSet.FindAsync(id);
 
@@ -83,5 +87,18 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
             return true;
         }
     }
+
+    static class Extensions
+    {
+        public static IQueryable<TEntity> Sorting<TEntity>(this IBaseEFRRepository<TEntity> baseEFRRepository, IQueryable<TEntity> entities, string entitySortType, SortType sortType) where TEntity: BaseEntity 
+        {
+            var property = typeof(TEntity).GetProperty(entitySortType);
+            entities = sortType == SortType.Increase ? entities.OrderBy(property.Name) : entities.OrderBy(property.Name + " descending");
+            return entities;
+        }
+    }
+   
+
+
 }
 

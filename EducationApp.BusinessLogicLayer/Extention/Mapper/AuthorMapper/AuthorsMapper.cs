@@ -48,7 +48,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors
             return authorsModel;
         }
 
-        internal static DataAccessLayer.Helpers.Author.AuthorFilterModel Map(AuthorFilterModel authorFilterModel)
+        public static DataAccessLayer.Helpers.Author.AuthorFilterModel Map(AuthorFilterModel authorFilterModel)
         {
             var resultModel = new DataAccessLayer.Helpers.Author.AuthorFilterModel
             {

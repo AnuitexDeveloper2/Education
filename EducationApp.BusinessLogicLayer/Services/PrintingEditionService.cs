@@ -48,7 +48,7 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             var resultModel = new BaseModel();
 
-            var printingEdition = await _printingEditionRepository.FindByIdAsync(id);
+            var printingEdition = await _printingEditionRepository.GetByIdAsync(id);
 
             if (printingEdition == null)
             {
@@ -77,7 +77,7 @@ namespace EducationApp.BusinessLogicLayer.Services
         public async Task<BaseModel> UpdateAsync(PrintingEditionModelItem printingEditionModelItem)
         {
             var resultModel = new BaseModel();
-            var printingEdition = await _printingEditionRepository.FindByIdAsync(printingEditionModelItem.Id);
+            var printingEdition = await _printingEditionRepository.GetByIdAsync(printingEditionModelItem.Id);
             if (printingEdition == null || printingEdition.IsRemoved)
             {
                 resultModel.Errors.Add(errors.PINotFound);

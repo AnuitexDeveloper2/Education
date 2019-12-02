@@ -4,9 +4,9 @@
     {
         public enum SortType
         {
-            None = 0,
-            Increase = 1,
-            Decrease = 2
+            Increase = 0,
+            Decrease = 1,
+            None = 2
         }
     }
 }

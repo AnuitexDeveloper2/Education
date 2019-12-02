@@ -11,7 +11,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
-
 namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 {
     public class PrintingEditionRepository : BaseEFRepository<PrintingEdition>, IPrintingEditionRepository
@@ -42,12 +41,12 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                                     });
             if (!string.IsNullOrWhiteSpace(printingEditionFilter.SearchString))
             {
-                var searchByName = await printingEditions.Where(k => k.Authors.Any(l => l.Name == printingEditionFilter.SearchString)).ToListAsync();
-                var printingEditio = await printingEditions.Where(l => l.Title == printingEditionFilter.SearchString).ToListAsync();
-                printingEditions = Enumerable.Concat(searchByName, printingEditio).AsQueryable();
+                var searchByName = await  printingEditions.Where(k => k.Authors.Any(l => l.Name == printingEditionFilter.SearchString)).ToListAsync();
+                var searchByTitle = await printingEditions.Where(l => l.Title == printingEditionFilter.SearchString).ToListAsync();
+                printingEditions = Enumerable.Concat(searchByName, searchByTitle).AsQueryable();
             }
 
-            if (printingEditions.Count() == 0)
+            if (!printingEditions.Any())
             {
                 return null;
             }
@@ -61,21 +60,22 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             {
                 printingEditions = printingEditions.Where(k => k.ProductType != item);
             }
-
-            var property = typeof(PrintingEdition).GetProperty(printingEditionFilter.PrintingEditionSortType.ToString()); //todo replace to extantion
-            printingEditions = printingEditionFilter.SortType == SortType.Decrease ? printingEditions
-                .OrderBy(property.Name, printingEditionFilter.PrintingEditionSortType.ToString()): printingEditions.OrderBy(property.Name + " descending"); 
+            
+            //todo replace to extantion
+            printingEditions = this.Sorting(printingEditions, printingEditionFilter.PrintingEditionSortType.ToString(), printingEditionFilter.SortType);
+           
             var count = printingEditions.Count();
 
             printingEditions = printingEditions.Skip((printingEditionFilter.PageNumber - 1) * printingEditionFilter.PageSize).Take(printingEditionFilter.PageSize);
 
             var result = new ResponseModel<PrintingEdition>()
             { 
-                Data = await printingEditions.ToListAsync(),
+                Data =  printingEditions.ToList(),
                 Count = count
             };
             return result;
         }
+
     }
 }
 

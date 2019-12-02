@@ -8,9 +8,6 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.PrintingEditions
     {
         public static PrintingEditionModelItem Map(PrintingEdition printingEdition)
         {
-
-
-
             PrintingEditionModelItem printingEditionModel = new PrintingEditionModelItem
             {
                 Id = printingEdition.Id,
@@ -20,8 +17,6 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.PrintingEditions
                 Type = (EducationApp.BusinessLogicLayer.Models.Enums.Enums.ProductType)printingEdition.ProductType,
                 Authors = AuthorsMapper.Map(printingEdition.Authors)
             };
-
-
             return printingEditionModel;
 
         }
