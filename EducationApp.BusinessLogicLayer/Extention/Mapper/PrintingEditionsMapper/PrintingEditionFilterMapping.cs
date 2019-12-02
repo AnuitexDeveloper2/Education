@@ -12,7 +12,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.PrintingEditions
             {
                 Id = printingEdition.Id,
                 Title = printingEdition.Title,
-                Description = printingEdition.Desccription,
+                Description = printingEdition.Description,
                 Price = printingEdition.Price,
                 Type = (EducationApp.BusinessLogicLayer.Models.Enums.Enums.ProductType)printingEdition.ProductType,
                 Authors = AuthorsMapper.Map(printingEdition.Authors)

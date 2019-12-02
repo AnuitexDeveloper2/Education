@@ -24,6 +24,8 @@ namespace EducationApp.DataAccessLayer.Initialisation
         {
             InitialisationRole();
             InitializationApplicationUser();
+            InitializationPrintingEdition();
+            InitializationAuthors();
         }
 
 

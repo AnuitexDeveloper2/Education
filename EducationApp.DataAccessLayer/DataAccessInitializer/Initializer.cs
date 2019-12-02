@@ -32,7 +32,7 @@ namespace EducationApp.DataAccessLayer.InitRepositories
             services.AddTransient<UserManager<ApplicationUser>>();
             services.AddTransient<RoleManager<Role>>();
             services.AddTransient<SignInManager<ApplicationUser>>();
-            services.AddTransient<DataBaseInitialisation>();
+           
 
             services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddScoped<IOrderItemRepository, OrderItemRepository>();

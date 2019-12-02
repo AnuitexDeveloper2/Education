@@ -19,7 +19,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapper.OrderMapper
                 Description = ordersItemModel.Description,
                 UserId = ordersItemModel.UserId,
                 Status = (OrderStatusType)ordersItemModel.Status,
-                Date = DateTime.Now
+                Date = DateTime.Now,
             };
             return order;
         }

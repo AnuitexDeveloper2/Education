@@ -28,7 +28,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        //[Authorize(Roles = role.Admin)]
+        [Authorize(Roles = role.Admin)]
         [HttpPost("removePrintingEdition")]
         public async Task<ActionResult> RemovePrintingEdition(long id) //todo param is Id
         {
@@ -37,7 +37,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-
+        [Authorize(Roles = role.Admin)]
         [HttpPost("updatePrintingEdition")]
         public async Task<ActionResult> UpdatePrintingEdition(PrintingEditionModelItem printingEditionModelItem)
         {

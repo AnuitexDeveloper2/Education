@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using EducationApp.DataAccessLayer.InitRepositories;
 using System;
+using EducationApp.DataAccessLayer.Initialisation;
 
 namespace EducationApp.BusinessLogicLayer.BaseInit
 {
@@ -15,6 +16,8 @@ namespace EducationApp.BusinessLogicLayer.BaseInit
             DataAccessInitializer.InitRepositories(services, connectionString);
 
             services.AddTransient<TokenValidationParameters>();
+
+            services.AddTransient<DataBaseInitialisation>();
 
             services.AddTransient<IEmailSender, EmailSender>();
 

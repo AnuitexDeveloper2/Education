@@ -14,6 +14,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors
             {
                 Name = author.Name,
                 Id = author.Id,
+                Date = DateTime.Now
             };
             return authorModelItem;
         }

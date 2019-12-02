@@ -58,9 +58,9 @@ namespace EducationApp.PresentationLayer
             });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IEmailSender emailSender)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,  IEmailSender emailSender)
         {
-           
+          
 
             app.UseMiddleware<ErrorMiddlware>();
 

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EducationApp.DataAccessLayer.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20191111085633_Init")]
+    [Migration("20191202151821_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -153,9 +153,6 @@ namespace EducationApp.DataAccessLayer.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long?>("ApplicationUserId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -176,22 +173,20 @@ namespace EducationApp.DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("PaymentId");
 
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.OrderItems", b =>
+            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.OrderItem", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Count")
                         .HasColumnType("int");
@@ -205,23 +200,17 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("OrdersId")
+                    b.Property<long>("OrderId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("PrintingEditionId")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("PrintingEditionId1")
+                    b.Property<long>("PrintingEditionId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrdersId");
+                    b.HasIndex("OrderId");
 
-                    b.HasIndex("PrintingEditionId1");
+                    b.HasIndex("PrintingEditionId");
 
                     b.ToTable("OrderItems");
                 });
@@ -239,8 +228,8 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
 
-                    b.Property<long>("TransactionId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("TransactionId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -260,7 +249,7 @@ namespace EducationApp.DataAccessLayer.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Desccription")
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsRemoved")
@@ -427,10 +416,6 @@ namespace EducationApp.DataAccessLayer.Migrations
 
             modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.Order", b =>
                 {
-                    b.HasOne("EducationApp.DataAccessLayer.Entities.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("EducationApp.DataAccessLayer.Entities.Payment", "Payment")
                         .WithMany()
                         .HasForeignKey("PaymentId")
@@ -438,15 +423,19 @@ namespace EducationApp.DataAccessLayer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.OrderItems", b =>
+            modelBuilder.Entity("EducationApp.DataAccessLayer.Entities.OrderItem", b =>
                 {
-                    b.HasOne("EducationApp.DataAccessLayer.Entities.Order", "Orders")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrdersId");
+                    b.HasOne("EducationApp.DataAccessLayer.Entities.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("EducationApp.DataAccessLayer.Entities.PrintingEdition", "PrintingEdition")
                         .WithMany()
-                        .HasForeignKey("PrintingEditionId1");
+                        .HasForeignKey("PrintingEditionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>

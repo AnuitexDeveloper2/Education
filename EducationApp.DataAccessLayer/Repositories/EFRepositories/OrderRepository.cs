@@ -1,7 +1,6 @@
 ﻿using BookStore.DataAccess.AppContext;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Helpers.OrderFilterModel;
-using EducationApp.DataAccessLayer.Models;
 using EducationApp.DataAccessLayer.Models.Base;
 using EducationApp.DataAccessLayer.Ropositories.Base;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
@@ -12,7 +11,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 
 namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 {
@@ -50,7 +48,9 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             if (orderFilterModel.Id > 0)
             {
                 orders = orders.Where(k => k.UserId == orderFilterModel.Id);
+
                 var userOrders = new ResponseModel<Order> { Data = await orders.ToListAsync(), Count = orders.Count() };
+
                 return userOrders;
             }
 
@@ -74,7 +74,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
         public Order GetOrder(long id)
         {
-            var result = _applicationContext.Orders.Where(p=>p.PaymentId == id).FirstOrDefault();
+            var result = _applicationContext.Orders.Where(p => p.PaymentId == id).FirstOrDefault();
 
             return result;
         }

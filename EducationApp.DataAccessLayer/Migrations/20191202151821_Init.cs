@@ -74,7 +74,7 @@ namespace EducationApp.DataAccessLayer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IsRemoved = table.Column<bool>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
-                    TransactionId = table.Column<long>(nullable: false)
+                    TransactionId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -90,7 +90,7 @@ namespace EducationApp.DataAccessLayer.Migrations
                     IsRemoved = table.Column<bool>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     Title = table.Column<string>(nullable: true),
-                    Desccription = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(nullable: false),
                     CurrencyType = table.Column<int>(nullable: false),
                     ProductType = table.Column<int>(nullable: false)
@@ -217,18 +217,11 @@ namespace EducationApp.DataAccessLayer.Migrations
                     Description = table.Column<string>(nullable: true),
                     UserId = table.Column<long>(nullable: false),
                     PaymentId = table.Column<long>(nullable: false),
-                    ApplicationUserId = table.Column<long>(nullable: true),
                     Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Orders_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Orders_Payments_PaymentId",
                         column: x => x.PaymentId,
@@ -273,29 +266,27 @@ namespace EducationApp.DataAccessLayer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IsRemoved = table.Column<bool>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
-                    Amount = table.Column<int>(nullable: false),
+                    Amount = table.Column<decimal>(nullable: false),
                     Currency = table.Column<int>(nullable: false),
-                    PrintingEditionId = table.Column<int>(nullable: false),
-                    OrderId = table.Column<int>(nullable: false),
-                    Count = table.Column<int>(nullable: false),
-                    PrintingEditionId1 = table.Column<long>(nullable: true),
-                    OrdersId = table.Column<long>(nullable: true)
+                    PrintingEditionId = table.Column<long>(nullable: false),
+                    OrderId = table.Column<long>(nullable: false),
+                    Count = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderItems_Orders_OrdersId",
-                        column: x => x.OrdersId,
+                        name: "FK_OrderItems_Orders_OrderId",
+                        column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderItems_PrintingEditions_PrintingEditionId1",
-                        column: x => x.PrintingEditionId1,
+                        name: "FK_OrderItems_PrintingEditions_PrintingEditionId",
+                        column: x => x.PrintingEditionId,
                         principalTable: "PrintingEditions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -348,19 +339,14 @@ namespace EducationApp.DataAccessLayer.Migrations
                 column: "PrintingEditionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_OrdersId",
+                name: "IX_OrderItems_OrderId",
                 table: "OrderItems",
-                column: "OrdersId");
+                column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_PrintingEditionId1",
+                name: "IX_OrderItems_PrintingEditionId",
                 table: "OrderItems",
-                column: "PrintingEditionId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_ApplicationUserId",
-                table: "Orders",
-                column: "ApplicationUserId");
+                column: "PrintingEditionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_PaymentId",
@@ -395,6 +381,9 @@ namespace EducationApp.DataAccessLayer.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
                 name: "Authors");
 
             migrationBuilder.DropTable(
@@ -402,9 +391,6 @@ namespace EducationApp.DataAccessLayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "PrintingEditions");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Payments");

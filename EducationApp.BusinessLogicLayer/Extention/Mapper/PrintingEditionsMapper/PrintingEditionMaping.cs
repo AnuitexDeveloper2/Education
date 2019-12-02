@@ -13,12 +13,10 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
             {
                 Date = DateTime.Now,
                 Id = model.Id,
-                IsRemoved = model.IsRemoved,
                 Title = model.Title,
-                Desccription = model.Description,
+                Description = model.Description,
                 Price = model.Price,
                 ProductType = (TypeProduct)model.Type,
-                
             };
             return printingEdition;
         }
@@ -26,7 +24,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
               public static PrintingEdition Map(this PrintingEdition printingEdition,PrintingEditionModelItem printingEditionModelItem)
         {
             printingEdition.Title = printingEditionModelItem.Title;
-            printingEdition.Desccription = printingEditionModelItem.Description;
+            printingEdition.Description = printingEditionModelItem.Description;
             printingEdition.Price = printingEditionModelItem.Price;
             printingEdition.ProductType = (TypeProduct)printingEditionModelItem.Type;
             return printingEdition;

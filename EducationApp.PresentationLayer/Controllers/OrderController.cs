@@ -20,7 +20,7 @@ namespace EducationApp.PresentationLayer.Controllers
             _orderService = orderService;
         }
 
-        [Authorize(Roles = role.Admin)]
+        [Authorize(Roles = role.User)]
         [HttpPost("createOrder")]
         public async Task<ActionResult> CreateOrder(OrderModelItem ordersItemModel)
         {
@@ -48,7 +48,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return result;
         }
 
-        //[Authorize(Roles =role.User)]
+        [Authorize(Roles = role.User)]
         [HttpPost("updateOrder")]
         public async Task<ActionResult> UpdateOrder(string TransactoinId,long paymentId) //todo rename UpdateOrder
         {

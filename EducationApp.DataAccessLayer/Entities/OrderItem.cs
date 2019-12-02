@@ -14,6 +14,7 @@ namespace EducationApp.DataAccessLayer.Entities
         [ForeignKey("Order")]
         public long OrderId { get; set; }
         public int Count { get; set; }
+        public Order Order { get; set; }
         public PrintingEdition PrintingEdition { get; set; }
         [NotMapped]
         public string PrintingEditionTitle { get; set; }

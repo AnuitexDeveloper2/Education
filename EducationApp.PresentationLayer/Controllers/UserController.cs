@@ -19,7 +19,7 @@ namespace EducationApp.PresentationLayer.Controllers
             _userService = userService;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = role.Admin)]
         [HttpPost("blockUser")]
         public async Task<IActionResult> BlockUser(long id)
         {
@@ -60,12 +60,12 @@ namespace EducationApp.PresentationLayer.Controllers
             var result = await _userService.RestorePasswordAsync(model);
             return Ok(result);
         }
-        [Authorize(Roles = role.Admin)] //todo get role from Enum or Const, method for Admin
+       /* [Authorize(Roles = role.Admin)]*/ //todo get role from Enum or Const, method for Admin
         [HttpPost("GetUsers")]
-        public async Task<UserModel> GetUsers(UserFilterModel filterUser)
+        public async Task<ActionResult<UserModel>> GetUsers(UserFilterModel filterUser)
         {
             var users = await _userService.GetUsersAsync(filterUser);
-            return users;
+            return Ok(users);
         }
 
 
