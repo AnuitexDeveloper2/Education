@@ -4,7 +4,6 @@ using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using EducationApp.DataAccessLayer.InitRepositories;
-using System;
 using EducationApp.DataAccessLayer.Initialisation;
 
 namespace EducationApp.BusinessLogicLayer.BaseInit
@@ -13,7 +12,7 @@ namespace EducationApp.BusinessLogicLayer.BaseInit
     {
         public static void InitServices(IServiceCollection services, string connectionString)
         {
-            DataAccessInitializer.InitRepositories(services, connectionString);
+            DataAccessInitialisation.InitRepositories(services, connectionString);
 
             services.AddTransient<TokenValidationParameters>();
 

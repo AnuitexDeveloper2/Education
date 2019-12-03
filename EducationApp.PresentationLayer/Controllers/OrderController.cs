@@ -39,7 +39,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return result;
         }
 
-        [Authorize(Roles =role.User)]
+        [Authorize(Roles = role.User)]
         [HttpPost("getUserOrders")]
         public async Task<OrderModel> GetUserOrders(OrderFilterModel orderFilterModel)
         {

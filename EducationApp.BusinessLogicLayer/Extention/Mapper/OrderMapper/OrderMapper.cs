@@ -5,7 +5,6 @@ using EducationApp.DataAccessLayer.Helpers.OrderFilterModel;
 using System;
 using System.Collections.Generic;
 using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
-//using statusType = EducationApp.DataAccessLayer.Entities.Enums.Enums;
 
 namespace EducationApp.BusinessLogicLayer.Helpers.Mapper.OrderMapper
 {

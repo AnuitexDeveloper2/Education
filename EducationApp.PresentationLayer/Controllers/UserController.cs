@@ -27,7 +27,7 @@ namespace EducationApp.PresentationLayer.Controllers
 
             return Ok(result);
         }
-        [Authorize(role.Admin)]
+        //[Authorize(role.Admin)]
         [HttpGet("getProfile")]
         public async Task<UserModelItem> GetProfile(long id)
         {
@@ -46,7 +46,7 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [Authorize(Roles = role.User)]
-        [HttpPost("EditProfile")]
+        [HttpPost("editProfile")]
         public async Task<ActionResult> EditProfile(UserProfileEditModel model)
         {
             var result = await _userService.EditProfileAsync(model);  
@@ -55,13 +55,24 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [HttpPost("forgotPassword")]
-        public async Task<ActionResult> ForgotPassword(UserModelItem model)
+        public async Task<ActionResult> ForgotPassword(string email)
         {
-            var result = await _userService.RestorePasswordAsync(model);
+            var result = await _userService.RestorePasswordAsync(email);
+
             return Ok(result);
         }
-       /* [Authorize(Roles = role.Admin)]*/ //todo get role from Enum or Const, method for Admin
-        [HttpPost("GetUsers")]
+
+        [Authorize(Roles = role.User)]
+        [HttpPost("changePassword")]
+        public async Task<ActionResult> ChangePassword(long id, string oldPassword,string newPassword)
+        {
+            var result = await _userService.ChangePassword(id, oldPassword, newPassword);
+
+            return Ok(result);
+        }
+
+        [Authorize(Roles = role.Admin)] //todo get role from Enum or Const, method for Admin
+        [HttpPost("getUsers")]
         public async Task<ActionResult<UserModel>> GetUsers(UserFilterModel filterUser)
         {
             var users = await _userService.GetUsersAsync(filterUser);

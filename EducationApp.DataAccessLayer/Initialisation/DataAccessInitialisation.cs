@@ -1,6 +1,5 @@
 ﻿using BookStore.DataAccess.AppContext;
 using EducationApp.DataAccessLayer.Entities;
-using EducationApp.DataAccessLayer.Initialisation;
 using EducationApp.DataAccessLayer.Repositories.EFRepositories;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using EducationApp.DataAccessLayer.Ropositories.EFRepositories;
@@ -11,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EducationApp.DataAccessLayer.InitRepositories
 {
-    public class DataAccessInitializer
+    public class DataAccessInitialisation
     {
         public static void InitRepositories(IServiceCollection services, string connectionString)
         {

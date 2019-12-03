@@ -80,6 +80,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         public async Task<bool> ChangePasswordAsync(ApplicationUser user, string oldPassword, string newPassword)
         {
             var changePasswordResult = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+
             return changePasswordResult.Succeeded;
         }
 
@@ -96,6 +97,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         public async Task<string> GeneratePasswordResetTokenAsync(ApplicationUser user)
         {
             var result = await _userManager.GeneratePasswordResetTokenAsync(user);
+
             return result;
         }
 
@@ -103,13 +105,16 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         public async Task<bool> ChangeEmailAsync(ApplicationUser user, string newEmail)
         {
             var token = await _userManager.GenerateChangeEmailTokenAsync(user, newEmail);
+
             var changeEmailResult = await _userManager.ChangeEmailAsync(user, newEmail, token);
+
             return changeEmailResult.Succeeded;
         }
 
         public async Task<bool> ConfirmEmailAsync(ApplicationUser user, string token)
         {
             var result = await _userManager.ConfirmEmailAsync(user, token);
+
             return result.Succeeded;
         }
 
@@ -121,6 +126,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         public async Task<bool> ConfirmPasswordAsync(ApplicationUser user, string password)
         {
             var result = await _userManager.CheckPasswordAsync(user, password);
+
             return result;
         }
 
@@ -132,11 +138,14 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         public async Task<bool> ResetPasswordAsync(ApplicationUser user, string newPassword)
         {
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
             if (token == null)
             {
                 return false;
             }
+
             var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+
             return result.Succeeded;
         }
 
@@ -150,11 +159,14 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         public async Task<bool> BlockUserAsync(ApplicationUser user)
         {
             user.LockoutEnabled = !user.LockoutEnabled;
+
             var result = await _applicationContext.SaveChangesAsync();
+
             if (result < 1)
             {
                 return false;
             }
+
             return true;
         }
 

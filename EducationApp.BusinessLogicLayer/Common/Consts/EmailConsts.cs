@@ -16,6 +16,7 @@
             public const string AdminPassword = "25012005";
             public const string callbackUrl = "https://localhost:44353/account/confirmEmail";
             public const string Invalid = "You entered an invalid / inactive username or password";
+            public const string ResetPassword = "This is your new paswword";
         }
     }
 }

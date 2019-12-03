@@ -17,18 +17,21 @@ namespace EducationApp.PresentationLayer.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IJwtHelper _jwtHelper; //todo JwtHelper
+
         private readonly IAccountService _accountService;
 
         public AccountController(IJwtHelper jwtHelper, IAccountService accountService)
         {
             _jwtHelper = jwtHelper;
+
             _accountService = accountService;
         }
 
         [HttpPost("register")]
         public async Task<ActionResult> Register(UserModelItem userItemModel,string password)
         {
-            var result = await _accountService.CreateUserAsync(userItemModel,password);
+            var result = await _accountService.CreateUserAsync(userItemModel, password);
+
             return Ok(result);
         }
 
@@ -54,7 +57,9 @@ namespace EducationApp.PresentationLayer.Controllers
             }
 
             var tokens = _jwtHelper.GenerateTokenModel(user);
+
             TokensInCookies(tokens.AccessToken, tokens.RefreshToken);
+
             await RefreshTokenAsync(tokens.RefreshToken);
 
             return Ok(errors);
@@ -64,8 +69,10 @@ namespace EducationApp.PresentationLayer.Controllers
         public async Task<ActionResult> SignOutAsync()
         {
             await _accountService.SignOutAsync();
+
             return Ok();
         }
+
         private async Task<ActionResult> RefreshTokenAsync(string refreshToken)
         {
             var token = _jwtHelper.ValidateToken(refreshToken); //todo replace to jwt helper
@@ -75,19 +82,25 @@ namespace EducationApp.PresentationLayer.Controllers
                 //todo return unvalid error
                 return Ok(error.Token);
             }
+
             var userId = token.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+
             long Id = long.Parse(userId);
+
             var user = await _accountService.GetByIdAsync(Id);
+
             //todo replace to BLL, returm mapped model
             var tokens = _jwtHelper.GenerateTokenModel(user);
             //add to cookie
-            TokensInCookies(tokens.AccessToken,tokens.RefreshToken);
+            TokensInCookies(tokens.AccessToken, tokens.RefreshToken);
+
             return Ok();
         }
        
         private void TokensInCookies(string accessToken,string refreshToken)
         {
             HttpContext.Response.Cookies.Append("RefereshToken", refreshToken); //todo to private method
+
             HttpContext.Response.Cookies.Append("AccessToken", accessToken);
         }
     }
