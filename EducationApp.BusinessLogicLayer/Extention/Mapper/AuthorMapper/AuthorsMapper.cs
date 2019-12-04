@@ -8,7 +8,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors
 {
     public static class AuthorsMapper
     {
-        public static Author Map(this AuthorModelItem author)
+        public static Author Map(AuthorModelItem author)
         {
             var authorModelItem = new Author
             {
@@ -20,7 +20,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors
         }
 
 
-        public static AuthorModelItem Map(this Author author)
+        public static AuthorModelItem Map(Author author)
         {
             var authorModelItem = new AuthorModelItem
             {
@@ -39,7 +39,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors
             return authorModelItem;
         }
 
-        public static AuthorModel Map(this IEnumerable<Author> authors)
+        public static AuthorModel Map(IEnumerable<Author> authors)
         {
             AuthorModel authorsModel = new AuthorModel();
             foreach (var item in authors)

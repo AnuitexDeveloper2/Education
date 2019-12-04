@@ -20,6 +20,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapper.OrderMapper
                 Status = (OrderStatusType)ordersItemModel.Status,
                 Date = DateTime.Now,
             };
+
             return order;
         }
         public static OrderFilterModel Map(Extention.Order.OrderFilterModel orderFilterModel)
@@ -33,17 +34,21 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapper.OrderMapper
                 PageNumber = orderFilterModel.PageNumber,
                 PageSize = orderFilterModel.PageSize
             };
+
             return resultFilter;
         }
         private static List<OrderStatusType> MapList(Extention.Order.OrderFilterModel orderFilterModel)
         {
             var statusOrder = new OrderStatusType();
+
             List<OrderStatusType> result = new List<OrderStatusType>();
+
             foreach (var item in orderFilterModel.StatusOrder)
             {
                 statusOrder = (OrderStatusType)item;
                 result.Add(statusOrder);
             }
+
             return result;
         }
 
@@ -57,28 +62,31 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapper.OrderMapper
                 UserEmail = order.UserEmail,
                 Status = (Models.Enums.Enums.OrderStatusType)order.Status,
                 AmountOrder = order.Amount,
-                OrderItems = MapList(order.OrderItems)
+                OrderItems = Map(order.OrderItems)
             };
             return resultModel;
         }
 
-        private static OrderItemModel MapList(IEnumerable<OrderItem> orderItems)
+        private static OrderItemModel Map(IEnumerable<OrderItem> orderItems)
         {
             var result = new OrderItemModel();
+
             foreach (var item in orderItems)
             {
-                result.Items.Add(MapNecessary(item));
+                result.Items.Add(Map(item));
             };
+
             return result;
         }
 
-        private static OrderItemModelItem MapNecessary(OrderItem item)
+        private static OrderItemModelItem Map(OrderItem item)
         {
             var result = new OrderItemModelItem
             {
                 PrintingEditionType = item.TypeProduct,
                 PrintingEditionName = item.PrintingEditionTitle
             };
+
           return result;
         }
     }

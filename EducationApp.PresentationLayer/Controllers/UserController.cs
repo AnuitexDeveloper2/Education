@@ -27,7 +27,7 @@ namespace EducationApp.PresentationLayer.Controllers
 
             return Ok(result);
         }
-        //[Authorize(role.Admin)]
+        [Authorize(role.Admin)]
         [HttpGet("getProfile")]
         public async Task<UserModelItem> GetProfile(long id)
         {
@@ -76,6 +76,7 @@ namespace EducationApp.PresentationLayer.Controllers
         public async Task<ActionResult<UserModel>> GetUsers(UserFilterModel filterUser)
         {
             var users = await _userService.GetUsersAsync(filterUser);
+
             return Ok(users);
         }
 

@@ -61,7 +61,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                 orders.Where(k => k.Status != item);
             }
 
-            orders = this.Sorting(orders, orderFilterModel.SortOrder.ToString(), orderFilterModel.SortType);
+            orders = Sorting(orders, orderFilterModel.SortOrder.ToString(), orderFilterModel.SortType);
 
             var count = orders.Count();
 

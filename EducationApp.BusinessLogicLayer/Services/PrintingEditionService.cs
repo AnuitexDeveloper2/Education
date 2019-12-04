@@ -26,9 +26,11 @@ namespace EducationApp.BusinessLogicLayer.Services
         public async Task<BaseModel> CreateAsync(PrintingEditionModelItem model)
         {
             var resultModel = new BaseModel();
+
             var printingEdition = PrintingEditionMaping.Map(model);
 
             var printingEditionId = await _printingEditionRepository.CreateAsync(printingEdition);
+
             if (printingEditionId < 1)
             {
                 resultModel.Errors.Add(errors.Create);
@@ -36,11 +38,14 @@ namespace EducationApp.BusinessLogicLayer.Services
             }
 
             var authorInPrintingEditions = AuthorInPrintingEditionMapper.Map(printingEditionId, model.Authors.Items.ToList());
+
             var hasCreated = await _authorInPrintingEditionRepository.CreateRangeAsync(authorInPrintingEditions);
+
             if (!hasCreated)
             {
                 resultModel.Errors.Add(errors.Create);
             }
+
             return resultModel;
         }
 
@@ -77,31 +82,42 @@ namespace EducationApp.BusinessLogicLayer.Services
         public async Task<BaseModel> UpdateAsync(PrintingEditionModelItem printingEditionModelItem)
         {
             var resultModel = new BaseModel();
+
             var printingEdition = await _printingEditionRepository.GetByIdAsync(printingEditionModelItem.Id);
+
             if (printingEdition == null || printingEdition.IsRemoved)
             {
                 resultModel.Errors.Add(errors.PINotFound);
                 return resultModel;
             }
+
             printingEdition = PrintingEditionMaping.Map(printingEdition, printingEditionModelItem);
+
             var wasRemoveAuthorInPrintingEdition = await _authorInPrintingEditionRepository.RemoveRangeAsync(x => x.PrintingEditionId == printingEdition.Id);
+
             if (!wasRemoveAuthorInPrintingEdition)
             {
                 resultModel.Errors.Add(errors.AuthorInPERemove);
                 return resultModel;
             }
+
             var wasUpdatePrintingEdition = await _printingEditionRepository.UpdateAsync(printingEdition);
+
             if (!wasUpdatePrintingEdition)
             {
                 resultModel.Errors.Add(errors.PIUpdate);
                 return resultModel;
             }
+
             var newAuthorInPE = AuthorInPrintingEditionMapper.Map(printingEdition.Id, printingEditionModelItem.Authors.Items);
+
             var wasCreateAuthorInPrintingEdition = await _authorInPrintingEditionRepository.CreateRangeAsync(newAuthorInPE);
+
             if (!wasCreateAuthorInPrintingEdition)
             {
                 resultModel.Errors.Add(errors.AuthorInPECreate);
             }
+
             return resultModel;
         }
 
@@ -109,18 +125,24 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
 
             var filterModel = PrintingEditionFilterStateMapping.Map(state);
+
             var printingEdition = await _printingEditionRepository.GetPrintingEditionsAsync(filterModel);
+
             var modelItems = new PrintingEditionModel();
+
             if (printingEdition == null)
             {
                 modelItems.Errors.Add(errors.PINotFound);
                 return modelItems;
             }
+
             for (int i = 0; i < printingEdition.Data.Count(); i++)
             {
                 modelItems.Items.Add(PrintingEditionFilterMapping.Map(printingEdition.Data[i]));
             }
+
             modelItems.Count = printingEdition.Count;
+
             return modelItems;
         }
     }

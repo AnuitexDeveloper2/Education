@@ -36,17 +36,18 @@ namespace EducationApp.PresentationLayer.Controllers
 
             return Ok(result);
         }
+
         [Authorize(Roles = role.Admin)]
         [HttpPost("updateAuthor")]
-        public async Task<ActionResult> UpdateAuthor(long id)
+        public async Task<ActionResult> UpdateAuthor(long id, string name)
         {
-            var result = await _authorService.UpdateAsync(id);
+            var result = await _authorService.UpdateAsync(id, name);
 
             return Ok(result);
         }
 
         [HttpPost("getAutors")]
-        public async Task<ActionResult>  GetAuthors(AuthorFilterModel authorFilterModel)
+        public async Task<ActionResult> GetAuthors(AuthorFilterModel authorFilterModel)
         {
             var authors = await _authorService.GetAuthorsAsync(authorFilterModel);
 

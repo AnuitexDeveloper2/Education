@@ -8,7 +8,7 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
     public interface IAuthorService 
     {
         Task<BaseModel> CreateAsync(AuthorModelItem authorModelItem);
-        Task<BaseModel> UpdateAsync(long id);
+        Task<BaseModel> UpdateAsync(long id,string name);
         Task<BaseModel> RemoveAsync(long id);
         Task<AuthorModel> GetAuthorsAsync(AuthorFilterModel authorFilterModel);
     }

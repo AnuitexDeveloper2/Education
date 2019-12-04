@@ -28,39 +28,51 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         public async Task<bool> CreateUserAsync(ApplicationUser user, string password)
         {
             var excistUser = await _userManager.FindByEmailAsync(user.Email);
+
             if (excistUser != null)
             {
                 return false;
             }
+
             user.UserName = user.FirstName;
+
             var createUser = await _userManager.CreateAsync(user, password);
+
             if (!createUser.Succeeded)
             {
                 return false;
             }
+
             var result = await _userManager.AddToRoleAsync(user, User);
+
             return result.Succeeded;
         }
         public async Task<bool> EditAsync(ApplicationUser user)
         {
             var result = await _userManager.UpdateAsync(user);
+
             return result.Succeeded;
         }
 
         public async Task<bool> RemoveAsync(ApplicationUser user)
         {
             user.IsRemoved = true;
+
             var result = await _userManager.UpdateAsync(user);
+
             return result.Succeeded;
         }
         public async Task<string> CheckRoleAsync(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
+
             if (user == null)
             {
                 return null;
             }
+
             var userRole = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+
             return userRole;
         }
 
@@ -68,12 +80,14 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         public async Task<ApplicationUser> GetByIdAsync(long id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
+
             return user;
         }
 
         public async Task<ApplicationUser> GetByNameAsync(string userName)
         {
             var user = await _userManager.FindByNameAsync(userName);
+
             return user;
         }
 
@@ -162,12 +176,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
             var result = await _applicationContext.SaveChangesAsync();
 
-            if (result < 1)
-            {
-                return false;
-            }
-
-            return true;
+            return result < 1 ? false : true;
         }
 
         public async Task<ResponseModel<ApplicationUser>> GetUsersAsync(UserFilterModel usersFilter)
@@ -202,7 +211,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             return presentationModel;
         }
 
-      
+
     }
 }
 

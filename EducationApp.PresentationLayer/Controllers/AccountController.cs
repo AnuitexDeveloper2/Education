@@ -60,8 +60,6 @@ namespace EducationApp.PresentationLayer.Controllers
 
             TokensInCookies(tokens.AccessToken, tokens.RefreshToken);
 
-            await RefreshTokenAsync(tokens.RefreshToken);
-
             return Ok(errors);
         }
         [Authorize]
@@ -71,6 +69,8 @@ namespace EducationApp.PresentationLayer.Controllers
             await _accountService.SignOutAsync();
 
             return Ok();
+
+
         }
 
         private async Task<ActionResult> RefreshTokenAsync(string refreshToken)

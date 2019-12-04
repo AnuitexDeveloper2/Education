@@ -41,8 +41,8 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                                     });
             if (!string.IsNullOrWhiteSpace(printingEditionFilter.SearchString))
             {
-                var searchByName = await  printingEditions.Where(k => k.Authors.Any(l => l.Name == printingEditionFilter.SearchString)).ToListAsync();
-                var searchByTitle = await printingEditions.Where(l => l.Title == printingEditionFilter.SearchString).ToListAsync();
+                var searchByName = await printingEditions.Where(k => k.Authors.Any(l => l.Name.Contains(printingEditionFilter.SearchString))).ToListAsync();
+                var searchByTitle = await printingEditions.Where(l => l.Title.Contains(printingEditionFilter.SearchString)).ToListAsync();
                 printingEditions = Enumerable.Concat(searchByName, searchByTitle).AsQueryable();
             }
 
@@ -60,19 +60,20 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             {
                 printingEditions = printingEditions.Where(k => k.ProductType != item);
             }
-            
+
             //todo replace to extantion
-            printingEditions = this.Sorting(printingEditions, printingEditionFilter.PrintingEditionSortType.ToString(), printingEditionFilter.SortType);
-           
+            printingEditions = Sorting(printingEditions, printingEditionFilter.PrintingEditionSortType.ToString(), printingEditionFilter.SortType);
+
             var count = printingEditions.Count();
 
             printingEditions = printingEditions.Skip((printingEditionFilter.PageNumber - 1) * printingEditionFilter.PageSize).Take(printingEditionFilter.PageSize);
 
             var result = new ResponseModel<PrintingEdition>()
-            { 
-                Data =  printingEditions.ToList(),
+            {
+                Data = printingEditions.ToList(),
                 Count = count
             };
+
             return result;
         }
 

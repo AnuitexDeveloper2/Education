@@ -9,8 +9,9 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.User
         public static string CreateRandomPassword(int length = 8)
         {
             var random = new Random();
-           
+
             char[] chars = new char[length];
+
             for (int i = 0; i < length; i++)
             {
                 chars[i] = _validChars[random.Next(0, _validChars.Length)];

@@ -64,6 +64,7 @@ namespace EducationApp.PresentationLayer
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
