@@ -5,7 +5,7 @@ using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 
 namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
 {
-    public static class PrintingEditionMaping
+    public static partial class PrintingEditionMapper
     {
         public static PrintingEdition Map(this PrintingEditionModelItem model)
         {
@@ -20,16 +20,5 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
             };
             return printingEdition;
         }
-
-              public static PrintingEdition Map(this PrintingEdition printingEdition,PrintingEditionModelItem printingEditionModelItem)
-        {
-            printingEdition.Title = printingEditionModelItem.Title;
-            printingEdition.Description = printingEditionModelItem.Description;
-            printingEdition.Price = printingEditionModelItem.Price;
-            printingEdition.ProductType = (TypeProduct)printingEditionModelItem.Type;
-            return printingEdition;
-        }
-
-
     }
 }

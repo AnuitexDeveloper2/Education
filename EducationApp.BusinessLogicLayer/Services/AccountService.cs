@@ -3,10 +3,10 @@ using EducationApp.BusinessLogicLayer.Helpers.Mapping;
 using EducationApp.BusinessLogicLayer.Models.Base;
 using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
-using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using System.Threading.Tasks;
 using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
+using EducationApp.BusinessLogicLayer.Extention.Mapper.UserMapper;
 
 
 namespace EducationApp.BusinessLogicLayer.Services
@@ -42,7 +42,7 @@ namespace EducationApp.BusinessLogicLayer.Services
                 userModel.Errors.Add(EmptyField);
                 return userModel;
             }
-            var user = UserMapper.Map(userItemModel);
+            var user =userItemModel.Map();
             var userCreate = await _userRepository.CreateUserAsync(user, password);
             if (!userCreate)
             {
@@ -79,7 +79,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
             var role = await _userRepository.GetRoleAsync(user);
 
-            var userModel = UserMapper.Map(user);
+            var userModel = user.Map();
 
             userModel.Role = role;
 
@@ -93,7 +93,7 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return null;
             }
             var user = await _userRepository.FindByEmailAsync(email);
-            var model = UserMapper.Map(user);
+            var model = user.Map();
             model.Role = await _userRepository.GetRoleAsync(user);
             return model;
         }

@@ -5,7 +5,7 @@
         public class Errors
         {
             public const string NotFound = "User Not Found";
-            public const string Token = "Token is not valid";
+            public const string InvalidToken = "Token is not valid";
             public const string Remove = "Remove User is Failure";
             public const string EmptyField = "Some Fiels is not filled";
             public const string ChangeEmailFailure = "Change Email is Failed";

@@ -29,8 +29,6 @@ namespace EducationApp.BusinessLogicLayer.BaseInit
             services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IPrintingEditionService, PrintingEditionService>();
-
-           //todo init in layers
         }
     }
 }

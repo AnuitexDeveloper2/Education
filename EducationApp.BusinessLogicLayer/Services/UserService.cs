@@ -8,6 +8,7 @@ using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using errors = EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
 using emailConsts = EducationApp.BusinessLogicLayer.Common.Consts.Consts.EmailConsts;
+using EducationApp.BusinessLogicLayer.Extention.Mapper.UserMapper;
 
 namespace EducationApp.BusinessLogicLayer.Services
 {
@@ -47,7 +48,7 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return resultModel;
             }
 
-            var result = await _userRepository.EditAsync(UserMapper.Map(model,user));
+            var result = await _userRepository.EditAsync(user.Map(model));
 
             if (!result)
             {
@@ -136,7 +137,7 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return resultModel;
             }
 
-            resultModel = UserMapper.Map(user);
+            resultModel = user.Map();
 
             return resultModel;
         }
@@ -158,7 +159,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
             if (!result)
             {
-                resultModel.Errors.Add(errors.Token);
+                resultModel.Errors.Add(errors.InvalidToken);
             }
 
             _emailSender.SendingEmailAsync(user.Email, emailConsts.ResetPassword, newPassword);
@@ -169,7 +170,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
         public async Task<UserModel> GetUsersAsync(UserFilterModel userFilter)
         {
-            var filter = UserMapper.Map(userFilter);
+            var filter = userFilter.Map();
 
             var users = await _userRepository.GetUsersAsync(filter);
 
@@ -183,7 +184,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
             for (int i = 0; i < users.Data.Count; i++)
             {
-                usersModel.Items.Add(UserMapper.Map(users.Data[i]));
+                usersModel.Items.Add(users.Data[i].Map());
             }
 
             usersModel.Count = users.Count;

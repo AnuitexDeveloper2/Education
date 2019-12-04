@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29418.71
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducationApp.PresentationLayer", "EducationApp.PresentationLayer\EducationApp.PresentationLayer.csproj", "{F95AB665-C05E-4FF5-AB74-BFA8CC24809C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationApp.PresentationLayer", "EducationApp.PresentationLayer\EducationApp.PresentationLayer.csproj", "{F95AB665-C05E-4FF5-AB74-BFA8CC24809C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducationApp.BusinessLogicLayer", "EducationApp.BusinessLogicLayer\EducationApp.BusinessLogicLayer.csproj", "{F89F680A-9C76-409B-9D4E-9318CFD44639}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationApp.BusinessLogicLayer", "EducationApp.BusinessLogicLayer\EducationApp.BusinessLogicLayer.csproj", "{F89F680A-9C76-409B-9D4E-9318CFD44639}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducationApp.DataAccessLayer", "EducationApp.DataAccessLayer\EducationApp.DataAccessLayer.csproj", "{CFA8C152-8CAA-48ED-AD6F-4CE3339F79BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationApp.DataAccessLayer", "EducationApp.DataAccessLayer\EducationApp.DataAccessLayer.csproj", "{CFA8C152-8CAA-48ED-AD6F-4CE3339F79BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

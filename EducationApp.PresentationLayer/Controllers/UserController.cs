@@ -71,7 +71,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = role.Admin)] //todo get role from Enum or Const, method for Admin
+        [Authorize(Roles = role.Admin)]
         [HttpPost("getUsers")]
         public async Task<ActionResult<UserModel>> GetUsers(UserFilterModel filterUser)
         {

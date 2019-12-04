@@ -10,7 +10,6 @@ namespace EducationApp.PresentationLayer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //todo authorize
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
@@ -33,7 +32,6 @@ namespace EducationApp.PresentationLayer.Controllers
         [HttpPost("getOrders")]
         public async Task<OrderModel> GetOrders(OrderFilterModel orderFilterModel)
         {
-            //todo orders for users
             var result = await _orderService.GetOrdersAsync(orderFilterModel);
            
             return result;
@@ -50,7 +48,7 @@ namespace EducationApp.PresentationLayer.Controllers
 
         [Authorize(Roles = role.User)]
         [HttpPost("updateOrder")]
-        public async Task<ActionResult> UpdateOrder(string TransactoinId,long paymentId) //todo rename UpdateOrder
+        public async Task<ActionResult> UpdateOrder(string TransactoinId,long paymentId) 
         {
             var result =await _orderService.UpdateOrderAsync(TransactoinId,paymentId);
 

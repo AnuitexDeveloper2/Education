@@ -19,9 +19,9 @@ namespace EducationApp.PresentationLayer.Controllers
             _printingEditionService = printingEditionService;
         }
 
-        [Authorize(Roles = role.Admin)] //todo check
-        [HttpPost("createPrintingEdition")]
-        public async Task<ActionResult> CreatePrintingEdition(PrintingEditionModelItem printingEditonModelItem)
+        [Authorize(Roles = role.Admin)]
+        [HttpPost("create")]
+        public async Task<ActionResult> Create(PrintingEditionModelItem printingEditonModelItem)
         {
             var result = await _printingEditionService.CreateAsync(printingEditonModelItem);
 
@@ -29,8 +29,8 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [Authorize(Roles = role.Admin)]
-        [HttpPost("removePrintingEdition")]
-        public async Task<ActionResult> RemovePrintingEdition(long id) //todo param is Id
+        [HttpPost("remove")]
+        public async Task<ActionResult> Remove(long id)
         {
             var result = await _printingEditionService.RemoveAsync(id);
 
@@ -38,8 +38,8 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [Authorize(Roles = role.Admin)]
-        [HttpPost("updatePrintingEdition")]
-        public async Task<ActionResult> UpdatePrintingEdition(PrintingEditionModelItem printingEditionModelItem)
+        [HttpPost("update")]
+        public async Task<ActionResult> Update(PrintingEditionModelItem printingEditionModelItem)
         {
             var result = await _printingEditionService.UpdateAsync(printingEditionModelItem);
 
@@ -47,8 +47,8 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("getPrintingEditons")]
-        public async Task<ActionResult> GetPrintingEditions(PrintingEditionFilterState printingEditionFilterState)
+        [HttpPost("get")]
+        public async Task<ActionResult> Get(PrintingEditionFilterState printingEditionFilterState)
         {
             var printingEdition = await _printingEditionService.GetPrintingEditionsAsync(printingEditionFilterState);
 

@@ -75,7 +75,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
 
             return result < 1 ? false : true;
         }
-        public  IQueryable<TEntity> Sorting( IQueryable<TEntity> entities, string entitySortType, SortType sortType) 
+        protected IQueryable<TEntity> SortByType( IQueryable<TEntity> entities, string entitySortType, SortType sortType) 
         {
             var property = typeof(TEntity).GetProperty(entitySortType);
 

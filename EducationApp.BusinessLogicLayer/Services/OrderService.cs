@@ -9,6 +9,7 @@ using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using System.Threading.Tasks;
 using errors = EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
+using EducationApp.BusinessLogicLayer.Extention.Mapper.OrderMapper;
 
 namespace EducationApp.BusinessLogicLayer.Services
 {
@@ -46,7 +47,7 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return resultModel;
             }
 
-            var order = OrderMapper.Map(ordersItemModel, payment.Id);
+            var order = ordersItemModel.Map(paymentId);
 
             var orderId = await _orderRepository.CreateAsync(order);
 
@@ -56,7 +57,7 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return resultModel;
             }
 
-            var orderItem = OrderItemMapper.Map(ordersItemModel.OrderItems, order.Id);
+            var orderItem = ordersItemModel.OrderItems.Map(orderId);
 
             var wasCreate = await _orderItemRepository.CreateRangeAsync(orderItem);
 
@@ -64,13 +65,13 @@ namespace EducationApp.BusinessLogicLayer.Services
             {
                 resultModel.Errors.Add(errors.OrderItemCreate);
             }
-            resultModel.PaymentId = paymentId;
+
             return resultModel;
         }
 
         public async Task<OrderModel> GetOrdersAsync(OrderFilterModel orderFilterModel)
         {
-            var filter = OrderMapper.Map(orderFilterModel);
+            var filter = orderFilterModel.Map();
 
             var getOrders = await _orderRepository.GetOrdersAsync(filter);
 
@@ -84,7 +85,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
             foreach (var item in getOrders.Data)
             {
-                resultModel.Items.Add(OrderMapper.Map(item));
+                resultModel.Items.Add(item.Map());
             }
 
             resultModel.ItemsCount = getOrders.Count;

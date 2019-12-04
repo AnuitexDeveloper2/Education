@@ -9,6 +9,7 @@ using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using System.Linq;
 using System.Threading.Tasks;
 using errors = EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
+using EducationApp.BusinessLogicLayer.Extention.Mapper.PrintingEditionsMapper;
 
 namespace EducationApp.BusinessLogicLayer.Services
 {
@@ -27,7 +28,7 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             var resultModel = new BaseModel();
 
-            var printingEdition = PrintingEditionMaping.Map(model);
+            var printingEdition = model.Map();
 
             var printingEditionId = await _printingEditionRepository.CreateAsync(printingEdition);
 
@@ -91,7 +92,7 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return resultModel;
             }
 
-            printingEdition = PrintingEditionMaping.Map(printingEdition, printingEditionModelItem);
+            printingEdition =  printingEditionModelItem.Map(printingEdition);
 
             var wasRemoveAuthorInPrintingEdition = await _authorInPrintingEditionRepository.RemoveRangeAsync(x => x.PrintingEditionId == printingEdition.Id);
 
@@ -124,7 +125,7 @@ namespace EducationApp.BusinessLogicLayer.Services
         public async Task<PrintingEditionModel> GetPrintingEditionsAsync(PrintingEditionFilterState state)
         {
 
-            var filterModel = PrintingEditionFilterStateMapping.Map(state);
+            var filterModel = state.Map();
 
             var printingEdition = await _printingEditionRepository.GetPrintingEditionsAsync(filterModel);
 
@@ -138,7 +139,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
             for (int i = 0; i < printingEdition.Data.Count(); i++)
             {
-                modelItems.Items.Add(PrintingEditionFilterMapping.Map(printingEdition.Data[i]));
+                modelItems.Items.Add(printingEdition.Data[i].Map());
             }
 
             modelItems.Count = printingEdition.Count;

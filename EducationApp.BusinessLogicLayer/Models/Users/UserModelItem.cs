@@ -8,9 +8,7 @@ namespace EducationApp.BusinessLogicLayer.Models.Users
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-         //todo remove
         public long Id { get; set; }
         public string Role { get; set; }
-        //todo remove
     }
 }

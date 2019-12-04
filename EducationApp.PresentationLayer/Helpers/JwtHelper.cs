@@ -49,7 +49,7 @@ namespace EducationApp.PresentationLayer.Helpers
             };
         }
 
-        private JwtSecurityToken GenerateToken(List<Claim> claims, double expires) //todo private
+        private JwtSecurityToken GenerateToken(List<Claim> claims, double expires)
         {
             var token = new JwtSecurityToken(
             issuer: Issuer,
@@ -62,13 +62,12 @@ namespace EducationApp.PresentationLayer.Helpers
 
         public JwtSecurityToken ValidateToken(string token)
         {
-            string refreshToken = new JwtSecurityTokenHandler().WriteToken(securityToken);
-            if (token != refreshToken)
+            var refreshToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            if (refreshToken != null && refreshToken.ValidTo > DateTime.Now)
             {
-                return null;
+                return refreshToken;
             }
-            //todo chech for valid
-            return securityToken;
+            return null;
         }
 
     }

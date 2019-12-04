@@ -10,10 +10,10 @@ namespace EducationApp.BusinessLogicLayer.Models.PrintingEditions
     {
         public long Id { get; set; }
         public string Title { get; set; }
-        public string Description { get; set; } //todo fix
+        public string Description { get; set; }
         public decimal Price { get; set; }
-        public CurrencyType Currency { get; set; } //todo rename prop Currency
-        public ProductType Type { get; set; } //todo public ProductType Type { get; set; }
+        public CurrencyType Currency { get; set; }
+        public ProductType Type { get; set; }
         public AuthorModel Authors { get; set; }
 
     }

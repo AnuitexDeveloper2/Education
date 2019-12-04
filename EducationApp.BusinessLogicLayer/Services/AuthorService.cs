@@ -6,6 +6,7 @@ using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using System.Threading.Tasks;
 using errors = EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
+using EducationApp.BusinessLogicLayer.Extention.Mapper.AuthorMapper;
 
 namespace EducationApp.BusinessLogicLayer.Services
 {
@@ -24,7 +25,7 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             var resultModel = new BaseModel();
 
-            var author = AuthorsMapper.Map(authorModelItem);
+            var author = authorModelItem.Map();
 
             var resultCreate = await _authorRepository.CreateAsync(author);
 
@@ -90,7 +91,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
         public async Task<AuthorModel> GetAuthorsAsync(AuthorFilterModel authorFilterModel)
         {
-            var filter = AuthorsMapper.Map(authorFilterModel);
+            var filter = authorFilterModel.Map();
 
             var authors = await _authorRepository.GetAuthorsAsync(filter);
 
@@ -104,7 +105,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
             for (int i = 0; i < authors.Data.Count; i++)
             {
-                authorsModel.Items.Add(AuthorsMapper.Map(authors.Data[i]));
+                authorsModel.Items.Add(authors.Data[i].Map());
             }
 
             authorsModel.Count = authors.Count;

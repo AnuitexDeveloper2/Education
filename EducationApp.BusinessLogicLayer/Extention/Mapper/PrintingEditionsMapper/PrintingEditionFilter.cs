@@ -5,9 +5,9 @@ using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 
 namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.PrintingEditions
 {
-    public class PrintingEditionFilterStateMapping
+    public static partial class PrintingEditionMapper
     {
-        public static PrintingEditionFilterModel Map(PrintingEditionFilterState printingEditionFilterState)
+        public static PrintingEditionFilterModel Map(this PrintingEditionFilterState printingEditionFilterState)
         {
             var printingEditionFilter = new PrintingEditionFilterModel
             {
@@ -21,7 +21,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.PrintingEditions
             return printingEditionFilter;
         }
 
-        public static List<TypeProduct> MapList(PrintingEditionFilterState printingEditionFilterState)
+        private static List<TypeProduct> MapList( PrintingEditionFilterState printingEditionFilterState)
         {
             var typeProduct = new TypeProduct();
             List<TypeProduct> result = new List<TypeProduct>();

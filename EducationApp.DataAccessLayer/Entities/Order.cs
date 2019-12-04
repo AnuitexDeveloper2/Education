@@ -14,7 +14,7 @@ namespace EducationApp.DataAccessLayer.Entities
         public long PaymentId { get; set; }
         [NotMapped]
         public IEnumerable<OrderItem> OrderItems { get; set; }
-        public OrderStatusType Status { get; set; } //todo rename property to Status
+        public OrderStatusType Status { get; set; }
         public Payment Payment { get; set; }
         [NotMapped]
         public decimal Amount { get; set; }

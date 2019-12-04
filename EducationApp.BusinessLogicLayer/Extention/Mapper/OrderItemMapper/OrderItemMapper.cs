@@ -1,13 +1,12 @@
 ﻿using EducationApp.BusinessLogicLayer.Models.OrderItemModelItem;
 using EducationApp.DataAccessLayer.Entities;
-using System;
 using System.Collections.Generic;
 
 namespace EducationApp.BusinessLogicLayer.Helpers.Mapper
 {
     public static class OrderItemMapper
     {
-        public static List<OrderItem> Map(OrderItemModel orderItemModel,long id)
+        public static List<OrderItem> Map(this OrderItemModel orderItemModel,long id)
         {
             var orderItem = new List<OrderItem>();
             foreach (var item in orderItemModel.Items)

@@ -61,8 +61,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                 printingEditions = printingEditions.Where(k => k.ProductType != item);
             }
 
-            //todo replace to extantion
-            printingEditions = Sorting(printingEditions, printingEditionFilter.PrintingEditionSortType.ToString(), printingEditionFilter.SortType);
+            printingEditions = SortByType(printingEditions, printingEditionFilter.PrintingEditionSortType.ToString(), printingEditionFilter.SortType);
 
             var count = printingEditions.Count();
 

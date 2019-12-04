@@ -48,10 +48,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             if (orderFilterModel.Id > 0)
             {
                 orders = orders.Where(k => k.UserId == orderFilterModel.Id);
-
-                var userOrders = new ResponseModel<Order> { Data = await orders.ToListAsync(), Count = orders.Count() };
-
-                return userOrders;
             }
 
             List<OrderStatusType> types = Enum.GetValues(typeof(OrderStatusType)).OfType<OrderStatusType>().Except(orderFilterModel.StatusOrder).ToList();
@@ -61,7 +57,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                 orders.Where(k => k.Status != item);
             }
 
-            orders = Sorting(orders, orderFilterModel.SortOrder.ToString(), orderFilterModel.SortType);
+            orders = SortByType(orders, orderFilterModel.SortOrder.ToString(), orderFilterModel.SortType);
 
             var count = orders.Count();
 

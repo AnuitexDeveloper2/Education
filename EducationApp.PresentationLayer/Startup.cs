@@ -47,7 +47,10 @@ namespace EducationApp.PresentationLayer
                     ValidateIssuerSigningKey = true,
                 };
             });
+
             services.AddMvc();
+
+            services.AddCors();
 
             services.AddSwaggerGen(c =>
             {
@@ -55,7 +58,7 @@ namespace EducationApp.PresentationLayer
             });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,  IEmailSender emailSender)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
           
 
@@ -65,6 +68,15 @@ namespace EducationApp.PresentationLayer
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+
+            
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
+
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200"));
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

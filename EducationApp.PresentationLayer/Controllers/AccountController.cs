@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using EducationApp.PresentationLayer.Helpers.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
-using System;
 using System.Linq;
 using error = EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
+using EducationApp.BusinessLogicLayer.Models.Base;
 
 namespace EducationApp.PresentationLayer.Controllers
 {
@@ -16,7 +16,7 @@ namespace EducationApp.PresentationLayer.Controllers
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
-        private readonly IJwtHelper _jwtHelper; //todo JwtHelper
+        private readonly IJwtHelper _jwtHelper;
 
         private readonly IAccountService _accountService;
 
@@ -58,7 +58,7 @@ namespace EducationApp.PresentationLayer.Controllers
 
             var tokens = _jwtHelper.GenerateTokenModel(user);
 
-            TokensInCookies(tokens.AccessToken, tokens.RefreshToken);
+            SetCookies(tokens.AccessToken, tokens.RefreshToken);
 
             return Ok(errors);
         }
@@ -73,33 +73,33 @@ namespace EducationApp.PresentationLayer.Controllers
 
         }
 
-        private async Task<ActionResult> RefreshTokenAsync(string refreshToken)
+        private async Task<IActionResult> RefreshTokenAsync(string refreshToken)
         {
-            var token = _jwtHelper.ValidateToken(refreshToken); //todo replace to jwt helper
+            var result = new BaseModel();
+            var token = _jwtHelper.ValidateToken(refreshToken);
 
-            if (token.ValidTo < DateTime.Now || token == null)
+            if (token == null)
             {
-                //todo return unvalid error
-                return Ok(error.Token);
+                result.Errors.Add(error.InvalidToken);
+                return Ok(result);
             }
 
             var userId = token.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
 
-            long Id = long.Parse(userId);
+            long Id = long.Parse(userId); //todo use tryParse
 
             var user = await _accountService.GetByIdAsync(Id);
 
-            //todo replace to BLL, returm mapped model
             var tokens = _jwtHelper.GenerateTokenModel(user);
-            //add to cookie
-            TokensInCookies(tokens.AccessToken, tokens.RefreshToken);
+
+            SetCookies(tokens.AccessToken, tokens.RefreshToken);
 
             return Ok();
         }
        
-        private void TokensInCookies(string accessToken,string refreshToken)
+        private void SetCookies(string accessToken,string refreshToken)
         {
-            HttpContext.Response.Cookies.Append("RefereshToken", refreshToken); //todo to private method
+            HttpContext.Response.Cookies.Append("RefereshToken", refreshToken);
 
             HttpContext.Response.Cookies.Append("AccessToken", accessToken);
         }

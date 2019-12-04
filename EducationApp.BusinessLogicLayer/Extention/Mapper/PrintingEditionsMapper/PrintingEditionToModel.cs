@@ -1,12 +1,12 @@
-﻿using EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors;
+﻿using EducationApp.BusinessLogicLayer.Extention.Mapper.AuthorMapper;
 using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
 using EducationApp.DataAccessLayer.Entities;
 
 namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.PrintingEditions
 {
-    public class PrintingEditionFilterMapping
+    public static partial class PrintingEditionMapper
     {
-        public static PrintingEditionModelItem Map(PrintingEdition printingEdition)
+        public static PrintingEditionModelItem Map(this PrintingEdition printingEdition)
         {
             PrintingEditionModelItem printingEditionModel = new PrintingEditionModelItem
             {
@@ -14,8 +14,8 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.PrintingEditions
                 Title = printingEdition.Title,
                 Description = printingEdition.Description,
                 Price = printingEdition.Price,
-                Type = (EducationApp.BusinessLogicLayer.Models.Enums.Enums.ProductType)printingEdition.ProductType,
-                Authors = AuthorsMapper.Map(printingEdition.Authors)
+                Type = (Models.Enums.Enums.ProductType)printingEdition.ProductType,
+                Authors = AuthorMaper.Map(printingEdition.Authors)
             };
             return printingEditionModel;
 
