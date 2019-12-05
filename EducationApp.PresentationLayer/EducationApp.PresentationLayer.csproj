@@ -6,13 +6,23 @@
 
   <ItemGroup>
     <Compile Remove="bin\**" />
+    <Compile Remove="ClientApp\dist\**" />
+    <Compile Remove="ClientApp\out-tsc\**" />
     <Compile Remove="obj\**" />
     <Content Remove="bin\**" />
+    <Content Remove="ClientApp\dist\**" />
+    <Content Remove="ClientApp\out-tsc\**" />
     <Content Remove="obj\**" />
     <EmbeddedResource Remove="bin\**" />
+    <EmbeddedResource Remove="ClientApp\dist\**" />
+    <EmbeddedResource Remove="ClientApp\out-tsc\**" />
     <EmbeddedResource Remove="obj\**" />
     <None Remove="bin\**" />
+    <None Remove="ClientApp\dist\**" />
+    <None Remove="ClientApp\out-tsc\**" />
     <None Remove="obj\**" />
+    <TypeScriptCompile Remove="ClientApp\dist\**" />
+    <TypeScriptCompile Remove="ClientApp\out-tsc\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +30,29 @@
     <None Remove="ClientApp\app\app.module.ts" />
     <None Remove="ClientApp\app\main.ts" />
     <None Remove="ClientApp\polyfills.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\main-es2015.js" />
+    <None Include="wwwroot\main-es2015.js.map" />
+    <None Include="wwwroot\main-es5.js" />
+    <None Include="wwwroot\main-es5.js.map" />
+    <None Include="wwwroot\polyfills-es2015.js" />
+    <None Include="wwwroot\polyfills-es2015.js.map" />
+    <None Include="wwwroot\polyfills-es5.js" />
+    <None Include="wwwroot\polyfills-es5.js.map" />
+    <None Include="wwwroot\runtime-es2015.js" />
+    <None Include="wwwroot\runtime-es2015.js.map" />
+    <None Include="wwwroot\runtime-es5.js" />
+    <None Include="wwwroot\runtime-es5.js.map" />
+    <None Include="wwwroot\styles-es2015.js" />
+    <None Include="wwwroot\styles-es2015.js.map" />
+    <None Include="wwwroot\styles-es5.js" />
+    <None Include="wwwroot\styles-es5.js.map" />
+    <None Include="wwwroot\vendor-es2015.js" />
+    <None Include="wwwroot\vendor-es2015.js.map" />
+    <None Include="wwwroot\vendor-es5.js" />
+    <None Include="wwwroot\vendor-es5.js.map" />
   </ItemGroup>
 
   <ItemGroup>

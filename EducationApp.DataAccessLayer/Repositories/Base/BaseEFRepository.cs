@@ -7,6 +7,7 @@ using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 using System.Linq.Dynamic.Core;
+using query = EducationApp.DataAccessLayer.Entities.Constants.Constants.Constant;
 
 namespace EducationApp.DataAccessLayer.Ropositories.Base
 {
@@ -79,7 +80,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
         {
             var property = typeof(TEntity).GetProperty(entitySortType);
 
-            entities = sortType == SortType.Increase ? entities.OrderBy(property.Name) : entities.OrderBy(property.Name + " descending");
+            entities = sortType == SortType.Increase ? entities.OrderBy(property.Name) : entities.OrderBy(property.Name + query.Descending);
 
             return entities;
         }

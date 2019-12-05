@@ -11,8 +11,8 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.AuthorInPrintingEditio
             var result = new List<AuthorInPrintingEdition>();
             foreach (var item in authors)
             {
-                var AuthorInPE = new AuthorInPrintingEdition { AuthorId = item.Id, PrintingEditionId = printingEditionId };
-                result.Add(AuthorInPE);
+                var authorInPrintingEdition = new AuthorInPrintingEdition { AuthorId = item.Id, PrintingEditionId = printingEditionId };
+                result.Add(authorInPrintingEdition);
             }
             return result;
         }
