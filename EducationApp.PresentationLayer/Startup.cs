@@ -78,6 +78,7 @@ namespace EducationApp.PresentationLayer
 
             app.UseCors(builder => builder.WithOrigins("http://localhost:4200"));
 
+           
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

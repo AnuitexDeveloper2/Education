@@ -26,33 +26,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\vendor-es2015.js" />
+    <Content Remove="wwwroot\vendor-es2015.js.map" />
+    <Content Remove="wwwroot\vendor-es5.js" />
+    <Content Remove="wwwroot\vendor-es5.js.map" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="ClientApp\app\app.component.ts" />
     <None Remove="ClientApp\app\app.module.ts" />
     <None Remove="ClientApp\app\main.ts" />
     <None Remove="ClientApp\polyfills.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\main-es2015.js" />
-    <None Include="wwwroot\main-es2015.js.map" />
-    <None Include="wwwroot\main-es5.js" />
-    <None Include="wwwroot\main-es5.js.map" />
-    <None Include="wwwroot\polyfills-es2015.js" />
-    <None Include="wwwroot\polyfills-es2015.js.map" />
-    <None Include="wwwroot\polyfills-es5.js" />
-    <None Include="wwwroot\polyfills-es5.js.map" />
-    <None Include="wwwroot\runtime-es2015.js" />
-    <None Include="wwwroot\runtime-es2015.js.map" />
-    <None Include="wwwroot\runtime-es5.js" />
-    <None Include="wwwroot\runtime-es5.js.map" />
-    <None Include="wwwroot\styles-es2015.js" />
-    <None Include="wwwroot\styles-es2015.js.map" />
-    <None Include="wwwroot\styles-es5.js" />
-    <None Include="wwwroot\styles-es5.js.map" />
-    <None Include="wwwroot\vendor-es2015.js" />
-    <None Include="wwwroot\vendor-es2015.js.map" />
-    <None Include="wwwroot\vendor-es5.js" />
-    <None Include="wwwroot\vendor-es5.js.map" />
   </ItemGroup>
 
   <ItemGroup>
