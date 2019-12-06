@@ -9,27 +9,25 @@
     <Compile Remove="ClientApp\dist\**" />
     <Compile Remove="ClientApp\out-tsc\**" />
     <Compile Remove="obj\**" />
+    <Compile Remove="wwwroot\**" />
     <Content Remove="bin\**" />
     <Content Remove="ClientApp\dist\**" />
     <Content Remove="ClientApp\out-tsc\**" />
     <Content Remove="obj\**" />
+    <Content Remove="wwwroot\**" />
     <EmbeddedResource Remove="bin\**" />
     <EmbeddedResource Remove="ClientApp\dist\**" />
     <EmbeddedResource Remove="ClientApp\out-tsc\**" />
     <EmbeddedResource Remove="obj\**" />
+    <EmbeddedResource Remove="wwwroot\**" />
     <None Remove="bin\**" />
     <None Remove="ClientApp\dist\**" />
     <None Remove="ClientApp\out-tsc\**" />
     <None Remove="obj\**" />
+    <None Remove="wwwroot\**" />
     <TypeScriptCompile Remove="ClientApp\dist\**" />
     <TypeScriptCompile Remove="ClientApp\out-tsc\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="wwwroot\vendor-es2015.js" />
-    <Content Remove="wwwroot\vendor-es2015.js.map" />
-    <Content Remove="wwwroot\vendor-es5.js" />
-    <Content Remove="wwwroot\vendor-es5.js.map" />
+    <TypeScriptCompile Remove="wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>

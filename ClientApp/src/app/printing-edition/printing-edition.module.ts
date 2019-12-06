@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PrintingEditionComponent } from './printing-edition/printing-edition.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [PrintingEditionComponent],
   imports: [
     CommonModule
   ]
