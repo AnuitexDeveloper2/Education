@@ -20,8 +20,8 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [Authorize(Roles = role.Admin)]
-        [HttpPost("createAuthor")]
-        public async Task<ActionResult> CreateAuthor(AuthorModelItem model)
+        [HttpPost("create")]
+        public async Task<ActionResult> Create(AuthorModelItem model)
         {
             var result = await _authorService.CreateAsync(model);
 
@@ -29,8 +29,8 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [Authorize(Roles = role.Admin)]
-        [HttpPost("removeAuthor")]
-        public async Task<ActionResult> RemoveAuthor(AuthorModelItem authorModel)
+        [HttpPost("remove")]
+        public async Task<ActionResult> Remove(AuthorModelItem authorModel)
         {
             var result = await _authorService.RemoveAsync(authorModel.Id);
 
@@ -38,16 +38,16 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [Authorize(Roles = role.Admin)]
-        [HttpPost("updateAuthor")]
-        public async Task<ActionResult> UpdateAuthor(long id, string name)
+        [HttpPost("update")]
+        public async Task<ActionResult> Update(long id, string name)
         {
             var result = await _authorService.UpdateAsync(id, name);
 
             return Ok(result);
         }
 
-        [HttpPost("getAutors")]
-        public async Task<ActionResult> GetAuthors(AuthorFilterModel authorFilterModel)
+        [HttpPost("get")]
+        public async Task<ActionResult> Get(AuthorFilterModel authorFilterModel)
         {
             var authors = await _authorService.GetAuthorsAsync(authorFilterModel);
 

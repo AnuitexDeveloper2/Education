@@ -1,16 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AccountComponent } from './account/account.component';
+import { RegisterComponent } from './register/register.component';
+import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { SignOutComponent } from './sign-out/sign-out.component';
 
 
 
 @NgModule({
-  declarations: [AccountComponent],
+  declarations: [RegisterComponent, ConfirmEmailComponent, SignInComponent, SignOutComponent],
   imports: [
     CommonModule
   ],
   exports:[
-    AccountComponent
+    RegisterComponent
   ]
 })
 export class AccountModule { }
