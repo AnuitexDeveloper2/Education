@@ -1,14 +1,10 @@
-import {Component} from '@angular/core';
-import {RouterOutlet} from '@angular/router';
+import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: 'app/component.html',
-    styleUrls: ['app.component.css']
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    get(RouterOutlet){
-
-        return RouterOutlet
-    }
+  title = 'Book Store';
 }

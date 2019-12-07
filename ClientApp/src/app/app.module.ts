@@ -3,22 +3,18 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from "./AppComponent";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
-
-
+import { AppComponent } from './app.component';
+import { HeaderComponent } from './shared/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    HeaderComponent
   ],
   imports: [
-    FormsModule,
-    HttpClientModule,
     BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
+    FormsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

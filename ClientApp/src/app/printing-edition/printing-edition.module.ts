@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CreateComponent } from './create/create.component';
 
+import { PrintingEditionRoutingModule } from './printing-edition-routing.module';
 
 
 @NgModule({
-  declarations: [CreateComponent],
+  declarations: [],
   imports: [
-    CommonModule
+    CommonModule,
+    PrintingEditionRoutingModule
   ]
 })
 export class PrintingEditionModule { }
