@@ -54,10 +54,5 @@ namespace EducationApp.PresentationLayer.Controllers
 
             return Ok(printingEdition);
         }
-
-
-
-
-
     }
 }

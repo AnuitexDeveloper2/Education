@@ -1,0 +1,27 @@
+.user_img{
+    text-align: center;
+    margin-top: 50px;
+}
+.catalog{
+    margin-left: 20px;
+    margin-top: 40px;
+}
+.signIn{
+   font-family: 'Times New Roman', Times, serif;
+   font-weight: bold;
+   font-size: 20px;
+   margin-left: 700px;
+}
+.form{
+    margin-left: 700px;
+}
+
+.button{
+   text-align: center;
+}
+
+button{
+    background-color: green;
+    border: black;
+    color: white;
+}

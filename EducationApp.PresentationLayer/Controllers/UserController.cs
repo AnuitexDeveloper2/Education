@@ -37,7 +37,7 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [Authorize(Roles = role.Admin)]
-        [HttpPost("removeUser")]
+        [HttpPost("remove")]
         public async Task<ActionResult> RemoveUser(long id)
         {
             var result = await _userService.RemoveUserAsync(id);

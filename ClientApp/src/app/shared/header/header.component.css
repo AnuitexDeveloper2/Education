@@ -1,8 +1,12 @@
-.header .logo_img{
-    margin-left: 40px;
+.header{
+    background-color: gainsboro;
 }
 
-.header .logo{
-    color: black;
-    margin-left: 20px;
+.logo{
+    margin-top: 20px;
+    margin-left: 50px;
+}
+.title{
+    font-size: 50px;
+    font-family: serif;
 }
