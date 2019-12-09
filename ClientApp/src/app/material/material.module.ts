@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { MatPaginatorModule } from '@angular/material';
 
+const MaterialComponent =[
+MatPaginatorModule
+]
 
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ]
+  imports:[MaterialComponent],
+  exports:[MaterialComponent]
 })
 export class MaterialModule { }
