@@ -32,7 +32,7 @@ namespace EducationApp.PresentationLayer.Controllers
         {
             var result = await _accountService.CreateUserAsync(userItemModel, password);
 
-            return Ok(result);
+            return Ok(result.Errors);
         }
 
         [HttpPost("confirmEmail")]
@@ -69,8 +69,6 @@ namespace EducationApp.PresentationLayer.Controllers
             await _accountService.SignOutAsync();
 
             return Ok();
-
-
         }
 
         private async Task<IActionResult> RefreshTokenAsync(string refreshToken)
@@ -86,15 +84,23 @@ namespace EducationApp.PresentationLayer.Controllers
 
             var userId = token.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
 
-            long Id = long.Parse(userId); //todo use tryParse
+            long id;
 
-            var user = await _accountService.GetByIdAsync(Id);
+              //todo use tryParse
+            var resultParse = long.TryParse(userId, out id);
+            if (!resultParse)
+            {
+                result.Errors.Add(error.IdNotValid);
+                return Ok(result);
+            }
+
+            var user = await _accountService.GetByIdAsync(id);
 
             var tokens = _jwtHelper.GenerateTokenModel(user);
 
             SetCookies(tokens.AccessToken, tokens.RefreshToken);
 
-            return Ok();
+            return Ok(result);
         }
        
         private void SetCookies(string accessToken,string refreshToken)

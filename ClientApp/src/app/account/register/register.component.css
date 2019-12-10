@@ -1,0 +1,28 @@
+.userImg{
+    text-align: center;
+}
+
+.catalog{
+    margin-left: 20px;
+    margin-top: 40px;
+}
+
+.Create{
+    margin-left: 40%;
+}
+
+.Form{
+    margin-left: 40%;
+}
+
+.Button{
+    text-align: center;
+}
+
+.SignUpButton{
+    color: black;
+    background-color: rgb(136, 212, 136);
+    cursor:pointer;
+    height:20px;
+    width:250px;
+}

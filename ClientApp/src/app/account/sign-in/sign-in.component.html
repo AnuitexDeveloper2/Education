@@ -1,4 +1,4 @@
-<span class="catalog" style="float: left;">Catalog</span>
+<span class="catalog" >Catalog</span>
 <div class="user_img">
     <img src="assets/images/user.png" height="100" width="100" alt="user">
 </div>
@@ -7,27 +7,32 @@
     <p>
         E-Mail <br>
     </p>
-    <input type="text" size="40">
+    <input type="text" size="50">
     <br>
     <p>
            Password 
-           <a href="http://localhost:4200/forgot-password">
-               <span >forgot your password?</span>
+           <a href="http://localhost:4200/user/forgot-password">
+               <span class="forgot-password">forgot your password?</span>
            </a>
     </p>
-        <input type="text" size="40">
+        <input type="text" size="50">
 </div>
-<div class="button">
-    <form action="">
-        <button>Sign-In</button>
-    </form>
+<div class="pointer">
+        <label >
+                <input type="checkbox" name="remember">
+                <span>Remember me</span>
+                     <form action="">
+                         <button class="signInButton">Sign In</button>
+                     </form>
+         </label>
 </div>
-<div class="form__row">
-    <label class="pointer">
-        <input type="checkbox" name="remember">
-        <span>Remember me</span>
-    </label>
+<div class="newUser">
+New to book Publishing Company? <br>
+<p>
+    <button  class="signUpButton" type="button" onClick='location.href="http://localhost:4200/account/register"'>Sign Up</button>
+</p>      
 </div>
+
 
 
 

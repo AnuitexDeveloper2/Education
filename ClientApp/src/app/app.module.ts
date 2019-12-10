@@ -6,6 +6,8 @@ import { HeaderComponent } from './shared/header/header.component';
 import { Router } from '@angular/router';
 import { AccountModule } from './account/account.module';
 import { CookieService } from 'ngx-cookie-service';
+import { HttpClientModule } from '@angular/common/http';
+import { UserModule } from "./user/user.module";
 
 @NgModule({
   declarations: [
@@ -13,12 +15,15 @@ import { CookieService } from 'ngx-cookie-service';
     HeaderComponent,
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
-    AccountModule
+    AccountModule,
   ],
+  
   providers: [
-    CookieService
+    CookieService,
+    
   ],
   bootstrap: [AppComponent]
 })
