@@ -9,25 +9,24 @@
     <div>
        Your First Name
     </div>
-     <input type="text" size="50" placeholder="First Name">
+     <input type="text" size="50" placeholder="First Name" name="name" [(ngModel)] ="user.firstName" >
    <div> <br>
     Your Last Name
    </div>
-    <input type="text" size="50" placeholder="Last Name">
+    <input type="text" size="50" placeholder="Last Name" name="name" [(ngModel)] ="user.lastName" >
     <div> <br>
         E-mail
     </div> 
-    <input type="text" size="50" placeholder="E-mail">
+    <input type="text" size="50" placeholder="E-mail" name="name" [(ngModel)] ="user.email">
     <div> <br>
         Password
     </div>
-    <input type="text" size="50" placeholder="Password">
+    <input type="text" size="50" placeholder="Password"  >
     <div> <br>
         Confirm password
     </div>
     <input type="text" size="50" placeholder="Password should be the same">
 </div>
-
 <form action="">
-    <p class="Button"><button class="SignUpButton" (click)="registr(userModel)"> Sign Up your account</button></p>
+    <p class="Button"><button class="SignUpButton" (click)="save()" > Sign Up your account</button></p>
 </form>

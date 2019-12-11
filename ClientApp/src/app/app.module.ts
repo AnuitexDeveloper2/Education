@@ -8,6 +8,9 @@ import { AccountModule } from './account/account.module';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClientModule } from '@angular/common/http';
 import { UserModule } from "./user/user.module";
+import { MaterialModule } from "./material/material.module";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { BrowserAnimationsModule  } from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -15,15 +18,20 @@ import { UserModule } from "./user/user.module";
     HeaderComponent,
   ],
   imports: [
+
+    ReactiveFormsModule,
+    MaterialModule,
+    FormsModule,
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
-    AccountModule,
+    BrowserAnimationsModule,
+    UserModule,
+    AccountModule
   ],
   
   providers: [
     CookieService,
-    
   ],
   bootstrap: [AppComponent]
 })

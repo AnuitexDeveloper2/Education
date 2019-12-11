@@ -37,7 +37,7 @@ namespace EducationApp.BusinessLogicLayer.Services
         public async Task<BaseModel> CreateUserAsync(UserModelItem userItemModel,string password)
         {
             var userModel = new BaseModel();
-            if (string.IsNullOrWhiteSpace(userItemModel.FirstName) || string.IsNullOrWhiteSpace(userItemModel.LastName) || string.IsNullOrWhiteSpace(userItemModel.Email))
+            if (string.IsNullOrWhiteSpace(userItemModel.FirstName) || string.IsNullOrWhiteSpace(userItemModel.LastName) || string.IsNullOrWhiteSpace(userItemModel.Email)||string.IsNullOrWhiteSpace(password))
             {
                 userModel.Errors.Add(EmptyField);
                 return userModel;
