@@ -35,13 +35,18 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             }
 
             user.UserName = user.FirstName;
+            try
+            {
 
             var createUser = await _userManager.CreateAsync(user, password);
-
-            if (!createUser.Succeeded)
-            {
-                return false;
+            
             }
+            catch (System.Exception ex)
+            {
+
+                throw;
+            }
+
 
             var result = await _userManager.AddToRoleAsync(user, User);
 

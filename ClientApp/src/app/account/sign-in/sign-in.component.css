@@ -22,10 +22,10 @@
 
 .signInButton{
     cursor: pointer;
-    box-shadow: 0px 15px 20px black(46, 229, 157, 0.4);
     background-color: rgb(136, 212, 136);
     border: black;
     color: white;
+    
 }
 
 .newUser{

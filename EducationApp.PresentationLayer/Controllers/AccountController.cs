@@ -28,8 +28,7 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [HttpPost("register")]
-
-        public async Task<ActionResult> Register([FromBody]UserModelItem userItemModel)
+        public async Task<ActionResult> Register(UserModelItem userItemModel)
         {
             var result = await _accountService.CreateUserAsync(userItemModel);
 

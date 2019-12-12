@@ -7,7 +7,7 @@
     <p>
         E-Mail <br>
     </p>
-    <input type="text" size="50">
+    <input type="text" size="50" name="name" [formControl] = 'email'>
     <br>
     <p>
            Password 
@@ -15,22 +15,22 @@
                <span class="forgot-password">forgot your password?</span>
            </a>
     </p>
-        <input type="text" size="50">
+        <input type="text" size="50" name="name" [formControl] = 'password'>
 </div>
 <div class="pointer">
         <label >
                 <input type="checkbox" name="remember">
                 <span>Remember me</span>
                      <form action="">
-                         <button class="signInButton">Sign In</button>
+                         <button class="signInButton" name="name" (Click) = "signIn()">Sign In</button>
                      </form>
          </label>
 </div>
 <div class="newUser">
 New to book Publishing Company? <br>
-<p>
+<form>
     <button  class="signUpButton" type="button" onClick='location.href="http://localhost:4200/account/register"'>Sign Up</button>
-</p>      
+</form>      
 </div>
 
 

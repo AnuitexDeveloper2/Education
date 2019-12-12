@@ -9,19 +9,19 @@
     <div>
        Your First Name
     </div>
-     <input type="text" size="50" placeholder="First Name" name="name" [(ngModel)] ="user.firstName" >
+     <input type="text" size="50" placeholder="First Name" name="name" [formControl] ="firstName" >
    <div> <br>
     Your Last Name
    </div>
-    <input type="text" size="50" placeholder="Last Name" name="name" [(ngModel)] ="user.lastName" >
+    <input type="text" size="50" placeholder="Last Name" name="name" [formControl] ="lastName" >
     <div> <br>
         E-mail
     </div> 
-    <input type="text" size="50" placeholder="E-mail" name="name" [(ngModel)] ="user.email">
+    <input type="text" size="50" placeholder="E-mail" name="name" [formControl] ="email">
     <div> <br>
         Password
     </div>
-    <input type="text" size="50" placeholder="Password" name="name" [(ngModel)] ="user.password"  >
+    <input type="text" size="50" placeholder="Password" name="name" [formControl] ="password"  >
     <div> <br>
         Confirm password
     </div>

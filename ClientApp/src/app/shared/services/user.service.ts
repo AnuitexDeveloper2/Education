@@ -9,12 +9,11 @@ export class UserService {
   email: string;
   password:string;
   constructor(private http:HttpClient) { }
-  forgotPassword(email): Observable<any>{
-    return this.http.post('http://localhost:50285/api/user/forgotPassword?',email)
+
+  ForgotPassword(email:string) {
+    return this.http.get(`https://localhost:44309/api/user/forgotPassword/?email=${email}`)
   }
 
-  signIn(email,password):Observable<any>{
-    return this.http.post('http://localhost:50285/api/account/signIn',email+password)
-  }
+ 
 
 }

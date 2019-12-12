@@ -27,7 +27,7 @@ namespace EducationApp.PresentationLayer.Controllers
 
             return Ok(result);
         }
-        //[Authorize(role.Admin)]
+        [Authorize(role.Admin)]
         [Authorize]
         [HttpGet("getProfile")]
         public async Task<UserModelItem> GetProfile(long id)
@@ -56,7 +56,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        [HttpPost("forgotPassword")]
+        [HttpGet("forgotPassword")]
         public async Task<ActionResult> ForgotPassword(string email)
         {
             var result = await _userService.RestorePasswordAsync(email);
@@ -65,7 +65,7 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [Authorize(Roles = role.User)]
-        [HttpPost("changePassword")]
+        [HttpGet("changePassword")]
         public async Task<ActionResult> ChangePassword(long id, string oldPassword,string newPassword)
         {
             var result = await _userService.ChangePassword(id, oldPassword, newPassword);

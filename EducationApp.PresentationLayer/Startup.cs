@@ -60,10 +60,10 @@ namespace EducationApp.PresentationLayer
                 options.TokenValidationParameters = tokenValidationParameter;
             });
 
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-            //});
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
             services.AddMvcCore();
         }
 
@@ -80,16 +80,15 @@ namespace EducationApp.PresentationLayer
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowCredentials());
 
-            app.UseCors(builder => builder.WithOrigins("http://localhost:4200"));
 
-
-            //app.UseSwagger();
-            //app.UseSwaggerUI(c =>
-            //{
-            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            //    c.RoutePrefix = string.Empty;
-            //});
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseRouting();
             app.UseEndpoints(endpoints =>
