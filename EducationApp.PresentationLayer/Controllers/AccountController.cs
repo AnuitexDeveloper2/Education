@@ -29,9 +29,9 @@ namespace EducationApp.PresentationLayer.Controllers
 
         [HttpPost("register")]
 
-        public async Task<ActionResult> Register([FromBody]UserModelItem userItemModel,string password)
+        public async Task<ActionResult> Register([FromBody]UserModelItem userItemModel)
         {
-            var result = await _accountService.CreateUserAsync(userItemModel, password);
+            var result = await _accountService.CreateUserAsync(userItemModel);
 
             return Ok(result.Errors);
         }
@@ -64,7 +64,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(errors);
         }
         [Authorize]
-        [HttpPost("signOut")]
+        [HttpGet("signOut")]
         public async Task<ActionResult> SignOutAsync()
         {
             await _accountService.SignOutAsync();

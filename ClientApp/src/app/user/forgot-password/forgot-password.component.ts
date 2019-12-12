@@ -11,7 +11,10 @@ export class ForgotPasswordComponent implements OnInit {
 
   email:string;
   constructor(private userService: UserService) { }
- 
+ forgot(){
+   debugger;
+   this.userService.forgotPassword(this.email).subscribe
+ }
 
   ngOnInit() {
   }

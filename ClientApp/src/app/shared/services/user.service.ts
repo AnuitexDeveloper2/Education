@@ -7,9 +7,14 @@ import { Observable } from "rxjs";
 })
 export class UserService {
   email: string;
+  password:string;
   constructor(private http:HttpClient) { }
-  forgotPassword(){
-    return this.http.get(' http://localhost:50285/api/user/forgotPassword?email=${email}')
+  forgotPassword(email): Observable<any>{
+    return this.http.post('http://localhost:50285/api/user/forgotPassword?',email)
+  }
+
+  signIn(email,password):Observable<any>{
+    return this.http.post('http://localhost:50285/api/account/signIn',email+password)
   }
 
 }

@@ -5,7 +5,8 @@ using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using System.Threading.Tasks;
-using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
+using error = EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
+using emailConst = EducationApp.BusinessLogicLayer.Common.Consts.Consts.EmailConsts;
 using EducationApp.BusinessLogicLayer.Extention.Mapper.UserMapper;
 
 
@@ -14,42 +15,55 @@ namespace EducationApp.BusinessLogicLayer.Services
     public class AccountService : IAccountService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IEmailSender _emailSender;
         public AccountService(IUserRepository userRepository, IEmailSender emailSender)
         {
             _userRepository = userRepository;
+            _emailSender = emailSender;
+            
         }
 
         public async Task<bool> ConfirmAccountAsync(string email)
         {
             var excistUser = await _userRepository.GetByEmailAsync(email);
+
             if (excistUser == null)
             {
                 return false;
             }
+
             string token = await _userRepository.GenerateEmailConfirmationTokenAsync(excistUser);
+
             if (token == null)
             {
                 return false;
             }
+
             return true;
         }
 
-        public async Task<BaseModel> CreateUserAsync(UserModelItem userItemModel,string password)
+        public async Task<BaseModel> CreateUserAsync(UserModelItem userItemModel)
         {
             var userModel = new BaseModel();
-            if (string.IsNullOrWhiteSpace(userItemModel.FirstName) || string.IsNullOrWhiteSpace(userItemModel.LastName) || string.IsNullOrWhiteSpace(userItemModel.Email)||string.IsNullOrWhiteSpace(password))
+
+            if (string.IsNullOrWhiteSpace(userItemModel.FirstName) || string.IsNullOrWhiteSpace(userItemModel.LastName) || string.IsNullOrWhiteSpace(userItemModel.Email) || string.IsNullOrWhiteSpace(userItemModel.Password))
             {
-                userModel.Errors.Add(EmptyField);
+                userModel.Errors.Add(error.EmptyField);
                 return userModel;
             }
-            var user =userItemModel.Map();
-            var userCreate = await _userRepository.CreateUserAsync(user, password);
+
+            var user = userItemModel.Map();
+
+            var userCreate = await _userRepository.CreateUserAsync(user, userItemModel.Password);
+
             if (!userCreate)
             {
-                userModel.Errors.Add(UserCreate);
+                userModel.Errors.Add(error.UserCreate);
                 return userModel;
             }
-            // _emailSender.SendingEmailAsync(UserEmail, MailSubject, $"Confirm registration by clicking on the link: <a href='{callbackUrl}'>link</a>");
+
+            _emailSender.SendingEmailAsync(emailConst.UserEmail, emailConst.MailSubject, emailConst.MailBody);
+
             return userModel;
         }
 
@@ -58,17 +72,23 @@ namespace EducationApp.BusinessLogicLayer.Services
         public async Task<BaseModel> ConfirmEmailAsync(string email)
         {
             var userModel = new BaseModel();
+
             var user = await _userRepository.FindByEmailAsync(email);
+            
             if (user == null)
             {
-                userModel.Errors.Add(NotFound);
+                userModel.Errors.Add(error.NotFound);
                 return userModel;
+            
             }
             string token = await _userRepository.GenerateEmailConfirmationTokenAsync(user);
+            
             var result = await _userRepository.ConfirmEmailAsync(user, token);
+            
             if (!result)
             {
-                userModel.Errors.Add(ConfirmEmail);
+                userModel.Errors.Add(error.ConfirmEmail);
+            
             }
             return userModel;
         }
@@ -103,19 +123,19 @@ namespace EducationApp.BusinessLogicLayer.Services
              var usersModel = new BaseModel();
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
-                usersModel.Errors.Add(EmptyField);
+                usersModel.Errors.Add(error.EmptyField);
                 return usersModel;
             }
             var user = await _userRepository.GetByEmailAsync(email);
             if (user == null)
             {
-                usersModel.Errors.Add(NotFound);
+                usersModel.Errors.Add(error.NotFound);
                 return usersModel;
             }
             var checkPassword = await _userRepository.ConfirmPasswordAsync(user, password);
             if (!checkPassword)
             {
-                usersModel.Errors.Add(NotValidPassword);
+                usersModel.Errors.Add(error.NotValidPassword);
                 return usersModel;
             }
             return usersModel;

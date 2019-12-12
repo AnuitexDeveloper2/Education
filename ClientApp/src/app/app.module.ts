@@ -11,6 +11,8 @@ import { UserModule } from "./user/user.module";
 import { MaterialModule } from "./material/material.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule  } from "@angular/platform-browser/animations";
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthenticationInterceptor } from "./shared/AuthenticationInterceptor";
 
 @NgModule({
   declarations: [
@@ -18,7 +20,6 @@ import { BrowserAnimationsModule  } from "@angular/platform-browser/animations";
     HeaderComponent,
   ],
   imports: [
-
     ReactiveFormsModule,
     MaterialModule,
     FormsModule,
@@ -29,11 +30,13 @@ import { BrowserAnimationsModule  } from "@angular/platform-browser/animations";
     UserModule,
     AccountModule
   ],
-  
-  providers: [
-    CookieService,
-  ],
-  bootstrap: [AppComponent]
+  providers:[{
+    provide:HTTP_INTERCEPTORS,
+    useClass: AuthenticationInterceptor,
+    multi:true,
+  }],
+
+   bootstrap: [AppComponent]
 })
 export class AppModule { 
   constructor(router:Router){}

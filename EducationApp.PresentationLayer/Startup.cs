@@ -25,9 +25,29 @@ namespace EducationApp.PresentationLayer
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None;
+            });
+            services.AddCors();
+            services.AddTransient<IJwtHelper, JwtHelper>();
             Initializer.InitServices(services, Configuration.GetConnectionString("DefaultConnection"));
 
-            services.AddTransient<IJwtHelper, JwtHelper>();
+            var tokenValidationParameter = new TokenValidationParameters()
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = JwtHelper.GetSymmetricSecurityKey(),
+
+                ValidIssuer = Issuer,
+                ValidateIssuer = true,
+
+                ValidAudience = Audience,
+                ValidateAudience = true,
+
+                ValidateLifetime = true
+            };
 
             services.AddAuthentication(options =>
             {
@@ -36,41 +56,26 @@ namespace EducationApp.PresentationLayer
             }).AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidIssuer = Issuer,
-                    ValidateAudience = true,
-                    ValidAudience = Audience,
-                    ValidateLifetime = true,
-                    IssuerSigningKey = JwtHelper.GetSymmetricSecurityKey(),
-                    ValidateIssuerSigningKey = true,
-                };
+                options.SaveToken = true;
+                options.TokenValidationParameters = tokenValidationParameter;
             });
 
-            services.AddMvc();
-
-            services.AddCors();
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-            });
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            //});
+            services.AddMvcCore();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-          
-
+         
             app.UseMiddleware<ErrorMiddlware>();
 
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
-            app.UseAuthorization();
-
-
-            
+            app.UseAuthorization();      
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
@@ -78,13 +83,13 @@ namespace EducationApp.PresentationLayer
 
             app.UseCors(builder => builder.WithOrigins("http://localhost:4200"));
 
-           
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                c.RoutePrefix = string.Empty;
-            });
+
+            //app.UseSwagger();
+            //app.UseSwaggerUI(c =>
+            //{
+            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            //    c.RoutePrefix = string.Empty;
+            //});
 
             app.UseRouting();
             app.UseEndpoints(endpoints =>

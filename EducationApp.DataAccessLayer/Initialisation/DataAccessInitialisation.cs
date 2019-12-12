@@ -28,6 +28,7 @@ namespace EducationApp.DataAccessLayer.InitRepositories
             )
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
+
             services.AddTransient<UserManager<ApplicationUser>>();
             services.AddTransient<RoleManager<Role>>();
             services.AddTransient<SignInManager<ApplicationUser>>();

@@ -27,10 +27,12 @@ namespace EducationApp.PresentationLayer.Controllers
 
             return Ok(result);
         }
-        [Authorize(role.Admin)]
+        //[Authorize(role.Admin)]
+        [Authorize]
         [HttpGet("getProfile")]
         public async Task<UserModelItem> GetProfile(long id)
         {
+            var user = User;
             var profile = await _userService.GetProfileAsync(id);
 
             return profile;

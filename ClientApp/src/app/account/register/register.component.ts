@@ -10,6 +10,7 @@ import { AccountService } from "../../shared/services/account/account.service";
 })
 export class RegisterComponent implements OnInit {
   user: UserModel = new UserModel();
+  password:string;
 
   constructor(private acc: AccountService) { }
 save(){
