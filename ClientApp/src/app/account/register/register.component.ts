@@ -10,22 +10,22 @@ import { FormControl } from '@angular/forms'
   providers:[AccountService]
 })
 export class RegisterComponent implements OnInit {
-  firstName = new FormControl('');
-  lastName = new FormControl('');
-  email = new FormControl('');
-  password = new FormControl('');
+  UserName = new FormControl();
+  firstName = new FormControl();
+  lastName = new FormControl();
+  email = new FormControl();
+  password = new FormControl();
 
   constructor(private acc: AccountService) { }
 
   
   save(){
     let user = new UserModel();
+    user.UserName = this.UserName.value;
     user.firstName = this.firstName.value;
     user.lastName = this.lastName.value;
     user.email = this.email.value;
-    user.password = this.password.value;
-  debugger;   
-  this.acc.register(user).subscribe()
+  this.acc.register(user,this.password.value).subscribe()
 }
   ngOnInit() {
   }

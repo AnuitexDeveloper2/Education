@@ -20,8 +20,8 @@ namespace EducationApp.PresentationLayer.Controllers
             _authorService = authorService;
         }
 
-        //[Authorize(Roles = role.Admin)]
-        
+
+        [Authorize(Roles = role.Admin)]
         [HttpPost("create")]
         public async Task<ActionResult> Create(AuthorModelItem model)
         {

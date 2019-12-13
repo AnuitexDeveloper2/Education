@@ -28,9 +28,9 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult> Register(UserModelItem userItemModel)
+        public async Task<ActionResult> Register(UserModelItem userItemModel,string password)
         {
-            var result = await _accountService.CreateUserAsync(userItemModel);
+            var result = await _accountService.CreateUserAsync(userItemModel,password);
 
             return Ok(result.Errors);
         }
@@ -49,12 +49,12 @@ namespace EducationApp.PresentationLayer.Controllers
         {
             var errors = await _accountService.SignIn(email, password);
 
-            var user = await _accountService.GetByEmailAsync(email);
-
             if (errors.Errors.Count > 0)
             {
                 return Ok(errors.Errors);
             }
+
+            var user = await _accountService.GetByEmailAsync(email);
 
             var tokens = _jwtHelper.GenerateTokenModel(user);
 

@@ -42,11 +42,11 @@ namespace EducationApp.BusinessLogicLayer.Services
             return true;
         }
 
-        public async Task<BaseModel> CreateUserAsync(UserModelItem userItemModel)
+        public async Task<BaseModel> CreateUserAsync(UserModelItem userItemModel,string password)
         {
             var userModel = new BaseModel();
 
-            if (string.IsNullOrWhiteSpace(userItemModel.FirstName) || string.IsNullOrWhiteSpace(userItemModel.LastName) || string.IsNullOrWhiteSpace(userItemModel.Email) || string.IsNullOrWhiteSpace(userItemModel.Password))
+            if (string.IsNullOrWhiteSpace(userItemModel.FirstName) || string.IsNullOrWhiteSpace(userItemModel.LastName) || string.IsNullOrWhiteSpace(userItemModel.Email) || string.IsNullOrWhiteSpace(password))
             {
                 userModel.Errors.Add(error.EmptyField);
                 return userModel;
@@ -54,7 +54,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
             var user = userItemModel.Map();
 
-            var userCreate = await _userRepository.CreateUserAsync(user, userItemModel.Password);
+            var userCreate = await _userRepository.CreateUserAsync(user, password);
 
             if (!userCreate)
             {

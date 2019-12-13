@@ -72,6 +72,7 @@ namespace EducationApp.PresentationLayer
          
             app.UseMiddleware<ErrorMiddlware>();
 
+            app.UseRouting();
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
@@ -90,7 +91,6 @@ namespace EducationApp.PresentationLayer
                 c.RoutePrefix = string.Empty;
             });
 
-            app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

@@ -34,17 +34,11 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                 return false;
             }
 
-            user.UserName = user.FirstName;
-            try
-            {
-
             var createUser = await _userManager.CreateAsync(user, password);
-            
-            }
-            catch (System.Exception ex)
-            {
 
-                throw;
+            if (!createUser.Succeeded)
+            {
+                return false;
             }
 
 
