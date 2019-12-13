@@ -5,13 +5,15 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { GetProfileComponent } from './get-profile/get-profile.component';
+import {GetUsersComponent} from './get-users/get-users.component'
 
 export const routes: Routes = [
   { path: 'block-user', component:BlockUserComponent },
   { path: 'change-Password', component:ChangePasswordComponent},
   { path: 'edit-profile', component:EditProfileComponent },
   { path: 'forgot-password', component:ForgotPasswordComponent },
-  { path: 'get-profile', component:GetProfileComponent }
+  { path: 'get-profile', component:GetProfileComponent },
+  { path: 'get-users', component:GetUsersComponent }
 ]
 @NgModule({
   imports: [RouterModule.forChild(routes)],

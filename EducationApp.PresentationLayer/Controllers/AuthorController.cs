@@ -47,7 +47,7 @@ namespace EducationApp.PresentationLayer.Controllers
 
             return Ok(result);
         }
-
+        [AllowAnonymous]
         [HttpPost("get")]
         public async Task<ActionResult> Get(AuthorFilterModel authorFilterModel)
         {

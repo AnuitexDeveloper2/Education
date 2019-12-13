@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { UserModel } from "../../../shared/models/UserModel";
+import { UserModel } from "../../models/user/UserModel";
 import { FormControl } from '@angular/forms'
 import { Observable } from 'rxjs';
 

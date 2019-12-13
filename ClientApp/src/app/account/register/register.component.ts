@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserModel } from 'src/app/shared/models/UserModel';
+import { UserModel } from 'src/app/shared/models/user/UserModel';
 import { AccountService } from '../../shared/services/account/account.service';
 import { FormControl } from '@angular/forms'
 
@@ -25,6 +25,7 @@ export class RegisterComponent implements OnInit {
     user.firstName = this.firstName.value;
     user.lastName = this.lastName.value;
     user.email = this.email.value;
+    debugger;
   this.acc.register(user,this.password.value).subscribe()
 }
   ngOnInit() {

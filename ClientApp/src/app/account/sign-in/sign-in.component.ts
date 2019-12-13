@@ -6,7 +6,7 @@ import { FormControl } from '@angular/forms';
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.css'],
-  providers: [AccountService]
+  providers: [AccountService],
 })
 export class SignInComponent  {
   email=new FormControl('');

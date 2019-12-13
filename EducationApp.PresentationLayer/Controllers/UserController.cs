@@ -73,8 +73,8 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = role.Admin)]
-        [HttpPost("getUsers")]
+        //[Authorize(Roles = role.Admin)]
+        [HttpGet("getUsers")]
         public async Task<ActionResult<UserModel>> GetUsers(UserFilterModel filterUser)
         {
             var users = await _userService.GetUsersAsync(filterUser);

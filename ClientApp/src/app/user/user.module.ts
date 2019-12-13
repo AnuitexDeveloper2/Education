@@ -10,15 +10,18 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { GetUsersComponent } from './get-users/get-users.component';
+import { MaterialModule } from "../material/material.module";
 
 
 @NgModule({
-  declarations: [BlockUserComponent, GetProfileComponent, RemoveComponent, EditProfileComponent, ForgotPasswordComponent, ChangePasswordComponent ],
+  declarations: [BlockUserComponent, GetProfileComponent, RemoveComponent, EditProfileComponent, ForgotPasswordComponent, ChangePasswordComponent, GetUsersComponent ],
   imports: [
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    UserRoutingModule
+    UserRoutingModule,
+    MaterialModule
   ]
 })
 export class UserModule { }
