@@ -10,7 +10,6 @@ namespace EducationApp.PresentationLayer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class AuthorController : ControllerBase
     {
         public readonly IAuthorService _authorService;
@@ -21,10 +20,12 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
 
-        [Authorize(Roles = role.Admin)]
+        //[Authorize(Roles = role.Admin)]
         [HttpPost("create")]
-        public async Task<ActionResult> Create(AuthorModelItem model)
+        public async Task<ActionResult> Create(string authorName)
         {
+            var model = new AuthorModelItem();
+            model.Name = authorName;
             var result = await _authorService.CreateAsync(model);
 
             return Ok(result);

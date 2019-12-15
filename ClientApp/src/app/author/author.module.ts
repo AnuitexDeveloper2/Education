@@ -1,17 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from "@angular/router";
 
 import { AuthorRoutingModule } from './author-routing.module';
-import { CreateComponent } from './create/create.component';
 import { RemoveComponent } from './remove/remove.component';
 import { UpdateComponent } from './update/update.component';
 import { GetComponent } from './get/get.component';
 import { MaterialModule } from "../material/material.module";
+import { CreateComponent } from './create/create.component';
+import { ReactiveFormsModule } from "@angular/forms";
 
 
 @NgModule({
-  declarations: [CreateComponent, RemoveComponent, UpdateComponent, GetComponent],
+  declarations: [ 
+    RemoveComponent,
+    UpdateComponent,
+    GetComponent,
+    CreateComponent
+  ],
   imports: [
+    RouterModule,
+    ReactiveFormsModule,
     CommonModule,
     AuthorRoutingModule,
     MaterialModule

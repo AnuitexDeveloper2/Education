@@ -11,6 +11,7 @@ using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.JWTConsts;
 using EducationApp.PresentationLayer.Helpers;
 using EducationApp.PresentationLayer.Helpers.Interfaces;
 using Microsoft.OpenApi.Models;
+using EducationApp.DataAccessLayer.Initialisation;
 
 namespace EducationApp.PresentationLayer
 {
@@ -69,7 +70,7 @@ namespace EducationApp.PresentationLayer
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-         
+
             app.UseMiddleware<ErrorMiddlware>();
 
             app.UseRouting();

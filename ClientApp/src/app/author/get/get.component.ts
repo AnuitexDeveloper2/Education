@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthorModel } from "../../shared/models/author/AuthorModel";
 
-export interface PeriodicElement {
- id:number;
- name:string;
- product:string[]
-}
+
 
 const ELEMENT_DATA: AuthorModel[] = [
-  
-];
+  {id: 1, name: 'Hydrogen', product: 'Barbara'},
+  ]
 @Component({
   selector: 'app-get',
   templateUrl: './get.component.html',
