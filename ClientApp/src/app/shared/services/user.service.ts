@@ -1,17 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { UserFilterModel } from '../models/user/UserFilterModel';
+import { UserModel } from '../models/user/UserModel';
+import { UserModelItem } from '../models/user/UserModelItem';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  email: string;
-  password:string;
+ 
   constructor(private http:HttpClient) { }
 
   ForgotPassword(email:string) {
-    return this.http.get(`https://localhost:44309/api/user/forgotPassword/?email=${email}`)
+    return this.http.post(`https://localhost:44309/api/user/forgotPassword/?email=${email}`,{withCredentials:true});
+  }
+
+  GetUsers(userFilterModel:UserFilterModel):Observable<UserModel> {
+    return this.http.post<UserModel>('https://localhost:44309/api/user/getUsers',userFilterModel)
   }
 
  

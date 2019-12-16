@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { UserModel } from "../../models/user/UserModel";
+import { UserModelItem } from "../../models/user/UserModelItem";
 import { FormControl } from '@angular/forms'
 import { Observable } from 'rxjs';
 
@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class AccountService {
   
   constructor(private http:HttpClient) { }
-register(user: UserModel,password:string){
+register(user: UserModelItem,password:string){
   return this.http.post(`https://localhost:44309/api/account/register/?password=${password}`,user, { withCredentials: true })
   }
 

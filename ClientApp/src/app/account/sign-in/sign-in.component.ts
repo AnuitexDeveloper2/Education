@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from "../../shared/services/account/account.service";
 import { FormControl } from '@angular/forms';
+import { AuthenticationService } from '../../shared/services/AuthenticationService'
 
 @Component({
   selector: 'app-sign-in',
@@ -9,10 +10,10 @@ import { FormControl } from '@angular/forms';
   providers: [AccountService],
 })
 export class SignInComponent  {
+  
+  constructor(private acc:AccountService) { }
   email=new FormControl('');
   password =new FormControl('');
-
-  constructor(private acc:AccountService) { }
 
   signIn(){
     debugger;

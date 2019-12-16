@@ -1,12 +1,6 @@
+import { UserModelItem } from './UserModelItem';
 
 export class UserModel {
-   constructor(
-       public UserName?: string,
-       public firstName?: string,
-       public lastName?: string,
-       public email?: string,
-      
-       public id?: number,
-       public Role?: string
-   ){}
-}
+       users:UserModelItem[];
+       count:number;
+   }

@@ -22,11 +22,10 @@ namespace EducationApp.PresentationLayer.Controllers
 
         //[Authorize(Roles = role.Admin)]
         [HttpPost("create")]
-        public async Task<ActionResult> Create(string authorName)
+        public async Task<ActionResult> Create(string name)
         {
-            var model = new AuthorModelItem();
-            model.Name = authorName;
-            var result = await _authorService.CreateAsync(model);
+            
+            var result = await _authorService.CreateAsync(name);
 
             return Ok(result);
         }
@@ -48,10 +47,12 @@ namespace EducationApp.PresentationLayer.Controllers
 
             return Ok(result);
         }
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [HttpPost("get")]
         public async Task<ActionResult> Get(AuthorFilterModel authorFilterModel)
         {
+            authorFilterModel.PageNumber = 1;
+            authorFilterModel.PageSize = 10;
             var authors = await _authorService.GetAuthorsAsync(authorFilterModel);
 
             return Ok(authors);

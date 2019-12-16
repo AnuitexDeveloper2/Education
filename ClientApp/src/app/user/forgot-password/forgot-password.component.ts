@@ -10,10 +10,12 @@ import { FormControl } from "@angular/forms";
   providers:[UserService]
 })
 export class ForgotPasswordComponent implements OnInit {
-  constructor(private userService: UserService) { }
 
-  email = new FormControl();
- forgot(){
+  constructor(private userService: UserService) { }
+  
+  email = new FormControl('');   
+
+   forgot(){
    debugger;
    this.userService.ForgotPassword(this.email.value).subscribe()
  }

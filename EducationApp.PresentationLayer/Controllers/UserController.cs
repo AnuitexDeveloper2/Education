@@ -56,7 +56,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        [HttpGet("forgotPassword")]
+        [HttpPost("forgotPassword")]
         public async Task<ActionResult> ForgotPassword(string email)
         {
             var result = await _userService.RestorePasswordAsync(email);
@@ -74,9 +74,11 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         //[Authorize(Roles = role.Admin)]
-        [HttpGet("getUsers")]
-        public async Task<ActionResult<UserModel>> GetUsers(UserFilterModel filterUser)
+        [HttpPost("getUsers")]
+        public async Task<ActionResult> GetUsers(UserFilterModel filterUser)
         {
+            filterUser.PageNumber = 1;
+            filterUser.PageSize = 5;
             var users = await _userService.GetUsersAsync(filterUser);
 
             return Ok(users);

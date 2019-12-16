@@ -7,6 +7,8 @@ using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using System.Threading.Tasks;
 using errors = EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
 using EducationApp.BusinessLogicLayer.Extention.Mapper.AuthorMapper;
+using EducationApp.DataAccessLayer.Entities;
+using System;
 
 namespace EducationApp.BusinessLogicLayer.Services
 {
@@ -21,11 +23,11 @@ namespace EducationApp.BusinessLogicLayer.Services
             _authorInPrintingEditionRepository = authorInPrintingEditionRepository;
         }
 
-        public async Task<BaseModel> CreateAsync(AuthorModelItem authorModelItem)
+        public async Task<BaseModel> CreateAsync(string name)
         {
             var resultModel = new BaseModel();
 
-            var author = authorModelItem.Map();
+            var author = new Author { Name = name, Date = DateTime.Now };
 
             var resultCreate = await _authorRepository.CreateAsync(author);
 

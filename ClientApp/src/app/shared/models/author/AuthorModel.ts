@@ -1,7 +1,6 @@
-export class AuthorModel{
-    constructor(){}
-    id?:number;
-    name?:string;
-    product?:string;
+import { AuthorModelItem } from './AuthorModelItem';
 
+export class AuthorModel{
+    count: number;
+    items: Array<AuthorModelItem>;
 }
