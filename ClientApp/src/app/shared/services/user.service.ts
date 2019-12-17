@@ -24,6 +24,10 @@ export class UserService {
     return this.http.get(`https://localhost:44309/api/user/blockUser/?id=${id}`)
   }
 
+  RemoveUser(id:number){
+    return this.http.get(`https://localhost:44309/api/user/remove/?id=${id}`)
+  }
+
  
 
 }

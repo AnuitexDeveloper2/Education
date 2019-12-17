@@ -2,7 +2,7 @@ import { Component, OnInit,ViewChild } from '@angular/core';
 import { AuthorService } from 'src/app/shared/services/author/author.service';
 import { AuthorModelItem } from 'src/app/shared/models/author/AuthorModelItem';
 import { AuthorFilterModel } from 'src/app/shared/models/author/AuthorFilterModel';
-import {MatPaginator, MatSort, MatTableDataSource, MatDialog} from '@angular/material';
+import {PageEvent, MatSort, MatTableDataSource, MatDialog} from '@angular/material';
 import { BaseFilterModel } from 'src/app/shared/models/Base/BaseFilterModel';
 import { SortType } from 'src/app/shared/enums/SortType';
 
@@ -15,6 +15,7 @@ import { SortType } from 'src/app/shared/enums/SortType';
 
 export class GetComponent implements OnInit {
 
+  pageIndex:number;
   authorFilter : AuthorFilterModel;
   items: Array<AuthorModelItem>;
   count: number;
@@ -51,6 +52,13 @@ export class GetComponent implements OnInit {
       this.authorFilter.sortType = SortType.Desc;
     }
   
+    this.getAuthors();
+  }
+
+  getServerData(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.authorFilter.pageSize = event.pageSize;
+    this.authorFilter.pageNumber = this.pageNumber;
     this.getAuthors();
   }
 

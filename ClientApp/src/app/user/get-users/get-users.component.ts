@@ -6,6 +6,7 @@ import { UserModel } from 'src/app/shared/models/user/UserModel';
 import {MatPaginator, MatSort, MatTableDataSource, MatDialog} from '@angular/material';
 import { UserSortType } from 'src/app/shared/enums/UserSortType';
 import { SortType } from 'src/app/shared/enums/SortType';
+import { EditProfileComponent } from "../edit-profile/edit-profile.component";
 
 @Component({
   selector: 'app-get-users',
@@ -59,9 +60,18 @@ export class GetUsersComponent implements OnInit {
       if(event.direction == 'desc'){
         this.userFilter.sortType = SortType.Desc;
       }
-
-     
     this.getUsers();
   }
+
+  edit(userModelItem: UserModelItem) {
+    const dialogRef = this.dialog.open(EditProfileComponent, {data: userModelItem});
+  }
+
+  remove(id:number){
+    debugger;
+     this.userService.RemoveUser(id).subscribe();
+     this.getUsers();
+  }
+
 }
 

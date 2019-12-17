@@ -1,3 +1,8 @@
 table {
     width: 100%;
   }
+
+  .img__button{
+    width: 25px;
+    height: 25px;
+  }

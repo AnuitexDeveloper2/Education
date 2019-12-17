@@ -38,8 +38,8 @@ namespace EducationApp.PresentationLayer.Controllers
             return profile;
         }
 
-        [Authorize(Roles = role.Admin)]
-        [HttpPost("remove")]
+        //[Authorize(Roles = role.Admin)]
+        [HttpGet("remove")]
         public async Task<ActionResult> RemoveUser(long id)
         {
             var result = await _userService.RemoveUserAsync(id);
