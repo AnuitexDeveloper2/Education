@@ -5,4 +5,5 @@ export class UserModelItem {
     email: string;
     id: number;
     role: string;
+    lockoutEnabled:boolean;
 }

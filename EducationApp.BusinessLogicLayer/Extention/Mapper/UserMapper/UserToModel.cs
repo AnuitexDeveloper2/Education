@@ -13,7 +13,8 @@ namespace EducationApp.BusinessLogicLayer.Extention.Mapper.UserMapper
                 LastName = user.LastName,
                 Email = user.Email,
                 Id = user.Id,
-                UserName = user.UserName
+                UserName = user.UserName,
+                LockoutEnabled = user.LockoutEnabled
             };
             return userItemModel;
         }

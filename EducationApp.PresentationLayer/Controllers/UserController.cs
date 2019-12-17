@@ -19,8 +19,8 @@ namespace EducationApp.PresentationLayer.Controllers
             _userService = userService;
         }
 
-        [Authorize(Roles = role.Admin)]
-        [HttpPost("blockUser")]
+        //[Authorize(Roles = role.Admin)]
+        [HttpGet("blockUser")]
         public async Task<IActionResult> BlockUser(long id)
         {
            var result = await _userService.BlockUserAsync(id);
@@ -78,7 +78,7 @@ namespace EducationApp.PresentationLayer.Controllers
         public async Task<ActionResult> GetUsers(UserFilterModel filterUser)
         {
             filterUser.PageNumber = 1;
-            filterUser.PageSize = 5;
+            filterUser.PageSize = 10;
             var users = await _userService.GetUsersAsync(filterUser);
 
             return Ok(users);
