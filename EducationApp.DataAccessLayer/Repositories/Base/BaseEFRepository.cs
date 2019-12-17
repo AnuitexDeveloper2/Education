@@ -80,7 +80,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
         {
             var property = typeof(TEntity).GetProperty(entitySortType);
 
-            entities = sortType == SortType.Increase ? entities.OrderBy(property.Name) : entities.OrderBy(property.Name + query.Descending);
+            entities = sortType == SortType.Asc ? entities.OrderBy(property.Name) : entities.OrderBy(property.Name + query.Descending);
 
             return entities;
         }

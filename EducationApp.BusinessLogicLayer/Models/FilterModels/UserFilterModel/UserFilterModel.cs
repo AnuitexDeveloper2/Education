@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using EducationApp.BusinessLogicLayer.Extention.BaseFilter;
-using EducationApp.DataAccessLayer.Entities.Enums;
+﻿using EducationApp.BusinessLogicLayer.Extention.BaseFilter;
 using static EducationApp.BusinessLogicLayer.Extention.Enums.Enums;
 using static EducationApp.BusinessLogicLayer.Models.Enums.Enums;
 

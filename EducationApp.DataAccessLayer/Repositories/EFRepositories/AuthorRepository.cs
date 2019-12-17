@@ -45,7 +45,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                 return null;
             }
 
-            authors = authorFilterModel.SortType == SortType.Increase ? authors.OrderBy(k => k.Id) : authors.OrderByDescending(k => k.Id);
+            authors = authorFilterModel.SortType == SortType.Asc ? authors.OrderBy(k => k.Id) : authors.OrderByDescending(k => k.Id);
 
             var count = await authors.CountAsync();
 

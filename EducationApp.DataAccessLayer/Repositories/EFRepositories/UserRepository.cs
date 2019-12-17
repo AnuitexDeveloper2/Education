@@ -200,7 +200,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             var property = typeof(ApplicationUser).GetProperty(usersFilter.UsersSortType.ToString());
             if (property != null)
             {
-                users = usersFilter.SortType == SortType.Decrease ? users.OrderBy(property.Name, usersFilter.UsersSortType.ToString()) : users.OrderBy(property.Name + " descending");
+                users = usersFilter.SortType == SortType.Asc ? users.OrderBy(property.Name, usersFilter.UsersSortType.ToString()) : users.OrderBy(property.Name + " descending");
             }
 
 

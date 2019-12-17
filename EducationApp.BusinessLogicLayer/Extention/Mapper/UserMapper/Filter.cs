@@ -6,6 +6,7 @@
         {
             var userFilter = new DataAccessLayer.Helpers.UserFilterModel
             {
+                SortType = (DataAccessLayer.Entities.Enums.Enums.SortType)filterUser.SortType,
                 UsersSortType = (DataAccessLayer.Entities.Enums.Enums.UserSortType)filterUser.UserSortType,
                 UsersFilterType = (DataAccessLayer.Entities.Enums.Enums.UserFilterType)filterUser.UsersFilterStatus,
                 PageNumber = filterUser.PageNumber,

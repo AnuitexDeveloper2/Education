@@ -4,6 +4,8 @@ import { UserModelItem } from "../../shared/models/user/UserModelItem";
 import { UserFilterModel } from 'src/app/shared/models/user/UserFilterModel';
 import { UserModel } from 'src/app/shared/models/user/UserModel';
 import {MatPaginator, MatSort, MatTableDataSource, MatDialog} from '@angular/material';
+import { UserSortType } from 'src/app/shared/enums/UserSortType';
+import { SortType } from 'src/app/shared/enums/SortType';
 
 @Component({
   selector: 'app-get-users',
@@ -21,7 +23,7 @@ export class GetUsersComponent implements OnInit {
   displayedColumns: string[] ;
 
   constructor(private userService:UserService,public dialog:MatDialog ) {
-    this.displayedColumns= [ 'name', 'email','status'],
+    this.displayedColumns= [ 'name', 'email','status','edit'],
     this.userFilter = new UserFilterModel
   }
   
@@ -38,6 +40,28 @@ export class GetUsersComponent implements OnInit {
   
   changeUserStatus(id:number){
     this.userService.changeUserStatus(id).subscribe();
+  }
+
+  sortUser(event:MatSort){
+   
+      if (event.active == 'name') {
+        this.userFilter.userSortType = UserSortType.LastName;
+      }
+    
+      if (event.active == 'email') {
+        this.userFilter.userSortType = UserSortType.Email; 
+       }
+
+      if(event.direction == 'asc'){
+        this.userFilter.sortType = SortType.Asc;
+      }
+
+      if(event.direction == 'desc'){
+        this.userFilter.sortType = SortType.Desc;
+      }
+
+     
+    this.getUsers();
   }
 }
 

@@ -10,7 +10,7 @@ namespace EducationApp.DataAccessLayer.Extention
         public static IQueryable<TEntity> Sorting<TEntity>(this IQueryable<PrintingEdition> printingEdition, IQueryable<TEntity> entities, string entitySortType, SortType sortType) 
         {
             var property = typeof(TEntity).GetProperty(entitySortType);
-            entities = sortType == SortType.Increase ? entities.OrderBy(property.Name) : entities.OrderBy(property.Name + " descending");
+            entities = sortType == SortType.Asc ? entities.OrderBy(property.Name) : entities.OrderBy(property.Name + " descending");
             return entities;
         }
     }

@@ -4,5 +4,6 @@ export class BaseFilterModel{
     searchString: string;
     pageNumber: number;
     pageSize: number;
-    sortType : SortType;
+    sortType: SortType
+   
 }

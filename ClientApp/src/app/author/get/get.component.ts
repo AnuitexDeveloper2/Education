@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { AuthorService } from 'src/app/shared/services/author/author.service';
 import { AuthorModelItem } from 'src/app/shared/models/author/AuthorModelItem';
 import { AuthorFilterModel } from 'src/app/shared/models/author/AuthorFilterModel';
 import {MatPaginator, MatSort, MatTableDataSource, MatDialog} from '@angular/material';
 import { BaseFilterModel } from 'src/app/shared/models/Base/BaseFilterModel';
+import { SortType } from 'src/app/shared/enums/SortType';
 
 @Component({
   selector: 'app-get',
@@ -14,7 +15,7 @@ import { BaseFilterModel } from 'src/app/shared/models/Base/BaseFilterModel';
 
 export class GetComponent implements OnInit {
 
-  authorFilter : BaseFilterModel;
+  authorFilter : AuthorFilterModel;
   items: Array<AuthorModelItem>;
   count: number;
   pageNumber: number;
@@ -24,10 +25,9 @@ export class GetComponent implements OnInit {
 
   constructor(private authorService:AuthorService,public dialog:MatDialog) { 
     this.displayedColumns = ['id', 'name', 'product']
-    this.authorFilter = new BaseFilterModel();
+    this.authorFilter = new AuthorFilterModel();
   }
   ngOnInit() {
-    debugger;
     this.getAuthors();
   }
 
@@ -38,9 +38,19 @@ export class GetComponent implements OnInit {
       this.items = data.items;
     })
   }
+  sortAuthors(event:MatSort) {
 
-  sortAuthors() {
-   this.authorFilter.sortType
+
+    if(event.direction =='asc')
+    {
+      this.authorFilter.sortType = SortType.Asc;
+    }
+
+    if(event.direction == 'desc')
+    {
+      this.authorFilter.sortType = SortType.Desc;
+    }
+  
     this.getAuthors();
   }
 
