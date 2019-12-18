@@ -67,7 +67,6 @@ export class GetUsersComponent implements OnInit {
   }
 
   edit(id:number) {
-    debugger;
     const dialogRef = this.dialog.open(EditProfileComponent, {data: id});
     this.getUsers();
   }

@@ -1,9 +1,11 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthorService } from 'src/app/shared/services/author/author.service';
 import { AuthorModelItem } from 'src/app/shared/models/author/AuthorModelItem';
 import { AuthorFilterModel } from 'src/app/shared/models/author/AuthorFilterModel';
 import {PageEvent, MatSort, MatTableDataSource, MatDialog} from '@angular/material';
 import { SortType } from 'src/app/shared/enums/SortType';
+import { CreateComponent } from "src/app/author/create/create.component";
+import { UpdateComponent } from "src/app/author/update/update.component";
 
 @Component({
   selector: 'app-get',
@@ -56,11 +58,29 @@ export class GetComponent implements OnInit {
     this.getAuthors();
   }
 
-    pagination(event: PageEvent) {
+  pagination(event: PageEvent) {
     debugger;
     this.authorFilter.pageSize = event.pageSize;
     this.authorFilter.pageNumber = event.pageIndex + 1;
     this.getAuthors();
   }
+
+  create(){
+    const dialogRef = this.dialog.open(CreateComponent);
+    this.getAuthors();
+  }
+
+  edit(id:number){
+    const dialogRef = this.dialog.open(UpdateComponent,{data:id})
+    this.getAuthors();
+  }
+
+  remove(id:number){
+    this.authorService.remove(id).subscribe();
+    this.getAuthors();
+ }
+  
+
+
 
 }

@@ -30,17 +30,17 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = role.Admin)]
-        [HttpPost("remove")]
-        public async Task<ActionResult> Remove(AuthorModelItem authorModel)
+        //[Authorize(Roles = role.Admin)]
+        [HttpGet("remove")]
+        public async Task<ActionResult> Remove(long id)
         {
-            var result = await _authorService.RemoveAsync(authorModel.Id);
+            var result = await _authorService.RemoveAsync(id);
 
             return Ok(result);
         }
 
         //[Authorize(Roles = role.Admin)]
-        [HttpPost("update")]
+        [HttpGet("update")]
         public async Task<ActionResult> Update(long id, string name)
         {
             var result = await _authorService.UpdateAsync(id, name);

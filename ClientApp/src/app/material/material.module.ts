@@ -7,7 +7,8 @@ import {  MatButtonModule,
   MatInputModule,
   MatSortModule,
   MatSlideToggleModule,
-  MatSelectModule 
+  MatSelectModule,
+  MatFormFieldModule,
 } from "@angular/material";
 
 const MaterialComponent =[
@@ -17,7 +18,8 @@ const MaterialComponent =[
  MatInputModule,
  MatSortModule,
  MatSlideToggleModule,
- MatSelectModule 
+ MatSelectModule,
+ MatFormFieldModule
 ]
 
 

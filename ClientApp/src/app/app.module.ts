@@ -7,12 +7,14 @@ import { Router } from '@angular/router';
 import { AccountModule } from './account/account.module';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClientModule } from '@angular/common/http';
+import { MatSelectModule  } from "@angular/material";
 import { UserModule } from "./user/user.module";
 import { MaterialModule } from "./material/material.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule  } from "@angular/platform-browser/animations";
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationInterceptor } from "./shared/AuthenticationInterceptor";
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { AuthenticationInterceptor } from "./shared/AuthenticationInterceptor";
     AppRoutingModule,
     BrowserAnimationsModule,
     UserModule,
-    AccountModule
+    AccountModule,
+    MatFormFieldModule,
+    MatSelectModule 
   ],
   providers:[{
     provide:HTTP_INTERCEPTORS,

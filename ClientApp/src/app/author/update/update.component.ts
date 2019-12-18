@@ -1,15 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from "@angular/material";
+import { FormControl } from "@angular/forms";
+import { AuthorService } from "src/app/shared/services/author/author.service";
+
 
 @Component({
   selector: 'app-update',
   templateUrl: './update.component.html',
-  styleUrls: ['./update.component.css']
+  styleUrls: ['./update.component.css'],
+  providers:[AuthorService]
 })
-export class UpdateComponent implements OnInit {
+export class UpdateComponent  {
 
-  constructor() { }
+  authorName = new FormControl();
+  constructor(@Inject(MAT_DIALOG_DATA) public data: number,private authorService:AuthorService) { }
 
-  ngOnInit() {
+  edit(){
+    let name = this.authorName.value
+    this.authorService.edit(this.data,name).subscribe();
   }
+
+  
 
 }

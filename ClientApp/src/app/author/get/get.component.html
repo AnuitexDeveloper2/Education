@@ -1,6 +1,6 @@
 <div class="title">
   Authors Page
-  <img style="float: right;" class = "add" src="assets/images/add-button-inside-black-circle.svg" alt="NewAuthor" title="Add New Author" (click)= "edit(element.id)">
+  <img style="float: right;" class = "add" src="assets/images/add-button-inside-black-circle.svg" alt="NewAuthor" title="Add New Author" (click)= "create()">
 </div>
 <br>
 <table mat-table [dataSource]="items" matSort (matSortChange)="sortAuthors($event)" class="mat-elevation-z8">

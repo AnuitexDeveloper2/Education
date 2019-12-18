@@ -21,7 +21,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         }
         public async Task<ResponseModel<Author>> GetAuthorsAsync(AuthorFilterModel authorFilterModel)
         {
-            var authors = from author in _applicationContext.Authors
+            var authors = from author in _applicationContext.Authors where author.IsRemoved ==false
                          select new Author
                          {
                              Id = author.Id,

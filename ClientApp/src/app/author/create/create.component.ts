@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Inject } from '@angular/core';
 import { FormControl } from "@angular/forms";
+import { MAT_DIALOG_DATA } from '@angular/material';
 import { AuthorService } from 'src/app/shared/services/author/author.service';
 
 @Component({
@@ -8,18 +9,16 @@ import { AuthorService } from 'src/app/shared/services/author/author.service';
   styleUrls: ['./create.component.css'],
   providers: [AuthorService]
 })
-export class CreateComponent implements OnInit {
+export class CreateComponent  {
 
   authorName = new FormControl('');
 
-  constructor(private authorService:AuthorService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: string, private authorService:AuthorService) { }
 
   save(){
     debugger;
     this.authorService.save(this.authorName.value).subscribe();
   }
 
-  ngOnInit() {
-  }
-
+ 
 }

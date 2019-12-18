@@ -21,6 +21,15 @@ email:string;
     return this.http.post(`https://localhost:44309/api/author/create/?name=${name}`,{withCredentials: true});
   }
 
+  edit(id:number,name:string){
+    return this.http.get(`https://localhost:44309/api/author/update/?id=${id}&name=${name}`)
+  }
+
+  remove(id:number){
+    return this.http.get(`https://localhost:44309/api/author/remove/?id=${id}`)
+  }
+
+
   
   
 }
