@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from "../../shared/services/account/account.service";
+import { AccountService } from "src/app/shared/services/account/account.service";
 import { FormControl } from '@angular/forms';
-import { AuthenticationService } from '../../shared/services/AuthenticationService'
+import { AuthenticationService } from 'src/app/shared/services/AuthenticationService'
 
 @Component({
   selector: 'app-sign-in',

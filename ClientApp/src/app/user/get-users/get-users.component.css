@@ -6,3 +6,23 @@ table {
     width: 25px;
     height: 25px;
   }
+
+  th.mat-column-name, td.mat-column-name {
+    width: 35%;
+    padding-left: 10%;
+  }
+
+  th.mat-column-email, td.mat-column-email {
+    width: 35%;
+    padding-left: 10%;
+  }
+
+  th.mat-column-status, td.mat-column-status{
+    width: 20%;
+    text-align:center;
+  }
+
+  th.mat-column-edit, td.mat-column-edit{
+    width: 10%;
+    text-align: right;
+  }

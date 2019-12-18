@@ -40,13 +40,7 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return resultModel;
             }
 
-            var resultChangeEmail = await _userRepository.ChangeEmailAsync(user, model.Email);
-
-            if (!resultChangeEmail)
-            {
-                resultModel.Errors.Add(errors.ChangeEmailFailure);
-                return resultModel;
-            }
+           
 
             var result = await _userRepository.EditAsync(user.Map(model));
 

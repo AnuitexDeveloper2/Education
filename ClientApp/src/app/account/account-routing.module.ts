@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { RegisterComponent } from './register/register.component';
-import { SignInComponent } from './sign-in/sign-in.component';
-import { SignOutComponent } from './sign-out/sign-out.component';
-import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
+import { RegisterComponent } from 'src/app/account/register/register.component';
+import { SignInComponent } from 'src/app/account/sign-in/sign-in.component';
+import { SignOutComponent } from 'src/app/account/sign-out/sign-out.component';
+import { ConfirmEmailComponent } from 'src/app/account/confirm-email/confirm-email.component';
 
 
 export const routes: Routes = [

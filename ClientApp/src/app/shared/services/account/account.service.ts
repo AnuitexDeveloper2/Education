@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { UserModelItem } from "../../models/user/UserModelItem";
-import { FormControl } from '@angular/forms'
-import { Observable } from 'rxjs';
+import { UserModelItem } from "src/app/shared/models/user/UserModelItem";
 
 @Injectable()
 export class AccountService {

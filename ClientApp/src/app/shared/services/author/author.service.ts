@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { AuthorFilterModel } from "../../../shared/models/author/AuthorFilterModel";
 import { Observable } from 'rxjs';
-import { AuthorModule } from 'src/app/author/author.module';
-import { AuthorModel } from '../../models/author/AuthorModel';
-import { BaseFilterModel } from '../../models/Base/BaseFilterModel';
+import { AuthorModel } from 'src/app/shared/models/author/AuthorModel';
+import { BaseFilterModel } from 'src/app/shared/models/Base/BaseFilterModel';
 
 @Injectable({
   providedIn: 'root'

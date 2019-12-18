@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from "../../shared/services/account/account.service";
+import { AccountService } from "src/app/shared/services/account/account.service";
 
 @Component({
   selector: 'app-confirm-email',

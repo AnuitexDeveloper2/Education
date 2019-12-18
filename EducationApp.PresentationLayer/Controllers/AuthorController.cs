@@ -51,8 +51,7 @@ namespace EducationApp.PresentationLayer.Controllers
         [HttpPost("get")]
         public async Task<ActionResult> Get(AuthorFilterModel authorFilterModel)
         {
-            authorFilterModel.PageNumber = 1;
-            authorFilterModel.PageSize = 10;
+            
             var authors = await _authorService.GetAuthorsAsync(authorFilterModel);
 
             return Ok(authors);

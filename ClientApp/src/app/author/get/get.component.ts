@@ -3,7 +3,6 @@ import { AuthorService } from 'src/app/shared/services/author/author.service';
 import { AuthorModelItem } from 'src/app/shared/models/author/AuthorModelItem';
 import { AuthorFilterModel } from 'src/app/shared/models/author/AuthorFilterModel';
 import {PageEvent, MatSort, MatTableDataSource, MatDialog} from '@angular/material';
-import { BaseFilterModel } from 'src/app/shared/models/Base/BaseFilterModel';
 import { SortType } from 'src/app/shared/enums/SortType';
 
 @Component({
@@ -25,10 +24,12 @@ export class GetComponent implements OnInit {
   displayedColumns: string[];
 
   constructor(private authorService:AuthorService,public dialog:MatDialog) { 
-    this.displayedColumns = ['id', 'name', 'product']
+    this.displayedColumns = ['id', 'name', 'product','edit']
     this.authorFilter = new AuthorFilterModel();
   }
   ngOnInit() {
+    this.authorFilter.pageSize = 10;
+    this.authorFilter.pageNumber = 1;
     this.getAuthors();
   }
 
@@ -55,10 +56,10 @@ export class GetComponent implements OnInit {
     this.getAuthors();
   }
 
-  getServerData(event: PageEvent) {
-    this.pageIndex = event.pageIndex;
+    pagination(event: PageEvent) {
+    debugger;
     this.authorFilter.pageSize = event.pageSize;
-    this.authorFilter.pageNumber = this.pageNumber;
+    this.authorFilter.pageNumber = event.pageIndex + 1;
     this.getAuthors();
   }
 

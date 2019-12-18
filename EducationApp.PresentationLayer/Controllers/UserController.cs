@@ -47,7 +47,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = role.User)]
+        //[Authorize(Roles = role.User)]
         [HttpPost("editProfile")]
         public async Task<ActionResult> EditProfile(UserProfileEditModel model)
         {
@@ -77,8 +77,6 @@ namespace EducationApp.PresentationLayer.Controllers
         [HttpPost("getUsers")]
         public async Task<ActionResult> GetUsers(UserFilterModel filterUser)
         {
-            filterUser.PageNumber = 1;
-            filterUser.PageSize = 10;
             var users = await _userService.GetUsersAsync(filterUser);
 
             return Ok(users);

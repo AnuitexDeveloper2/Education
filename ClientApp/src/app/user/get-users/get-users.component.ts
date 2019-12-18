@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../shared/services/user.service'
-import { UserModelItem } from "../../shared/models/user/UserModelItem";
+import { UserService } from 'src/app/shared/services/user.service'
+import { UserModelItem } from "src/app/shared/models/user/UserModelItem";
 import { UserFilterModel } from 'src/app/shared/models/user/UserFilterModel';
-import { UserModel } from 'src/app/shared/models/user/UserModel';
-import {MatPaginator, MatSort, MatTableDataSource, MatDialog} from '@angular/material';
+import {MatPaginator, MatSort, MatTableDataSource, MatDialog, PageEvent} from '@angular/material';
 import { UserSortType } from 'src/app/shared/enums/UserSortType';
 import { SortType } from 'src/app/shared/enums/SortType';
-import { EditProfileComponent } from "../edit-profile/edit-profile.component";
+import { EditProfileComponent } from "src/app/user/edit-profile/edit-profile.component";
 
 @Component({
   selector: 'app-get-users',
@@ -21,14 +20,18 @@ export class GetUsersComponent implements OnInit {
   public dataSource = new MatTableDataSource();
   items:  Array<UserModelItem>;
   count: number;
-  displayedColumns: string[] ;
+  displayedColumns: string[];
+  userModelItem: UserModelItem;
 
   constructor(private userService:UserService,public dialog:MatDialog ) {
     this.displayedColumns= [ 'name', 'email','status','edit'],
-    this.userFilter = new UserFilterModel
+    this.userFilter = new UserFilterModel,
+    this.userModelItem = new UserModelItem()
   }
   
   ngOnInit() {
+    this.userFilter.pageNumber = 1;
+    this.userFilter.pageSize = 10;
     this.getUsers();
   }
 
@@ -63,14 +66,21 @@ export class GetUsersComponent implements OnInit {
     this.getUsers();
   }
 
-  edit(userModelItem: UserModelItem) {
-    const dialogRef = this.dialog.open(EditProfileComponent, {data: userModelItem});
+  edit(id:number) {
+    debugger;
+    const dialogRef = this.dialog.open(EditProfileComponent, {data: id});
+    this.getUsers();
   }
 
   remove(id:number){
-    debugger;
-     this.userService.RemoveUser(id).subscribe();
+     this.userService.removeUser(id).subscribe();
      this.getUsers();
+  }
+
+  pagination(event:PageEvent){
+    this.userFilter.pageSize = event.pageSize;
+    this.userFilter.pageNumber=event.pageIndex+1;
+    this.getUsers()
   }
 
 }

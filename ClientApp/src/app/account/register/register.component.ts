@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserModelItem } from 'src/app/shared/models/user/UserModelItem';
-import { AccountService } from '../../shared/services/account/account.service';
+import { AccountService } from 'src/app/shared/services/account/account.service';
 import { FormControl } from '@angular/forms'
 
 @Component({
@@ -10,7 +10,7 @@ import { FormControl } from '@angular/forms'
   providers:[AccountService]
 })
 export class RegisterComponent implements OnInit {
-  UserName = new FormControl();
+  userName = new FormControl();
   firstName = new FormControl();
   lastName = new FormControl();
   email = new FormControl();
@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
   
   save(){
     let user = new UserModelItem();
-    user.userName = this.UserName.value;
+    user.userName = this.userName.value;
     user.firstName = this.firstName.value;
     user.lastName = this.lastName.value;
     user.email = this.email.value;

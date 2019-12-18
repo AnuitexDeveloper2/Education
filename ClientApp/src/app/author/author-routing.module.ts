@@ -1,9 +1,9 @@
 import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { GetComponent } from "../author/get/get.component";
-import { RemoveComponent } from "../author/remove/remove.component";
-import { UpdateComponent } from "../author/update/update.component";
-import { CreateComponent } from './create/create.component';
+import { GetComponent } from "src/app/author/get/get.component";
+import { RemoveComponent } from "src/app/author/remove/remove.component";
+import { UpdateComponent } from "src/app/author/update/update.component";
+import { CreateComponent } from 'src/app/author/create/create.component';
 
 export const routes: Routes = [
 { path:'create', component:CreateComponent },

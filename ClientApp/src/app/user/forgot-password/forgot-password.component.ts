@@ -17,7 +17,7 @@ export class ForgotPasswordComponent implements OnInit {
 
    forgot(){
    debugger;
-   this.userService.ForgotPassword(this.email.value).subscribe()
+   this.userService.forgotPassword(this.email.value).subscribe()
  }
 
   ngOnInit() {
