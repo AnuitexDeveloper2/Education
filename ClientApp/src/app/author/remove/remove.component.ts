@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material';
+import { AuthorService } from 'src/app/shared/services/author/author.service';
 
 @Component({
   selector: 'app-remove',
   templateUrl: './remove.component.html',
-  styleUrls: ['./remove.component.css']
+  styleUrls: ['./remove.component.css'],
+  providers: [AuthorService]
 })
-export class RemoveComponent implements OnInit {
+export class RemoveComponent  {
 
-  constructor() { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: number, private authorService: AuthorService ) { }
 
-  ngOnInit() {
-  }
+ remove(){
+
+  this.authorService.remove(this.data).subscribe();
+ }
 
 }

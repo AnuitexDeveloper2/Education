@@ -15,13 +15,18 @@ import { BrowserAnimationsModule  } from "@angular/platform-browser/animations";
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationInterceptor } from "./shared/AuthenticationInterceptor";
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {ModalModule} from "ng2-modal";
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-  ],
+      ],
   imports: [
+    NgbModule,
+    MDBBootstrapModule.forRoot(),
     ReactiveFormsModule,
     MaterialModule,
     FormsModule,
@@ -32,7 +37,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     UserModule,
     AccountModule,
     MatFormFieldModule,
-    MatSelectModule 
+    MatSelectModule,
+    ModalModule 
   ],
   providers:[{
     provide:HTTP_INTERCEPTORS,

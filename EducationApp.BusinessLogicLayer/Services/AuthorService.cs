@@ -27,6 +27,12 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             var resultModel = new BaseModel();
 
+            if (name == null)
+            {
+                resultModel.Errors.Add(errors.EmptyField);
+                return resultModel;
+            }
+
             var author = new Author { Name = name, Date = DateTime.Now };
 
             var resultCreate = await _authorRepository.CreateAsync(author);
@@ -42,6 +48,12 @@ namespace EducationApp.BusinessLogicLayer.Services
         public async Task<BaseModel> UpdateAsync(long id,string name)
         {
             var resultModel = new BaseModel();
+
+            if (name == null)
+            {
+                resultModel.Errors.Add(errors.EmptyField);
+                return resultModel;
+            }
 
             var author = await _authorRepository.GetByIdAsync(id);
 

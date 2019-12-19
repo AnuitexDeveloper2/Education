@@ -11,24 +11,23 @@ import { UserModelItem } from 'src/app/shared/models/user/UserModelItem';
   styleUrls: ['./edit-profile.component.css'],
   providers: [UserService]
 })
-export class EditProfileComponent implements OnInit {
+export class EditProfileComponent  {
   
   userModelItem: UserModelItem;
   firstName = new FormControl();
   lastName = new FormControl();
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: number, private userService: UserService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: UserModelItem, private userService: UserService) {
    this.userModelItem = new UserModelItem();
    }
 
-  ngOnInit() {
-  }
-
+  
   editUser(){
+    debugger;
     let user = new UserModelItem();
     user.firstName = this.firstName.value;
     user.lastName = this.lastName.value;
-    user.id = this.data;
+    user.id = this.data.id;
     this.userService.edit(user).subscribe();
   }
 

@@ -1,9 +1,9 @@
-<h2>New Author Name</h2>
-<div> 
-<input type="text" size="50" placeholder="Author Name" name="name" [formControl] ="authorName">
-</div> <br>
-   
-  <div>
-      <button (click)="edit()">Create</button>
-  </div>
+<h2>New Author Name </h2>
+
   
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="New Author Name" value={{data.name}} [formControl] ="authorName">
+  </mat-form-field>
+    <input class="create" type="reset" value="Edit" (click)=edit()>
+</form>

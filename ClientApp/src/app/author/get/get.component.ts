@@ -6,6 +6,7 @@ import {PageEvent, MatSort, MatTableDataSource, MatDialog} from '@angular/materi
 import { SortType } from 'src/app/shared/enums/SortType';
 import { CreateComponent } from "src/app/author/create/create.component";
 import { UpdateComponent } from "src/app/author/update/update.component";
+import { RemoveComponent } from '../remove/remove.component';
 
 @Component({
   selector: 'app-get',
@@ -70,16 +71,20 @@ export class GetComponent implements OnInit {
     this.getAuthors();
   }
 
-  edit(id:number){
-    const dialogRef = this.dialog.open(UpdateComponent,{data:id})
+  edit(author:AuthorModelItem){
+    const dialogRef = this.dialog.open(UpdateComponent,{data:author})
     this.getAuthors();
   }
 
   remove(id:number){
-    this.authorService.remove(id).subscribe();
-    this.getAuthors();
+    const dialogRef = this.dialog.open(RemoveComponent,{data:id})
  }
   
+ applyFilter(filtervalue:string)
+ {
+   this.authorFilter.searchString = filtervalue;
+   this.getAuthors();
+ }
 
 
 

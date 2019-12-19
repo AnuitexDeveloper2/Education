@@ -1,1 +1,7 @@
-<p>remove works!</p>
+<h2 mat-dialog-title>Are you sure delete <span class="name"> {{data.lastName}} {{data.firstName}}</span>  </h2>
+
+
+<mat-dialog-actions >
+  <button class="Exit" mat-button mat-dialog-close>No</button>
+  <button class="Delete" mat-button [mat-dialog-close]="true"  (click) = remove()>Yes</button>
+</mat-dialog-actions>

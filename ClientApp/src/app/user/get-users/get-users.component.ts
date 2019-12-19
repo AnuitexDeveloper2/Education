@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/shared/services/user.service'
 import { UserModelItem } from "src/app/shared/models/user/UserModelItem";
 import { UserFilterModel } from 'src/app/shared/models/user/UserFilterModel';
-import {MatPaginator, MatSort, MatTableDataSource, MatDialog, PageEvent} from '@angular/material';
+import { MatSort, MatTableDataSource, MatDialog, PageEvent} from '@angular/material';
 import { UserSortType } from 'src/app/shared/enums/UserSortType';
 import { SortType } from 'src/app/shared/enums/SortType';
 import { EditProfileComponent } from "src/app/user/edit-profile/edit-profile.component";
+import { RemoveComponent } from 'src/app/user/remove/remove.component';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-get-users',
@@ -22,6 +24,7 @@ export class GetUsersComponent implements OnInit {
   count: number;
   displayedColumns: string[];
   userModelItem: UserModelItem;
+  status = new FormControl();
 
   constructor(private userService:UserService,public dialog:MatDialog ) {
     this.displayedColumns= [ 'name', 'email','status','edit'],
@@ -66,20 +69,30 @@ export class GetUsersComponent implements OnInit {
     this.getUsers();
   }
 
-  edit(id:number) {
-    const dialogRef = this.dialog.open(EditProfileComponent, {data: id});
+  edit(user:UserModelItem) {
+   debugger;
+    const dialogRef = this.dialog.open(EditProfileComponent, {data: user});
     this.getUsers();
   }
 
-  remove(id:number){
-     this.userService.removeUser(id).subscribe();
-     this.getUsers();
+  remove(user:UserModelItem){
+    debugger;
+    const dialogRef = this.dialog.open(RemoveComponent, {data: user});
+    this.getUsers();
   }
 
   pagination(event:PageEvent){
     this.userFilter.pageSize = event.pageSize;
     this.userFilter.pageNumber=event.pageIndex+1;
     this.getUsers()
+  }
+
+  applyFilter(filtervalue:string)
+  {
+    debugger;
+    this.userFilter.searchString = filtervalue;
+    const element = this.getUsers();
+    
   }
 
 }

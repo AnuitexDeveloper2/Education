@@ -7,7 +7,7 @@
             public const string NotFound = "User Not Found";
             public const string InvalidToken = "Token is not valid";
             public const string Remove = "Remove User is Failure";
-            public const string EmptyField = "Some Fiels is not filled";
+            public const string EmptyField = "Some Field is Empty";
             public const string ChangeEmailFailure = "Change Email is Failed";
             public const string ChangePasswordFailure = "Change Password is Failed";
             public const string EditUserFailure = "Edit User Profile is Failed";

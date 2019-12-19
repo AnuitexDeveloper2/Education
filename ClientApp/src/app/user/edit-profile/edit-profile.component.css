@@ -1,3 +1,15 @@
 .userimg{
     text-align: left;
 }
+
+.Save{
+    background-color:rgb(133, 216, 133);
+}
+
+.cancel{
+    background-color:red;
+}
+
+.name{
+    color: green;
+}
