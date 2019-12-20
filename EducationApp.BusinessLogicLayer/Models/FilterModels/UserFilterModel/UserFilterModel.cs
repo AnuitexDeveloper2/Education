@@ -6,7 +6,7 @@ namespace EducationApp.BusinessLogicLayer.Extention.User
 {
     public class UserFilterModel :BaseFilterModel
     {
-        public UsersFilterType UsersFilterStatus { get; set; }
+        public UsersFilterType UserFilterStatus { get; set; }
         public UserSortType UserSortType { get; set; }
     }
 }

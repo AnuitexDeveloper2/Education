@@ -1,0 +1,58 @@
+table {
+    width: 100%;
+  }
+
+  td.mat-column-id {
+    width: 15%;
+    padding-right: 8px;
+  }
+  
+  th.mat-column-name, td.mat-column-name {
+    width: 35%;
+    padding-left: 10%;
+  }
+
+  th.mat-column-product, td.mat-column-product{
+    width: 35%;
+    padding-left: 10%;
+  }
+
+  th.mat-column-edit, td.mat-column-edit{
+    width: 15%;
+    padding-left: 10%;
+  }
+
+  .img__button{
+    margin-right: 5%;
+    width: 25px;
+    height: 25px;
+  }
+
+  .add{
+    margin-right: 2%;
+    width: 20px;
+    height: 20px;
+  }
+
+  th{
+    background-color: rgb(187, 243, 211);
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  table { 
+    border-collapse: collapse; 
+    width: 100%; 
+} 
+  
+th, td { 
+    text-align: left; 
+    padding: 8px; 
+} 
+  
+tr:nth-child(odd) { 
+    background-color:rgb(243, 240, 240); 
+} 
+
+.search{
+  margin-left: 1%;
+}

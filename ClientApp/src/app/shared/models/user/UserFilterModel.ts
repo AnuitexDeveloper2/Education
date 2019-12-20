@@ -6,6 +6,6 @@ import { SortType } from '../../enums/SortType';
 export class UserFilterModel extends BaseFilterModel
 {
     userSortType:UserSortType;
-    filterType:UsersFilterType;
+    userFilterStatus:UsersFilterType;
     sortType:SortType;
 }

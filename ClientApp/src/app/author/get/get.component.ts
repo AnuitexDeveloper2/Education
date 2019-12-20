@@ -62,28 +62,32 @@ export class GetComponent implements OnInit {
   pagination(event: PageEvent) {
     debugger;
     this.authorFilter.pageSize = event.pageSize;
-    this.authorFilter.pageNumber = event.pageIndex + 1;
+    this.pageIndex = event.pageIndex;
+    this.authorFilter.pageNumber = this.pageIndex + 1; 
     this.getAuthors();
   }
 
   create(){
-    const dialogRef = this.dialog.open(CreateComponent);
+    const dialogRef = this.dialog.open(CreateComponent).afterClosed().subscribe(() => this.getAuthors());
     this.getAuthors();
   }
 
   edit(author:AuthorModelItem){
-    const dialogRef = this.dialog.open(UpdateComponent,{data:author})
-    this.getAuthors();
+    debugger;
+    const dialogRef = this.dialog.open(UpdateComponent,{data:author}).afterClosed().subscribe(() => this.getAuthors());
   }
 
-  remove(id:number){
-    const dialogRef = this.dialog.open(RemoveComponent,{data:id})
+  remove(author:AuthorModelItem){
+    const dialogRef = this.dialog.open(RemoveComponent,{data:author}).afterClosed().subscribe(() => this.getAuthors())
  }
   
  applyFilter(filtervalue:string)
  {
    this.authorFilter.searchString = filtervalue;
+   this.authorFilter.pageNumber = 1;
+   this.pageIndex = 0;
    this.getAuthors();
+   
  }
 
 

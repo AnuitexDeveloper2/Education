@@ -38,7 +38,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             if (!string.IsNullOrEmpty(authorFilterModel.SearchString))
             {
                 authors = authors.Where(k => k.Name.Contains(authorFilterModel.SearchString));
-                authorFilterModel.PageNumber = 1;
             }
 
             if (!authors.Any())

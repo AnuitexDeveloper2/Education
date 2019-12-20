@@ -46,7 +46,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [HttpPost("get")]
         public async Task<ActionResult> Get(PrintingEditionFilterState printingEditionFilterState)
         {

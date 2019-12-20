@@ -185,6 +185,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             if (!string.IsNullOrWhiteSpace(usersFilter.SearchString))
             {
                 users = users.Where(k => k.LastName.ToLower().Contains(usersFilter.SearchString.ToLower()) || k.FirstName.ToLower().Contains(usersFilter.SearchString.ToLower()));
+                usersFilter.PageNumber = 1;
             }
 
             if (!users.Any())

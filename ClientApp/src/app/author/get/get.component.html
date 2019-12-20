@@ -25,7 +25,10 @@
  
   <ng-container matColumnDef="product" >
     <th mat-header-cell *matHeaderCellDef> <h2 class="columnTitle"> Product</h2> </th>
-    <td mat-cell *matCellDef="let element"> {{element.bookTitles}} </td>
+    <td mat-cell *matCellDef="let element">
+      <ul class="columnList">
+      <li *ngFor="let item of element.bookTitles">{{item}}</li>
+    </ul>  </td>
   </ng-container>
 
   <ng-container matColumnDef="edit">
@@ -33,7 +36,7 @@
     <td mat-cell *matCellDef="let element">
       <div class="td__container">
         <img  class = "img__button" src="assets/images/iconmonstr-pencil-8.svg" alt="edit" matTooltip="Edit This Author" (click)= "edit(element)">
-        <img class = "img__button" src="assets/images/rubbish.svg" alt="remove" matTooltip="Remove This Author" (click)= "remove(element.id)">
+        <img class = "img__button" src="assets/images/rubbish.svg" alt="remove" matTooltip="Remove This Author" (click)= "remove(element)">
       </div>  
     </td>
   </ng-container>

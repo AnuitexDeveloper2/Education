@@ -8,6 +8,7 @@ import { SortType } from 'src/app/shared/enums/SortType';
 import { EditProfileComponent } from "src/app/user/edit-profile/edit-profile.component";
 import { RemoveComponent } from 'src/app/user/remove/remove.component';
 import { FormControl } from '@angular/forms';
+import { UsersFilterType } from 'src/app/shared/enums/UsersFilterType';
 
 @Component({
   selector: 'app-get-users',
@@ -25,11 +26,16 @@ export class GetUsersComponent implements OnInit {
   displayedColumns: string[];
   userModelItem: UserModelItem;
   status = new FormControl();
+  statusList : string[]; 
+  pageIndex: number;
+  currentStatus:UsersFilterType;
 
   constructor(private userService:UserService,public dialog:MatDialog ) {
     this.displayedColumns= [ 'name', 'email','status','edit'],
     this.userFilter = new UserFilterModel,
-    this.userModelItem = new UserModelItem()
+    this.userModelItem = new UserModelItem(),
+    this.statusList = ['Active','Blocked']
+    this.status = new FormControl();
   }
   
   ngOnInit() {
@@ -39,6 +45,7 @@ export class GetUsersComponent implements OnInit {
   }
 
   getUsers() {
+    debugger;
     this.userService.getUsers(this.userFilter).subscribe(data  => {
       this.count = data.count;
       this.items = data.items;
@@ -71,14 +78,12 @@ export class GetUsersComponent implements OnInit {
 
   edit(user:UserModelItem) {
    debugger;
-    const dialogRef = this.dialog.open(EditProfileComponent, {data: user});
-    this.getUsers();
+    const dialogRef = this.dialog.open(EditProfileComponent, {data: user}).afterClosed().subscribe(() => this.getUsers());;
   }
 
   remove(user:UserModelItem){
     debugger;
-    const dialogRef = this.dialog.open(RemoveComponent, {data: user});
-    this.getUsers();
+    const dialogRef = this.dialog.open(RemoveComponent, {data: user}).afterClosed().subscribe(() => this.getUsers());
   }
 
   pagination(event:PageEvent){
@@ -91,8 +96,21 @@ export class GetUsersComponent implements OnInit {
   {
     debugger;
     this.userFilter.searchString = filtervalue;
-    const element = this.getUsers();
-    
+    this.userFilter.pageNumber = 1;
+    this.pageIndex = 0;
+    this.getUsers();
+  }
+
+  filterUser(name:string){
+    debugger;
+    if( name == "Active")
+    {
+      this.userFilter.userFilterStatus = UsersFilterType.Active;
+    }
+    if( name== "Blocked"){
+      this.userFilter.userFilterStatus = UsersFilterType.Blocked;
+    }
+    this.getUsers();
   }
 
 }

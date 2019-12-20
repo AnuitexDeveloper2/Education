@@ -8,7 +8,7 @@
             {
                 SortType = (DataAccessLayer.Entities.Enums.Enums.SortType)filterUser.SortType,
                 UsersSortType = (DataAccessLayer.Entities.Enums.Enums.UserSortType)filterUser.UserSortType,
-                UsersFilterType = (DataAccessLayer.Entities.Enums.Enums.UserFilterType)filterUser.UsersFilterStatus,
+                UsersFilterType = (DataAccessLayer.Entities.Enums.Enums.UserFilterType)filterUser.UserFilterStatus,
                 PageNumber = filterUser.PageNumber,
                 PageSize = filterUser.PageSize,
                 SearchString = filterUser.SearchString

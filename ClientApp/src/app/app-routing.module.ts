@@ -6,18 +6,23 @@ const routes: Routes = [
   
     {
       path: 'account',
-      loadChildren: () => import('./account/account.module').then(mod =>mod.AccountModule),
+      loadChildren: () => import('src/app/account/account.module').then(mod =>mod.AccountModule)
     },
+    
     {
       path: 'user',
-      loadChildren: () => import('./user/user.module').then(mod =>mod.UserModule)
+      loadChildren: () => import('src/app/user/user.module').then(mod =>mod.UserModule)
     },
+    
     {
       path: 'author',
-      loadChildren: () => import('./author/author.module').then(mod =>mod.AuthorModule),
-    }
+      loadChildren: () => import('src/app/author/author.module').then(mod =>mod.AuthorModule)
+    },
 
-  
+    {
+      path: 'books',
+      loadChildren: () => import('src/app/printing-edition/printing-edition.module').then(mod =>mod.PrintingEditionModule)
+    }
 
 ];
 

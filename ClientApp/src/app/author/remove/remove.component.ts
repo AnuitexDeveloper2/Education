@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { AuthorService } from 'src/app/shared/services/author/author.service';
+import { AuthorModelItem } from 'src/app/shared/models/author/AuthorModelItem';
 
 @Component({
   selector: 'app-remove',
@@ -10,11 +11,11 @@ import { AuthorService } from 'src/app/shared/services/author/author.service';
 })
 export class RemoveComponent  {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: number, private authorService: AuthorService ) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: AuthorModelItem, private authorService: AuthorService ) { }
 
  remove(){
-
-  this.authorService.remove(this.data).subscribe();
+  debugger;
+  this.authorService.remove(this.data.id).subscribe();
  }
 
 }
