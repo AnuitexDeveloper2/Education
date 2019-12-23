@@ -20,17 +20,17 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
 
-        //[Authorize(Roles = role.Admin)]
+        [Authorize(Roles = role.Admin)]
         [HttpPost("create")]
         public async Task<ActionResult> Create(string name)
         {
-            
+
             var result = await _authorService.CreateAsync(name);
 
             return Ok(result);
         }
 
-        //[Authorize(Roles = role.Admin)]
+        [Authorize(Roles = role.User)]
         [HttpGet("remove")]
         public async Task<ActionResult> Remove(long id)
         {
@@ -39,7 +39,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        //[Authorize(Roles = role.Admin)]
+        [Authorize(Roles = role.Admin)]
         [HttpGet("update")]
         public async Task<ActionResult> Update(long id, string name)
         {
@@ -47,7 +47,18 @@ namespace EducationApp.PresentationLayer.Controllers
 
             return Ok(result);
         }
-        //[AllowAnonymous]
+
+        [Authorize(Roles = role.Admin)]
+        [HttpGet("getAll")]
+        public async Task<ActionResult> GetAll()
+        {
+            var result = await _authorService.GetAll();
+
+            return Ok(result);
+        }
+
+
+        [AllowAnonymous]
         [HttpPost("get")]
         public async Task<ActionResult> Get(AuthorFilterModel authorFilterModel)
         {
@@ -56,5 +67,7 @@ namespace EducationApp.PresentationLayer.Controllers
 
             return Ok(authors);
         }
+
+
     }
 }

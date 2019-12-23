@@ -38,9 +38,11 @@ export class GetComponent implements OnInit {
 
   
   getAuthors(){
+    debugger;
     return this.authorService.get(this.authorFilter).subscribe(data=>{
       this.count = data.count;
       this.items = data.items;
+      debugger;
     })
   }
   sortAuthors(event:MatSort) {

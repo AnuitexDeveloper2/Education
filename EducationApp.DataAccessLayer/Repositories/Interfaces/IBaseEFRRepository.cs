@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EducationApp.DataAccessLayer.Repositories.Interfaces
@@ -9,6 +10,7 @@ namespace EducationApp.DataAccessLayer.Repositories.Interfaces
         Task<bool> UpdateAsync(TEntity entity);
         Task<TEntity> GetByIdAsync(long id);
         Task<bool> MarkRemoveAsync(TEntity entity);
+        Task<List<TEntity>> GetAllAsync();
         Task<bool> CreateRangeAsync(List<TEntity> entity);
     }
 }

@@ -10,6 +10,7 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
         Task<BaseModel> CreateAsync(string name);
         Task<BaseModel> UpdateAsync(long id,string name);
         Task<BaseModel> RemoveAsync(long id);
+        Task<AuthorModel> GetAll();
         Task<AuthorModel> GetAuthorsAsync(AuthorFilterModel authorFilterModel);
     }
 }

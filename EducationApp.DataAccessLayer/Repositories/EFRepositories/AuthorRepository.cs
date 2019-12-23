@@ -19,6 +19,8 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         public AuthorRepository(ApplicationContext applicationContext) : base(applicationContext)
         {
         }
+
+
         public async Task<ResponseModel<Author>> GetAuthorsAsync(AuthorFilterModel authorFilterModel)
         {
             var authors = from author in _applicationContext.Authors where author.IsRemoved ==false
@@ -54,8 +56,9 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             var resultModel = new ResponseModel<Author> { Data = authors.ToList(), Count = count };
 
             return resultModel;
-
         }
+
+
 
     }
 }

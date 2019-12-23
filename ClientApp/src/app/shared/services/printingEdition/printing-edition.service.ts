@@ -14,4 +14,8 @@ export class PrintingEditionService {
   get(printingEditionFilterState:PrintingEditionFilterModel):Observable<PrintingEditionModel>{
     return this.http.post<PrintingEditionModel>('https://localhost:44309/api/printingEdition/get',printingEditionFilterState)
   }
+
+  create(printingEditionModel){
+    return this.http.post('https://localhost:44309/api/printingEdition/get',printingEditionModel)
+  }
 }

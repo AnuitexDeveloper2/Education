@@ -103,6 +103,8 @@ namespace EducationApp.BusinessLogicLayer.Services
             return resultModel;
         }
 
+
+
         public async Task<AuthorModel> GetAuthorsAsync(AuthorFilterModel authorFilterModel)
         {
             var filter = authorFilterModel.Map();
@@ -125,6 +127,19 @@ namespace EducationApp.BusinessLogicLayer.Services
             authorsModel.Count = authors.Count;
 
             return authorsModel;
+        }
+
+        public async Task<AuthorModel> GetAll()
+        {
+            var resultModel = new AuthorModel();
+
+            var authors = await _authorRepository.GetAllAsync();
+
+            foreach (var item in authors)
+            {
+                resultModel.Items.Add(item.Map());
+            }
+            return resultModel;
         }
     }
 }

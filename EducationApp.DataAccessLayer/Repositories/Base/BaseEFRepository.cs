@@ -76,9 +76,18 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
 
             return result < 1 ? false : true;
         }
+
+        public async Task<List<TEntity>> GetAllAsync()
+        {
+            return await  _applicationContext.Set<TEntity>().ToListAsync();
+        }
         protected IQueryable<TEntity> SortByType( IQueryable<TEntity> entities, string entitySortType, SortType sortType) 
         {
             var property = typeof(TEntity).GetProperty(entitySortType);
+            if (property == null)
+            {
+                return entities;
+            }
 
             entities = sortType == SortType.Asc ? entities.OrderBy(property.Name) : entities.OrderBy(property.Name + query.Descending);
 

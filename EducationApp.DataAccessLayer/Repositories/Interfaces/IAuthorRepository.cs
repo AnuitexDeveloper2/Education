@@ -1,14 +1,13 @@
 ﻿using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Helpers.Author;
-using EducationApp.DataAccessLayer.Models;
 using EducationApp.DataAccessLayer.Models.Base;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using System.Threading.Tasks;
 
 namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
 {
-    public interface IAuthorRepository :IBaseEFRRepository<Author>
+    public interface IAuthorRepository : IBaseEFRRepository<Author>
     {
-       Task <ResponseModel<Author>> GetAuthorsAsync(AuthorFilterModel authorFilterModel);
+        Task<ResponseModel<Author>> GetAuthorsAsync(AuthorFilterModel authorFilterModel);
     }
 }

@@ -29,6 +29,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                                         Title = printingEdition.Title,
                                         ProductType = printingEdition.ProductType,
                                         Price = printingEdition.Price,
+                                        Description = printingEdition.Description,
                                         Date = printingEdition.Date,
                                         Authors = (from authorPrintingEdition in _applicationContext.AuthorInPrintingEditions
                                                    join author in _applicationContext.Authors on authorPrintingEdition.AuthorId equals author.Id
@@ -69,7 +70,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
             var result = new ResponseModel<PrintingEdition>()
             {
-                Data = printingEditions.ToList(),
+                Data =  printingEditions.ToList(),
                 Count = count
             };
 

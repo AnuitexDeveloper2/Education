@@ -13,10 +13,9 @@ export class CreateComponent  {
 
   authorName = new FormControl('');
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: string, private authorService:AuthorService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: string, private authorService: AuthorService) { }
 
   save(){
-    debugger;
     this.authorService.save(this.authorName.value).subscribe();
   }
 

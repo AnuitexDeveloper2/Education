@@ -1,1 +1,19 @@
-<p>create works!</p>
+<h2>Add new Product</h2>
+
+<div>
+    <mat-form-field action="/action_page.php">
+        Title: <textarea cols="50" rows="4"  class="title" type="text" class="title"  maxlength="100">  </textarea>
+            <br>
+    </mat-form-field>
+</div>
+
+<div>
+    <mat-form-field action="/action_page.php">
+        Description: <textarea name="" id="" cols="50" rows="10" type="text" class="description" maxlength="1000" ></textarea>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-select multiple class="mat__select" [formControl] = "authors">
+            <mat-option *ngFor= "let author of items" [value]="author">{{author.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+</div>

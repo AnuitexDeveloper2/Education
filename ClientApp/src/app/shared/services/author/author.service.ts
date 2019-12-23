@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from 'rxjs';
 import { AuthorModel } from 'src/app/shared/models/author/AuthorModel';
 import { BaseFilterModel } from 'src/app/shared/models/Base/BaseFilterModel';
+import { AuthorModule } from 'src/app/author/author.module';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,10 @@ email:string;
 
   remove(id:number){
     return this.http.get(`https://localhost:44309/api/author/remove/?id=${id}`)
+  }
+
+  getAll():Observable<AuthorModule>{
+    return this.http.get('https://localhost:44309/api/author/getAll')
   }
 
 

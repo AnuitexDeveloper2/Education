@@ -4,8 +4,9 @@
     {
         public enum PrintingEditionSortType
         {
-            Price = 0,
-            Id = 1
+            None=0,
+            Price = 1,
+            Id = 2
         }
     }
 }

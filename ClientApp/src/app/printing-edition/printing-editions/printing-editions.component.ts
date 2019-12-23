@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { PrintingEditionService } from "src/app/shared/services/printingEdition/printing-edition.service";
 import { PrintingEditionFilterModel } from 'src/app/shared/models/printing-editions/PrintingEditionFilterModel';
-import { PrintingeditionModelItem } from 'src/app/shared/models/printing-editions/PrintingEditionModelItem';
+import { PrintingEditionModelItem } from 'src/app/shared/models/printing-editions/PrintingEditionModelItem';
+import {PageEvent, MatSort, MatTableDataSource, MatDialog} from '@angular/material';
+import { CreateComponent } from 'src/app/printing-edition/create/create.component';
 
 
 @Component({
@@ -15,13 +17,14 @@ export class PrintingEditionsComponent implements OnInit {
 
   filter: PrintingEditionFilterModel;
   count: number;
-  items: Array<PrintingeditionModelItem>;
+  items: Array<PrintingEditionModelItem>;
   displayedColumns: string[];
+  public dataSource = new MatTableDataSource();
 
-  constructor(private service:PrintingEditionService ) {
+  constructor(private service: PrintingEditionService, private dialog: MatDialog ) {
 
    this.displayedColumns = ['id','name','description','category','authors','price','edit']
-  this.filter = new PrintingEditionFilterModel();
+   this.filter = new PrintingEditionFilterModel();
    }
 
   ngOnInit() {
@@ -33,10 +36,15 @@ export class PrintingEditionsComponent implements OnInit {
 
   getBooks(){
     debugger;
-     this.service.get(this.filter).subscribe(data=>{
+    return this.service.get(this.filter).subscribe(data=>{
       this.count = data.count;
       this.items = data.items;
-    });
+      debugger;
+    })
+  }
+
+  create(){
+    const dialogRef = this.dialog.open(CreateComponent).afterClosed().subscribe(()=>this.getBooks())
   }
 
 }

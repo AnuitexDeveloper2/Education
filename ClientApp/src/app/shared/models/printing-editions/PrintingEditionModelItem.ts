@@ -2,7 +2,7 @@ import { CurrencyType } from '../../enums/CurrencyType';
 import { ProductType } from '../../enums/ProductType';
 import { AuthorModel } from '../author/AuthorModel';
 
-export class PrintingeditionModelItem{
+export class PrintingEditionModelItem{
     id: number;
     title: string;
     description: string;
