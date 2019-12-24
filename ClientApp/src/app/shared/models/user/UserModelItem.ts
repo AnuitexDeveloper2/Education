@@ -6,4 +6,5 @@ export class UserModelItem {
     id: number;
     role: string;
     lockoutEnabled:boolean;
+    password: string;
 }

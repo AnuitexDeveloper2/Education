@@ -15,7 +15,7 @@ export class RemoveComponent  {
 
  remove(){
   debugger;
-  this.authorService.remove(this.data.id).subscribe();
+  this.authorService.remove(this.data.id).subscribe()
  }
 
 }

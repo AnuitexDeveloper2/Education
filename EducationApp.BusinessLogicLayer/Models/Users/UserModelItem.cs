@@ -1,4 +1,4 @@
-﻿using EducationApp.BusinessLogicLayer.Models.Base;
+using EducationApp.BusinessLogicLayer.Models.Base;
 
 namespace EducationApp.BusinessLogicLayer.Models.Users
 {
@@ -11,5 +11,7 @@ namespace EducationApp.BusinessLogicLayer.Models.Users
         public long Id { get; set; }
         public string Role { get; set; }
         public bool LockoutEnabled { get; set; }
+        public string Password { get; set; }
+
     }
 }

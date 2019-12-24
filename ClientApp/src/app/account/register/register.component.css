@@ -11,18 +11,41 @@
     margin-left: 40%;
 }
 
-.Form{
+.form-group{
     margin-left: 35%;
 }
 
-.Button{
+.button{
     text-align: center;
 }
 
-.SignUpButton{
-    color: black;
+.ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid #42A948; /* green */
+  }
+  
+  .ng-invalid:not(form)  {
+    border-left: 5px solid #a94442; /* red */
+  }
+
+  .alert{
+      color: crimson;
+  }
+
+  button {
+    font-family: Arial;
+    background-color: #eee;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    cursor: hand;
+  }
+  button:hover {
+    background-color: #cfd8dc;
     background-color: rgb(136, 212, 136);
-    cursor:pointer;
-    height:20px;
-    width:250px;
-}
+  }
+  button:disabled {
+    background-color: #eee;
+    color: #aaa;
+    cursor: auto;
+  }
