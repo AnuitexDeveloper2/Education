@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BookStore.DataAccess.AppContext;
@@ -79,7 +79,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
 
         public async Task<List<TEntity>> GetAllAsync()
         {
-            return await  _applicationContext.Set<TEntity>().ToListAsync();
+            return await  _applicationContext.Set<TEntity>().Where(l=>l.IsRemoved ==false).ToListAsync();
         }
         protected IQueryable<TEntity> SortByType( IQueryable<TEntity> entities, string entitySortType, SortType sortType) 
         {

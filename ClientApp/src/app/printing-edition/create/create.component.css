@@ -6,3 +6,48 @@
     width: 200px;
     height: 200px;
 }
+
+.mat__select{
+    font-size: 14px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    
+  } 
+
+  .authorsForm{
+    text-align: right;
+  }
+
+  .authors{
+      width: 300px;
+      
+  }
+
+  .nameProperty{
+      color: darkgray;
+  }
+
+  .currencyForm{
+      width: 50px;
+      
+  }
+
+  .currencyProperty{
+    margin-top: 30%;
+  }
+
+  
+  .cancelButton{
+      text-align: left;
+  }
+  .saveButton{
+      text-align: right;
+  }
+
+  #block_container
+{
+    text-align:center;
+}
+#bloc1, #bloc2
+{
+    display:inline;
+}

@@ -16,6 +16,6 @@ export class PrintingEditionService {
   }
 
   create(printingEditionModel){
-    return this.http.post('https://localhost:44309/api/printingEdition/get',printingEditionModel)
+    return this.http.post('https://localhost:44309/api/printingEdition/create',printingEditionModel)
   }
 }

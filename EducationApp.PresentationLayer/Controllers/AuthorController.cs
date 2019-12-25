@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using EducationApp.BusinessLogicLayer.Extention.Author;
 using EducationApp.BusinessLogicLayer.Models.Authors;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
@@ -48,7 +48,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = role.Admin)]
+        //[Authorize(Roles = role.Admin)]
         [HttpGet("getAll")]
         public async Task<ActionResult> GetAll()
         {

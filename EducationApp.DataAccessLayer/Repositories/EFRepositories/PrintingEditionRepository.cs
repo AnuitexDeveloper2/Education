@@ -1,4 +1,4 @@
-﻿using BookStore.DataAccess.AppContext;
+using BookStore.DataAccess.AppContext;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Helpers.PrintingEditionFilter;
 using EducationApp.DataAccessLayer.Models.Base;
@@ -20,7 +20,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
         }
 
-        public async Task<ResponseModel<PrintingEdition>> GetPrintingEditionsAsync(PrintingEditionFilterModel printingEditionFilter) //toso rename ...s
+        public async Task<ResponseModel<PrintingEdition>> GetPrintingEditionsAsync(PrintingEditionFilterModel printingEditionFilter) 
         {
             var printingEditions = (from printingEdition in _applicationContext.PrintingEditions
                                     select new PrintingEdition

@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
@@ -19,7 +19,7 @@ namespace EducationApp.PresentationLayer.Controllers
             _printingEditionService = printingEditionService;
         }
 
-        [Authorize(Roles = role.Admin)]
+        //[Authorize(Roles = role.Admin)]
         [HttpPost("create")]
         public async Task<ActionResult> Create(PrintingEditionModelItem printingEditonModelItem)
         {

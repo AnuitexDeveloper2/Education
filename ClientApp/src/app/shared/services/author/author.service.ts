@@ -31,6 +31,7 @@ email:string;
   }
 
   getAll():Observable<AuthorModule>{
+    debugger;
     return this.http.get('https://localhost:44309/api/author/getAll')
   }
 
