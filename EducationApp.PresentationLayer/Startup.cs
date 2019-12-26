@@ -12,17 +12,21 @@ using EducationApp.PresentationLayer.Helpers;
 using EducationApp.PresentationLayer.Helpers.Interfaces;
 using Microsoft.OpenApi.Models;
 using EducationApp.DataAccessLayer.Initialisation;
+using Microsoft.AspNetCore.Identity;
 
 namespace EducationApp.PresentationLayer
 {
     public class Startup
     {
+        private PasswordOptions password;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
+
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -34,7 +38,8 @@ namespace EducationApp.PresentationLayer
             });
             services.AddCors();
             services.AddTransient<IJwtHelper, JwtHelper>();
-            Initializer.InitServices(services, Configuration.GetConnectionString("DefaultConnection"));
+            var value = Configuration.GetSection("PasswordOptions").Get<PasswordOptions>();
+            Initializer.InitServices(services, Configuration.GetConnectionString("DefaultConnection"),value);
 
             var tokenValidationParameter = new TokenValidationParameters()
             {

@@ -6,26 +6,25 @@ using EducationApp.DataAccessLayer.Ropositories.EFRepositories;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EducationApp.DataAccessLayer.InitRepositories
 {
     public class DataAccessInitialisation
     {
-        public static void InitRepositories(IServiceCollection services, string connectionString)
+        public static void InitRepositories(IServiceCollection services, string connectionString,PasswordOptions passwordOption)
         {
             services.AddDbContext<ApplicationContext>(options =>
   options.UseSqlServer(connectionString));
 
-            services.AddIdentity<ApplicationUser, Role>(o =>
-            {
-                o.Password.RequireDigit = false;
-                o.Password.RequireLowercase = false;
-                o.Password.RequireUppercase = false;
-                o.Password.RequireNonAlphanumeric = false;
-                o.Password.RequiredLength = 6;
-            }
-            )
+            services.Configure<IdentityOptions>(option => { option.Password = passwordOption; });
+                
+
+
+             
+
+            services.AddIdentity<ApplicationUser, Role>()
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
 

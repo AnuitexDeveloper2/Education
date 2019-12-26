@@ -5,14 +5,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using EducationApp.DataAccessLayer.InitRepositories;
 using EducationApp.DataAccessLayer.Initialisation;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace EducationApp.BusinessLogicLayer.BaseInit
 {
     public class Initializer
     {
-        public static void InitServices(IServiceCollection services, string connectionString)
+        public static void InitServices(IServiceCollection services, string connectionString, PasswordOptions passwordOptions)
         {
-            DataAccessInitialisation.InitRepositories(services, connectionString);
+            DataAccessInitialisation.InitRepositories(services, connectionString,passwordOptions);
 
             services.AddTransient<TokenValidationParameters>();
 

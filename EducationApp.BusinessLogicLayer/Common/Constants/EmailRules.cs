@@ -4,11 +4,7 @@ namespace EducationApp.BusinessLogicLayer.Common.Consts
     {
         public class EmailRules
         {
-            public const string Error = "Error";
-            public const string UserPassword = "Education2019";
             public const string MailSubject = "Registration";
-            public const string UserEmail = "educationappgoncharuk2019@gmail.com";
-            public const string UserName = "User";
             public const string AdminEmail = "morgenshtern1988@gmail.com";
             public const string Host = "smtp.gmail.com";
             public const int Port = 587;

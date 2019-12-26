@@ -56,7 +56,7 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return userModel;
             }
 
-            _emailSender.SendingEmailAsync(emailConst.UserEmail, emailConst.MailSubject, emailConst.MailBody);
+            _emailSender.SendingEmailAsync(userItemModel.Email, emailConst.MailSubject, emailConst.MailBody);
 
             return userModel;
         }
