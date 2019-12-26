@@ -1,4 +1,4 @@
-﻿using BookStore.DataAccess.AppContext;
+using BookStore.DataAccess.AppContext;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Helpers;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Linq.Dynamic.Core;
 using System.Linq;
 using System.Threading.Tasks;
-using static EducationApp.DataAccessLayer.Entities.Constants.Constants.Constant;
+using static EducationApp.DataAccessLayer.Entities.Constants.Constants.InitialData;
 using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 using Microsoft.EntityFrameworkCore;
 using EducationApp.DataAccessLayer.Models.Base;
@@ -152,11 +152,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         {
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            if (token == null)
-            {
-                return false;
-            }
-
             var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
 
             return result.Succeeded;
@@ -169,7 +164,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             return role.FirstOrDefault();
         }
 
-        public async Task<bool> BlockUserAsync(ApplicationUser user)
+        public async Task<bool> BlockAsync(ApplicationUser user)
         {
             user.LockoutEnabled = !user.LockoutEnabled;
 
@@ -178,7 +173,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             return result < 1 ? false : true;
         }
 
-        public async Task<ResponseModel<ApplicationUser>> GetUsersAsync(UserFilterModel usersFilter)
+        public async Task<ResponseModel<ApplicationUser>> GetFilteredAsync(UserFilterModel usersFilter)
         {
             var users = _applicationContext.Users.Where(k => k.IsRemoved == false);
 
@@ -188,20 +183,16 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                 usersFilter.PageNumber = 1;
             }
 
-            if (!users.Any())
+           
+            if (usersFilter.FilterType != UserFilterType.All)
             {
-                return null;
+                users = usersFilter.FilterType == UserFilterType.Active ? users.Where(k => k.LockoutEnabled == true) : users.Where(k => k.LockoutEnabled == false);
             }
 
-            if (usersFilter.UsersFilterType != UserFilterType.All)
-            {
-                users = usersFilter.UsersFilterType == UserFilterType.Active ? users.Where(k => k.LockoutEnabled == true) : users.Where(k => k.LockoutEnabled == false);
-            }
-
-            var property = typeof(ApplicationUser).GetProperty(usersFilter.UsersSortType.ToString());
+            var property = typeof(ApplicationUser).GetProperty(usersFilter.ColumnType.ToString());
             if (property != null)
             {
-                users = usersFilter.SortType == SortType.Asc ? users.OrderBy(property.Name, usersFilter.UsersSortType.ToString()) : users.OrderBy(property.Name + " descending");
+                users = usersFilter.SortType == SortType.Asc ? users.OrderBy(property.Name, usersFilter.ColumnType.ToString()) : users.OrderBy(property.Name + " descending");
             }
 
 

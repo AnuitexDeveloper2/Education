@@ -1,8 +1,8 @@
-﻿namespace EducationApp.BusinessLogicLayer.Common.Consts
+namespace EducationApp.BusinessLogicLayer.Common.Consts
 {
-    public partial class Consts
+    public partial class Constants
     {
-        public class EmailConsts
+        public class EmailRules
         {
             public const string Error = "Error";
             public const string UserPassword = "Education2019";

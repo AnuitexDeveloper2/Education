@@ -1,4 +1,4 @@
-﻿using EducationApp.DataAccessLayer.Helpers.OrderFilterModel;
+using EducationApp.DataAccessLayer.Helpers.OrderFilterModel;
 using System.Collections.Generic;
 using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 
@@ -25,7 +25,7 @@ namespace EducationApp.BusinessLogicLayer.Extention.Mapper.OrderMapper
         {
             var statusOrder = new OrderStatusType();
 
-            List<OrderStatusType> result = new List<OrderStatusType>();
+            var result = new List<OrderStatusType>();
 
             foreach (var item in orderFilterModel.StatusOrder)
             {

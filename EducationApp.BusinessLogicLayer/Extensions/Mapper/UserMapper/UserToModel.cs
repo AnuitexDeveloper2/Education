@@ -1,4 +1,4 @@
-﻿using EducationApp.BusinessLogicLayer.Models.Users;
+using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.DataAccessLayer.Entities;
 
 namespace EducationApp.BusinessLogicLayer.Extention.Mapper.UserMapper
@@ -7,7 +7,7 @@ namespace EducationApp.BusinessLogicLayer.Extention.Mapper.UserMapper
     {
         public static UserModelItem Map(this ApplicationUser user)
         {
-            UserModelItem userItemModel = new UserModelItem
+            var userItemModel = new UserModelItem
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,

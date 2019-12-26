@@ -1,14 +1,14 @@
-﻿using EducationApp.BusinessLogicLayer.Models.Authors;
+using EducationApp.BusinessLogicLayer.Models.Authors;
 using System.Collections.Generic;
 
 namespace EducationApp.BusinessLogicLayer.Extention.Mapper.AuthorMapper
 {
-    public static class AuthorMaper
-    {
+  public static partial class AuthorMapper
+  {
 
         public static AuthorModel Map(IEnumerable<DataAccessLayer.Entities.Author> authors)
         {
-            AuthorModel authorsModel = new AuthorModel();
+            var authorsModel = new AuthorModel();
             foreach (var item in authors)
             {
                 authorsModel.Items.Add(Map(item));

@@ -1,4 +1,4 @@
-﻿using EducationApp.BusinessLogicLayer.Extention.PrintingEditionFilterState;
+using EducationApp.BusinessLogicLayer.Extention.PrintingEditionFilterState;
 using EducationApp.DataAccessLayer.Helpers.PrintingEditionFilter;
 using System.Collections.Generic;
 using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
@@ -24,7 +24,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.PrintingEditions
         private static List<TypeProduct> MapList( PrintingEditionFilterState printingEditionFilterState)
         {
             var typeProduct = new TypeProduct();
-            List<TypeProduct> result = new List<TypeProduct>();
+            var result = new List<TypeProduct>();
             foreach (var item in printingEditionFilterState.TypeProduct)
             {
                 typeProduct = (TypeProduct)item;

@@ -1,4 +1,4 @@
-﻿using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
+using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
 using System;
 using EducationApp.DataAccessLayer.Entities;
 using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
@@ -9,7 +9,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
     {
         public static PrintingEdition Map(this PrintingEditionModelItem model)
         {
-            PrintingEdition printingEdition = new PrintingEdition
+            var printingEdition = new PrintingEdition
             {
                 Date = DateTime.Now,
                 Id = model.Id,

@@ -1,4 +1,4 @@
-﻿using BookStore.DataAccess.AppContext;
+using BookStore.DataAccess.AppContext;
 using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Helpers.Author;
 using EducationApp.DataAccessLayer.Models;
@@ -21,7 +21,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
         }
 
 
-        public async Task<ResponseModel<Author>> GetAuthorsAsync(AuthorFilterModel authorFilterModel)
+        public async Task<ResponseModel<Author>> GetFiltredAsync(AuthorFilterModel authorFilterModel)
         {
             var authors = from author in _applicationContext.Authors where author.IsRemoved ==false
                          select new Author

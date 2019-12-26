@@ -1,8 +1,8 @@
-﻿namespace EducationApp.DataAccessLayer.Entities.Constants
+namespace EducationApp.DataAccessLayer.Entities.Constants
 {
     public partial class Constants
     {
-        public class Constant
+        public class InitialData
         {
             public const string Admin = "Admin";
             public const string User = "User";
@@ -12,7 +12,6 @@
             public const string AuthorName = "Terry Pratchett";
             public const string PrintingEditionName = "Discword";
             public const string PrintingEditionName1 = "CLR via C#";
-            public const string Descending = " descending";
         }
 
     }

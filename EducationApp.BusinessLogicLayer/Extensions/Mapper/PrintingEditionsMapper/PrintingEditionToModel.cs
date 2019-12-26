@@ -1,4 +1,4 @@
-﻿using EducationApp.BusinessLogicLayer.Extention.Mapper.AuthorMapper;
+using EducationApp.BusinessLogicLayer.Extention.Mapper.AuthorMapper;
 using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
 using EducationApp.DataAccessLayer.Entities;
 
@@ -8,14 +8,14 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.PrintingEditions
     {
         public static PrintingEditionModelItem Map(this PrintingEdition printingEdition)
         {
-            PrintingEditionModelItem printingEditionModel = new PrintingEditionModelItem
+            var printingEditionModel = new PrintingEditionModelItem
             {
                 Id = printingEdition.Id,
                 Title = printingEdition.Title,
                 Description = printingEdition.Description,
                 Price = printingEdition.Price,
                 Type = (Models.Enums.Enums.ProductType)printingEdition.ProductType,
-                Authors = AuthorMaper.Map(printingEdition.Authors)
+                Authors = AuthorMapper.Map(printingEdition.Authors)
             };
             return printingEditionModel;
 

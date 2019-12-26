@@ -1,6 +1,6 @@
-﻿using System.Net;
+using System.Net;
 using System.Net.Mail;
-using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.EmailConsts;
+using static EducationApp.BusinessLogicLayer.Common.Consts.Constants.EmailRules;
 
 namespace EducationApp.BusinessLogicLayer.Helpers
 {
@@ -8,16 +8,16 @@ namespace EducationApp.BusinessLogicLayer.Helpers
     {
         public void SendingEmailAsync(string email, string subject, string body)
         {
-            MailAddress from = new MailAddress(AdminEmail);
-            MailAddress to = new MailAddress(email);
-            MailMessage m = new MailMessage(from, to);
-            m.Subject = subject;
-            m.Body = body;
-            SmtpClient smtp = new SmtpClient(Host, Port);
-            smtp.UseDefaultCredentials = false;
-            smtp.Credentials = new NetworkCredential(AdminEmail, AdminPassword);
-            smtp.EnableSsl = true;
-            smtp.Send(m);
+            var sender = new MailAddress(AdminEmail);
+            var recipient = new MailAddress(email);
+            var message = new MailMessage(sender, recipient);
+            message.Subject = subject;
+            message.Body = body;
+            SmtpClient smtpClient = new SmtpClient(Host, Port);
+            smtpClient.UseDefaultCredentials = false;
+            smtpClient.Credentials = new NetworkCredential(AdminEmail, AdminPassword);
+            smtpClient.EnableSsl = true;
+            smtpClient.Send(message);
         }
     }
 }

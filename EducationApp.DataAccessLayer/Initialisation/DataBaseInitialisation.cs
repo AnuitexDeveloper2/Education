@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static EducationApp.DataAccessLayer.Entities.Constants.Constants.Constant;
+using static EducationApp.DataAccessLayer.Entities.Constants.Constants.InitialData;
 
 namespace EducationApp.DataAccessLayer.Initialisation
 {

@@ -1,6 +1,6 @@
 ﻿namespace EducationApp.BusinessLogicLayer.Common.Consts
 {
-    public partial class Consts
+    public partial class Constants
     {
 
         public class UserRoles

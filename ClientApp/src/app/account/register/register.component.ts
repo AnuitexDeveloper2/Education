@@ -23,7 +23,7 @@ export class RegisterComponent {
    
   save(){
     debugger;
-  this.acc.register(this.user,this.password.value).subscribe()
+  this.acc.register(this.user).subscribe()
 }
 
   

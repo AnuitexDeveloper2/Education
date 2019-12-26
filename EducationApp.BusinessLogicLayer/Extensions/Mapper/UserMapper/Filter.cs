@@ -1,4 +1,4 @@
-﻿namespace EducationApp.BusinessLogicLayer.Extention.Mapper.UserMapper
+namespace EducationApp.BusinessLogicLayer.Extention.Mapper.UserMapper
 {
     public static partial class UserMapper
     {
@@ -7,8 +7,8 @@
             var userFilter = new DataAccessLayer.Helpers.UserFilterModel
             {
                 SortType = (DataAccessLayer.Entities.Enums.Enums.SortType)filterUser.SortType,
-                UsersSortType = (DataAccessLayer.Entities.Enums.Enums.UserSortType)filterUser.UserSortType,
-                UsersFilterType = (DataAccessLayer.Entities.Enums.Enums.UserFilterType)filterUser.UserFilterStatus,
+                ColumnType = (DataAccessLayer.Entities.Enums.Enums.UsersSortType)filterUser.UserSortType,
+                FilterType = (DataAccessLayer.Entities.Enums.Enums.UserFilterType)filterUser.UserFilterStatus,
                 PageNumber = filterUser.PageNumber,
                 PageSize = filterUser.PageSize,
                 SearchString = filterUser.SearchString

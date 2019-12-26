@@ -12,6 +12,6 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
 {
     public interface IPrintingEditionRepository : IBaseEFRRepository<PrintingEdition>
     {
-        Task<ResponseModel<PrintingEdition>> GetPrintingEditionsAsync(PrintingEditionFilterModel printingEditionFilterModel);
+        Task<ResponseModel<PrintingEdition>> GetFiltredAsync(PrintingEditionFilterModel printingEditionFilterModel);
     }
 }

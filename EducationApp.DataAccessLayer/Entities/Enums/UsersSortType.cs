@@ -1,8 +1,8 @@
-﻿namespace EducationApp.DataAccessLayer.Entities.Enums
+namespace EducationApp.DataAccessLayer.Entities.Enums
 {
     public partial class Enums
     {
-        public enum UserSortType
+        public enum UsersSortType
         {
            None = 0,
            Email = 1,

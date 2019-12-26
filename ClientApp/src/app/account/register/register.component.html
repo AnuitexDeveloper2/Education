@@ -41,7 +41,7 @@
     <div> <br>
         <div>
             <label>Password</label> <br>
-            <input type="password" class="form-control" size="80" placeholder="Password" required password  [(ngModel)]="passwordText" name="password"  #password="ngModel">
+            <input type="password" class="form-control" size="80" placeholder="Password" required password  [(ngModel)]="user.password" name="password"  #password="ngModel">
             <div [hidden]="password.valid || password.pristine" class="alert alert-danger" > 
               Password is required
             </div>

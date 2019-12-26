@@ -1,18 +1,19 @@
-﻿using System;
+using System;
+using password = EducationApp.BusinessLogicLayer.Common.Consts.Constants.RandomPassword;
 
 namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.User
 {
     public class GeneratePassword
     {
-        private static string _validChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        private static string _validChars =password.AvailableChar;
 
-        public static string CreateRandomPassword(int length = 8)
+        public static string CreateRandomPassword(int passwordLength)
         {
             var random = new Random();
 
-            char[] chars = new char[length];
+            char[] chars = new char[passwordLength];
 
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < passwordLength; i++)
             {
                 chars[i] = _validChars[random.Next(0, _validChars.Length)];
             }

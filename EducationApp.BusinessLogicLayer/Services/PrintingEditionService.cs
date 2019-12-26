@@ -1,4 +1,4 @@
-﻿using EducationApp.BusinessLogicLayer.Extention.PrintingEditionFilterState;
+using EducationApp.BusinessLogicLayer.Extention.PrintingEditionFilterState;
 using EducationApp.BusinessLogicLayer.Helpers.Mapping;
 using EducationApp.BusinessLogicLayer.Helpers.Mapping.AuthorInPrintingEditionMapper;
 using EducationApp.BusinessLogicLayer.Helpers.Mapping.PrintingEditions;
@@ -8,7 +8,7 @@ using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using System.Linq;
 using System.Threading.Tasks;
-using errors = EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
+using errors = EducationApp.BusinessLogicLayer.Common.Consts.Constants.Errors;
 using EducationApp.BusinessLogicLayer.Extention.Mapper.PrintingEditionsMapper;
 
 namespace EducationApp.BusinessLogicLayer.Services
@@ -127,7 +127,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
             var filterModel = state.Map();
 
-            var printingEdition = await _printingEditionRepository.GetPrintingEditionsAsync(filterModel);
+            var printingEdition = await _printingEditionRepository.GetFiltredAsync(filterModel);
 
             var modelItems = new PrintingEditionModel();
 

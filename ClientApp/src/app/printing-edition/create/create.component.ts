@@ -40,8 +40,7 @@ export class CreateComponent {
   currencyList = enumSelector(CurrencyType);
   save(){
     debugger;
-    this.service.create(this.printingEdition.value).subscribe((data:AuthorModel)=>
-        this.items = data.items);
+    this.service.create(this.printingEdition.value).subscribe();
   }
 
 }

@@ -1,4 +1,4 @@
-﻿using EducationApp.BusinessLogicLayer.Models.Users;
+using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.DataAccessLayer.Entities;
 
 namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
@@ -7,7 +7,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
     {
         public static ApplicationUser Map(this UserModelItem model)
         {
-            ApplicationUser user = new ApplicationUser
+            var user = new ApplicationUser
             {
                 FirstName = model.FirstName,
                 LastName = model.LastName,

@@ -7,7 +7,7 @@ using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 using System.Linq.Dynamic.Core;
-using query = EducationApp.DataAccessLayer.Entities.Constants.Constants.Constant;
+using сonditions = EducationApp.DataAccessLayer.Entities.Constants.Constants.FilterConditions;
 
 namespace EducationApp.DataAccessLayer.Ropositories.Base
 {
@@ -89,7 +89,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.Base
                 return entities;
             }
 
-            entities = sortType == SortType.Asc ? entities.OrderBy(property.Name) : entities.OrderBy(property.Name + query.Descending);
+            entities = sortType == SortType.Asc ? entities.OrderBy(property.Name) : entities.OrderBy(property.Name + сonditions.Descending);
 
             return entities;
         }

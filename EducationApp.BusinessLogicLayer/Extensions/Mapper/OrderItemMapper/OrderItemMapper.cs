@@ -1,4 +1,4 @@
-﻿using EducationApp.BusinessLogicLayer.Models.OrderItemModelItem;
+using EducationApp.BusinessLogicLayer.Models.OrderItemModelItem;
 using EducationApp.DataAccessLayer.Entities;
 using System.Collections.Generic;
 
@@ -18,7 +18,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapper
                     OrderId = id,
                     Amount = item.Amount,
                     Currency = (DataAccessLayer.Entities.Enums.Enums.CurrencyType)item.Currency,
-            };
+                };
                 orderItem.Add(result);
             }
             return orderItem;

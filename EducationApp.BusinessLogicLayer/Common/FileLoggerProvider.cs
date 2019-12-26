@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace EducationApp.BusinessLogicLayer.Common
 {
     public class FileLoggerProvider : ILoggerProvider
     {
-        private string path;
+        private readonly string  path;
         public FileLoggerProvider(string _path)
         {
             path = _path;

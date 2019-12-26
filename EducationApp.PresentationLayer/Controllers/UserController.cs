@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using EducationApp.BusinessLogicLayer.Models.Users;
 using Microsoft.AspNetCore.Mvc;
 using EducationApp.BusinessLogicLayer.Services;
 using Microsoft.AspNetCore.Authorization;
 using EducationApp.BusinessLogicLayer.Extention.User;
-using role = EducationApp.BusinessLogicLayer.Common.Consts.Consts.UserRoles;
+using role = EducationApp.BusinessLogicLayer.Common.Consts.Constants.UserRoles;
 
 namespace EducationApp.PresentationLayer.Controllers
 {

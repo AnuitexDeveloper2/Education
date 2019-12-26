@@ -22,6 +22,11 @@ const routes: Routes = [
     {
       path: 'books',
       loadChildren: () => import('src/app/printing-edition/printing-edition.module').then(mod =>mod.PrintingEditionModule)
+    },
+
+    {
+      path: 'administrator',
+      loadChildren: () => import('src/app/administrator/administrator.module').then(mod =>mod.AdministratorModule)
     }
 
 ];

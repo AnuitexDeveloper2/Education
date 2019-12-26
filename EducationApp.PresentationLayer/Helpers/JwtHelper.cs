@@ -7,8 +7,8 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using static EducationApp.BusinessLogicLayer.Common.Consts.Consts;
-using static EducationApp.BusinessLogicLayer.Common.Consts.Consts.JWTConsts;
+using static EducationApp.BusinessLogicLayer.Common.Consts.Constants;
+using static EducationApp.BusinessLogicLayer.Common.Consts.Constants.JWTConsts;
 
 namespace EducationApp.PresentationLayer.Helpers
 {

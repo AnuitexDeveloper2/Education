@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using EducationApp.BusinessLogicLayer.Models.PrintingEditions;
 using EducationApp.BusinessLogicLayer.Extention.PrintingEditionFilterState;
 using Microsoft.AspNetCore.Authorization;
-using role = EducationApp.BusinessLogicLayer.Common.Consts.Consts.UserRoles;
+using role = EducationApp.BusinessLogicLayer.Common.Consts.Constants.UserRoles;
 
 namespace EducationApp.PresentationLayer.Controllers
 {

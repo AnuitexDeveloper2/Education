@@ -4,7 +4,7 @@ using EducationApp.BusinessLogicLayer.Models.Authors;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using role = EducationApp.BusinessLogicLayer.Common.Consts.Consts.UserRoles;
+using role = EducationApp.BusinessLogicLayer.Common.Consts.Constants.UserRoles;
 
 namespace EducationApp.PresentationLayer.Controllers
 {
@@ -20,7 +20,7 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
 
-        [Authorize(Roles = role.Admin)]
+        //[Authorize(Roles = role.Admin)]
         [HttpPost("create")]
         public async Task<ActionResult> Create(string name)
         {

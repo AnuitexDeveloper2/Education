@@ -1,4 +1,4 @@
-﻿using EducationApp.BusinessLogicLayer.Extention.Order;
+using EducationApp.BusinessLogicLayer.Extention.Order;
 using EducationApp.BusinessLogicLayer.Helpers.Mapper;
 using EducationApp.BusinessLogicLayer.Helpers.Mapper.OrderMapper;
 using EducationApp.BusinessLogicLayer.Models.Base;
@@ -8,7 +8,7 @@ using EducationApp.DataAccessLayer.Entities;
 using EducationApp.DataAccessLayer.Repositories.Interfaces;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using System.Threading.Tasks;
-using errors = EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
+using errors = EducationApp.BusinessLogicLayer.Common.Consts.Constants.Errors;
 using EducationApp.BusinessLogicLayer.Extention.Mapper.OrderMapper;
 
 namespace EducationApp.BusinessLogicLayer.Services

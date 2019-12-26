@@ -24,9 +24,9 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
         Task<ApplicationUser> FindByEmailAsync(string email);
         Task<bool> ResetPasswordAsync(ApplicationUser user, string newPassword);
         Task<string> GetRoleAsync(ApplicationUser user);
-        Task<bool> BlockUserAsync(ApplicationUser user);
+        Task<bool> BlockAsync(ApplicationUser user);
         Task SignOut();
-        Task<ResponseModel<ApplicationUser>> GetUsersAsync(UserFilterModel state);
+        Task<ResponseModel<ApplicationUser>> GetFilteredAsync(UserFilterModel state);
 
 
     }

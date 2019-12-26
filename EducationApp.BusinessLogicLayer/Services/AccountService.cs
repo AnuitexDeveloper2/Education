@@ -1,12 +1,12 @@
-﻿using EducationApp.BusinessLogicLayer.Helpers;
+using EducationApp.BusinessLogicLayer.Helpers;
 using EducationApp.BusinessLogicLayer.Helpers.Mapping;
 using EducationApp.BusinessLogicLayer.Models.Base;
 using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using System.Threading.Tasks;
-using error = EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
-using emailConst = EducationApp.BusinessLogicLayer.Common.Consts.Consts.EmailConsts;
+using error = EducationApp.BusinessLogicLayer.Common.Consts.Constants.Errors;
+using emailConst = EducationApp.BusinessLogicLayer.Common.Consts.Constants.EmailRules;
 using EducationApp.BusinessLogicLayer.Extention.Mapper.UserMapper;
 
 
@@ -42,19 +42,13 @@ namespace EducationApp.BusinessLogicLayer.Services
             return true;
         }
 
-        public async Task<BaseModel> CreateUserAsync(UserModelItem userItemModel,string password)
+        public async Task<BaseModel> CreateUserAsync(UserModelItem userItemModel)
         {
             var userModel = new BaseModel();
 
-            if (string.IsNullOrWhiteSpace(userItemModel.FirstName) || string.IsNullOrWhiteSpace(userItemModel.LastName) || string.IsNullOrWhiteSpace(userItemModel.Email) || string.IsNullOrWhiteSpace(password))
-            {
-                userModel.Errors.Add(error.EmptyField);
-                return userModel;
-            }
-
             var user = userItemModel.Map();
 
-            var userCreate = await _userRepository.CreateUserAsync(user, password);
+            var userCreate = await _userRepository.CreateUserAsync(user,userItemModel.Password);
 
             if (!userCreate)
             {

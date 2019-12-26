@@ -15,8 +15,8 @@ import { BrowserAnimationsModule  } from "@angular/platform-browser/animations";
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationInterceptor } from "./shared/AuthenticationInterceptor";
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {ModalModule} from "ng2-modal";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalModule } from "ng2-modal";
 import { MatInputModule } from '@angular/material';
 
 @NgModule({

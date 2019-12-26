@@ -315,3 +315,10 @@ Error
 Request finished in 10836.395400000001ms 500 application/json
 Application started. Press Ctrl+C to shut down.
 Hosting environment: Development
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: C:\Users\Anuitex-179\source\repos\EducaionApp\EducationApp.PresentationLayer

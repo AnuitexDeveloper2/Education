@@ -4,7 +4,7 @@ using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using role = EducationApp.BusinessLogicLayer.Common.Consts.Consts.UserRoles;
+using role = EducationApp.BusinessLogicLayer.Common.Consts.Constants.UserRoles;
 
 namespace EducationApp.PresentationLayer.Controllers
 {

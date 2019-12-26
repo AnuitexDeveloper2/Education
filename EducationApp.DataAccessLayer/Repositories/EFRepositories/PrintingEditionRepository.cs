@@ -20,7 +20,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
         }
 
-        public async Task<ResponseModel<PrintingEdition>> GetPrintingEditionsAsync(PrintingEditionFilterModel printingEditionFilter) 
+        public async Task<ResponseModel<PrintingEdition>> GetFiltredAsync(PrintingEditionFilterModel printingEditionFilter) 
         {
             var printingEditions = (from printingEdition in _applicationContext.PrintingEditions
                                     select new PrintingEdition

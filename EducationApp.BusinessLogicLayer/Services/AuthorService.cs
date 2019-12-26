@@ -1,11 +1,11 @@
-﻿using EducationApp.BusinessLogicLayer.Extention.Author;
+using EducationApp.BusinessLogicLayer.Extention.Author;
 using EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors;
 using EducationApp.BusinessLogicLayer.Models.Authors;
 using EducationApp.BusinessLogicLayer.Models.Base;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using System.Threading.Tasks;
-using errors = EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
+using errors = EducationApp.BusinessLogicLayer.Common.Consts.Constants.Errors;
 using EducationApp.BusinessLogicLayer.Extention.Mapper.AuthorMapper;
 using EducationApp.DataAccessLayer.Entities;
 using System;
@@ -109,7 +109,7 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             var filter = authorFilterModel.Map();
 
-            var authors = await _authorRepository.GetAuthorsAsync(filter);
+            var authors = await _authorRepository.GetFiltredAsync(filter);
 
             var authorsModel = new AuthorModel();
 

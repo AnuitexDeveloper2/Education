@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using EducationApp.BusinessLogicLayer.Extention.User;
 using EducationApp.BusinessLogicLayer.Helpers;
 using EducationApp.BusinessLogicLayer.Helpers.Mapping;
@@ -6,8 +6,9 @@ using EducationApp.BusinessLogicLayer.Helpers.Mapping.User;
 using EducationApp.BusinessLogicLayer.Models.Base;
 using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
-using errors = EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
-using emailConsts = EducationApp.BusinessLogicLayer.Common.Consts.Consts.EmailConsts;
+using errors = EducationApp.BusinessLogicLayer.Common.Consts.Constants.Errors;
+using emailConsts = EducationApp.BusinessLogicLayer.Common.Consts.Constants.EmailRules;
+using password = EducationApp.BusinessLogicLayer.Common.Consts.Constants.RandomPassword;
 using EducationApp.BusinessLogicLayer.Extention.Mapper.UserMapper;
 
 namespace EducationApp.BusinessLogicLayer.Services
@@ -85,7 +86,7 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return resultModel;
             }
 
-            var result = await _userRepository.BlockUserAsync(user);
+            var result = await _userRepository.BlockAsync(user);
 
             if (!result)
             {
@@ -111,7 +112,6 @@ namespace EducationApp.BusinessLogicLayer.Services
 
             if (!result)
             {
-
                 resultModel.Errors.Add(errors.ChangePasswordFailure);
             }
             return resultModel;
@@ -147,7 +147,7 @@ namespace EducationApp.BusinessLogicLayer.Services
                 resultModel.Errors.Add(errors.NotFound);
                 return resultModel;
             }
-            var newPassword = GeneratePassword.CreateRandomPassword();
+            var newPassword = GeneratePassword.CreateRandomPassword(password.PasswordLength);
 
             var result = await _userRepository.ResetPasswordAsync(user, newPassword);
 
@@ -166,7 +166,7 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             var filter = userFilter.Map();
 
-            var users = await _userRepository.GetUsersAsync(filter);
+            var users = await _userRepository.GetFilteredAsync(filter);
 
             var usersModel = new UserModel();
 

@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -7,7 +7,8 @@ using EducationApp.PresentationLayer.Helpers.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.Linq;
-using error = EducationApp.BusinessLogicLayer.Common.Consts.Consts.Errors;
+using error = EducationApp.BusinessLogicLayer.Common.Consts.Constants.Errors;
+using token = EducationApp.BusinessLogicLayer.Common.Consts.Constants.Token;
 using EducationApp.BusinessLogicLayer.Models.Base;
 
 namespace EducationApp.PresentationLayer.Controllers
@@ -28,9 +29,9 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult> Register(UserModelItem userItemModel,string password)
+        public async Task<ActionResult> Register(UserModelItem userItemModel)
         {
-            var result = await _accountService.CreateUserAsync(userItemModel,password);
+            var result = await _accountService.CreateUserAsync(userItemModel);
 
             return Ok(result.Errors);
         }
@@ -47,11 +48,11 @@ namespace EducationApp.PresentationLayer.Controllers
         [HttpPost("signIn")]
         public async Task<ActionResult> SignIn(string email,string password)
         {
-            var errors = await _accountService.SignIn(email, password);
+            var result = await _accountService.SignIn(email, password);
 
-            if (errors.Errors.Count > 0)
+            if (!result.Errors.Any())
             {
-                return Ok(errors.Errors);
+                return Ok(result);
             }
 
             var user = await _accountService.GetByEmailAsync(email);
@@ -60,7 +61,7 @@ namespace EducationApp.PresentationLayer.Controllers
 
             SetCookies(tokens.AccessToken, tokens.RefreshToken);
 
-            return Ok(errors);
+            return Ok(result);
         }
         [Authorize]
         [HttpGet("signOut")]
@@ -71,6 +72,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok();
         }
 
+        [HttpGet("token")]
         private async Task<IActionResult> RefreshTokenAsync(string refreshToken)
         {
             var result = new BaseModel();
@@ -105,9 +107,9 @@ namespace EducationApp.PresentationLayer.Controllers
        
         private void SetCookies(string accessToken,string refreshToken)
         {
-            HttpContext.Response.Cookies.Append("RefereshToken", refreshToken);
+            HttpContext.Response.Cookies.Append(token.RefreshToken, refreshToken);
 
-            HttpContext.Response.Cookies.Append("AccessToken", accessToken);
+            HttpContext.Response.Cookies.Append(token.AccessToken, accessToken);
         }
     }
 }
