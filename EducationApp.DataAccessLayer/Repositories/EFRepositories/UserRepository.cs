@@ -33,7 +33,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             {
                 return false;
             }
-
+            
             var createUser = await _userManager.CreateAsync(user, password);
 
             if (!createUser.Succeeded)
