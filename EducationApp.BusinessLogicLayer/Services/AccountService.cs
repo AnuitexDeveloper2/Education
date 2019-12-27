@@ -6,7 +6,6 @@ using EducationApp.BusinessLogicLayer.Services.Interfaces;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using System.Threading.Tasks;
 using error = EducationApp.BusinessLogicLayer.Common.Consts.Constants.Errors;
-using emailConst = EducationApp.BusinessLogicLayer.Common.Consts.Constants.EmailRules;
 using EducationApp.BusinessLogicLayer.Extention.Mapper.UserMapper;
 
 
@@ -23,45 +22,30 @@ namespace EducationApp.BusinessLogicLayer.Services
             
         }
 
-        public async Task<bool> ConfirmAccountAsync(string email)
-        {
-            var excistUser = await _userRepository.GetByEmailAsync(email);
-
-            if (excistUser == null)
-            {
-                return false;
-            }
-
-            string token = await _userRepository.GenerateEmailConfirmationTokenAsync(excistUser);
-
-            if (token == null)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        public async Task<BaseModel> CreateUserAsync(UserModelItem userItemModel)
+        public async Task<BaseModel> CreateUserAsync(UserModelItem userModelItem)
         {
             var userModel = new BaseModel();
 
-            var user = userItemModel.Map();
+            if (userModelItem == null)
+            {
+                userModel.Errors.Add(error.EmptyField);
+                return userModel;
+            }
 
-            var userCreate = await _userRepository.CreateUserAsync(user,userItemModel.Password);
+            var userEntity = userModelItem.Map();
 
-            if (!userCreate)
+            var result = await _userRepository.CreateUserAsync(userEntity,userModelItem.Password);
+
+            if (!result)
             {
                 userModel.Errors.Add(error.UserCreate);
                 return userModel;
             }
 
-            _emailSender.SendingEmailAsync(userItemModel.Email, emailConst.MailSubject, emailConst.MailBody);
+            _emailSender.SendingEmailAsync(userModelItem.Email);    
 
             return userModel;
         }
-
-
 
         public async Task<BaseModel> ConfirmEmailAsync(string email)
         {
@@ -75,9 +59,9 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return userModel;
             
             }
-            string token = await _userRepository.GenerateEmailConfirmationTokenAsync(user);
+            //
             
-            var result = await _userRepository.ConfirmEmailAsync(user, token);
+            var result = await _userRepository.ConfirmEmailAsync(user);
             
             if (!result)
             {
@@ -102,17 +86,17 @@ namespace EducationApp.BusinessLogicLayer.Services
 
         public async Task<UserModelItem> GetByEmailAsync(string email)
         {
-            if (email == null)
+            if (string.IsNullOrEmpty(email))
             {
                 return null;
             }
             var user = await _userRepository.FindByEmailAsync(email);
-            var model = user.Map();
-            model.Role = await _userRepository.GetRoleAsync(user);
-            return model;
+            var userModel = user.Map();
+            userModel.Role = await _userRepository.GetRoleAsync(user);
+            return userModel;
         }
 
-        public async Task<BaseModel> SignIn(string email, string password)
+        public async Task<BaseModel> SignInAsync(string email, string password)
         {
              var usersModel = new BaseModel();
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
@@ -126,11 +110,10 @@ namespace EducationApp.BusinessLogicLayer.Services
                 usersModel.Errors.Add(error.NotFound);
                 return usersModel;
             }
-            var checkPassword = await _userRepository.ConfirmPasswordAsync(user, password);
-            if (!checkPassword)
+            var result = await _userRepository.SignInAsync(user, password);
+            if (result == null)
             {
                 usersModel.Errors.Add(error.NotValidPassword);
-                return usersModel;
             }
             return usersModel;
         }

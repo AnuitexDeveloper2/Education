@@ -102,16 +102,18 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             return await _userManager.FindByEmailAsync(email);
         }
 
-        public async Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user)
-        {
-            return await _userManager.GenerateEmailConfirmationTokenAsync(user);
-        }
-
         public async Task<string> GeneratePasswordResetTokenAsync(ApplicationUser user)
         {
             var result = await _userManager.GeneratePasswordResetTokenAsync(user);
 
             return result;
+        }
+
+        public async Task<ApplicationUser> SignInAsync(ApplicationUser user,string password)
+        {
+            await _signInManager.SignInAsync(user,isPersistent:false);
+
+            return user;
         }
 
 
@@ -124,8 +126,10 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             return changeEmailResult.Succeeded;
         }
 
-        public async Task<bool> ConfirmEmailAsync(ApplicationUser user, string token)
+        public async Task<bool> ConfirmEmailAsync(ApplicationUser user)
         {
+            string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
             var result = await _userManager.ConfirmEmailAsync(user, token);
 
             return result.Succeeded;

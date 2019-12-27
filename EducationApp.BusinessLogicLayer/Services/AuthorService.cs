@@ -23,21 +23,21 @@ namespace EducationApp.BusinessLogicLayer.Services
             _authorInPrintingEditionRepository = authorInPrintingEditionRepository;
         }
 
-        public async Task<BaseModel> CreateAsync(string name)
+        public async Task<BaseModel> CreateAsync(AuthorModelItem authorModel)
         {
             var resultModel = new BaseModel();
 
-            if (name == null)
+            if (authorModel == null)
             {
                 resultModel.Errors.Add(errors.EmptyField);
                 return resultModel;
             }
 
-            var author = new Author { Name = name, Date = DateTime.Now };
+            var author = authorModel.Map();
 
-            var resultCreate = await _authorRepository.CreateAsync(author);
+            var result = await _authorRepository.CreateAsync(author);
 
-            if (resultCreate < 1)
+            if (result < 1)
             {
                 resultModel.Errors.Add(errors.AuthorCreate);
             }

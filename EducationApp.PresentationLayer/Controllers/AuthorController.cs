@@ -22,10 +22,10 @@ namespace EducationApp.PresentationLayer.Controllers
 
         //[Authorize(Roles = role.Admin)]
         [HttpPost("create")]
-        public async Task<ActionResult> Create(string name)
+        public async Task<ActionResult> Create(AuthorModelItem author)
         {
 
-            var result = await _authorService.CreateAsync(name);
+            var result = await _authorService.CreateAsync(author);
 
             return Ok(result);
         }

@@ -11,17 +11,22 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapper
             var orderItem = new List<OrderItem>();
             foreach (var item in orderItemModel.Items)
             {
-                var result = new OrderItem
-                {
-                    PrintingEditionId = item.PrintingEditionId,
-                    Count = item.Count,
-                    OrderId = id,
-                    Amount = item.Amount,
-                    Currency = (DataAccessLayer.Entities.Enums.Enums.CurrencyType)item.Currency,
-                };
-                orderItem.Add(result);
+                orderItem.Add(Map(item, id));
             }
             return orderItem;
+        }
+
+        private static OrderItem Map(OrderItemModelItem orderItemModelItem,long id)
+        {
+            var result = new OrderItem
+            {
+                PrintingEditionId = orderItemModelItem.PrintingEditionId,
+                Count = orderItemModelItem.Count,
+                OrderId = id,
+                Amount = orderItemModelItem.Amount,
+                Currency = (DataAccessLayer.Entities.Enums.Enums.CurrencyType)orderItemModelItem.Currency,
+            };
+            return result;
         }
     }
 }

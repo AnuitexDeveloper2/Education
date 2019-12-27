@@ -1,5 +1,4 @@
 ﻿using EducationApp.BusinessLogicLayer.BaseInit;
-using EducationApp.BusinessLogicLayer.Helpers;
 using EducationApp.PresentationLayer.Helpers.Middlware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,18 +6,17 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using static EducationApp.BusinessLogicLayer.Common.Consts.Constants.JWTConsts;
 using EducationApp.PresentationLayer.Helpers;
 using EducationApp.PresentationLayer.Helpers.Interfaces;
 using Microsoft.OpenApi.Models;
-using EducationApp.DataAccessLayer.Initialisation;
 using Microsoft.AspNetCore.Identity;
+using EducationApp.BusinessLogicLayer.Models.Email;
+using EducationApp.BusinessLogicLayer.Models.JWT;
 
 namespace EducationApp.PresentationLayer
 {
     public class Startup
     {
-        private PasswordOptions password;
 
         public Startup(IConfiguration configuration)
         {
@@ -37,21 +35,27 @@ namespace EducationApp.PresentationLayer
                 options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None;
             });
             services.AddCors();
-            services.AddTransient<IJwtHelper, JwtHelper>();
-            var value = Configuration.GetSection("PasswordOptions").Get<PasswordOptions>();
-            Initializer.InitServices(services, Configuration.GetConnectionString("DefaultConnection"),value);
 
-            var tokenValidationParameter = new TokenValidationParameters()
+            var emailOptions = Configuration.GetSection("EmailModel").Get<EmailModel>();
+            
+            services.Configure<EmailModel>(options => Configuration.GetSection("EmailModel").Bind(options));
+
+            services.AddTransient<IJwtHelper, JwtHelper>();
+
+            var passwordOptions = Configuration.GetSection("PasswordOptions").Get<PasswordOptions>();
+            Initializer.InitServices(services, Configuration.GetConnectionString("DefaultConnection"), passwordOptions);
+
+            var jwtOptions = Configuration.GetSection("JWTOptions").Get<JWTOptions>();
+            services.Configure<JWTOptions>(options => Configuration.GetSection("JWTOptions").Bind(options));
+
+            var tokenValidationParameter = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = JwtHelper.GetSymmetricSecurityKey(),
-
-                ValidIssuer = Issuer,
+                IssuerSigningKey = JwtHelper.GetSymmetricSecurityKey(jwtOptions.Key),
+                ValidIssuer = jwtOptions.Issuer,
                 ValidateIssuer = true,
-
-                ValidAudience = Audience,
+                ValidAudience = jwtOptions.Audience,
                 ValidateAudience = true,
-
                 ValidateLifetime = true
             };
 

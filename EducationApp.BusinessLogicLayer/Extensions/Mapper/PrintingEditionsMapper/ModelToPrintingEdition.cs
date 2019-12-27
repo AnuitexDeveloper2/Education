@@ -20,5 +20,7 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
             };
             return printingEdition;
         }
+
     }
+
 }

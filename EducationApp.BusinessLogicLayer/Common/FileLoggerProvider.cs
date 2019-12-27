@@ -4,14 +4,14 @@ namespace EducationApp.BusinessLogicLayer.Common
 {
     public class FileLoggerProvider : ILoggerProvider
     {
-        private readonly string  path;
+        private readonly string  _path;
         public FileLoggerProvider(string _path)
         {
-            path = _path;
+            this._path = _path;
         }
         public ILogger CreateLogger(string categoryName)
         {
-            return new FileLogger(path);
+            return new FileLogger(_path);
         }
 
         public void Dispose()

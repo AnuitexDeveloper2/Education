@@ -18,13 +18,7 @@ namespace EducationApp.DataAccessLayer.InitRepositories
             services.AddDbContext<ApplicationContext>(options =>
   options.UseSqlServer(connectionString));
 
-            services.Configure<IdentityOptions>(option => { option.Password = passwordOption; });
-                
-
-
-             
-
-            services.AddIdentity<ApplicationUser, Role>()
+            services.AddIdentity<ApplicationUser, Role>(option => { option.Password = passwordOption; })
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
 

@@ -16,8 +16,6 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.Authors
             };
             return authorModelItem;
         }
-
-       
     }
 }
 

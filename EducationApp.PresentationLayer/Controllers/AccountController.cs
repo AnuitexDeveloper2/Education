@@ -21,6 +21,8 @@ namespace EducationApp.PresentationLayer.Controllers
 
         private readonly IAccountService _accountService;
 
+
+
         public AccountController(IJwtHelper jwtHelper, IAccountService accountService)
         {
             _jwtHelper = jwtHelper;
@@ -48,9 +50,9 @@ namespace EducationApp.PresentationLayer.Controllers
         [HttpPost("signIn")]
         public async Task<ActionResult> SignIn(string email,string password)
         {
-            var result = await _accountService.SignIn(email, password);
+            var result = await _accountService.SignInAsync(email, password);
 
-            if (!result.Errors.Any())
+            if (result.Errors.Any())
             {
                 return Ok(result);
             }

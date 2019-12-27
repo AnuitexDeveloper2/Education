@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using EducationApp.DataAccessLayer.InitRepositories;
 using EducationApp.DataAccessLayer.Initialisation;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
+using EducationApp.BusinessLogicLayer.Models.Email;
 
 namespace EducationApp.BusinessLogicLayer.BaseInit
 {
@@ -15,6 +15,8 @@ namespace EducationApp.BusinessLogicLayer.BaseInit
         public static void InitServices(IServiceCollection services, string connectionString, PasswordOptions passwordOptions)
         {
             DataAccessInitialisation.InitRepositories(services, connectionString,passwordOptions);
+
+            services.AddTransient<EmailModel>();
 
             services.AddTransient<TokenValidationParameters>();
 

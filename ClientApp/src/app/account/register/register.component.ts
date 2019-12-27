@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserModelItem } from 'src/app/shared/models/user/UserModelItem';
 import { AccountService } from 'src/app/shared/services/account/account.service';
-import {FormControl, Validators, FormGroup} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-register',

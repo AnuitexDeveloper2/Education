@@ -7,7 +7,6 @@ using EducationApp.BusinessLogicLayer.Models.Base;
 using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using errors = EducationApp.BusinessLogicLayer.Common.Consts.Constants.Errors;
-using emailConsts = EducationApp.BusinessLogicLayer.Common.Consts.Constants.EmailRules;
 using password = EducationApp.BusinessLogicLayer.Common.Consts.Constants.RandomPassword;
 using EducationApp.BusinessLogicLayer.Extention.Mapper.UserMapper;
 
@@ -156,7 +155,7 @@ namespace EducationApp.BusinessLogicLayer.Services
                 resultModel.Errors.Add(errors.InvalidToken);
             }
 
-            _emailSender.SendingEmailAsync(user.Email, emailConsts.ResetPassword, newPassword);
+            _emailSender.SendingEmailAsync(user.Email);
 
             return resultModel;
         }

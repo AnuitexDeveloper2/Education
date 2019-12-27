@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AuthorModel } from 'src/app/shared/models/author/AuthorModel';
 import { BaseFilterModel } from 'src/app/shared/models/Base/BaseFilterModel';
 import { AuthorModule } from 'src/app/author/author.module';
+import { AuthorModelItem } from '../../models/author/AuthorModelItem';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,9 @@ email:string;
     return this.http.post<AuthorModel>('https://localhost:44309/api/author/get',authorFilterModel)
   }
 
-  save(name:string) {
-    return this.http.post(`https://localhost:44309/api/author/create/?name=${name}`,{withCredentials: true});
+  save(author:AuthorModelItem) {
+    debugger;
+    return this.http.post(`https://localhost:44309/api/author/create/`,author,{withCredentials: true});
   }
 
   edit(id:number,name:string){

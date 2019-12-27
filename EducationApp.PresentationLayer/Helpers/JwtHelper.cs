@@ -1,23 +1,29 @@
-﻿using EducationApp.BusinessLogicLayer.Models.Token;
+﻿using EducationApp.BusinessLogicLayer.Models.JWT;
+using EducationApp.BusinessLogicLayer.Models.Token;
 using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.PresentationLayer.Helpers.Interfaces;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using static EducationApp.BusinessLogicLayer.Common.Consts.Constants;
 using static EducationApp.BusinessLogicLayer.Common.Consts.Constants.JWTConsts;
 
 namespace EducationApp.PresentationLayer.Helpers
 {
     public class JwtHelper : IJwtHelper
     {
-        public JwtSecurityToken securityToken;
-        public static SymmetricSecurityKey GetSymmetricSecurityKey()
+        private readonly JWTOptions _jWTOptions;
+        public JwtHelper(IOptions<JWTOptions> option)
         {
-            return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(JWTConsts.Key));
+            _jWTOptions = option.Value;
+        }
+        public JwtSecurityToken securityToken;
+        public static SymmetricSecurityKey GetSymmetricSecurityKey(string key)
+        {
+            return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key));
         }
         public TokenModel GenerateTokenModel(UserModelItem user)
         {
@@ -56,7 +62,7 @@ namespace EducationApp.PresentationLayer.Helpers
             audience: Audience,
             claims: claims,
             expires: DateTime.Now.AddMinutes(expires),
-            signingCredentials: new SigningCredentials(GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+            signingCredentials: new SigningCredentials(GetSymmetricSecurityKey(_jWTOptions.Key), SecurityAlgorithms.HmacSha256));
             return token;
         }
 

@@ -2,7 +2,7 @@
 {
     public interface IEmailSender
     {
-        void SendingEmailAsync(string email, string subject, string body);
+        void SendingEmailAsync(string email);
 
     }
 }

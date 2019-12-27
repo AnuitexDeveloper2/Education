@@ -2,6 +2,7 @@ import { Component, OnInit,Inject } from '@angular/core';
 import { FormControl } from "@angular/forms";
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { AuthorService } from 'src/app/shared/services/author/author.service';
+import { AuthorModelItem } from 'src/app/shared/models/author/AuthorModelItem';
 
 @Component({
   selector: 'app-create',
@@ -11,12 +12,14 @@ import { AuthorService } from 'src/app/shared/services/author/author.service';
 })
 export class CreateComponent  {
 
-  authorName = new FormControl('');
+  author: AuthorModelItem;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: string, private authorService: AuthorService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: string, private authorService: AuthorService) { 
+    this.author = new AuthorModelItem;
+  }
 
   save(){
-    this.authorService.save(this.authorName.value).subscribe();
+    this.authorService.save(this.author).subscribe();
   }
 
  
