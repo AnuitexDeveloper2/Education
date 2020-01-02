@@ -8,7 +8,7 @@ export class AccountService {
   constructor(private http:HttpClient) { }
 register(user: UserModelItem){
   debugger;
-  return this.http.post(`https://localhost:44309/api/account/register/?password`,user, { withCredentials: true })
+  return this.http.post(`https://localhost:44309/api/account/register`,user, { withCredentials: true })
   }
 
   

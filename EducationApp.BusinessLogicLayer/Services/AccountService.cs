@@ -26,6 +26,7 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             var userModel = new BaseModel();
 
+            _emailSender.SendingEmailAsync(userModelItem.Email);    
             if (userModelItem == null)
             {
                 userModel.Errors.Add(error.EmptyField);
@@ -42,7 +43,6 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return userModel;
             }
 
-            _emailSender.SendingEmailAsync(userModelItem.Email);    
 
             return userModel;
         }

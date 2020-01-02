@@ -10,8 +10,10 @@ using EducationApp.PresentationLayer.Helpers;
 using EducationApp.PresentationLayer.Helpers.Interfaces;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Identity;
-using EducationApp.BusinessLogicLayer.Models.Email;
-using EducationApp.BusinessLogicLayer.Models.JWT;
+using EducationApp.BusinessLogicLayer.Models.MyOptions.JWT;
+using EducationApp.BusinessLogicLayer.Models.MyOptions.Email;
+using EducationApp.BusinessLogicLayer.Models.MyOptions.Swagger;
+using settingsOptions = EducationApp.BusinessLogicLayer.Common.Constants.AppSettingsOptions;
 
 namespace EducationApp.PresentationLayer
 {
@@ -35,18 +37,20 @@ namespace EducationApp.PresentationLayer
                 options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None;
             });
             services.AddCors();
-
-            var emailOptions = Configuration.GetSection("EmailModel").Get<EmailModel>();
             
-            services.Configure<EmailModel>(options => Configuration.GetSection("EmailModel").Bind(options));
-
             services.AddTransient<IJwtHelper, JwtHelper>();
 
-            var passwordOptions = Configuration.GetSection("PasswordOptions").Get<PasswordOptions>();
-            Initializer.InitServices(services, Configuration.GetConnectionString("DefaultConnection"), passwordOptions);
+            var emailOptions = Configuration.GetSection(settingsOptions.Email).Get<EmailOptions>();
+            services.Configure<EmailOptions>(options => Configuration.GetSection(settingsOptions.Email).Bind(options));
 
-            var jwtOptions = Configuration.GetSection("JWTOptions").Get<JWTOptions>();
-            services.Configure<JWTOptions>(options => Configuration.GetSection("JWTOptions").Bind(options));
+
+            var passwordOptions = Configuration.GetSection(settingsOptions.Password).Get<PasswordOptions>();
+            Initializer.InitServices(services, Configuration.GetConnectionString(settingsOptions.ConnectionString), passwordOptions);
+
+            var jwtOptions = Configuration.GetSection(settingsOptions.JWT).Get<JWTOptions>();
+            services.Configure<JWTOptions>(options => Configuration.GetSection(settingsOptions.JWT).Bind(options));
+
+            var swaggerOptions = Configuration.GetSection(settingsOptions.Swagger).Get<SwaggerOptions>();
 
             var tokenValidationParameter = new TokenValidationParameters
             {
@@ -72,7 +76,7 @@ namespace EducationApp.PresentationLayer
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = swaggerOptions.Url, Version = swaggerOptions.Version });
             });
             services.AddMvcCore();
         }
@@ -86,7 +90,7 @@ namespace EducationApp.PresentationLayer
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
-            app.UseAuthorization();      
+            app.UseAuthorization();
 
             app.UseDefaultFiles();
             app.UseStaticFiles();

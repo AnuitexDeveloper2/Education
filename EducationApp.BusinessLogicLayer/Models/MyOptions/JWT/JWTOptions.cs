@@ -1,4 +1,4 @@
-﻿namespace EducationApp.BusinessLogicLayer.Models.JWT
+﻿namespace EducationApp.BusinessLogicLayer.Models.MyOptions.JWT
 {
     public class JWTOptions
     {

@@ -1,4 +1,4 @@
-using EducationApp.BusinessLogicLayer.Models.Email;
+using EducationApp.BusinessLogicLayer.Models.MyOptions.Email;
 using Microsoft.Extensions.Options;
 using System.Net;
 using System.Net.Mail;
@@ -7,8 +7,8 @@ namespace EducationApp.BusinessLogicLayer.Helpers
 {
     public class EmailSender : IEmailSender
     {
-        private readonly EmailModel _emailModel;
-        public EmailSender( IOptions<EmailModel> options)
+        private readonly EmailOptions _emailModel;
+        public EmailSender( IOptions<EmailOptions> options)
         {
             _emailModel = options.Value;
         }

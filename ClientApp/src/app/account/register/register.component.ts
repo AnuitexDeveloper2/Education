@@ -11,20 +11,13 @@ import {FormControl} from '@angular/forms';
 })
 export class RegisterComponent {
   user: UserModelItem;
-  password: FormControl;
-  confirmPassword: FormControl;
   constructor(private acc: AccountService) {
     this.user = new UserModelItem();
-    this.confirmPassword = new FormControl();
-    this.password = new FormControl();
    }
 
    
   save(){
     debugger;
   this.acc.register(this.user).subscribe()
-}
-
-  
- 
+ }
 }

@@ -1,6 +1,6 @@
-﻿namespace EducationApp.BusinessLogicLayer.Models.Email
+﻿namespace EducationApp.BusinessLogicLayer.Models.MyOptions.Email
 {
-    public class EmailModel
+    public class EmailOptions
     {
         public string MailBody { get; set; }
         public string MailSubject { get; set; }

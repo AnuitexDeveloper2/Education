@@ -1,4 +1,4 @@
-﻿using EducationApp.BusinessLogicLayer.Models.JWT;
+﻿using EducationApp.BusinessLogicLayer.Models.MyOptions.JWT;
 using EducationApp.BusinessLogicLayer.Models.Token;
 using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.PresentationLayer.Helpers.Interfaces;
