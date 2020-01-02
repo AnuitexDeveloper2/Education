@@ -8,7 +8,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.Interfaces
 {
     public interface IUserRepository
     {
-        Task<bool> CreateUserAsync(ApplicationUser user,string password);
+        Task<string> CreateUserAsync(ApplicationUser user,string password);
         Task<bool> EditAsync(ApplicationUser user);
         Task<bool> RemoveAsync(ApplicationUser user);
         Task<string> CheckRoleAsync(string email);

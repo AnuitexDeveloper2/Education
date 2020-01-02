@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Identity;
 using System.Linq.Dynamic.Core;
 using System.Linq;
 using System.Threading.Tasks;
-using static EducationApp.DataAccessLayer.Entities.Constants.Constants.InitialData;
+using initialData = EducationApp.DataAccessLayer.Entities.Constants.Constants.InitialData;
+using errors = EducationApp.DataAccessLayer.Entities.Constants.Constants.Errors;
 using static EducationApp.DataAccessLayer.Entities.Enums.Enums;
 using Microsoft.EntityFrameworkCore;
 using EducationApp.DataAccessLayer.Models.Base;
@@ -25,26 +26,30 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             _signInManager = signInManager;
             _applicationContext = applicationContext;
         }
-        public async Task<bool> CreateUserAsync(ApplicationUser user, string password)
+        public async Task<string> CreateUserAsync(ApplicationUser user, string password)
         {
             var excistUser = await _userManager.FindByEmailAsync(user.Email);
 
             if (excistUser != null)
             {
-                return false;
+                return errors.EmailBusy;
             }
             
             var createUser = await _userManager.CreateAsync(user, password);
-
             if (!createUser.Succeeded)
             {
-                return false;
+                var error = createUser.Errors.Select(k => k.Description).FirstOrDefault();
+                return error;
+            }
+            
+            var result = await _userManager.AddToRoleAsync(user, initialData.User);
+
+            if (!result.Succeeded)
+            {
+                return errors.RoleNotAssigned;
             }
 
-
-            var result = await _userManager.AddToRoleAsync(user, User);
-
-            return result.Succeeded;
+            return errors.Ok;
         }
         public async Task<bool> EditAsync(ApplicationUser user)
         {

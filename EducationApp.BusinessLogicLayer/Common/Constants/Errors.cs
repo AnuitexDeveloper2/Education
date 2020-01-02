@@ -34,6 +34,7 @@ namespace EducationApp.BusinessLogicLayer.Common.Consts
             public const string OrderIsNotFound = "Order Is Not Found";
             public const string NotPaid = "Order is Not Paid";
             public const string IdNotValid = "Id don't Valid";
+            public const string Ok = "Ok";
         }
 
     }

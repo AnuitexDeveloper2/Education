@@ -9,7 +9,7 @@
     <br>
    <p>
        Password 
-       <a href="http://localhost:4200/user/forgot-password">
+       <a routerLink="/user/forgot-password" routerLinkActive="active">
         <span class="forgot-password">forgot your password?</span>
     </a>
     <br>
@@ -17,13 +17,13 @@
 </p>
 </div>
 <div class="pointer">
-        <label >
-                <input type="checkbox" name="remember">
-                <span>Remember me</span>
-                     <form action="">
-                         <button class="signInButton" name="name" (click) = "signIn()">Sign In</button>
-                     </form>
-         </label>
+    <label >
+        <input type="checkbox" name="remember">
+        <span>Remember me</span>
+            <form action="">
+                <button class="signInButton" name="name" (click) = "signIn()">Sign In</button>
+            </form>
+    </label>
 </div>
 <div class="newUser">
 New to book Publishing Company? <br>
@@ -31,7 +31,5 @@ New to book Publishing Company? <br>
     <button  class="signUpButton" type="button" onClick='location.href="http://localhost:4200/account/register"'>Sign Up</button>
 </form>      
 </div>
-
-
 
 

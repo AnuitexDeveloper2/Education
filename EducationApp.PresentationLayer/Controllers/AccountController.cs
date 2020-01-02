@@ -35,7 +35,7 @@ namespace EducationApp.PresentationLayer.Controllers
         {
             var result = await _accountService.CreateUserAsync(userItemModel);
 
-            return Ok(result.Errors);
+            return Ok(result);
         }
 
         [HttpPost("confirmEmail")]

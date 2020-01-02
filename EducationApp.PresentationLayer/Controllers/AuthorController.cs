@@ -30,7 +30,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = role.User)]
+        //[Authorize(Roles = role.Admin)]
         [HttpGet("remove")]
         public async Task<ActionResult> Remove(long id)
         {

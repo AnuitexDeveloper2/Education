@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserModelItem } from 'src/app/shared/models/user/UserModelItem';
 import { AccountService } from 'src/app/shared/services/account/account.service';
-import {FormControl} from '@angular/forms';
+import { BaseModel } from 'src/app/shared/models/Base/BaseModel';
+import { MatDialog } from '@angular/material';
+import { ErrorComponent } from '../error/error.component';
 
 @Component({
   selector: 'app-register',
@@ -11,13 +13,20 @@ import {FormControl} from '@angular/forms';
 })
 export class RegisterComponent {
   user: UserModelItem;
-  constructor(private acc: AccountService) {
+  baseModel: BaseModel;
+  constructor(private accountService: AccountService,public dialog:MatDialog) {
     this.user = new UserModelItem();
+    this.baseModel = new BaseModel();
    }
 
    
   save(){
-    debugger;
-  this.acc.register(this.user).subscribe()
+  this.accountService.register(this.user).subscribe(data => {
+      this.baseModel.errors = data.errors
+      if(this.baseModel.errors.length>0){
+       this.dialog.open(ErrorComponent,{data:this.baseModel.errors})
+      }
+
+  })
  }
 }

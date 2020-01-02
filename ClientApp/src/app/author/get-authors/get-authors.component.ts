@@ -6,17 +6,19 @@ import {PageEvent, MatSort, MatTableDataSource, MatDialog} from '@angular/materi
 import { SortType } from 'src/app/shared/enums/SortType';
 import { CreateComponent } from "src/app/author/create/create.component";
 import { UpdateComponent } from "src/app/author/update/update.component";
-import { RemoveComponent } from '../remove/remove.component';
+import { RemoveComponent } from 'src/app/user/remove/remove.component';
+import { ColumnName } from "src/app/shared/constants/column-name";
 
 @Component({
-  selector: 'app-get',
-  templateUrl: './get.component.html',
-  styleUrls: ['./get.component.css'],
+  selector: 'app-get-authors',
+  templateUrl: './get-authors.component.html',
+  styleUrls: ['./get-authors.component.css'],
   providers:[AuthorService]
 })
 
-export class GetComponent implements OnInit {
 
+export class GetAuthorsComponent implements OnInit {
+  columnName: ColumnName;
   pageIndex:number;
   authorFilter : AuthorFilterModel;
   items: Array<AuthorModelItem>;
@@ -27,7 +29,8 @@ export class GetComponent implements OnInit {
   displayedColumns: string[];
 
   constructor(private authorService:AuthorService,public dialog:MatDialog) { 
-    this.displayedColumns = ['id', 'name', 'product','edit']
+    this.columnName = new ColumnName();
+    this.displayedColumns = [ this.columnName.Id, this.columnName.Name, this.columnName.Product, this.columnName.Edit]
     this.authorFilter = new AuthorFilterModel();
   }
   ngOnInit() {
@@ -80,7 +83,8 @@ export class GetComponent implements OnInit {
   }
 
   remove(author:AuthorModelItem){
-    const dialogRef = this.dialog.open(RemoveComponent,{data:author}).afterClosed().subscribe(() => this.getAuthors())
+    debugger;
+    const dialogRef = this.dialog.open(RemoveComponent,{data:author,}).afterClosed().subscribe(() => this.getAuthors())
  }
   
  applyFilter(filtervalue:string)
