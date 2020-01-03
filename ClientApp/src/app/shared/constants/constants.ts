@@ -1,3 +1,3 @@
-export class Constants{
-    public static readonly emptyString :'';
+export namespace Constants{
+    export const emptyString: string = '';
 }

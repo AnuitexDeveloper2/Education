@@ -28,8 +28,8 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = role.Admin)]
-        [HttpPost("remove")]
+        //[Authorize(Roles = role.Admin)]
+        [HttpGet("remove")]
         public async Task<ActionResult> Remove(long id)
         {
             var result = await _printingEditionService.RemoveAsync(id);
@@ -37,7 +37,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = role.Admin)]
+        //[Authorize(Roles = role.Admin)]
         [HttpPost("update")]
         public async Task<ActionResult> Update(PrintingEditionModelItem printingEditionModelItem)
         {

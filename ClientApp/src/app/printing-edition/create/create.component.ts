@@ -1,16 +1,13 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject,Input } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { PrintingEditionService } from 'src/app/shared/services/printingEdition/printing-edition.service';
-import { PrintingEditionModel } from 'src/app/shared/models/printing-editions/printingEditionModel';
-import { PrintingEditionModelItem } from "src/app/shared/models/printing-editions/PrintingEditionModelItem";
-import { FormControl, FormControlDirective, FormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthorService } from 'src/app/shared/services/author/author.service';
 import { AuthorModel } from 'src/app/shared/models/author/AuthorModel';
 import { AuthorModelItem } from 'src/app/shared/models/author/AuthorModelItem';
-import { AuthorModule } from 'src/app/author/author.module';
 import { ProductType } from 'src/app/shared/enums/ProductType';
-import { PrintingEditionSortType } from 'src/app/shared/enums/PrintingEditionSortType';
 import { CurrencyType } from 'src/app/shared/enums/CurrencyType';
+import { PrintingEditionModelItem } from 'src/app/shared/models/printing-editions/PrintingEditionModelItem';
 
 @Component({
   selector: 'app-create',
@@ -19,20 +16,21 @@ import { CurrencyType } from 'src/app/shared/enums/CurrencyType';
   providers:[PrintingEditionService]
 })
 export class CreateComponent {
-
-  printingEdition = new FormGroup({
-    title: new FormControl,
-    price: new FormControl,
-    description: new FormControl,
-    typeProduct: new FormControl,
-    currency: new FormControl,
-    authors: new FormControl,
-  })
+    printingEdition: FormGroup;
     items = new Array<AuthorModelItem>();
-    
-  constructor(@Inject(MAT_DIALOG_DATA) public data: string, private service: PrintingEditionService,private authorService: AuthorService) { }
+    //regex = new RegExp("^[0-9]+$");
+
+
+  constructor( private service: PrintingEditionService,private authorService: AuthorService,private formBuilder: FormBuilder) {
+      this.printingEdition = this.formBuilder.group({
+      title: ['', Validators.required],
+      description: ['', Validators.required],
+      price: ['', Validators.required, Validators.pattern('^[0-9]+$')]
+
+    })
+   }
   
-  authorsList  =  this.authorService.getAll().subscribe((data:AuthorModel)=>
+  authorsList = this.authorService.getAll().subscribe((data:AuthorModel)=>
   this.items = data.items)
    
   categoryList = enumSelector(ProductType);
@@ -40,7 +38,12 @@ export class CreateComponent {
   currencyList = enumSelector(CurrencyType);
   save(){
     debugger;
-    this.service.create(this.printingEdition.value).subscribe();
+    let model = new PrintingEditionModelItem();
+    model.price = parseInt(this.printingEdition.get('price').value, 10);
+    model.description = this.printingEdition.get('description').value;
+    model.title = this.printingEdition.get('title').value;
+    debugger
+    this.service.create(model).subscribe();
   }
 
 }

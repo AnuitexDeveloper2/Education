@@ -8,10 +8,11 @@ import { SignInComponent } from 'src/app/account/sign-in/sign-in.component';
 import { SignOutComponent } from 'src/app/account/sign-out/sign-out.component';
 import { ConfirmEmailComponent } from 'src/app/account/confirm-email/confirm-email.component';
 import { ErrorComponent } from './error/error.component';
+import { ForgotPasswordComponent } from "src/app/account/forgot-password/forgot-password.component";
 
 
 @NgModule({
-  declarations: [RegisterComponent, SignInComponent, SignOutComponent, ConfirmEmailComponent, ErrorComponent],
+  declarations: [RegisterComponent,ForgotPasswordComponent, SignInComponent, SignOutComponent, ConfirmEmailComponent, ErrorComponent],
   imports: [
     MatFormFieldModule,
     FormsModule,

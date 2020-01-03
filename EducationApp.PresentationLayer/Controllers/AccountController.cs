@@ -38,6 +38,14 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
+        [HttpPost("forgotPassword")]
+        public async Task<ActionResult> ForgotPassword(string email)
+        {
+            var result = await _accountService.RestorePasswordAsync(email);
+
+            return Ok(result);
+        }
+
         [HttpPost("confirmEmail")]
         public async Task<ActionResult> ConfirmEmail(UserModelItem email)
         {
@@ -90,7 +98,6 @@ namespace EducationApp.PresentationLayer.Controllers
 
             long id;
 
-              //todo use tryParse
             var resultParse = long.TryParse(userId, out id);
             if (!resultParse)
             {

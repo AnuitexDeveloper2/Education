@@ -4,7 +4,7 @@ namespace EducationApp.BusinessLogicLayer.Common.Consts
     {
         public class Errors
         {
-            public const string NotFound = "User Not Found";
+            public const string UserNotFound = "User Not Found";
             public const string InvalidToken = "Token is not valid";
             public const string Remove = "Remove User is Failure";
             public const string EmptyField = "Some Field is Empty";
@@ -35,7 +35,8 @@ namespace EducationApp.BusinessLogicLayer.Common.Consts
             public const string NotPaid = "Order is Not Paid";
             public const string IdNotValid = "Id don't Valid";
             public const string Ok = "Ok";
+            public const string Email = "Email  ";
+            public const string NotFound = "  Not Found";
         }
-
     }
 }

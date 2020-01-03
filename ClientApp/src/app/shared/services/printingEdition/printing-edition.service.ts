@@ -4,6 +4,9 @@ import { Observable } from "rxjs";
 import { PrintingEditionFilterModel } from 'src/app/shared/models/printing-editions/PrintingEditionFilterModel';
 import { PrintingEditionModel } from "src/app/shared/models/printing-editions/printingEditionModel";
 import { environment } from "src/environments/environment";
+import { PrintingEditionModelItem } from '../../models/printing-editions/PrintingEditionModelItem';
+import { BaseModel } from '../../models/Base/BaseModel';
+import { AuthorModelItem } from '../../models/author/AuthorModelItem';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +19,11 @@ export class PrintingEditionService {
     return this.http.post<PrintingEditionModel>( environment.baseUrl + 'printingEdition/get',printingEditionFilterState)
   }
 
-  create(printingEditionModel:PrintingEditionModel){
-    return this.http.post( environment.baseUrl + 'printingEdition/create',printingEditionModel)
+  create(author:PrintingEditionModelItem) {
+    return this.http.post( environment.baseUrl +`printingEdition/create/`,author,{withCredentials: true});
+  }
+
+  remove(id:number){
+    return this.http.get(`https://localhost:44309/api/printingEdition/remove/?id=${id}`)
   }
 }

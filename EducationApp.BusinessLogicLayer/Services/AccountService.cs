@@ -7,7 +7,8 @@ using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using System.Threading.Tasks;
 using error = EducationApp.BusinessLogicLayer.Common.Consts.Constants.Errors;
 using EducationApp.BusinessLogicLayer.Extention.Mapper.UserMapper;
-
+using password = EducationApp.BusinessLogicLayer.Common.Consts.Constants.RandomPassword;
+using EducationApp.BusinessLogicLayer.Helpers.GeneratePassword;
 
 namespace EducationApp.BusinessLogicLayer.Services
 {
@@ -47,6 +48,31 @@ namespace EducationApp.BusinessLogicLayer.Services
             return userModel;
         }
 
+        public async Task<BaseModel> RestorePasswordAsync(string email)
+        {
+            var resultModel = new BaseModel();
+
+            var user = await _userRepository.GetByEmailAsync(email);
+
+            if (user == null)
+            {
+                resultModel.Errors.Add(error.Email + email + error.NotFound);
+                return resultModel;
+            }
+            var newPassword = GeneratePassword.CreateRandomPassword(password.PasswordLength);
+
+            var result = await _userRepository.ResetPasswordAsync(user, newPassword);
+
+            if (!result)
+            {
+                resultModel.Errors.Add(error.InvalidToken);
+            }
+
+            _emailSender.SendingEmailAsync(user.Email);
+
+            return resultModel;
+        }
+
         public async Task<BaseModel> ConfirmEmailAsync(string email)
         {
             var userModel = new BaseModel();
@@ -55,7 +81,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             
             if (user == null)
             {
-                userModel.Errors.Add(error.NotFound);
+                userModel.Errors.Add(error.UserNotFound);
                 return userModel;
             
             }
@@ -107,7 +133,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             var user = await _userRepository.GetByEmailAsync(email);
             if (user == null)
             {
-                usersModel.Errors.Add(error.NotFound);
+                usersModel.Errors.Add(error.UserNotFound);
                 return usersModel;
             }
             var result = await _userRepository.SignInAsync(user, password);

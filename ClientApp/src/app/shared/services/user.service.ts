@@ -12,9 +12,7 @@ export class UserService {
  
   constructor(private http:HttpClient) { }
 
-  forgotPassword(email:string) {
-    return this.http.post(`https://localhost:44309/api/user/forgotPassword/?email=${email}`,{withCredentials:true});
-  }
+  
 
   getUsers(userFilterModel:UserFilterModel):Observable<UserModel> {
     return this.http.post<UserModel>('https://localhost:44309/api/user/getUsers',userFilterModel)

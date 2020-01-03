@@ -4,6 +4,10 @@ import { PrintingEditionFilterModel } from 'src/app/shared/models/printing-editi
 import { PrintingEditionModelItem } from 'src/app/shared/models/printing-editions/PrintingEditionModelItem';
 import {PageEvent, MatSort, MatTableDataSource, MatDialog} from '@angular/material';
 import { CreateComponent } from 'src/app/printing-edition/create/create.component';
+import { ColumnName } from 'src/app/shared/constants/column-name';
+import { Filter } from 'src/app/shared/constants/Filter';
+import { RemoveComponent } from 'src/app/printing-edition/remove/remove.component';
+import { PrintingEditionModel } from 'src/app/shared/models/printing-editions/printingEditionModel';
 
 
 @Component({
@@ -23,14 +27,14 @@ export class PrintingEditionsComponent implements OnInit {
 
   constructor(private service: PrintingEditionService, private dialog: MatDialog ) {
 
-   this.displayedColumns = ['id','name','description','category','authors','price','edit']
+   this.displayedColumns = [ ColumnName.id, ColumnName.Name, ColumnName.Description, ColumnName.Category, ColumnName.Authors, ColumnName.Price, ColumnName.Edit ]
    this.filter = new PrintingEditionFilterModel();
    }
 
   ngOnInit() {
     this.filter.TypeProduct = [0,1,2]
-    this.filter.pageNumber = 1;
-    this.filter.pageSize = 10;
+    this.filter.pageNumber = Filter.one;
+    this.filter.pageSize = Filter.ten;
     this.getBooks();
   }
 
@@ -42,7 +46,11 @@ export class PrintingEditionsComponent implements OnInit {
   }
 
   create(){
-    const dialogRef = this.dialog.open(CreateComponent).afterClosed().subscribe(()=>this.getBooks())
+    const dialogRef = this.dialog.open(CreateComponent).afterClosed().subscribe();
+  }
+
+  remove(printingEdition:PrintingEditionModelItem){
+    const dialogRef = this.dialog.open(RemoveComponent,{data:printingEdition})
   }
 
 }

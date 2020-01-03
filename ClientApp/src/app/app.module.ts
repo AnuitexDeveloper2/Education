@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { AppComponent } from 'src/app/app.component';
-import { HeaderComponent } from './shared/header/header.component';
+import { HeaderComponent } from './shared/components/header/header.component';
 import { Router } from '@angular/router';
 import { AccountModule } from 'src/app/account/account.module';
 import { CookieService } from 'ngx-cookie-service';

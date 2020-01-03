@@ -33,11 +33,7 @@ email:string;
   }
 
   getAll():Observable<AuthorModule>{
-    debugger;
     return this.http.get(environment.baseUrl + 'author/getAll')
   }
 
-
-  
-  
 }

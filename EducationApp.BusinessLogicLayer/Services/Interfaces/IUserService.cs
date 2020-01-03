@@ -12,7 +12,7 @@ namespace EducationApp.BusinessLogicLayer.Services
         Task<UserModelItem> GetProfileAsync(long id);
         Task<BaseModel> EditProfileAsync(UserProfileEditModel model);
         Task <UserModel> GetUsersAsync(UserFilterModel filter);
-        Task<BaseModel> RestorePasswordAsync(string email);
+       
         Task<BaseModel> ChangePassword( long id, string oldPassword, string newPassword);
 
 

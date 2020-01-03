@@ -1,11 +1,11 @@
 using System;
 using password = EducationApp.BusinessLogicLayer.Common.Consts.Constants.RandomPassword;
 
-namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.User
+namespace EducationApp.BusinessLogicLayer.Helpers.GeneratePassword
 {
     public class GeneratePassword
     {
-        private static string _validChars =password.AvailableChar;
+        private static readonly string _validChars =password.AvailableChar;
 
         public static string CreateRandomPassword(int passwordLength)
         {

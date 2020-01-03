@@ -7,11 +7,11 @@ import { UserModelItem } from 'src/app/shared/models/user/UserModelItem';
 
 @Component({
   selector: 'app-edit-profile',
-  templateUrl: './edit-profile.component.html',
-  styleUrls: ['./edit-profile.component.css'],
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css'],
   providers: [UserService]
 })
-export class EditProfileComponent  {
+export class ProfileComponent  {
   
   userModelItem: UserModelItem;
   firstName = new FormControl();

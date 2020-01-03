@@ -8,34 +8,35 @@ import { CreateComponent } from "src/app/author/create/create.component";
 import { UpdateComponent } from "src/app/author/update/update.component";
 import { RemoveComponent } from 'src/app/user/remove/remove.component';
 import { ColumnName } from "src/app/shared/constants/column-name";
+import { Filter } from 'src/app/shared/constants/Filter';
+import { Direction } from 'src/app/shared/constants/direction';
 
 @Component({
   selector: 'app-get-authors',
-  templateUrl: './get-authors.component.html',
-  styleUrls: ['./get-authors.component.css'],
+  templateUrl: './authors.component.html',
+  styleUrls: ['./authors.component.css'],
   providers:[AuthorService]
 })
 
 
-export class GetAuthorsComponent implements OnInit {
-  columnName: ColumnName;
-  pageIndex:number;
+export class AuthorsComponent implements OnInit {
+  pageIndex: number;
   authorFilter : AuthorFilterModel;
   items: Array<AuthorModelItem>;
   count: number;
   pageNumber: number;
   pageSize: number;
-  public dataSource = new MatTableDataSource();
+  public dataSource= new MatTableDataSource();
   displayedColumns: string[];
+  
 
   constructor(private authorService:AuthorService,public dialog:MatDialog) { 
-    this.columnName = new ColumnName();
-    this.displayedColumns = [ this.columnName.Id, this.columnName.Name, this.columnName.Product, this.columnName.Edit]
+    this.displayedColumns = [ ColumnName.id, ColumnName.Name, ColumnName.Product, ColumnName.Edit]
     this.authorFilter = new AuthorFilterModel();
   }
   ngOnInit() {
-    this.authorFilter.pageSize = 10;
-    this.authorFilter.pageNumber = 1;
+    this.authorFilter.pageSize = Filter.ten;
+    this.authorFilter.pageNumber = Filter.one;
     this.getAuthors();
   }
 
@@ -51,12 +52,12 @@ export class GetAuthorsComponent implements OnInit {
   sortAuthors(event:MatSort) {
 
 
-    if(event.direction =='asc')
+    if(event.direction == Direction.Asc)
     {
       this.authorFilter.sortType = SortType.Asc;
     }
 
-    if(event.direction == 'desc')
+    if(event.direction == Direction.Desc)
     {
       this.authorFilter.sortType = SortType.Desc;
     }
@@ -68,7 +69,7 @@ export class GetAuthorsComponent implements OnInit {
     debugger;
     this.authorFilter.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
-    this.authorFilter.pageNumber = this.pageIndex + 1; 
+    this.authorFilter.pageNumber = this.pageIndex + Filter.one; 
     this.getAuthors();
   }
 
@@ -78,20 +79,18 @@ export class GetAuthorsComponent implements OnInit {
   }
 
   edit(author:AuthorModelItem){
-    debugger;
     const dialogRef = this.dialog.open(UpdateComponent,{data:author}).afterClosed().subscribe(() => this.getAuthors());
   }
 
   remove(author:AuthorModelItem){
-    debugger;
     const dialogRef = this.dialog.open(RemoveComponent,{data:author,}).afterClosed().subscribe(() => this.getAuthors())
  }
   
  applyFilter(filtervalue:string)
  {
    this.authorFilter.searchString = filtervalue;
-   this.authorFilter.pageNumber = 1;
-   this.pageIndex = 0;
+   this.authorFilter.pageNumber = Filter.one;
+   this.pageIndex = Filter.zero;
    this.getAuthors();
    
  }

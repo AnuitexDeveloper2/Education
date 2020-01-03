@@ -2,12 +2,10 @@ using System.Threading.Tasks;
 using EducationApp.BusinessLogicLayer.Extention.User;
 using EducationApp.BusinessLogicLayer.Helpers;
 using EducationApp.BusinessLogicLayer.Helpers.Mapping;
-using EducationApp.BusinessLogicLayer.Helpers.Mapping.User;
 using EducationApp.BusinessLogicLayer.Models.Base;
 using EducationApp.BusinessLogicLayer.Models.Users;
 using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using errors = EducationApp.BusinessLogicLayer.Common.Consts.Constants.Errors;
-using password = EducationApp.BusinessLogicLayer.Common.Consts.Constants.RandomPassword;
 using EducationApp.BusinessLogicLayer.Extention.Mapper.UserMapper;
 
 namespace EducationApp.BusinessLogicLayer.Services
@@ -15,11 +13,9 @@ namespace EducationApp.BusinessLogicLayer.Services
     class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IEmailSender _emailSender;
-        public UserService(IUserRepository userRepository, IEmailSender emailSender)
+        public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            _emailSender = emailSender;
         }
 
         public async Task<BaseModel> EditProfileAsync(UserProfileEditModel model)
@@ -36,7 +32,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
             if (user == null)
             {
-                resultModel.Errors.Add(errors.NotFound);
+                resultModel.Errors.Add(errors.UserNotFound);
                 return resultModel;
             }
 
@@ -59,7 +55,7 @@ namespace EducationApp.BusinessLogicLayer.Services
             var user = await _userRepository.GetByIdAsync(id);
             if (user == null)
             {
-                resultModel.Errors.Add(errors.NotFound);
+                resultModel.Errors.Add(errors.UserNotFound);
                 return resultModel;
             }
 
@@ -81,7 +77,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
             if (user == null)
             {
-                resultModel.Errors.Add(errors.NotFound);
+                resultModel.Errors.Add(errors.UserNotFound);
                 return resultModel;
             }
 
@@ -103,7 +99,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
             if (user == null)
             {
-                resultModel.Errors.Add(errors.NotFound);
+                resultModel.Errors.Add(errors.UserNotFound);
                 return resultModel;
             }
 
@@ -126,7 +122,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
             if (user == null)
             {
-                resultModel.Errors.Add(errors.NotFound);
+                resultModel.Errors.Add(errors.UserNotFound);
                 return resultModel;
             }
 
@@ -134,32 +130,6 @@ namespace EducationApp.BusinessLogicLayer.Services
 
             return resultModel;
         }
-
-        public async Task<BaseModel> RestorePasswordAsync(string email)
-        {
-            var resultModel = new BaseModel();
-
-            var user = await _userRepository.GetByEmailAsync(email);
-
-            if (user == null)
-            {
-                resultModel.Errors.Add(errors.NotFound);
-                return resultModel;
-            }
-            var newPassword = GeneratePassword.CreateRandomPassword(password.PasswordLength);
-
-            var result = await _userRepository.ResetPasswordAsync(user, newPassword);
-
-            if (!result)
-            {
-                resultModel.Errors.Add(errors.InvalidToken);
-            }
-
-            _emailSender.SendingEmailAsync(user.Email);
-
-            return resultModel;
-        }
-
 
         public async Task<UserModel> GetUsersAsync(UserFilterModel userFilter)
         {
@@ -171,7 +141,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
             if (users == null)
             {
-                usersModel.Errors.Add(errors.NotFound);
+                usersModel.Errors.Add(errors.UserNotFound);
                 return usersModel;
             }
 

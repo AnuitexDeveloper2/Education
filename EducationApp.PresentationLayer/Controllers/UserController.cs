@@ -56,13 +56,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        [HttpPost("forgotPassword")]
-        public async Task<ActionResult> ForgotPassword(string email)
-        {
-            var result = await _userService.RestorePasswordAsync(email);
-
-            return Ok(result);
-        }
+       
 
         [Authorize(Roles = role.User)]
         [HttpGet("changePassword")]

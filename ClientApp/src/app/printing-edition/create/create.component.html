@@ -1,5 +1,5 @@
 <h2>Add new Product</h2>
-<form action="" [formGroup]="printingEdition">
+<form action="" [formGroup]="printingEdition" >
 <div>
     <mat-form-field action="/action_page.php">
        <span class="nameProperty">Title:</span> <textarea matInput  formControlName ="title" cols="50" rows="4"   type="text" class="title"  maxlength="100">  </textarea>
@@ -8,7 +8,7 @@
 
     <mat-form-field class="category">
         <span class="nameProperty"> Category: </span><br>
-         <mat-select class="mat__select"  formControlName = "typeProduct" >
+         <mat-select class="mat__select"  formControlName = "type" >
             <mat-option *ngFor= "let item of categoryList" [value]="item">{{item}}</mat-option>
          </mat-select>
     </mat-form-field>
@@ -46,6 +46,6 @@
   <div id="block_container">
 
     <div id="bloc1">  <button class="cancel" mat-button mat-dialog-close>Cancel</button>  </div>  
-    <div id="bloc2">  <button class="Save" mat-button [mat-dialog-close]="true"  (click) = save()>Save</button> </div>
+    <div id="bloc2">  <button class="Save" type="submit" mat-button [mat-dialog-close]="true"  (click) = save()>Save</button> </div>
 
 </div>
