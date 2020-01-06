@@ -5,56 +5,50 @@
 <div class="Create">
     <h2>Create account</h2>
 </div>
-<form class="form-group" (ngSubmit)="onSubmit()" #userForm="ngForm">
+<form class="form-group" (ngSubmit)="onSubmit()" [formGroup]="userForm">
     
     <div>
-        <label for="name">Your UserName</label> <br>
-        <input type="text" class="form-control" size="80" placeholder="UserName" required [(ngModel)]="user.userName" name="userName" #userName="ngModel">
-        <div [hidden]="userName.valid || userName.pristine" class="alert alert-danger">
-                 Please enter your UserName
+        <mat-form-field class="form" appearance="outline">
+            <mat-label class="label">User Name</mat-label>
+            <input matInput placeholder="Please Enter Your UserName" formControlName = "userName">
+        </mat-form-field>
     </div>
-     </div> <br>
+    
+    <div>
+        <mat-form-field class="form" appearance="outline">
+            <mat-label class="label">First Name</mat-label>
+            <input matInput placeholder="Please Enter Your First Name" formControlName = "firstName">
+        </mat-form-field>
+    </div>
 
     <div>
-        <label >Your First Name</label> <br>
-        <input type="text" class="form-control" size="80" placeholder="First Name" required [(ngModel)] ="user.firstName" name="firstName" #firstName="ngModel">
-        <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger">
-            Please enter your First Name
-        </div>
+        <mat-form-field class="form" appearance="outline">
+            <mat-label class="label">Last Name</mat-label>
+            <input matInput placeholder="Please Enter Your Last Name" formControlName = "lastName">
+        </mat-form-field>
     </div>
-   
-    <div> <br>
-        <label>Your Last Name</label> <br>
-        <input type="text" class="form-control" size="80" placeholder="Last Name" required  [(ngModel)] ="user.lastName" name="lastName" #lastName="ngModel">
-        <div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger">
-            Please enter your Last Name
-        </div>
+
+    <div>
+        <mat-form-field class="form" appearance="outline">
+            <mat-label class="label">Email</mat-label>
+            <input matInput placeholder="Please Enter Your Email" formControlName = "email">
+        </mat-form-field>
     </div>
-    
-    <div> <br>
-        <label >E-mail</label> <br>
-        <input type="email" class="form-control" size="80" placeholder="E-mail" required email [(ngModel)] ="user.email" name="email" #email="ngModel">
-        <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
-            Please enter a valid email adress
-        </div>
-    </div> 
-    <div> <br>
-        <div>
-            <label>Password</label> <br>
-            <input type="password" class="form-control" size="80" placeholder="Password" required password  [(ngModel)]="user.password" name="password"  #password="ngModel">
-            <div [hidden]="password.valid || password.pristine" class="alert alert-danger" > 
-              Password is required
-            </div>
-         </div>
-         <div> <br>
-            <label>Confirm password</label> <br>
-            <input type="password" size="80" name="confirmPassword"[(ngModel)]="confirmPasswordText" required validateEqual="password" #confirmPassword="ngModel">
-            <div [hidden]="confirmPassword.valid || confirmPassword.pristine" class="alert">
-              Password mismatch
-            </div>
-         </div>
+
+    <div>
+        <mat-form-field class="form" appearance="outline">
+            <mat-label class="label">Password</mat-label>
+            <input matInput placeholder="Please Enter Your Password" formControlName = "password">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field class="form" appearance="outline">
+            <mat-label class="form">Confirm Password</mat-label>
+            <input matInput placeholder="Please Enter Your Last Name">
+        </mat-form-field>
     </div>
 </form>
-<form action="">
-    <p class="button"><button  type="submit" class="btn btn-success" [disabled]="!userForm.form.valid" (click)="save()"> Sign Up your account</button></p>
+<form >
+    <p class="button"><button  type="submit" class="btn btn-success"  (click)="save()"> Sign Up your account</button></p>
 </form>

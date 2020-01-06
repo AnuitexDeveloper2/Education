@@ -20,6 +20,7 @@ export class PrintingEditionService {
   }
 
   create(author:PrintingEditionModelItem) {
+    debugger;
     return this.http.post( environment.baseUrl +`printingEdition/create/`,author,{withCredentials: true});
   }
 

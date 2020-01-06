@@ -20,16 +20,9 @@
 }
 
 .ng-valid[required], .ng-valid.required  {
-    border-left: 5px solid #42A948; /* green */
+    border-left: 5px solid #42A948; 
   }
   
-  .ng-invalid:not(form)  {
-    border-left: 5px solid #a94442; /* red */
-  }
-
-  .alert{
-      color: crimson;
-  }
 
   button {
     font-family: Arial;
@@ -49,3 +42,28 @@
     color: #aaa;
     cursor: auto;
   }
+
+  .form{
+    width: 600px;
+    border-color: green;
+  }
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: black!important;
+   opacity: 1!important;
+}
+
+::ng-deep .mat-form-field-label {
+  color: rgba(0,0,0,.6)!important;
+}
+
+::ng-deep .mat-input-element {
+  caret-color: black!important;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: rgb(136, 212, 136)!important;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick{
+  color: red!important;
+}

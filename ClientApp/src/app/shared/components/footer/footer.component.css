@@ -1,0 +1,12 @@
+.footer{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: grey;
+    background-color: rgb(217, 243, 217);
+}
+.version{
+   text-align: center;
+}
+
+.license{
+    text-align: right;
+}

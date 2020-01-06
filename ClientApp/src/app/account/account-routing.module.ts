@@ -13,7 +13,8 @@ export const routes: Routes = [
       { path: 'confirm-email', component: ConfirmEmailComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'error', component: ErrorComponent},
-      { path: 'forgot-password', component: ForgotPasswordComponent }
+      { path: 'forgot-password', component: ForgotPasswordComponent },
+      { path: 'sign-out', component: SignOutComponent}
 ];
 
 @NgModule({

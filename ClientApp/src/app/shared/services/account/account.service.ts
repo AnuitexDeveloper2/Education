@@ -15,11 +15,11 @@ register(user: UserModelItem):Observable<BaseModel>{
   }
   
   signIn(email:string,password:string):Observable<BaseModel>{
-    return this.http.post<BaseModel>(environment + `signIn/?password=${password}&email=${email}`, { withCredentials: true })
+    return this.http.post<BaseModel>(environment.baseUrl + `signIn/?password=${password}&email=${email}`, { withCredentials: true })
   }
 
   forgotPassword(email:string):Observable<BaseModel> {
-    return this.http.post<BaseModel>(`https://localhost:44309/api/account/forgotPassword/?email=${email}`,{withCredentials:true});
+    return this.http.post<BaseModel>(environment.baseUrl + `account/forgotPassword/?email=${email}`,{withCredentials:true});
   }
 
 }

@@ -57,6 +57,7 @@ export class UsersComponent implements OnInit {
   }
   
   changeUserStatus(id:number){
+    debugger;
     this.userService.changeUserStatus(id).subscribe();
   }
 

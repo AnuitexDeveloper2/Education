@@ -1,6 +1,7 @@
 .title{
     width: 200px;
     height: 100px;
+    columns: 50;
 }
 .description{
     width: 200px;

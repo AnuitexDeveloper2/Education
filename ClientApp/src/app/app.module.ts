@@ -14,15 +14,15 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule  } from "@angular/platform-browser/animations";
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationInterceptor } from "./shared/AuthenticationInterceptor";
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalModule } from "ng2-modal";
-import { MatInputModule } from '@angular/material';
+import { FooterComponent } from './shared/components/footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    FooterComponent
       ],
   imports: [
     NgbModule,
@@ -35,10 +35,8 @@ import { MatInputModule } from '@angular/material';
     BrowserAnimationsModule,
     UserModule,
     AccountModule,
-    MatFormFieldModule,
     MatSelectModule,
     ModalModule,
-    MatInputModule 
   ],
   providers:[{
     provide:HTTP_INTERCEPTORS,

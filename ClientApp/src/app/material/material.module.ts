@@ -9,10 +9,14 @@ import {  MatButtonModule,
   MatSlideToggleModule,
   MatSelectModule,
   MatFormFieldModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatCheckboxModule,
+  MatIconModule,
 } from "@angular/material";
 
 const MaterialComponent =[
+ MatIconModule,
+ MatCheckboxModule,
  MatPaginatorModule,
  MatTableModule,
  MatDialogModule,
