@@ -32,7 +32,7 @@ export class PrintingEditionsComponent implements OnInit {
 
    this.displayedColumns = [ ColumnName.id, ColumnName.Name, ColumnName.Description, ColumnName.Category, ColumnName.Authors, ColumnName.Price, ColumnName.Edit ];
    this.filter = new PrintingEditionFilterModel();
-   this.type = [Category.Book,Category.Jornal,Category.Newspaper];
+   this.type = [Category.Book,Category.Journal,Category.Newspaper];
    this.dataSource
    }
 
@@ -99,12 +99,13 @@ export class PrintingEditionsComponent implements OnInit {
 
   filterBook(name: string) {
     debugger;
+    this.filter.TypeProduct = new Array<ProductType>();
     if( name == Category.Book)
     {
       this.filter.TypeProduct.push(ProductType.Book);
     }
     
-    if( name == Category.Jornal){
+    if( name == Category.Journal){
       this.filter.TypeProduct.push(ProductType.Journal);
     }
 
