@@ -23,12 +23,12 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
         public async Task<ResponseModel<Author>> GetFiltredAsync(AuthorFilterModel authorFilterModel)
         {
-            var authors = from author in _applicationContext.Authors where author.IsRemoved ==false
+            var authors = from author in _applicationContext.Authors where author.IsRemoved == false
                          select new Author
                          {
                              Id = author.Id,
                              Name = author.Name,
-                             PrintingEditions = (from authorPrintingEdition in _applicationContext.AuthorInPrintingEditions
+                             PrintingEditions = (from authorPrintingEdition in _applicationContext.AuthorInPrintingEditions 
                                                  join printingEdition in _applicationContext.PrintingEditions on authorPrintingEdition.AuthorId equals author.Id
                                                  where (authorPrintingEdition.PrintingEditionId == printingEdition.Id)
                                                  select new PrintingEdition

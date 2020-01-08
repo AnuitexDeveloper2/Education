@@ -45,6 +45,13 @@ table {
 th, td { 
     text-align: left; 
     padding: 8px; 
+    text-align: left; 
+    max-width: 100px;
+    border: 1px solid #000000;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 20%; 
 } 
   
 tr:nth-child(odd) { 

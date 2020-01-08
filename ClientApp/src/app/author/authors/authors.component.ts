@@ -21,16 +21,16 @@ import { Direction } from 'src/app/shared/constants/direction';
 
 export class AuthorsComponent implements OnInit {
   pageIndex: number;
-  authorFilter : AuthorFilterModel;
+  authorFilter: AuthorFilterModel;
   items: Array<AuthorModelItem>;
   count: number;
   pageNumber: number;
   pageSize: number;
-  public dataSource= new MatTableDataSource();
+  public dataSource = new MatTableDataSource();
   displayedColumns: string[];
   
 
-  constructor(private authorService:AuthorService,public dialog:MatDialog) { 
+  constructor( private authorService:AuthorService,public dialog:MatDialog ) { 
     this.displayedColumns = [ ColumnName.id, ColumnName.Name, ColumnName.Product, ColumnName.Edit]
     this.authorFilter = new AuthorFilterModel();
   }
@@ -41,7 +41,7 @@ export class AuthorsComponent implements OnInit {
   }
 
   
-  getAuthors(){
+  getAuthors() {
     debugger;
     return this.authorService.get(this.authorFilter).subscribe(data=>{
       this.count = data.count;
@@ -65,7 +65,7 @@ export class AuthorsComponent implements OnInit {
     this.getAuthors();
   }
 
-  pagination(event: PageEvent) {
+  movePage(event: PageEvent) {
     debugger;
     this.authorFilter.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
@@ -73,26 +73,24 @@ export class AuthorsComponent implements OnInit {
     this.getAuthors();
   }
 
-  create(){
+  create() {
     const dialogRef = this.dialog.open(CreateComponent).afterClosed().subscribe(() => this.getAuthors());
     this.getAuthors();
   }
 
-  edit(author:AuthorModelItem){
+  edit(author:AuthorModelItem) {
     const dialogRef = this.dialog.open(UpdateComponent,{data:author}).afterClosed().subscribe(() => this.getAuthors());
   }
 
-  remove(author:AuthorModelItem){
+  remove(author:AuthorModelItem) {
     const dialogRef = this.dialog.open(RemoveComponent,{data:author,}).afterClosed().subscribe(() => this.getAuthors())
  }
   
- applyFilter(filtervalue:string)
- {
+ applyFilter(filtervalue:string) {
    this.authorFilter.searchString = filtervalue;
    this.authorFilter.pageNumber = Filter.one;
    this.pageIndex = Filter.zero;
    this.getAuthors();
-   
  }
 
 

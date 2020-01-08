@@ -13,7 +13,6 @@ export class RemoveComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: PrintingEditionModelItem, private printingEditionService:PrintingEditionService) { }
   
   remove(){
-    debugger;
-    this.printingEditionService.remove(this.data.id).subscribe
+    this.printingEditionService.remove(this.data.id).subscribe();
   }
 }

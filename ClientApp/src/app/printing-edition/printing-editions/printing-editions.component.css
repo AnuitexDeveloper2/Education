@@ -3,17 +3,20 @@ table {
   }
 
   td.mat-column-id {
-    width: 15%;
+    width: 5%;
     padding-right: 8px;
   }
   
   th.mat-column-name, td.mat-column-name {
+    width: 20%;
+  }
+
+  th.mat-column-description, td.mat-column-description{
     width: 35%;
-    padding-left: 10%;
   }
 
   th.mat-column-product, td.mat-column-product{
-    width: 35%;
+    width: 25%;
     padding-left: 10%;
   }
 
@@ -42,11 +45,17 @@ table {
   table { 
     border-collapse: collapse; 
     width: 100%; 
+    column-rule: black;
 } 
   
 th, td { 
     text-align: left; 
-    padding: 8px; 
+    max-width: 100px;
+    border: 1px solid #000000;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 20%; 
 } 
   
 tr:nth-child(odd) { 

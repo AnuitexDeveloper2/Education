@@ -9,6 +9,7 @@ import { ProductType } from 'src/app/shared/enums/ProductType';
 import { CurrencyType } from 'src/app/shared/enums/CurrencyType';
 import { PrintingEditionModelItem } from 'src/app/shared/models/printing-editions/PrintingEditionModelItem';
 import { Constants } from 'src/app/shared/constants/constants';
+import { Filter } from 'src/app/shared/constants/Filter';
 
 @Component({
   selector: 'app-create',
@@ -21,7 +22,7 @@ export class CreateComponent {
     items = new Array<AuthorModelItem>();
     model: PrintingEditionModelItem;
 
-  constructor( private service: PrintingEditionService,private authorService: AuthorService,private formBuilder: FormBuilder) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: PrintingEditionModelItem, private service: PrintingEditionService,private authorService: AuthorService,private formBuilder: FormBuilder) {
       this.printingEdition = this.formBuilder.group({
       authors: [ Constants.emptyString,Validators.required ],
       title: [ Constants.emptyString, Validators.required ],
@@ -39,17 +40,34 @@ export class CreateComponent {
   categoryList = enumSelector(ProductType);
   currencyList = enumSelector(CurrencyType);
 
-  save(){
+  save() {
     debugger;
     this.model.price = this.printingEdition.get('price').value;
-    this.model.authors.items = this.printingEdition.get('authors').value;
+    this.model.authors = this.Map(this.printingEdition.get('authors').value);
     this.model.currency = parseInt(CurrencyType[this.printingEdition.get('currency').value]);
     this.model.type = parseInt(ProductType[this.printingEdition.get('type').value]);
     this.model.description = this.printingEdition.get('description').value;
     this.model.title = this.printingEdition.get('title').value;
-    this.service.create(this.model).subscribe();
+    
+    if(this.data.id >0) {
+      this.model.id = this.data.id
+      this.service.update(this.model).subscribe();
+    }
+
+    if (this.data.id == 0) {
+      this.service.create(this.model).subscribe();
+    }
   }
 
+  private Map(authorsName: Array<AuthorModelItem>) {
+    let authorModel = new AuthorModel();
+    authorModel.items = new Array<AuthorModelItem>();
+    authorsName.forEach(element => {
+      authorModel.items.push(element);     
+   });
+    
+    return authorModel;
+  }
 }
   export function enumSelector(definition) {
     let enumValues:Array<string>= [];

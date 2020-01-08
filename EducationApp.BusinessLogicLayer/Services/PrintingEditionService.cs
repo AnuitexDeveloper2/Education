@@ -70,7 +70,7 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return resultModel;
             }
 
-            var wasRemoveAuthorInPrintingEdition = await _authorInPrintingEditionRepository.RemoveRangeAsync(x => x.AuthorId == printingEdition.Id);
+            var wasRemoveAuthorInPrintingEdition = await _authorInPrintingEditionRepository.RemoveRangeAsync(x => x.PrintingEditionId == printingEdition.Id);
 
             if (!wasRemoveAuthorInPrintingEdition)
             {
@@ -92,15 +92,9 @@ namespace EducationApp.BusinessLogicLayer.Services
                 return resultModel;
             }
 
-            printingEdition =  printingEditionModelItem.Map(printingEdition);
-
             var wasRemoveAuthorInPrintingEdition = await _authorInPrintingEditionRepository.RemoveRangeAsync(x => x.PrintingEditionId == printingEdition.Id);
 
-            if (!wasRemoveAuthorInPrintingEdition)
-            {
-                resultModel.Errors.Add(errors.AuthorInPERemove);
-                return resultModel;
-            }
+            printingEdition = printingEditionModelItem.Map(printingEdition);
 
             var wasUpdatePrintingEdition = await _printingEditionRepository.UpdateAsync(printingEdition);
 

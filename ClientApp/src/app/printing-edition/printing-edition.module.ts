@@ -5,13 +5,12 @@ import { MaterialModule } from "src/app/material/material.module";
 import { PrintingEditionRoutingModule } from './printing-edition-routing.module';
 import { CreateComponent } from 'src/app/printing-edition/create/create.component';
 import { RemoveComponent } from 'src/app/printing-edition/remove/remove.component';
-import { UpdateComponent } from 'src/app/printing-edition/update/update.component';
 import { PrintingEditionsComponent } from 'src/app/printing-edition/printing-editions/printing-editions.component';
 import { RouterModule } from '@angular/router';
 
 
 @NgModule({
-  declarations: [CreateComponent, RemoveComponent, UpdateComponent, PrintingEditionsComponent],
+  declarations: [CreateComponent, RemoveComponent, PrintingEditionsComponent],
   imports: [
     CommonModule,
     PrintingEditionRoutingModule,

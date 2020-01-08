@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Type } from '@angular/core';
 import { PrintingEditionService } from "src/app/shared/services/printingEdition/printing-edition.service";
 import { PrintingEditionFilterModel } from 'src/app/shared/models/printing-editions/PrintingEditionFilterModel';
 import { PrintingEditionModelItem } from 'src/app/shared/models/printing-editions/PrintingEditionModelItem';
@@ -7,8 +7,10 @@ import { CreateComponent } from 'src/app/printing-edition/create/create.componen
 import { ColumnName } from 'src/app/shared/constants/column-name';
 import { Filter } from 'src/app/shared/constants/Filter';
 import { RemoveComponent } from 'src/app/printing-edition/remove/remove.component';
-import { PrintingEditionModel } from 'src/app/shared/models/printing-editions/printingEditionModel';
-
+import { Category } from 'src/app/shared/constants/category';
+import { PrintingEditionSortType } from 'src/app/shared/enums/PrintingEditionSortType';
+import { Direction } from 'src/app/shared/constants/direction';
+import { SortType } from 'src/app/shared/enums/SortType';
 
 @Component({
   selector: 'app-printing-editions',
@@ -18,17 +20,19 @@ import { PrintingEditionModel } from 'src/app/shared/models/printing-editions/pr
 })
 export class PrintingEditionsComponent implements OnInit {
 
-
   filter: PrintingEditionFilterModel;
   count: number;
   items: Array<PrintingEditionModelItem>;
   displayedColumns: string[];
-  public dataSource = new MatTableDataSource();
+  dataSource = new MatTableDataSource();
+  type: string[];
 
   constructor(private service: PrintingEditionService, private dialog: MatDialog ) {
 
-   this.displayedColumns = [ ColumnName.id, ColumnName.Name, ColumnName.Description, ColumnName.Category, ColumnName.Authors, ColumnName.Price, ColumnName.Edit ]
+   this.displayedColumns = [ ColumnName.id, ColumnName.Name, ColumnName.Description, ColumnName.Category, ColumnName.Authors, ColumnName.Price, ColumnName.Edit ];
    this.filter = new PrintingEditionFilterModel();
+   this.type = [Category.Book,Category.Jornal,Category.Newspaper];
+   this.dataSource
    }
 
   ngOnInit() {
@@ -46,11 +50,51 @@ export class PrintingEditionsComponent implements OnInit {
   }
 
   create(){
-    const dialogRef = this.dialog.open(CreateComponent).afterClosed().subscribe();
+    const dialogRef = this.dialog.open(CreateComponent).afterClosed().subscribe(() => this.getBooks());
   }
 
-  remove(printingEdition:PrintingEditionModelItem){
-    const dialogRef = this.dialog.open(RemoveComponent,{data:printingEdition})
+  remove(printingEdition: PrintingEditionModelItem){
+    debugger;
+    const dialogRef = this.dialog.open(RemoveComponent,{data:printingEdition}).afterClosed().subscribe(() => this.getBooks());
+  }
+
+  movePage(event: PageEvent) {
+    this.filter.pageSize = event.pageSize;
+    this.filter.pageNumber = event.pageIndex + Filter.one;
+    this.getBooks();
+  }
+
+  applyFilter(filterValue: string) {
+    this.filter.searchString = filterValue;
+    this.getBooks();
+  }
+
+  edit(printingEdition: PrintingEditionModelItem) {
+    const dialogRef = this.dialog.open(CreateComponent,{data:printingEdition}).afterClosed().subscribe(() => this.getBooks());
+  }
+
+  sort(event: MatSort) {
+     debugger;
+    if (event.active == ColumnName.id) {
+      this.filter.printingEditionSortType = PrintingEditionSortType.Id;
+    }
+
+    if (event.active == ColumnName.Name) {
+      this.filter.printingEditionSortType = PrintingEditionSortType.Title; 
+    }
+
+    if (event.active == ColumnName.Price) {
+      this.filter.printingEditionSortType = PrintingEditionSortType.Price;
+    }
+
+    if (event.direction == Direction.Asc) {
+      this.filter.sortType = SortType.Asc
+    }
+
+    if (event.direction == Direction.Desc) {
+      this.filter.sortType = SortType.Desc
+    }
+    this.getBooks();
   }
 
 }

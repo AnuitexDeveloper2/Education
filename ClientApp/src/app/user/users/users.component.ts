@@ -30,7 +30,7 @@ export class UsersComponent implements OnInit {
   displayedColumns: string[];
   userModelItem: UserModelItem;
   status = new FormControl();
-  statusList : string[]; 
+  statusList: string[]; 
   pageIndex: number;
   currentStatus:UsersFilterType;
 
@@ -56,13 +56,12 @@ export class UsersComponent implements OnInit {
     });
   }
   
-  changeUserStatus(id:number){
+  changeUserStatus(id: number) {
     debugger;
     this.userService.changeUserStatus(id).subscribe();
   }
 
-  sortUser(event:MatSort){
-   
+  sortUser(event: MatSort) {
       if (event.active == ColumnName.Name) {
         this.userFilter.userSortType = UserSortType.LastName;
       }
@@ -81,33 +80,30 @@ export class UsersComponent implements OnInit {
     this.getUsers();
   }
 
-  edit(user:UserModelItem) {
+  edit(user: UserModelItem) {
    debugger;
     const dialogRef = this.dialog.open(ProfileComponent, {data: user}).afterClosed().subscribe(() => this.getUsers());;
   }
 
-  remove(user:UserModelItem){
+  remove(user: UserModelItem) {
     debugger;
     const dialogRef = this.dialog.open(RemoveComponent, {data: user}).afterClosed().subscribe(() => this.getUsers());
   }
 
-  pagination(event:PageEvent){
+  movePage(event: PageEvent) {
     this.userFilter.pageSize = event.pageSize;
     this.userFilter.pageNumber=event.pageIndex+Filter.one;
     this.getUsers()
   }
 
-  applyFilter(filtervalue:string)
-  {
-    debugger;
+  applyFilter(filtervalue: string) {
     this.userFilter.searchString = filtervalue;
     this.userFilter.pageNumber = Filter.one;
     this.pageIndex = Filter.zero;
     this.getUsers();
   }
 
-  filterUser(name:string){
-    debugger;
+  filterUser(name: string) {
     if( name == Status.Active)
     {
       this.userFilter.userFilterStatus = UsersFilterType.Active;

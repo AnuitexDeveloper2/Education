@@ -22,7 +22,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
         public async Task<ResponseModel<PrintingEdition>> GetFiltredAsync(PrintingEditionFilterModel printingEditionFilter) 
         {
-            var printingEditions = (from printingEdition in _applicationContext.PrintingEditions
+            var printingEditions = (from printingEdition in _applicationContext.PrintingEditions where printingEdition.IsRemoved == false
                                     select new PrintingEdition
                                     {
                                         Id = printingEdition.Id,

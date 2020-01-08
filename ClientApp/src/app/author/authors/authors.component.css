@@ -37,6 +37,7 @@ table {
   th{
     background-color: rgb(187, 243, 211);
     font-family: Arial, Helvetica, sans-serif;
+    text-align: left; 
   }
 
   table { 
@@ -47,6 +48,12 @@ table {
 th, td { 
     text-align: left; 
     padding: 8px; 
+    max-width: 100px;
+    border: 1px solid #000000;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 20%; 
 } 
   
 tr:nth-child(odd) { 

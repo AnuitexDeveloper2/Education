@@ -8,6 +8,7 @@
 
 <mat-form-field class="search">
   <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search Author">
+  <mat-icon matSuffix>search</mat-icon>
 </mat-form-field>
 <table mat-table [dataSource]="items" matSort (matSortChange)="sortAuthors($event)" class="mat-elevation-z8">
 
@@ -45,5 +46,11 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<mat-paginator [length] = "count" [pageSize] = "10" [pageIndex]="pageIndex"   (page)="pageEvent = pagination($event)" showFirstLastButtons ></mat-paginator> 
+<mat-paginator 
+  [length] = "count" 
+  [pageSize] = "10" 
+  [pageIndex]="pageIndex"   
+  (page)="pageEvent = movePage($event)" 
+  showFirstLastButtons >
+</mat-paginator> 
 
