@@ -30,8 +30,8 @@
 
       <ng-container matColumnDef="category">
         <th mat-header-cell *matHeaderCellDef> <h2 class="columnTitle"> Category </h2>
-          <mat-select  [formControl]="status" multiple>
-            <mat-option *ngFor="let category of categoryList" (click) = "filterBook(category)" >{{category}}</mat-option>
+          <mat-select   multiple>
+            <mat-option *ngFor="let category of type" (click) = "filterBook(category)" >{{category}}</mat-option>
           </mat-select >
         </th>
         <td mat-cell *matCellDef="let element"> {{type[element.type]}} </td>

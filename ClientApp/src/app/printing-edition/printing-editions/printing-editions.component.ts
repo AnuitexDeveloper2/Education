@@ -11,6 +11,7 @@ import { Category } from 'src/app/shared/constants/category';
 import { PrintingEditionSortType } from 'src/app/shared/enums/PrintingEditionSortType';
 import { Direction } from 'src/app/shared/constants/direction';
 import { SortType } from 'src/app/shared/enums/SortType';
+import { ProductType } from 'src/app/shared/enums/ProductType';
 
 @Component({
   selector: 'app-printing-editions',
@@ -74,7 +75,6 @@ export class PrintingEditionsComponent implements OnInit {
   }
 
   sort(event: MatSort) {
-     debugger;
     if (event.active == ColumnName.id) {
       this.filter.printingEditionSortType = PrintingEditionSortType.Id;
     }
@@ -94,6 +94,24 @@ export class PrintingEditionsComponent implements OnInit {
     if (event.direction == Direction.Desc) {
       this.filter.sortType = SortType.Desc
     }
+    this.getBooks();
+  }
+
+  filterBook(name: string) {
+    debugger;
+    if( name == Category.Book)
+    {
+      this.filter.TypeProduct.push(ProductType.Book);
+    }
+    
+    if( name == Category.Jornal){
+      this.filter.TypeProduct.push(ProductType.Journal);
+    }
+
+    if (name == Category.Newspaper) {
+      this.filter.TypeProduct.push(ProductType.Newspaper);
+    }
+
     this.getBooks();
   }
 
