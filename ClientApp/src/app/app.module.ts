@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { AppComponent } from 'src/app/app.component';
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { AccountModule } from 'src/app/account/account.module';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClientModule } from '@angular/common/http';
-import { MatSelectModule  } from "@angular/material";
+import { MatSelectModule, GestureConfig  } from "@angular/material";
 import { UserModule } from "src/app/user/user.module";
 import { MaterialModule } from "src/app/material/material.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -18,11 +18,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalModule } from "ng2-modal";
 import { FooterComponent } from './shared/components/footer/footer.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
       ],
   imports: [
     NgbModule,
@@ -42,7 +43,8 @@ import { FooterComponent } from './shared/components/footer/footer.component';
     provide:HTTP_INTERCEPTORS,
     useClass: AuthenticationInterceptor,
     multi:true,
-  }],
+  },
+  { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
 
    bootstrap: [AppComponent]
 })

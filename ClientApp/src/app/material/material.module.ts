@@ -12,9 +12,16 @@ import {  MatButtonModule,
   MatTooltipModule,
   MatCheckboxModule,
   MatIconModule,
+  MatSliderModule,
+  MatGridListModule
 } from "@angular/material";
 
+import { Ng5SliderModule } from 'ng5-slider';
+
 const MaterialComponent =[
+  Ng5SliderModule,
+MatSliderModule,
+ MatGridListModule, 
  MatIconModule,
  MatCheckboxModule,
  MatPaginatorModule,

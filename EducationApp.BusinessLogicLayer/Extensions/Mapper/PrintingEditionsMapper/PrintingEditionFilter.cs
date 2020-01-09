@@ -17,11 +17,14 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.PrintingEditions
                 PrintingEditionSortType = (PrintingEditionSortType)printingEditionFilterState.PrintingEditionSortType,
                 SortType = (SortType)printingEditionFilterState.SortType
             };
-            printingEditionFilter.TypeProduct = MapList(printingEditionFilterState);
+            if (printingEditionFilterState.TypeProduct != null)
+            {
+                printingEditionFilter.TypeProduct = MapList(printingEditionFilterState);
+            }
             return printingEditionFilter;
         }
 
-        private static List<TypeProduct> MapList( PrintingEditionFilterState printingEditionFilterState)
+        private static List<TypeProduct> MapList(PrintingEditionFilterState printingEditionFilterState)
         {
             var typeProduct = new TypeProduct();
             var result = new List<TypeProduct>();

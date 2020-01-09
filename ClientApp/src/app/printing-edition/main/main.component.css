@@ -1,0 +1,44 @@
+.filter {
+    width: 20%;
+    border-right: solid grey;
+    float: left;
+    padding-left: 1%;
+}
+
+.books {
+    width: 75%;
+    text-align: center;
+    float: right;
+}
+
+
+.category {
+    border-bottom: solid grey;
+}
+
+.categoryForm {
+    padding-top: 5%;
+    padding-left: 10%;
+}
+
+.price {
+    padding-top: 5%;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+ .mat-slider-thumb {
+    background-color: greenyellow !important;
+}
+.main {
+    display: flex;
+}
+
+.title {
+font-size: 20px;
+color: black;
+}
+.author {
+    font-size:  15px;
+    color: gray
+}

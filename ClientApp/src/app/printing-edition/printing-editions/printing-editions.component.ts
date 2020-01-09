@@ -43,8 +43,8 @@ export class PrintingEditionsComponent implements OnInit {
     this.getBooks();
   }
 
-  getBooks(){
-    return this.service.get(this.filter).subscribe(data=>{
+  getBooks() {
+    return this.service.get(this.filter).subscribe(data => {
       this.count = data.count;
       this.items = data.items;
     })

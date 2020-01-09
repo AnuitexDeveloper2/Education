@@ -51,7 +51,10 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             {
                 return null;
             }
-
+            if (printingEditionFilter.TypeProduct == null)
+            {
+                return null;
+            }
             List<TypeProduct> types = Enum.GetValues(typeof(TypeProduct))
                 .OfType<TypeProduct>()
                 .Except(printingEditionFilter.TypeProduct)
