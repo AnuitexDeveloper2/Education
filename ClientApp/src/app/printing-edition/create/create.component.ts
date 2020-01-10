@@ -49,16 +49,19 @@ export class CreateComponent {
     this.model.description = this.printingEdition.get('description').value;
     this.model.title = this.printingEdition.get('title').value;
     
-    if(this.data.id >0) {
+    if(this.data != null) {
       this.model.id = this.data.id
       this.service.update(this.model).subscribe();
     }
 
-    if (this.data.id == 0) {
+    if (this.data == null) {
       this.service.create(this.model).subscribe();
     }
   }
-
+  private Id(data:PrintingEditionModelItem) {
+    debugger;
+    let test = data;
+  }
   private Map(authorsName: Array<AuthorModelItem>) {
     let authorModel = new AuthorModel();
     authorModel.items = new Array<AuthorModelItem>();

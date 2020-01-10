@@ -50,12 +50,11 @@ export class PrintingEditionsComponent implements OnInit {
     })
   }
 
-  create(){
+  create(printingEdition: PrintingEditionModelItem){
     const dialogRef = this.dialog.open(CreateComponent).afterClosed().subscribe(() => this.getBooks());
   }
 
   remove(printingEdition: PrintingEditionModelItem){
-    debugger;
     const dialogRef = this.dialog.open(RemoveComponent,{data:printingEdition}).afterClosed().subscribe(() => this.getBooks());
   }
 
