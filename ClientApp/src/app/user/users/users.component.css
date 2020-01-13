@@ -7,23 +7,23 @@ table {
     height: 25px;
   }
 
-  th.mat-column-name, td.mat-column-name {
+  th.mat-column-Name, td.mat-column-Name {
    
     width: 35%;
     padding-left: 10%;
   }
 
-  th.mat-column-email, td.mat-column-email {
+  th.mat-column-Email, td.mat-column-Email {
     width: 35%;
     padding-left: 10%;
   }
 
-  th.mat-column-status, td.mat-column-status{
+  th.mat-column-Status, td.mat-column-Status{
     width: 20%;
     text-align:center;
   }
 
-  th.mat-column-edit, td.mat-column-edit{
+  th.mat-column-Edit, td.mat-column-Edit{
     width: 10%;
     text-align: right;
   }

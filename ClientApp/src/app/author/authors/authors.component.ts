@@ -51,16 +51,7 @@ export class AuthorsComponent implements OnInit {
   }
   sortAuthors(event:MatSort) {
 
-
-    if(event.direction == Direction.Asc)
-    {
-      this.authorFilter.sortType = SortType.Asc;
-    }
-
-    if(event.direction == Direction.Desc)
-    {
-      this.authorFilter.sortType = SortType.Desc;
-    }
+    this.authorFilter.sortType = SortType[event.direction];
   
     this.getAuthors();
   }

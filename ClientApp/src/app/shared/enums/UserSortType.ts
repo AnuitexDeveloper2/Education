@@ -1,5 +1,5 @@
 export enum UserSortType{
     None = 0,
-    Email = 1,
-    LastName = 2
+    email = 1,
+    name = 2
 }

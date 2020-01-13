@@ -29,8 +29,10 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping
             var authors = new List<Author>();
             foreach (var item in authorModel.Items)
             {
-                var author = new Author();
-                author.Name = item.Name;
+                var author = new Author
+                {
+                    Name = item.Name
+                };
                 authors.Add(author);
             }
             return authors;

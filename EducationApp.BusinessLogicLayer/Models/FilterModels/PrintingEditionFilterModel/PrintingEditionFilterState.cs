@@ -8,5 +8,8 @@ namespace EducationApp.BusinessLogicLayer.Extention.PrintingEditionFilterState
     {
         public List<ProductType> TypeProduct { get; set; }
         public PrintingEditionSortType PrintingEditionSortType { get; set; }
+        public decimal MinPrice { get; set; }
+        public decimal MaxPrice { get; set; }
+        public CurrencyType CurrencyType { get; set; }
     }
 }

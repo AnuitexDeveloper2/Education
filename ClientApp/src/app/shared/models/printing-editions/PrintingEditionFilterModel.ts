@@ -6,4 +6,6 @@ export class PrintingEditionFilterModel extends BaseFilterModel
 {
     printingEditionSortType: PrintingEditionSortType;
     TypeProduct: Array<ProductType>;
+    minPrice: number;
+    maxPrice: number;
 }

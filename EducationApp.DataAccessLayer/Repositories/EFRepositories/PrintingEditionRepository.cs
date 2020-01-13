@@ -15,14 +15,16 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 {
     public class PrintingEditionRepository : BaseEFRepository<PrintingEdition>, IPrintingEditionRepository
     {
+        private List<TypeProduct> types = new List<TypeProduct>();
         public PrintingEditionRepository(ApplicationContext applicationContext) : base(applicationContext)
         {
 
         }
 
-        public async Task<ResponseModel<PrintingEdition>> GetFiltredAsync(PrintingEditionFilterModel printingEditionFilter) 
+        public async Task<ResponseModel<PrintingEdition>> GetFiltredAsync(PrintingEditionFilterModel printingEditionFilter)
         {
-            var printingEditions = (from printingEdition in _applicationContext.PrintingEditions where printingEdition.IsRemoved == false
+            var printingEditions = (from printingEdition in _applicationContext.PrintingEditions
+                                    where printingEdition.IsRemoved == false
                                     select new PrintingEdition
                                     {
                                         Id = printingEdition.Id,
@@ -51,14 +53,15 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
             {
                 return null;
             }
-            if (printingEditionFilter.TypeProduct == null)
-            {
-                return null;
-            }
-            List<TypeProduct> types = Enum.GetValues(typeof(TypeProduct))
+
+            types = Enum.GetValues(typeof(TypeProduct))
                 .OfType<TypeProduct>()
                 .Except(printingEditionFilter.TypeProduct)
                 .ToList();
+            if (!printingEditionFilter.TypeProduct.Any())
+            {
+                types = new List<TypeProduct>();
+            }
 
             foreach (var item in types)
             {
@@ -67,13 +70,15 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
             printingEditions = SortByType(printingEditions, printingEditionFilter.PrintingEditionSortType.ToString(), printingEditionFilter.SortType);
 
+            printingEditions = printingEditions.Where(k => k.Price > printingEditionFilter.MinPrice && k.Price < printingEditionFilter.MaxPrice);
+
             var count = printingEditions.Count();
 
             printingEditions = printingEditions.Skip((printingEditionFilter.PageNumber - 1) * printingEditionFilter.PageSize).Take(printingEditionFilter.PageSize);
 
             var result = new ResponseModel<PrintingEdition>()
             {
-                Data =  printingEditions.ToList(),
+                Data = printingEditions.ToList(),
                 Count = count
             };
 

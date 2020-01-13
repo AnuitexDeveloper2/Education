@@ -8,5 +8,8 @@ namespace EducationApp.DataAccessLayer.Helpers.PrintingEditionFilter
     {
         public PrintingEditionSortType PrintingEditionSortType { get; set; }
         public List<TypeProduct> TypeProduct { get; set; }
+        public CurrencyType CurrencyType { get; set; }
+        public decimal MinPrice { get; set; }
+        public decimal MaxPrice { get; set; }
     }
 }

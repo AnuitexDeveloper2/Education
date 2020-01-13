@@ -13,14 +13,18 @@ import {  MatButtonModule,
   MatCheckboxModule,
   MatIconModule,
   MatSliderModule,
-  MatGridListModule
+  MatGridListModule,
+  MatRadioModule 
 } from "@angular/material";
 
 import { Ng5SliderModule } from 'ng5-slider';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 const MaterialComponent =[
-  Ng5SliderModule,
-MatSliderModule,
+  MatRadioModule,
+ NgMultiSelectDropDownModule,
+ Ng5SliderModule,
+ MatSliderModule,
  MatGridListModule, 
  MatIconModule,
  MatCheckboxModule,

@@ -2,22 +2,22 @@ table {
     width: 100%;
   }
 
-  td.mat-column-id {
+  td.mat-column-Id {
     width: 15%;
     padding-right: 8px;
   }
   
-  th.mat-column-name, td.mat-column-name {
+  th.mat-column-Name, td.mat-column-Name {
     width: 35%;
     padding-left: 10%;
   }
 
-  th.mat-column-product, td.mat-column-product{
+  th.mat-column-Product, td.mat-column-Product{
     width: 35%;
     padding-left: 10%;
   }
 
-  th.mat-column-edit, td.mat-column-edit{
+  th.mat-column-Edit, td.mat-column-Edit{
     width: 15%;
     padding-left: 10%;
   }

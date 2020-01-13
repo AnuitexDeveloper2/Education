@@ -13,6 +13,7 @@ import { ColumnName } from "src/app/shared/constants/column-name";
 import { Status } from "src/app/shared/constants/status";
 import { Filter } from 'src/app/shared/constants/Filter';
 import { Direction } from 'src/app/shared/constants/direction';
+import { enumSelector } from 'src/app/Extention/EnumExtention';
 
 @Component({
   selector: 'app-users',
@@ -38,7 +39,7 @@ export class UsersComponent implements OnInit {
     this.displayedColumns= [ ColumnName.Name, ColumnName.Email, ColumnName.Status, ColumnName.Edit],
     this.userFilter = new UserFilterModel,
     this.userModelItem = new UserModelItem(),
-    this.statusList = [Status.Active,Status.Blocked]
+    this.statusList = enumSelector(Status);
     this.status = new FormControl();
   }
   
@@ -62,21 +63,9 @@ export class UsersComponent implements OnInit {
   }
 
   sortUser(event: MatSort) {
-      if (event.active == ColumnName.Name) {
-        this.userFilter.userSortType = UserSortType.LastName;
-      }
-    
-      if (event.active == ColumnName.Email) {
-        this.userFilter.userSortType = UserSortType.Email; 
-       }
-
-      if(event.direction == Direction.Asc){
-        this.userFilter.sortType = SortType.Asc;
-      }
-
-      if(event.direction == Direction.Desc){
-        this.userFilter.sortType = SortType.Desc;
-      }
+    let element = event.active;
+    this.userFilter.userSortType = UserSortType[event.active];
+    this.userFilter.sortType = SortType[event.direction];
     this.getUsers();
   }
 
@@ -104,13 +93,8 @@ export class UsersComponent implements OnInit {
   }
 
   filterUser(name: string) {
-    if( name == Status.Active)
-    {
-      this.userFilter.userFilterStatus = UsersFilterType.Active;
-    }
-    if( name== Status.Blocked){
-      this.userFilter.userFilterStatus = UsersFilterType.Blocked;
-    }
+    debugger;
+    this.userFilter.userFilterStatus = UsersFilterType[name];
     this.getUsers();
   }
 

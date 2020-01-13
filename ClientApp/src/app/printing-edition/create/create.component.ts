@@ -9,7 +9,7 @@ import { ProductType } from 'src/app/shared/enums/ProductType';
 import { CurrencyType } from 'src/app/shared/enums/CurrencyType';
 import { PrintingEditionModelItem } from 'src/app/shared/models/printing-editions/PrintingEditionModelItem';
 import { Constants } from 'src/app/shared/constants/constants';
-import { Filter } from 'src/app/shared/constants/Filter';
+import { enumSelector } from "src/app/Extention/EnumExtention";
 
 @Component({
   selector: 'app-create',
@@ -58,10 +58,7 @@ export class CreateComponent {
       this.service.create(this.model).subscribe();
     }
   }
-  private Id(data:PrintingEditionModelItem) {
-    debugger;
-    let test = data;
-  }
+ 
   private Map(authorsName: Array<AuthorModelItem>) {
     let authorModel = new AuthorModel();
     authorModel.items = new Array<AuthorModelItem>();
@@ -72,15 +69,7 @@ export class CreateComponent {
     return authorModel;
   }
 }
-  export function enumSelector(definition) {
-    let enumValues:Array<string>= [];
-    for(let value in definition) {
-        if(value.length>1) {
-            enumValues.push(value);
-        }
-    }
-    return enumValues;
-}
+  
  
 
 

@@ -6,7 +6,7 @@
           <mat-form-field class="categoryForm">
               <mat-label> Categories</mat-label>
               <mat-select class="selectCategory"  multiple >
-                <mat-option  *ngFor = "let category of type" (click) = "filterBook(category)" [value] = "category">{{category}}</mat-option>
+                <mat-option   *ngFor = "let category of type" (click) = "filterBook(category)" [value] = "category">{{category}}</mat-option>
               </mat-select>
           </mat-form-field>
          
@@ -15,7 +15,7 @@
         price
         <p>Min value: <input type="number" [(ngModel)]="minValue"></p>
         <p>Max value: <input type="number" [(ngModel)]="maxValue"></p>
-        <input type="submit" value="Ok" (click)="priceFilter($event.target.value)" >
+        <input type="submit" value="Ok" (click)="priceFilter(minValue,maxValue)" >
         <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ng5-slider>
        </div>
   </div>
@@ -23,7 +23,25 @@
     <mat-form-field class="search">
       <input type="text" matInput (keyup)="applyFilter($event.target.value)" placeholder="search by book title, by author" >
       <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field> <br>
+
+    <form [formGroup] = "mainForm">
+      <mat-form-field class="categoryForm">
+        <mat-label> Categories</mat-label>
+        <mat-select class="currency"  matNativeControl formControlName = "currency" >
+          <mat-option   *ngFor = "let category of currencyList" (click) = "sort()" [value] = "category">{{category}}</mat-option>
+        </mat-select>
     </mat-form-field>
+
+    <span class="sortBy">
+      <mat-form-field>
+        <label> Sort by</label>
+              <select class="sortPrice"matNativeControl required = "sortBy" >
+                <option   *ngFor = "let sort of sortType" (click) = "priceFilter()" [value] = "sort">{{sort}}</option>
+              </select>
+      </mat-form-field>
+    </span>
+  </form>
       <mat-grid-list  cols = "3" raws = "2" rowHeight="1.7:1.3">
           <mat-grid-tile *ngFor="let book of items" >
               <div>

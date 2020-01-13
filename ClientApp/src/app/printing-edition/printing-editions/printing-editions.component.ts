@@ -7,11 +7,11 @@ import { CreateComponent } from 'src/app/printing-edition/create/create.componen
 import { ColumnName } from 'src/app/shared/constants/column-name';
 import { Filter } from 'src/app/shared/constants/Filter';
 import { RemoveComponent } from 'src/app/printing-edition/remove/remove.component';
-import { Category } from 'src/app/shared/constants/category';
 import { PrintingEditionSortType } from 'src/app/shared/enums/PrintingEditionSortType';
 import { Direction } from 'src/app/shared/constants/direction';
 import { SortType } from 'src/app/shared/enums/SortType';
 import { ProductType } from 'src/app/shared/enums/ProductType';
+import { enumSelector } from 'src/app/Extention/EnumExtention';
 
 @Component({
   selector: 'app-printing-editions',
@@ -21,26 +21,33 @@ import { ProductType } from 'src/app/shared/enums/ProductType';
 })
 export class PrintingEditionsComponent implements OnInit {
 
+  
   filter: PrintingEditionFilterModel;
   count: number;
   items: Array<PrintingEditionModelItem>;
   displayedColumns: string[];
   dataSource = new MatTableDataSource();
   type: string[];
+  stringEnums: string[];
+  
 
   constructor(private service: PrintingEditionService, private dialog: MatDialog ) {
 
    this.displayedColumns = [ ColumnName.id, ColumnName.Name, ColumnName.Description, ColumnName.Category, ColumnName.Authors, ColumnName.Price, ColumnName.Edit ];
    this.filter = new PrintingEditionFilterModel();
-   this.type = [Category.Book,Category.Journal,Category.Newspaper];
+   this.type = enumSelector(ProductType);
    this.dataSource
+   this.stringEnums = new Array<string>();
    }
 
   ngOnInit() {
+    this.filter.minPrice = Filter.zero,
+    this.filter.maxPrice = Filter.oneThousand,
     this.filter.TypeProduct = [0,1,2]
     this.filter.pageNumber = Filter.one;
     this.filter.pageSize = Filter.ten;
     this.getBooks();
+    this.filter.TypeProduct = new Array<ProductType>();
   }
 
   getBooks() {
@@ -74,45 +81,30 @@ export class PrintingEditionsComponent implements OnInit {
   }
 
   sort(event: MatSort) {
-    if (event.active == ColumnName.id) {
-      this.filter.printingEditionSortType = PrintingEditionSortType.Id;
-    }
-
-    if (event.active == ColumnName.Name) {
-      this.filter.printingEditionSortType = PrintingEditionSortType.Title; 
-    }
-
-    if (event.active == ColumnName.Price) {
-      this.filter.printingEditionSortType = PrintingEditionSortType.Price;
-    }
-
-    if (event.direction == Direction.Asc) {
-      this.filter.sortType = SortType.Asc
-    }
-
-    if (event.direction == Direction.Desc) {
-      this.filter.sortType = SortType.Desc
-    }
+    this.filter.printingEditionSortType = PrintingEditionSortType[event.active];
+    this.filter.sortType = SortType[event.direction];
     this.getBooks();
   }
 
   filterBook(name: string) {
-    debugger;
-    this.filter.TypeProduct = new Array<ProductType>();
-    if( name == Category.Book)
-    {
-      this.filter.TypeProduct.push(ProductType.Book);
-    }
-    
-    if( name == Category.Journal){
-      this.filter.TypeProduct.push(ProductType.Journal);
-    }
-
-    if (name == Category.Newspaper) {
-      this.filter.TypeProduct.push(ProductType.Newspaper);
-    }
-
+    this.filter.TypeProduct.push(ProductType[name])
+    this.test(name);
     this.getBooks();
   }
 
+  private test  (name: string): number {
+    let lenght = this.stringEnums.length;
+    for (let index = 0; index < lenght ; index++) {
+      const element = this.stringEnums[index];
+      if (element == name) {
+        this.stringEnums.splice(index,1);
+        this.filter.TypeProduct.splice(index,1);
+        this.filter.TypeProduct.pop();
+        return index;
+      }
+    }
+    
+      this.stringEnums.push(name)
+    return -1;
+  }
 }

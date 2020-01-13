@@ -15,7 +15,10 @@ namespace EducationApp.BusinessLogicLayer.Helpers.Mapping.PrintingEditions
                 PageSize = printingEditionFilterState.PageSize,
                 SearchString = printingEditionFilterState.SearchString,
                 PrintingEditionSortType = (PrintingEditionSortType)printingEditionFilterState.PrintingEditionSortType,
-                SortType = (SortType)printingEditionFilterState.SortType
+                SortType = (SortType)printingEditionFilterState.SortType,
+                CurrencyType = (CurrencyType)printingEditionFilterState.CurrencyType,
+                MinPrice = printingEditionFilterState.MinPrice,
+                MaxPrice = printingEditionFilterState.MaxPrice
             };
             if (printingEditionFilterState.TypeProduct != null)
             {
