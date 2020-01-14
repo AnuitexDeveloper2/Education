@@ -44,9 +44,9 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                                     });
             if (!string.IsNullOrWhiteSpace(printingEditionFilter.SearchString))
             {
-                var searchByName = await printingEditions.Where(k => k.Authors.Any(l => l.Name.Contains(printingEditionFilter.SearchString))).ToListAsync();
-                var searchByTitle = await printingEditions.Where(l => l.Title.Contains(printingEditionFilter.SearchString)).ToListAsync();
-                printingEditions = Enumerable.Concat(searchByName, searchByTitle).AsQueryable();
+                //var searchByName = await printingEditions.Where(k => k.Authors.Any(l => l.Name.Contains(printingEditionFilter.SearchString))).ToListAsync();
+                printingEditions =  printingEditions.Where(l => l.Title.Contains(printingEditionFilter.SearchString));
+               // printingEditions = Enumerable.Concat(searchByName, searchByTitle).AsQueryable();
             }
 
             if (!printingEditions.Any())
@@ -78,7 +78,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
             var result = new ResponseModel<PrintingEdition>()
             {
-                Data = printingEditions.ToList(),
+                Data = await printingEditions.ToListAsync(),
                 Count = count
             };
 

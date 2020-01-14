@@ -33,11 +33,16 @@ export class RegisterComponent {
 
   save(){
   this.accountService.register(this.userForm.value).subscribe(data => {
+    debugger;
       this.baseModel.errors = data.errors
       if(this.baseModel.errors.length>0){
        this.dialog.open(ErrorComponent,{data:this.baseModel.errors})
       }
-
   })
+     let test = this.baseModel.errors;
+     this.err(this.baseModel.errors);
  }
+  private err(errors:Array<string>){
+
+  }
 }

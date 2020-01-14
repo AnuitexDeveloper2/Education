@@ -12,7 +12,6 @@ import { UsersFilterType } from 'src/app/shared/enums/UsersFilterType';
 import { ColumnName } from "src/app/shared/constants/column-name";
 import { Status } from "src/app/shared/constants/status";
 import { Filter } from 'src/app/shared/constants/Filter';
-import { Direction } from 'src/app/shared/constants/direction';
 import { enumSelector } from 'src/app/Extention/EnumExtention';
 
 @Component({

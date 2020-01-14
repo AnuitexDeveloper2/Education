@@ -5,7 +5,7 @@
       <div class="category">
           <mat-form-field class="categoryForm">
               <mat-label> Categories</mat-label>
-              <mat-select class="selectCategory"  multiple >
+              <mat-select class="selectCategory" matNativeControl  multiple >
                 <mat-option   *ngFor = "let category of type" (click) = "filterBook(category)" [value] = "category">{{category}}</mat-option>
               </mat-select>
           </mat-form-field>
@@ -25,36 +25,42 @@
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field> <br>
 
-    <form [formGroup] = "mainForm">
-      <mat-form-field class="categoryForm">
-        <mat-label> Categories</mat-label>
-        <mat-select class="currency"  matNativeControl formControlName = "currency" >
-          <mat-option   *ngFor = "let category of currencyList" (click) = "sort()" [value] = "category">{{category}}</mat-option>
-        </mat-select>
-    </mat-form-field>
+    <div>
+      <div class="currencyForm">
+        <mat-form-field >
+          <label> Currency</label>
+          <select class="currency"  matNativeControl [(ngModel)] = "currency" >
+            <option   *ngFor = "let currency of currencyList" (click) = "sort()" [value] = "currency">{{currency}}</option>
+          </select>
+        </mat-form-field>
+      </div>
 
-    <span class="sortBy">
-      <mat-form-field>
-        <label> Sort by</label>
-              <select class="sortPrice"matNativeControl required = "sortBy" >
-                <option   *ngFor = "let sort of sortType" (click) = "priceFilter()" [value] = "sort">{{sort}}</option>
-              </select>
-      </mat-form-field>
-    </span>
-  </form>
+      <div>
+        <mat-form-field>
+          <label> Sort by</label>
+           <select matNativeControl [(ngModel)] = "sortBy">
+              <option value="asc" (click) = "sort()">Low to High</option>
+              <option value="desc" (click) = "sort()">High to Low</option>
+           </select>
+          </mat-form-field>
+      </div>
+    </div>
       <mat-grid-list  cols = "3" raws = "2" rowHeight="1.7:1.3">
           <mat-grid-tile *ngFor="let book of items" >
-              <div>
-              <img class="image" src="assets\images\bookForUser.svg" alt="books"> <br>
+              <div (click) = "details(book)">
+                <a  routerLinkActive="active">
+              <img class="image" src="assets\images\bookForUser.svg" matTooltip = "Watch Details: {{book.title}}" alt="books" > <br>
+            
               <span class="title">
-                  {{book.title}}
+                {{book.title}}
               </span> <br>
               <span class="author" *ngFor = "let author of book.authors.items">
-                  {{author.name}} <br>
-            </span> <br>
-            <span class="price">
-              ${{book.price}}
-            </span>
+                {{author.name}} <br>
+              </span> <br>
+              <span class="price">
+                {{book.price}} {{currency}}
+              </span>
+            </a>
               </div>
             </mat-grid-tile>
       </mat-grid-list>

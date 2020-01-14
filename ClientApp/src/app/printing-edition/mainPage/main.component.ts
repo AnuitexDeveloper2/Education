@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { PrintingEditionFilterModel } from 'src/app/shared/models/printing-editions/PrintingEditionFilterModel';
 import { PrintingEditionService } from 'src/app/shared/services/printingEdition/printing-edition.service';
 import { PrintingEditionModelItem } from 'src/app/shared/models/printing-editions/PrintingEditionModelItem';
@@ -10,6 +10,7 @@ import { enumSelector, ListEnum } from 'src/app/Extention/EnumExtention';
 import { CurrencyType } from 'src/app/shared/enums/CurrencyType';
 import { SortType } from 'src/app/shared/enums/SortType';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { DataService } from 'src/app/shared/services/Data/Data.service';
 
 @Component({
   selector: 'app-main',
@@ -29,12 +30,14 @@ export class MainComponent implements OnInit {
   private stringEnums: string[];
   private currencyList: string[];
   private sortType: string[];
+   @Output() SendValue = new EventEmitter<PrintingEditionModelItem>();
  
-  constructor(private service: PrintingEditionService, private formBuilder: FormBuilder) {
+  constructor(private service: PrintingEditionService, private formBuilder: FormBuilder, ) {
     this.mainForm = formBuilder.group({
       currency: [''],
       sortBy: ['']
     })
+    this.SendValue = new EventEmitter<PrintingEditionModelItem>();
     this.filter = new PrintingEditionFilterModel();
     this.stringEnums = Array<string>();
     this.type = enumSelector(ProductType);
@@ -51,9 +54,10 @@ export class MainComponent implements OnInit {
     this.filter.maxPrice = Filter.oneThousand,
     this.filter.pageNumber = Filter.one;
     this.filter.pageSize = Filter.six;
-    this.filter.TypeProduct = [ Filter.zero,Filter.one,Filter.two];
+    this.filter.currencyType = CurrencyType.USD;
+    this.filter.typeProduct = [ Filter.zero,Filter.one,Filter.two];
     this.getBooks();
-    this.filter.TypeProduct = new Array<ProductType>();
+    this.filter.typeProduct = new Array<ProductType>();
   }
 
   getBooks() {
@@ -82,7 +86,7 @@ export class MainComponent implements OnInit {
     this.getBooks();
   }
 
-  sort() {
+  sort(value: string) {
     debugger;
     let test = parseInt(CurrencyType[this.mainForm.get('currency').value]);
     let test1 = parseInt(SortType[this.mainForm.get('sortBy').value]);
@@ -92,9 +96,16 @@ export class MainComponent implements OnInit {
   }
 
   filterBook(name: string) {
-    this.filter.TypeProduct.push(ProductType[name]);
+    this.filter.typeProduct.push(ProductType[name]);
     this.test(name);
     this.getBooks();
+  }
+
+  details(book:PrintingEditionModelItem){
+    debugger;
+      this.SendValue.emit(book);
+      //this.service.currentData.subscribe(message => message = book)
+      location.href = `http://localhost:4200/books/details/?id=${book}`;
   }
 
   private test  (name: string): number {
@@ -103,8 +114,8 @@ export class MainComponent implements OnInit {
       const element = this.stringEnums[index];
       if (element == name) {
         this.stringEnums.splice(index,1);
-        this.filter.TypeProduct.splice(index,1);
-        this.filter.TypeProduct.pop();
+        this.filter.typeProduct.splice(index,1);
+        this.filter.typeProduct.pop();
         return index;
       }
     }

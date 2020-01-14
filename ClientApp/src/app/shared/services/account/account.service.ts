@@ -10,7 +10,6 @@ export class AccountService {
   
   constructor(private http:HttpClient) { }
 register(user: UserModelItem):Observable<BaseModel>{
-  debugger;
   return this.http.post<BaseModel>( environment.baseUrl + `account/register`,user, { withCredentials: true })
   }
   

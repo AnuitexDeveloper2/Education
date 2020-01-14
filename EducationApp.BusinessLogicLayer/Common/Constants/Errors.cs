@@ -37,6 +37,7 @@ namespace EducationApp.BusinessLogicLayer.Common.Consts
             public const string Ok = "Ok";
             public const string Email = "Email  ";
             public const string NotFound = "  Not Found";
+            public const string Empty = "Undefined";
         }
     }
 }

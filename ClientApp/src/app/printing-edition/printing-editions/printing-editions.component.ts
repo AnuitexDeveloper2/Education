@@ -43,11 +43,11 @@ export class PrintingEditionsComponent implements OnInit {
   ngOnInit() {
     this.filter.minPrice = Filter.zero,
     this.filter.maxPrice = Filter.oneThousand,
-    this.filter.TypeProduct = [0,1,2]
+    this.filter.typeProduct = [0,1,2]
     this.filter.pageNumber = Filter.one;
     this.filter.pageSize = Filter.ten;
     this.getBooks();
-    this.filter.TypeProduct = new Array<ProductType>();
+    this.filter.typeProduct = new Array<ProductType>();
   }
 
   getBooks() {
@@ -87,7 +87,7 @@ export class PrintingEditionsComponent implements OnInit {
   }
 
   filterBook(name: string) {
-    this.filter.TypeProduct.push(ProductType[name])
+    this.filter.typeProduct.push(ProductType[name])
     this.test(name);
     this.getBooks();
   }
@@ -98,8 +98,8 @@ export class PrintingEditionsComponent implements OnInit {
       const element = this.stringEnums[index];
       if (element == name) {
         this.stringEnums.splice(index,1);
-        this.filter.TypeProduct.splice(index,1);
-        this.filter.TypeProduct.pop();
+        this.filter.typeProduct.splice(index,1);
+        this.filter.typeProduct.pop();
         return index;
       }
     }

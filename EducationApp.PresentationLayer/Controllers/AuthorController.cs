@@ -39,7 +39,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = role.Admin)]
+        //[Authorize(Roles = role.Admin)]
         [HttpGet("update")]
         public async Task<ActionResult> Update(long id, string name)
         {

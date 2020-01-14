@@ -3,6 +3,10 @@ import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup, FormBui
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Constants } from 'src/app/shared/constants/constants';
 import { AccountService } from 'src/app/shared/services/account/account.service';
+import { enumSelector } from 'src/app/Extention/EnumExtention';
+import { CurrencyType } from 'src/app/shared/enums/CurrencyType';
+import { ProductType } from 'src/app/shared/enums/ProductType';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 
 @Component({
@@ -12,23 +16,24 @@ import { AccountService } from 'src/app/shared/services/account/account.service'
   providers: [AccountService]
 })
 export class SignOutComponent  {
-   
-  userForm: FormGroup
-  constructor(private formBuilder: FormBuilder,public accountService:AccountService) {
-    this.userForm = this.formBuilder.group(
-      {
-        userName: [Constants.emptyString,Validators.required],
-        firstName: [Constants.emptyString,Validators.required],
-        lastName: [Constants.emptyString,Validators.required],
-        email: [Constants.emptyString,Validators.required],
-        password:[Constants.emptyString,Validators.required]
-      }
-    )
+  dropdownList: string[];
+  selectedItems = [];
+  dropdownSettings = {};
+  ngOnInit() {
+    this.dropdownList = enumSelector(ProductType); 
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+      defaultOpen: true,
+      limitSelection: 2
+    };
+    
   }
-
-  save(){
-    this.accountService.register(this.userForm.value).subscribe();
-  }
-
+  
 
 }

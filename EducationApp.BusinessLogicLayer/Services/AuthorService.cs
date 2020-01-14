@@ -27,7 +27,7 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             var resultModel = new BaseModel();
 
-            if (authorModel == null)
+            if (authorModel.Name == null)
             {
                 resultModel.Errors.Add(errors.EmptyField);
                 return resultModel;

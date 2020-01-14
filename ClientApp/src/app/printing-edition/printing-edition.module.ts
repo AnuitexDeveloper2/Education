@@ -7,11 +7,12 @@ import { CreateComponent } from 'src/app/printing-edition/create/create.componen
 import { RemoveComponent } from 'src/app/printing-edition/remove/remove.component';
 import { PrintingEditionsComponent } from 'src/app/printing-edition/printing-editions/printing-editions.component';
 import { RouterModule } from '@angular/router';
-import { MainComponent } from './main/main.component';
+import { MainComponent } from './mainPage/main.component';
+import { DetailsComponent } from './details/details.component';
 
 
 @NgModule({
-  declarations: [CreateComponent, RemoveComponent, PrintingEditionsComponent, MainComponent],
+  declarations: [CreateComponent, RemoveComponent, PrintingEditionsComponent, MainComponent, DetailsComponent],
   imports: [
     CommonModule,
     PrintingEditionRoutingModule,
