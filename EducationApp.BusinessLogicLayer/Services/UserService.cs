@@ -22,7 +22,7 @@ namespace EducationApp.BusinessLogicLayer.Services
         {
             var resultModel = new BaseModel();
 
-            if (model == null)
+            if (model.FirstName == null || model.LastName == null)
             {
                 resultModel.Errors.Add(errors.EmptyField);
                 return resultModel;

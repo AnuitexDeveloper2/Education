@@ -3,7 +3,7 @@ import { AccountService } from "src/app/shared/services/account/account.service"
 import { FormControl, Validators } from '@angular/forms';
 import { BaseModel } from 'src/app/shared/models/Base/BaseModel';
 import { MatDialog } from '@angular/material';
-import { ErrorComponent } from "src/app/account/error/error.component";
+import { ErrorComponent } from "src/app/shared/error/error.component";
 import { Constants } from "src/app/shared/constants/constants";
 
 @Component({

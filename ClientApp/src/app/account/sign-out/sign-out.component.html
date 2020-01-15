@@ -7,3 +7,12 @@
   (onSelectAll)="onSelectAll($event)"
 >
 </ng-multiselect-dropdown>
+
+<mat-table mat-table  matSort (matSortChange)="sort($event)" class="mat-elevation-z8">
+
+  <ng-container matColumnDef= "Order" >
+      <th mat-header-row *matHeaderCellDef mat-sort-header> <h2 class="orderColumn"> Order </h2> </th>
+      <td mat-row *matCellDef= "let element"> Element </td>
+    </ng-container>
+  
+    </mat-table>

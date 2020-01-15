@@ -1,1 +1,21 @@
-<p>details works!</p>
+<span class="catalog" >Catalog</span>
+<div>
+<img class="image" src="assets\images\bookForUser.svg"  alt="books" >
+    <div class="title" >{{printingEdition.title}} <br>
+        <br>
+       <span class="author" *ngFor = "let author of printingEdition.authors.items"> {{author.name}} (author) <br></span>
+    </div>
+    
+     
+      <div class="price">
+          <label class="amount" >Amount</label>
+          <select >
+              <option *ngFor = "let item of amountList" [value] = "item">{{item}}</option>
+          </select>
+          {{printingEdition.price}} $ <br>
+          <div class="send-data">
+          <input type="button" value="add to cart">
+        </div>
+      </div>
+</div> 
+<div class="description">{{printingEdition.description}}</div>

@@ -4,7 +4,7 @@ import { RegisterComponent } from 'src/app/account/register/register.component';
 import { SignInComponent } from 'src/app/account/sign-in/sign-in.component';
 import { SignOutComponent } from 'src/app/account/sign-out/sign-out.component';
 import { ConfirmEmailComponent } from 'src/app/account/confirm-email/confirm-email.component';
-import { ErrorComponent } from './error/error.component';
+import { ErrorComponent } from '../shared/error/error.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 

@@ -9,4 +9,11 @@ export namespace ColumnName {
     export const Category: string = 'Category';
     export const Authors: string = 'Authors';
     export const Price: string = 'Price';
+    export const Order: string = 'Order';
+    export const Date: string = 'Date';
+    export const UserName: string = 'UserName';
+    export const UserEmail: string = 'UserEmail';
+    export const Title: string = 'Title';
+    export const Qty: string = 'Qty';
+    export const OrderAmount: string = 'OrderAmount';
 }

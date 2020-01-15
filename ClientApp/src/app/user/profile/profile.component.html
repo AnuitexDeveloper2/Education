@@ -5,13 +5,19 @@
 </div>
 <mat-dialog-content class="first-field">
     <mat-form-field>
-        <input matInput  placeholder="First Name" [formControl] ="firstName">
+        <input matInput  placeholder="First Name" value = {{data.firstName}}  [formControl] ="firstName">
       </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-content class="second-field">
     <mat-form-field>
-        <input matInput  placeholder="Last name" [formControl] ="lastName">
+        <input matInput  placeholder="Last name" value = {{data.lastName}} [formControl] ="lastName">
+      </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-content class="third-field">
+    <mat-form-field>
+        <input matInput  placeholder="email" value = {{data.email}} [formControl] ="email">
       </mat-form-field>
 </mat-dialog-content>
 

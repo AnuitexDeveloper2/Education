@@ -10,7 +10,7 @@ import { enumSelector, ListEnum } from 'src/app/Extention/EnumExtention';
 import { CurrencyType } from 'src/app/shared/enums/CurrencyType';
 import { SortType } from 'src/app/shared/enums/SortType';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DataService } from 'src/app/shared/services/Data/Data.service';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-main',
@@ -32,7 +32,7 @@ export class MainComponent implements OnInit {
   private sortType: string[];
    @Output() SendValue = new EventEmitter<PrintingEditionModelItem>();
  
-  constructor(private service: PrintingEditionService, private formBuilder: FormBuilder, ) {
+  constructor(private service: PrintingEditionService, private formBuilder: FormBuilder, public router: Router ) {
     this.mainForm = formBuilder.group({
       currency: [''],
       sortBy: ['']
@@ -102,10 +102,9 @@ export class MainComponent implements OnInit {
   }
 
   details(book:PrintingEditionModelItem){
-    debugger;
-      this.SendValue.emit(book);
-      //this.service.currentData.subscribe(message => message = book)
-      location.href = `http://localhost:4200/books/details/?id=${book}`;
+      this.service.printingEdition = book;
+      debugger;
+      this.router.navigateByUrl('books/details')
   }
 
   private test  (name: string): number {

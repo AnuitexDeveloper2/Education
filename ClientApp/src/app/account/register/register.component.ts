@@ -3,7 +3,7 @@ import { UserModelItem } from 'src/app/shared/models/user/UserModelItem';
 import { AccountService } from 'src/app/shared/services/account/account.service';
 import { BaseModel } from 'src/app/shared/models/Base/BaseModel';
 import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../error/error.component';
+import { ErrorComponent } from '../../shared/error/error.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Constants } from 'src/app/shared/constants/constants';
 

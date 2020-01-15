@@ -57,7 +57,6 @@ export class UsersComponent implements OnInit {
   }
   
   changeUserStatus(id: number) {
-    debugger;
     this.userService.changeUserStatus(id).subscribe();
   }
 
@@ -69,13 +68,12 @@ export class UsersComponent implements OnInit {
   }
 
   edit(user: UserModelItem) {
-   debugger;
     const dialogRef = this.dialog.open(ProfileComponent, {data: user}).afterClosed().subscribe(() => this.getUsers());;
   }
 
   remove(user: UserModelItem) {
-    debugger;
     const dialogRef = this.dialog.open(RemoveComponent, {data: user}).afterClosed().subscribe(() => this.getUsers());
+    debugger;
   }
 
   movePage(event: PageEvent) {

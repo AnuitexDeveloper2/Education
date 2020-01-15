@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { UserFilterModel } from 'src/app/shared/models/user/UserFilterModel';
 import { UserModel } from 'src/app/shared/models/user/UserModel';
 import { UserModelItem } from '../models/user/UserModelItem';
+import { BaseModel } from '../models/Base/BaseModel';
 
 @Injectable({
   providedIn: 'root'
@@ -18,16 +19,16 @@ export class UserService {
     return this.http.post<UserModel>('https://localhost:44309/api/user/getUsers',userFilterModel)
   }
 
-  changeUserStatus(id:number){
-    return this.http.get(`https://localhost:44309/api/user/blockUser/?id=${id}`)
+  changeUserStatus(id:number): Observable<BaseModel>{
+    return this.http.get<BaseModel>(`https://localhost:44309/api/user/blockUser/?id=${id}`)
   }
 
-  removeUser(id:number){
-    return this.http.get(`https://localhost:44309/api/user/remove/?id=${id}`)
+  removeUser(id:number): Observable<BaseModel>{
+    return this.http.get<BaseModel>(`https://localhost:44309/api/user/remove/?id=${id}`)
   }
 
-  edit(userModelItem:UserModelItem){
-    return this.http.post('https://localhost:44309/api/user/editProfile',userModelItem,{withCredentials:true});
+  edit(userModelItem:UserModelItem): Observable<BaseModel>{
+    return this.http.post<BaseModel>('https://localhost:44309/api/user/editProfile',userModelItem,{withCredentials:true});
   }
 
 

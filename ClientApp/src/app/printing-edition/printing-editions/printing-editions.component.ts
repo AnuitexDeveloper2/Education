@@ -105,6 +105,6 @@ export class PrintingEditionsComponent implements OnInit {
     }
     
       this.stringEnums.push(name)
-    return -1;
+      return -1;
   }
 }

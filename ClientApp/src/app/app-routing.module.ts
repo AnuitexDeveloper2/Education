@@ -27,6 +27,11 @@ const routes: Routes = [
     {
       path: 'administrator',
       loadChildren: () => import('src/app/administrator/administrator.module').then(mod =>mod.AdministratorModule)
+    },
+
+    {
+      path: 'order',
+      loadChildren: () => import('src/app/order/order.module').then(mod=>mod.OrderModule)
     }
 
 ];

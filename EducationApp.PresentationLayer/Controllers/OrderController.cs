@@ -28,8 +28,8 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = role.Admin)]
-        [HttpPost("get")]
+        //[Authorize(Roles = role.Admin)]
+        [HttpPost("getOrders")]
         public async Task<OrderModel> GetOrders(OrderFilterModel orderFilterModel)
         {
             var result = await _orderService.GetOrdersAsync(orderFilterModel);

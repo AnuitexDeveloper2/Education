@@ -1,0 +1,47 @@
+.image {
+    width: 15%;
+    height: 15%;
+}
+
+.title {
+    size: 50px;
+    color: black;
+    font-weight: bold;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 5%;
+
+}
+
+.description {
+    margin-left: 5%;
+    margin-top: 5%;
+    margin-right: 5%;
+    vertical-align: top;
+    text-align: center;
+    float: center;
+}
+
+.author {
+    font-weight: normal;
+}
+
+.details {
+    background-color: cornflowerblue;
+    display: inline;
+}
+
+.price {
+    margin-right: 10%;
+    text-align: right;
+    vertical-align: top;
+    color: green;
+}
+
+.amount {
+    color: black;
+}
+
+.send-data {
+    margin-top: 1%;
+}

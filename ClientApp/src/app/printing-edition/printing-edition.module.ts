@@ -15,9 +15,6 @@ import { DetailsComponent } from './details/details.component';
   declarations: [CreateComponent, RemoveComponent, PrintingEditionsComponent, MainComponent, DetailsComponent],
   imports: [
     CommonModule,
-    PrintingEditionRoutingModule,
-    RouterModule,
-    PrintingEditionRoutingModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,

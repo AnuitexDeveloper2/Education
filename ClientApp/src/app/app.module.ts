@@ -16,7 +16,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationInterceptor } from "./shared/AuthenticationInterceptor";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalModule } from "ng2-modal";
-import { FooterComponent } from './shared/components/footer/footer.component';
+import { FooterComponent } from 'src/app/shared/components/footer/footer.component';
+import { OrderModule } from 'src/app/order/order.module';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { FooterComponent } from './shared/components/footer/footer.component';
     AccountModule,
     MatSelectModule,
     ModalModule,
+    OrderModule
   ],
   providers:[{
     provide:HTTP_INTERCEPTORS,
