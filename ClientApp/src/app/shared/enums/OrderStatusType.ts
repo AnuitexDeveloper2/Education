@@ -1,4 +1,4 @@
 export enum OrderStatusType {
     Unpaid = 0,
-     Paid = 1
+    Paid = 1
 }

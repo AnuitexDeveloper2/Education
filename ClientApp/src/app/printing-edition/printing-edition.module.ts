@@ -4,7 +4,6 @@ import { FormsModule,ReactiveFormsModule } from "@angular/forms";
 import { MaterialModule } from "src/app/material/material.module";
 import { PrintingEditionRoutingModule } from './printing-edition-routing.module';
 import { CreateComponent } from 'src/app/printing-edition/create/create.component';
-import { RemoveComponent } from 'src/app/printing-edition/remove/remove.component';
 import { PrintingEditionsComponent } from 'src/app/printing-edition/printing-editions/printing-editions.component';
 import { RouterModule } from '@angular/router';
 import { MainComponent } from './mainPage/main.component';
@@ -12,7 +11,7 @@ import { DetailsComponent } from './details/details.component';
 
 
 @NgModule({
-  declarations: [CreateComponent, RemoveComponent, PrintingEditionsComponent, MainComponent, DetailsComponent],
+  declarations: [CreateComponent, PrintingEditionsComponent, MainComponent, DetailsComponent],
   imports: [
     CommonModule,
     RouterModule,

@@ -56,8 +56,6 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-       
-
         [Authorize(Roles = role.User)]
         [HttpGet("changePassword")]
         public async Task<ActionResult> ChangePassword(long id, string oldPassword,string newPassword)

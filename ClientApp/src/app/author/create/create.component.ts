@@ -4,7 +4,7 @@ import { AuthorService } from 'src/app/shared/services/author/author.service';
 import { AuthorModelItem } from 'src/app/shared/models/author/AuthorModelItem';
 import { FormControl } from '@angular/forms';
 import { BaseModel } from 'src/app/shared/models/Base/BaseModel';
-import { ErrorComponent } from 'src/app/shared/error/error.component';
+import { ErrorComponent } from 'src/app/shared/components/error/error.component';
 
 @Component({
   selector: 'app-create',

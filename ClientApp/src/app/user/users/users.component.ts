@@ -6,13 +6,14 @@ import { MatSort, MatTableDataSource, MatDialog, PageEvent} from '@angular/mater
 import { UserSortType } from 'src/app/shared/enums/UserSortType';
 import { SortType } from 'src/app/shared/enums/SortType';
 import { ProfileComponent } from "src/app/user/profile/profile.component";
-import { RemoveComponent } from 'src/app/user/remove/remove.component';
+import { RemoveComponent } from 'src/app/shared/components/remove/remove.component';
 import { FormControl } from '@angular/forms';
 import { UsersFilterType } from 'src/app/shared/enums/UsersFilterType';
 import { ColumnName } from "src/app/shared/constants/column-name";
 import { Status } from "src/app/shared/constants/status";
 import { Filter } from 'src/app/shared/constants/Filter';
 import { enumSelector } from 'src/app/Extention/EnumExtention';
+import { Constants } from 'src/app/shared/constants/constants';
 
 @Component({
   selector: 'app-users',
@@ -72,9 +73,13 @@ export class UsersComponent implements OnInit {
   }
 
   remove(user: UserModelItem) {
-    const dialogRef = this.dialog.open(RemoveComponent, {data: user}).afterClosed().subscribe(() => this.getUsers());
-    debugger;
-  }
+   let dialogRef = this.dialog.open(RemoveComponent, {data: { name: user.firstName + Constants.Space + user.lastName }})
+   .afterClosed().subscribe(data => {
+     if (data) {
+     this.userService.removeUser(user.id).subscribe(() => this.getUsers());
+     }
+   });
+ }
 
   movePage(event: PageEvent) {
     this.userFilter.pageSize = event.pageSize;
@@ -90,7 +95,6 @@ export class UsersComponent implements OnInit {
   }
 
   filterUser(name: string) {
-    debugger;
     this.userFilter.userFilterStatus = UsersFilterType[name];
     this.getUsers();
   }

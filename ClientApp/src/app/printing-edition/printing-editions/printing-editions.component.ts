@@ -6,9 +6,8 @@ import {PageEvent, MatSort, MatTableDataSource, MatDialog} from '@angular/materi
 import { CreateComponent } from 'src/app/printing-edition/create/create.component';
 import { ColumnName } from 'src/app/shared/constants/column-name';
 import { Filter } from 'src/app/shared/constants/Filter';
-import { RemoveComponent } from 'src/app/printing-edition/remove/remove.component';
+import { RemoveComponent } from 'src/app/shared/components/remove/remove.component';
 import { PrintingEditionSortType } from 'src/app/shared/enums/PrintingEditionSortType';
-import { Direction } from 'src/app/shared/constants/direction';
 import { SortType } from 'src/app/shared/enums/SortType';
 import { ProductType } from 'src/app/shared/enums/ProductType';
 import { enumSelector } from 'src/app/Extention/EnumExtention';
@@ -61,10 +60,15 @@ export class PrintingEditionsComponent implements OnInit {
     const dialogRef = this.dialog.open(CreateComponent).afterClosed().subscribe(() => this.getBooks());
   }
 
-  remove(printingEdition: PrintingEditionModelItem){
-    const dialogRef = this.dialog.open(RemoveComponent,{data:printingEdition}).afterClosed().subscribe(() => this.getBooks());
-  }
-
+  remove(printingEdition: PrintingEditionModelItem) {
+    debugger;
+   let dialogRef = this.dialog.open(RemoveComponent, {data: {pageName: 'book', name: printingEdition.title}})
+   .afterClosed().subscribe(data => {
+     if (data) {
+     this.service.remove(printingEdition.id).subscribe(() => this.getBooks());
+     }
+   });
+ }
   movePage(event: PageEvent) {
     this.filter.pageSize = event.pageSize;
     this.filter.pageNumber = event.pageIndex + Filter.one;

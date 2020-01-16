@@ -1,4 +1,4 @@
-import { CurrencyType } from '../../enums/CurrencyType';
+import { CurrencyType } from 'src/app/shared/enums/CurrencyType';
 
 export class OrderItemModelItem {
     amount: number;

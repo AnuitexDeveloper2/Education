@@ -1,3 +1,93 @@
 table {
     width: 100%;
+  }
+
+  td.mat-column-Order {
+    width: 5%;
+  }
+  
+  th.mat-column-Date, td.mat-column-Date {
+    width: 10%;
+    text-align: center;
+  }
+
+  th.mat-column-UserName, td.mat-column-UserName{
+    width: 10%;
+    text-align: center;
+  }
+
+  th.mat-column-UserEmail, td.mat-column-UserEmail{
+    width: 25%;
+  }
+
+  th.mat-column-Product, td.mat-column-Product{
+    width: 5%;
+  }
+
+  th.mat-column-Title, td.mat-column-Title{
+    width: 230;
+  }
+
+  
+  th.mat-column-Qty, td.mat-column-Qty{
+    width: 5%;
+  }
+
+  th.mat-column-OrderAmount, td.mat-column-OrderAmount{
+    width: 5%;
+    text-align: center;
+  }
+
+  th.mat-column-Status, td.mat-column-Status{
+    width: 10%;
+    text-align: center;
+  }
+
+  th, td { 
+    max-width: 100px;
+    border: 1px solid #000000;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+} 
+  
+tr:nth-child(odd) { 
+    background-color:rgb(243, 240, 240); 
+} 
+
+table { 
+  border-collapse: collapse; 
+  width: 100%; 
+  column-rule: black;
+} 
+
+th {
+  background-color: rgb(187, 243, 211);
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
 }
+td {
+  text-align: left;
+}
+
+th.mat-column-Title {
+  text-align: center;
+}
+
+th.mat-column-Qty {
+  text-align: center;
+}
+
+th.mat-column-UserEmail {
+  text-align: center;
+}
+
+th.mat-column-Product {
+  text-align: center;
+}
+
+th.mat-column-Date {
+  text-align: center;
+}
+
+  

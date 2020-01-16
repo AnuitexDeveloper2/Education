@@ -4,7 +4,7 @@ import { FormControl } from "@angular/forms";
 import { UserService } from "src/app/shared/services/user.service";
 import { UserModelItem } from 'src/app/shared/models/user/UserModelItem';
 import { BaseModel } from 'src/app/shared/models/Base/BaseModel';
-import { ErrorComponent } from 'src/app/shared/error/error.component';
+import { ErrorComponent } from 'src/app/shared/components/error/error.component';
 
 
 @Component({

@@ -18,6 +18,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalModule } from "ng2-modal";
 import { FooterComponent } from 'src/app/shared/components/footer/footer.component';
 import { OrderModule } from 'src/app/order/order.module';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { OrderModule } from 'src/app/order/order.module';
     AccountModule,
     MatSelectModule,
     ModalModule,
-    OrderModule
+    OrderModule,
+    SharedModule
   ],
   providers:[{
     provide:HTTP_INTERCEPTORS,

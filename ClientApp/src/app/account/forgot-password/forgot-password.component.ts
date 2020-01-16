@@ -4,7 +4,7 @@ import { FormControl } from "@angular/forms";
 import { BaseModel } from 'src/app/shared/models/Base/BaseModel';
 import { Constants } from 'src/app/shared/constants/constants';
 import { MatDialog } from '@angular/material';
-import { ErrorComponent } from "src/app/shared/error/error.component";
+import { ErrorComponent } from "src/app/shared/components/error/error.component";
 
 
 @Component({
@@ -20,7 +20,7 @@ export class ForgotPasswordComponent {
     this.baseModel = new BaseModel();
    }
   
-  email = new FormControl(Constants.emptyString);   
+  email = new FormControl(Constants.EmptyString);   
 
    forgot(){
    this.userService.forgotPassword(this.email.value).subscribe(data =>{

@@ -15,7 +15,7 @@ export class PrintingEditionService {
 
   constructor(private http: HttpClient) { }
 
-  get(printingEditionFilterState:PrintingEditionFilterModel):Observable<PrintingEditionModel>{
+  get(printingEditionFilterState:PrintingEditionFilterModel): Observable<PrintingEditionModel>{
     return this.http.post<PrintingEditionModel>( environment.baseUrl + 'printingEdition/get',printingEditionFilterState)
   }
 

@@ -3,7 +3,7 @@ import { AccountService } from "src/app/shared/services/account/account.service"
 import { FormControl, Validators } from '@angular/forms';
 import { BaseModel } from 'src/app/shared/models/Base/BaseModel';
 import { MatDialog } from '@angular/material';
-import { ErrorComponent } from "src/app/shared/error/error.component";
+import { ErrorComponent } from "src/app/shared/components/error/error.component";
 import { Constants } from "src/app/shared/constants/constants";
 
 @Component({
@@ -17,8 +17,8 @@ export class SignInComponent  {
   constructor(private accountService:AccountService,public dialog:MatDialog) {
     this.baseModel = new BaseModel()
   }
-  email=new FormControl(Constants.emptyString,Validators.required);
-  password =new FormControl(Constants.emptyString,Validators.required);
+  email=new FormControl(Constants.EmptyString,Validators.required);
+  password =new FormControl(Constants.EmptyString,Validators.required);
 
   signIn(){
     this.accountService.signIn(this.email.value,this.password.value).subscribe((data:BaseModel) => {

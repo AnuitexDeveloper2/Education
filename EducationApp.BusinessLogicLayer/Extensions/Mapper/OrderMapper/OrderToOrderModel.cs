@@ -2,6 +2,7 @@
 using EducationApp.BusinessLogicLayer.Models.Orders;
 using EducationApp.DataAccessLayer.Entities;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace EducationApp.BusinessLogicLayer.Extention.Mapper.OrderMapper
 {
@@ -12,7 +13,7 @@ namespace EducationApp.BusinessLogicLayer.Extention.Mapper.OrderMapper
             var resultModel = new OrderModelItem
             {
                 Id = order.Id,
-                Date = order.Date,
+                Date = order.Date.ToString("G",CultureInfo.CreateSpecificCulture("en-us")),
                 UserName = order.UserName,
                 UserEmail = order.UserEmail,
                 Status = (Models.Enums.Enums.OrderStatusType)order.Status,

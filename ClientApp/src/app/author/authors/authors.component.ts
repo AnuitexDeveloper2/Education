@@ -5,12 +5,10 @@ import { AuthorFilterModel } from 'src/app/shared/models/author/AuthorFilterMode
 import {PageEvent, MatSort, MatTableDataSource, MatDialog} from '@angular/material';
 import { SortType } from 'src/app/shared/enums/SortType';
 import { CreateComponent } from "src/app/author/create/create.component";
-import { RemoveComponent } from 'src/app/user/remove/remove.component';
 import { ColumnName } from "src/app/shared/constants/column-name";
 import { Filter } from 'src/app/shared/constants/Filter';
-import { Direction } from 'src/app/shared/constants/direction';
 import { CreateEdit } from 'src/app/shared/enums/CreateEdit';
-
+import { RemoveComponent } from 'src/app/shared/components/remove/remove.component';
 @Component({
   selector: 'app-get-authors',
   templateUrl: './authors.component.html',
@@ -75,9 +73,16 @@ export class AuthorsComponent implements OnInit {
     const dialogRef = this.dialog.open(CreateComponent,{data:author}).afterClosed().subscribe(() => this.getAuthors());
   }
 
-  remove(author:AuthorModelItem) {
-    const dialogRef = this.dialog.open(RemoveComponent,{data:author}).afterClosed().subscribe(() => this.getAuthors())
- }
+  
+ remove(author: AuthorModelItem) {
+   debugger;
+  let dialogRef = this.dialog.open(RemoveComponent, {data: {pageName: 'author', name: author.name}})
+  .afterClosed().subscribe(data => {
+    if (data) {
+    this.authorService.remove(author.id).subscribe(() => this.getAuthors());
+    }
+  });
+}
   
  applyFilter(filtervalue:string) {
    this.authorFilter.searchString = filtervalue;

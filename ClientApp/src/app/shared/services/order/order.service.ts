@@ -15,4 +15,8 @@ export class OrderService {
   getOrders(orderFilter: OrderFilterModel): Observable<OrderModel> {
     return this.http.post<OrderModel>( environment.baseUrl + 'order/getOrders',orderFilter)
   }
+
+  getUserOrders(orderFilter: OrderFilterModel): Observable<OrderModel> {
+    return this.http.post<OrderModel>(environment.baseUrl + 'order/getUserOrders',orderFilter)
+  }
 }

@@ -7,13 +7,12 @@ import { RegisterComponent } from 'src/app/account/register/register.component';
 import { SignInComponent } from 'src/app/account/sign-in/sign-in.component';
 import { SignOutComponent } from 'src/app/account/sign-out/sign-out.component';
 import { ConfirmEmailComponent } from 'src/app/account/confirm-email/confirm-email.component';
-import { ErrorComponent } from '../shared/error/error.component';
 import { ForgotPasswordComponent } from "src/app/account/forgot-password/forgot-password.component";
-import { MaterialModule } from '../material/material.module';
+import { MaterialModule } from 'src/app/material/material.module';
 
 
 @NgModule({
-  declarations: [RegisterComponent,ForgotPasswordComponent, SignInComponent, SignOutComponent, ConfirmEmailComponent, ErrorComponent],
+  declarations: [RegisterComponent,ForgotPasswordComponent, SignInComponent, SignOutComponent, ConfirmEmailComponent],
   imports: [
     MatFormFieldModule,
     FormsModule,

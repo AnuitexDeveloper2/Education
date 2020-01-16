@@ -1,3 +1,4 @@
 export namespace Constants{
-    export const emptyString: string = '';
+    export const EmptyString: string = '';
+    export const Space: string = ' ';
 }

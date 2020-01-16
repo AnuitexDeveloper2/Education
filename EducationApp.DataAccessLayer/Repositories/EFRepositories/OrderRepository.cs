@@ -52,9 +52,9 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
             List<OrderStatusType> types = Enum.GetValues(typeof(OrderStatusType)).OfType<OrderStatusType>().Except(orderFilterModel.StatusOrder).ToList();
 
-            foreach (var item in orderFilterModel.StatusOrder)
+            foreach (var item in types)
             {
-                orders.Where(k => k.Status != item);
+               orders = orders.Where(k => k.Status != item);
             }
 
             orders = SortByType(orders, orderFilterModel.SortOrder.ToString(), orderFilterModel.SortType);

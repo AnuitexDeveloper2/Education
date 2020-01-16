@@ -24,12 +24,12 @@ export class CreateComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: PrintingEditionModelItem, private service: PrintingEditionService,private authorService: AuthorService,private formBuilder: FormBuilder) {
       this.printingEdition = this.formBuilder.group({
-      authors: [ Constants.emptyString,Validators.required ],
-      title: [ Constants.emptyString, Validators.required ],
-      description: [ Constants.emptyString, Validators.required ],
-      currency: [ Constants.emptyString,Validators.required ],
-      type: [ Constants.emptyString,Validators.required ],
-      price: [ Constants.emptyString, Validators.pattern('^[0-9]+$') ]
+      authors: [ Constants.EmptyString,Validators.required ],
+      title: [ Constants.EmptyString, Validators.required ],
+      description: [ Constants.EmptyString, Validators.required ],
+      currency: [ Constants.EmptyString,Validators.required ],
+      type: [ Constants.EmptyString,Validators.required ],
+      price: [ Constants.EmptyString, Validators.pattern('^[0-9]+$') ]
     })
     this.model = new PrintingEditionModelItem();
    }

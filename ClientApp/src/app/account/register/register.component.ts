@@ -3,7 +3,7 @@ import { UserModelItem } from 'src/app/shared/models/user/UserModelItem';
 import { AccountService } from 'src/app/shared/services/account/account.service';
 import { BaseModel } from 'src/app/shared/models/Base/BaseModel';
 import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../../shared/error/error.component';
+import { ErrorComponent } from 'src/app/shared/components/error/error.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Constants } from 'src/app/shared/constants/constants';
 
@@ -22,11 +22,11 @@ export class RegisterComponent {
     this.baseModel = new BaseModel();
     this.userForm = this.formBuilder.group(
       {
-        userName: [Constants.emptyString,Validators.required],
-        firstName: [Constants.emptyString,Validators.required],
-        lastName: [Constants.emptyString,Validators.required],
-        email: [Constants.emptyString,Validators.email],
-        password: [Constants.emptyString,Validators.pattern('^[0-9]+$')]
+        userName: [Constants.EmptyString,Validators.required],
+        firstName: [Constants.EmptyString,Validators.required],
+        lastName: [Constants.EmptyString,Validators.required],
+        email: [Constants.EmptyString,Validators.email],
+        password: [Constants.EmptyString,Validators.pattern('^[0-9]+$')]
       }
     )
    }
@@ -39,7 +39,6 @@ export class RegisterComponent {
        this.dialog.open(ErrorComponent,{data:this.baseModel.errors})
       }
   })
-     let test = this.baseModel.errors;
      this.err(this.baseModel.errors);
  }
   private err(errors:Array<string>){

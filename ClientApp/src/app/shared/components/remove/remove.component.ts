@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { AuthorService } from 'src/app/shared/services/author/author.service';
 import { AuthorModelItem } from 'src/app/shared/models/author/AuthorModelItem';
 
@@ -11,11 +11,10 @@ import { AuthorModelItem } from 'src/app/shared/models/author/AuthorModelItem';
 })
 export class RemoveComponent  {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: AuthorModelItem, private authorService: AuthorService ) { }
+  constructor(public dialogRef: MatDialogRef<RemoveComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
- remove(){
-  debugger;
-  this.authorService.remove(this.data.id).subscribe()
- }
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 
 }
