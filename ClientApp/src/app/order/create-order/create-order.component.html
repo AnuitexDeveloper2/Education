@@ -1,1 +1,38 @@
-<p>create-order works!</p>
+<h2>Checkout</h2>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Position Column -->
+    <ng-container matColumnDef="Product">
+      <th mat-header-cell *matHeaderCellDef> Product </th>
+      <td mat-cell *matCellDef="let element"> {{element.printingEditionName}} </td>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="UnitPrice">
+      <th mat-header-cell *matHeaderCellDef> Unit Price </th>
+      <td mat-cell *matCellDef="let element"> {{element.printingEditionPrice}} </td>
+    </ng-container>
+  
+    <!-- Weight Column -->
+    <ng-container matColumnDef="Qty">
+      <th mat-header-cell *matHeaderCellDef> Qty </th>
+      <td mat-cell *matCellDef="let element"> {{element.count}} </td>
+    </ng-container>
+  
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="OrderAmount">
+      <th mat-header-cell *matHeaderCellDef> Order Amount </th>
+      <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <h2>Total price:</h2>
+
+  <mat-dialog-actions >
+    <button class="Exit" mat-button mat-dialog-close>Cancel</button>
+    <button class="Delete" mat-button [mat-dialog-close]="true"  (click) = create()>Buy Now</button>
+  </mat-dialog-actions>
+  

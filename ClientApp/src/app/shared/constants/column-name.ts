@@ -16,4 +16,5 @@ export namespace ColumnName {
     export const Title: string = 'Title';
     export const Qty: string = 'Qty';
     export const OrderAmount: string = 'OrderAmount';
+    export const UnitPrice: string = 'UnitPrice';
 }

@@ -19,7 +19,7 @@ namespace EducationApp.PresentationLayer.Controllers
             _orderService = orderService;
         }
 
-        [Authorize(Roles = role.User)]
+        //[Authorize(Roles = role.User)]
         [HttpPost("create")]
         public async Task<ActionResult> CreateOrder(OrderModelItem ordersItemModel)
         {

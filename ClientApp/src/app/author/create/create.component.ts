@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { FormControl } from '@angular/forms';
 import { AuthorService } from 'src/app/shared/services/author/author.service';
 import { AuthorModelItem } from 'src/app/shared/models/author/AuthorModelItem';
-import { FormControl } from '@angular/forms';
 import { BaseModel } from 'src/app/shared/models/Base/BaseModel';
 import { ErrorComponent } from 'src/app/shared/components/error/error.component';
 
@@ -23,7 +23,7 @@ export class CreateComponent {
     this.baseModel = new BaseModel();
   }
 
-  save(){
+  save() {
     this.authorModel.name = this.authorName.value;
     if (this.data.id == 0) {
       this.authorService.save(this.authorModel).subscribe(data => {

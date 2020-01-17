@@ -1,16 +1,17 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from "@angular/router";
+import { PageEvent, MatDialog } from '@angular/material';
+import { Options } from 'ng5-slider';
+import { FormGroup, FormBuilder} from '@angular/forms';
 import { PrintingEditionFilterModel } from 'src/app/shared/models/printing-editions/PrintingEditionFilterModel';
 import { PrintingEditionService } from 'src/app/shared/services/printingEdition/printing-edition.service';
 import { PrintingEditionModelItem } from 'src/app/shared/models/printing-editions/PrintingEditionModelItem';
-import { Options } from 'ng5-slider';
 import { Filter } from 'src/app/shared/constants/Filter';
-import { PageEvent, MatSort } from '@angular/material';
 import { ProductType } from 'src/app/shared/enums/ProductType';
-import { enumSelector, ListEnum } from 'src/app/Extention/EnumExtention';
+import { enumSelector } from 'src/app/Extention/EnumExtention';
 import { CurrencyType } from 'src/app/shared/enums/CurrencyType';
 import { SortType } from 'src/app/shared/enums/SortType';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from "@angular/router";
+import { PrintingEditionSortType } from 'src/app/shared/enums/PrintingEditionSortType';
 
 @Component({
   selector: 'app-main',
@@ -30,14 +31,12 @@ export class MainComponent implements OnInit {
   private stringEnums: string[];
   private currencyList: string[];
   private sortType: string[];
-   @Output() SendValue = new EventEmitter<PrintingEditionModelItem>();
  
-  constructor(private service: PrintingEditionService, private formBuilder: FormBuilder, public router: Router ) {
+  constructor(private service: PrintingEditionService, private formBuilder: FormBuilder, public router: Router) {
     this.mainForm = formBuilder.group({
-      currency: [''],
-      sortBy: ['']
+      currency: CurrencyType[CurrencyType.USD],
+      sortBy: SortType[SortType.asc]
     })
-    this.SendValue = new EventEmitter<PrintingEditionModelItem>();
     this.filter = new PrintingEditionFilterModel();
     this.stringEnums = Array<string>();
     this.type = enumSelector(ProductType);
@@ -86,13 +85,16 @@ export class MainComponent implements OnInit {
     this.getBooks();
   }
 
-  sort(value: string) {
-    debugger;
-    let test = parseInt(CurrencyType[this.mainForm.get('currency').value]);
-    let test1 = parseInt(SortType[this.mainForm.get('sortBy').value]);
-    this.filter.currencyType = parseInt(CurrencyType[this.mainForm.get('currency').value])
-    this.filter.sortType = SortType.desc;
+  sort() {
+    this.filter.printingEditionSortType = PrintingEditionSortType.Price;
+    this.filter.sortType = parseInt(SortType[this.mainForm.get('sortBy').value]);
     this.getBooks();
+  }
+
+  changeCurrency() {
+    this.filter.currencyType = parseInt(CurrencyType[this.mainForm.get('currency').value])
+    this.getBooks();
+
   }
 
   filterBook(name: string) {
@@ -101,13 +103,12 @@ export class MainComponent implements OnInit {
     this.getBooks();
   }
 
-  details(book:PrintingEditionModelItem){
+  details(book:PrintingEditionModelItem) {
       this.service.printingEdition = book;
-      debugger;
       this.router.navigateByUrl('books/details')
   }
 
-  private test  (name: string): number {
+   private test  (name: string): number {
     let lenght = this.stringEnums.length;
     for (let index = 0; index < lenght ; index++) {
       const element = this.stringEnums[index];

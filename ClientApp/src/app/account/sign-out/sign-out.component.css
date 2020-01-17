@@ -1,5 +1,2 @@
-.inline { 
-  display: inline-block; 
-  border: 1px solid red; 
-  margin:10px;
-  }
+.left { float: left;} 
+.right { float: right;} 

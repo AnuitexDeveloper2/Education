@@ -1,21 +1,31 @@
 <span class="catalog" >Catalog</span>
-<div>
-<img class="image" src="assets\images\bookForUser.svg"  alt="books" >
-    <div class="title" >{{printingEdition.title}} <br>
+<div class="container"> 
+
+  <div class="conteiner" >
+  <img class="image" src="assets\images\bookForUser.svg"  alt="books" >
+  <div class="title" >{{printingEdition.title}} <br>
         <br>
-       <span class="author" *ngFor = "let author of printingEdition.authors.items"> {{author.name}} (author) <br></span>
+       <div class="author" *ngFor = "let author of printingEdition.authors.items"> {{author.name}} (author) <br></div>
     </div>
     
-     
-      <div class="price">
-          <label class="amount" >Amount</label>
-          <select >
-              <option *ngFor = "let item of amountList" [value] = "item">{{item}}</option>
-          </select>
-          {{printingEdition.price}} $ <br>
-          <div class="send-data">
-          <input type="button" value="add to cart">
-        </div>
-      </div>
+    <div class="price">
+    <mat-form-field>
+      <label class="amount" >Qty</label>
+       
+          <span class="quantity">
+          <mat-select >
+              <mat-option *ngFor = "let item of amountList" [value] = "item" (click) = "quantity(item)">{{item}}</mat-option>
+          </mat-select>
+        </span>
+        Amount:  {{amount}} $ <br>
+        </mat-form-field>
+            <form class="send-data" >
+            <div >
+             <button (click) = "purchase()">add to cart</button>
+          </div>
+        </form>
+    </div>
 </div> 
+<form action="">
 <div class="description">{{printingEdition.description}}</div>
+</form>

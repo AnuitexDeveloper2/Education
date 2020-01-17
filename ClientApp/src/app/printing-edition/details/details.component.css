@@ -1,6 +1,7 @@
 .image {
     width: 15%;
     height: 15%;
+    float: left;
 }
 
 .title {
@@ -10,7 +11,7 @@
     display: inline-block;
     vertical-align: top;
     margin-top: 5%;
-
+    
 }
 
 .description {
@@ -33,8 +34,7 @@
 
 .price {
     margin-right: 10%;
-    text-align: right;
-    vertical-align: top;
+    float: right;
     color: green;
 }
 
@@ -44,4 +44,24 @@
 
 .send-data {
     margin-top: 1%;
+    float: right;
+    vertical-align: bottom;
 }
+
+.quantity {
+   
+    margin-bottom: 50%;
+}
+
+.left { 
+    float: left;
+    color: black;
+    font-weight: bold;
+} 
+.right {
+     float: right;
+    } 
+
+
+
+

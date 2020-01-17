@@ -25,23 +25,23 @@
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field> <br>
 
-    <div>
+    <div [formGroup] = 'mainForm'>
       <div class="currencyForm">
         <mat-form-field >
           <label> Currency</label>
-          <select class="currency"  matNativeControl [(ngModel)] = "currency" >
-            <option   *ngFor = "let currency of currencyList" (click) = "sort()" [value] = "currency">{{currency}}</option>
-          </select>
+          <mat-select class="currency"  matNativeControl formControlName = "currency" >
+            <mat-option   *ngFor = "let currency of currencyList" (click) = "changeCurrency()" [value] = "currency">{{currency}}</mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
 
       <div>
         <mat-form-field>
           <label> Sort by</label>
-           <select matNativeControl [(ngModel)] = "sortBy">
-              <option value="asc" (click) = "sort()">Low to High</option>
-              <option value="desc" (click) = "sort()">High to Low</option>
-           </select>
+           <mat-select matNativeControl formControlName = "sortBy">
+              <mat-option value="asc" (click) = "sort()">Low to High</mat-option>
+              <mat-option value="desc" (click) = "sort()">High to Low</mat-option>
+           </mat-select>
           </mat-form-field>
       </div>
     </div>
@@ -58,7 +58,7 @@
                 {{author.name}} <br>
               </span> <br>
               <span class="price">
-                {{book.price}} {{currency}}
+                {{book.price}} {{mainForm.value.currency}}
               </span>
             </a>
               </div>
@@ -73,6 +73,3 @@
      (page)="pageEvent = movePage($event)"
      showFirstLastButtons >
   </mat-paginator> 
-
-   
-

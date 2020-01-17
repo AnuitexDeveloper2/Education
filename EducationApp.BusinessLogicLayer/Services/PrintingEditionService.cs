@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using errors = EducationApp.BusinessLogicLayer.Common.Consts.Constants.Errors;
 using EducationApp.BusinessLogicLayer.Extention.Mapper.PrintingEditionsMapper;
+using EducationApp.BusinessLogicLayer.Helpers;
 
 namespace EducationApp.BusinessLogicLayer.Services
 {
@@ -133,7 +134,7 @@ namespace EducationApp.BusinessLogicLayer.Services
 
             for (int i = 0; i < printingEdition.Data.Count(); i++)
             {
-                modelItems.Items.Add(printingEdition.Data[i].Map());
+                modelItems.Items.Add(printingEdition.Data[i].Map(state.CurrencyType));
             }
 
             modelItems.Count = printingEdition.Count;

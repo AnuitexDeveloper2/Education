@@ -7,4 +7,5 @@ export class OrderItemModelItem {
     printingEditionType: string;
     count: number;
     printingEditionName: string;
+    printingEditionPrice: number;
 }

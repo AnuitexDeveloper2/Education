@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {PageEvent, MatSort, MatTableDataSource, MatDialog} from '@angular/material';
 import { AuthorService } from 'src/app/shared/services/author/author.service';
 import { AuthorModelItem } from 'src/app/shared/models/author/AuthorModelItem';
 import { AuthorFilterModel } from 'src/app/shared/models/author/AuthorFilterModel';
-import {PageEvent, MatSort, MatTableDataSource, MatDialog} from '@angular/material';
 import { SortType } from 'src/app/shared/enums/SortType';
 import { CreateComponent } from "src/app/author/create/create.component";
 import { ColumnName } from "src/app/shared/constants/column-name";
@@ -28,28 +28,26 @@ export class AuthorsComponent implements OnInit {
   public dataSource = new MatTableDataSource();
   displayedColumns: string[];
   
-
   constructor( private authorService:AuthorService,public dialog:MatDialog ) { 
     this.displayedColumns = [ ColumnName.id, ColumnName.Name, ColumnName.Product, ColumnName.Edit]
     this.authorFilter = new AuthorFilterModel();
   }
+
   ngOnInit() {
     this.authorFilter.pageSize = Filter.ten;
     this.authorFilter.pageNumber = Filter.one;
     this.getAuthors();
   }
 
-  
   getAuthors() {
     return this.authorService.get(this.authorFilter).subscribe(data=>{
       this.count = data.count;
       this.items = data.items;
     })
   }
-  sortAuthors(event:MatSort) {
 
+  sortAuthors(event:MatSort) {
     this.authorFilter.sortType = SortType[event.direction];
-  
     this.getAuthors();
   }
 
@@ -73,9 +71,7 @@ export class AuthorsComponent implements OnInit {
     const dialogRef = this.dialog.open(CreateComponent,{data:author}).afterClosed().subscribe(() => this.getAuthors());
   }
 
-  
  remove(author: AuthorModelItem) {
-   debugger;
   let dialogRef = this.dialog.open(RemoveComponent, {data: {pageName: 'author', name: author.name}})
   .afterClosed().subscribe(data => {
     if (data) {

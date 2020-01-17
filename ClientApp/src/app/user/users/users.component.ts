@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { UserService } from 'src/app/shared/services/user.service'
 import { UserModelItem } from "src/app/shared/models/user/UserModelItem";
 import { UserFilterModel } from 'src/app/shared/models/user/UserFilterModel';
@@ -7,7 +8,6 @@ import { UserSortType } from 'src/app/shared/enums/UserSortType';
 import { SortType } from 'src/app/shared/enums/SortType';
 import { ProfileComponent } from "src/app/user/profile/profile.component";
 import { RemoveComponent } from 'src/app/shared/components/remove/remove.component';
-import { FormControl } from '@angular/forms';
 import { UsersFilterType } from 'src/app/shared/enums/UsersFilterType';
 import { ColumnName } from "src/app/shared/constants/column-name";
 import { Status } from "src/app/shared/constants/status";

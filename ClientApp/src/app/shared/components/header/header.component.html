@@ -20,21 +20,24 @@
     <p class="logo">
         <a  routerLink='/books/main' routerLinkActive='active'>
             <img src="assets/images/open-book.png"  height="100" width="170" alt='mainPage' > 
-            <button mat-button [matMenuTriggerFor]="menu">Menu</button>
-            <img class="cart" src="assets/images/iconmonstr-shopping-cart-3.svg" alt='purchcaseCart' style="float: right;">
-                
+            <!--<button mat-button [matMenuTriggerFor]="menu">Menu</button>-->
             <span class="title">
                 Book Publishing Company
             </span>
         </a>
+        <a routerLink="order/create-order">
+        <img class="cart" src="assets/images/iconmonstr-shopping-cart-3.svg" alt='purchcaseCart' style="float: right;">
+       </a>
     </p>
 </div>
 </div>
 <div>
-    <span class="matMenu" style="float: right;">
-        <mat-menu >
-            <button mat-menu-item>Item 1</button>
-            <button mat-menu-item>Item 2</button>
-        </mat-menu>
+
+       <!-- <span class="matMenu" style="float: right;">
+            <mat-menu >
+                <button mat-menu-item>Item 1</button>
+                <button mat-menu-item>Item 2</button>
+            </mat-menu>
         </span>
+    -->
 </div>

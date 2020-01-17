@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material';
 import { UserModelItem } from 'src/app/shared/models/user/UserModelItem';
 import { AccountService } from 'src/app/shared/services/account/account.service';
 import { BaseModel } from 'src/app/shared/models/Base/BaseModel';
-import { MatDialog } from '@angular/material';
 import { ErrorComponent } from 'src/app/shared/components/error/error.component';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Constants } from 'src/app/shared/constants/constants';
 
 @Component({
@@ -13,6 +13,7 @@ import { Constants } from 'src/app/shared/constants/constants';
   styleUrls: ['./register.component.css'],
   providers:[AccountService]
 })
+
 export class RegisterComponent {
   user: UserModelItem;
   baseModel: BaseModel;
@@ -31,7 +32,7 @@ export class RegisterComponent {
     )
    }
 
-  save(){
+  save() {
   this.accountService.register(this.userForm.value).subscribe(data => {
     debugger;
       this.baseModel.errors = data.errors
@@ -41,7 +42,7 @@ export class RegisterComponent {
   })
      this.err(this.baseModel.errors);
  }
-  private err(errors:Array<string>){
+  private err(errors:Array<string>) {
 
   }
 }
