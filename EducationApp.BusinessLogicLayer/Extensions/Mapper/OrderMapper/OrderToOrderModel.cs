@@ -13,11 +13,11 @@ namespace EducationApp.BusinessLogicLayer.Extention.Mapper.OrderMapper
             var resultModel = new OrderModelItem
             {
                 Id = order.Id,
-                Date = order.Date.ToString("G",CultureInfo.CreateSpecificCulture("en-us")),
+                Date = order.Date.ToString("G", CultureInfo.CreateSpecificCulture("en-us")),
                 UserName = order.UserName,
                 UserEmail = order.UserEmail,
                 Status = (Models.Enums.Enums.OrderStatusType)order.Status,
-                AmountOrder = order.Amount,
+                AmountOrder = TotalAmount(order.OrderItems),
                 OrderItems = Map(order.OrderItems)
             };
             return resultModel;
@@ -26,10 +26,17 @@ namespace EducationApp.BusinessLogicLayer.Extention.Mapper.OrderMapper
         private static OrderItemModel Map(IEnumerable<OrderItem> orderItems)
         {
             var result = new OrderItemModel();
+           
 
             foreach (var item in orderItems)
             {
-                result.Items.Add(Map(item));
+                var orderItemModelItem = new OrderItemModelItem()
+                {
+                    Count = item.Count,
+                    PrintingEditionName = item.PrintingEditionTitle,
+                    PrintingEditionType = item.TypeProduct.ToString()
+                };
+                result.Items.Add(orderItemModelItem);
             };
 
             return result;
@@ -43,6 +50,18 @@ namespace EducationApp.BusinessLogicLayer.Extention.Mapper.OrderMapper
                 PrintingEditionName = item.PrintingEditionTitle
             };
             return result;
+        }
+
+        private static decimal TotalAmount(IEnumerable<OrderItem> orderItem)
+        {
+            var result = (decimal)0;
+            foreach (var item in orderItem)
+            {
+                result += item.Amount;
+            }
+
+            return result;
+
         }
 
     }

@@ -42,7 +42,8 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                                               Id = orderItem.Id,
                                               Count = orderItem.Count,
                                               PrintingEditionTitle = printingEdition.Title,
-                                              TypeProduct = printingEdition.ProductType.ToString()
+                                              TypeProduct = printingEdition.ProductType.ToString(),
+                                              Amount = orderItem.Amount
                                           }
                          };
             if (orderFilterModel.Id > 0)

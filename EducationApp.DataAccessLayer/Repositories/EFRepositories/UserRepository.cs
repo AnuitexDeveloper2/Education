@@ -60,7 +60,7 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
 
         public async Task<bool> RemoveAsync(ApplicationUser user)
         {
-            user.IsRemoved = true;
+            user.IsRemoved = false;
 
             var result = await _userManager.UpdateAsync(user);
 

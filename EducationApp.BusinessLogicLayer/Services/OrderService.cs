@@ -18,11 +18,13 @@ namespace EducationApp.BusinessLogicLayer.Services
         private readonly IOrderRepository _orderRepository;
         private readonly IPaymentRepository _paymentRepository;
         private readonly IOrderItemRepository _orderItemRepository;
-        public OrderService(IOrderRepository orderRepository, IOrderItemRepository orderItemRepository, IPaymentRepository paymentRepository)
+        private readonly IPrintingEditionRepository _printingEditionRepository;
+        public OrderService(IOrderRepository orderRepository, IOrderItemRepository orderItemRepository, IPaymentRepository paymentRepository, IPrintingEditionRepository printingEditionRepository)
         {
             _orderItemRepository = orderItemRepository;
             _orderRepository = orderRepository;
             _paymentRepository = paymentRepository;
+            _printingEditionRepository = printingEditionRepository;
         }
         public async Task<OrderModel> CreateAsync(OrderModelItem ordersItemModel)
         {

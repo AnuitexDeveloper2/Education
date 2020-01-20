@@ -6,5 +6,4 @@ export class OrderFilterModel extends BaseFilterModel {
     id:number;
     statusOrder: Array<OrderStatusType>;
     sortOrder: SortOrderType;
-
 }

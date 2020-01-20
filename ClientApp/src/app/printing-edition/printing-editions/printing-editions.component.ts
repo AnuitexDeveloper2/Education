@@ -85,6 +85,7 @@ export class PrintingEditionsComponent implements OnInit {
   }
 
   sort(event: MatSort) {
+    debugger;
     this.filter.printingEditionSortType = PrintingEditionSortType[event.active];
     this.filter.sortType = SortType[event.direction];
     this.getBooks();

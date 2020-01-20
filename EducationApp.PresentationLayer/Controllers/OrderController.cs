@@ -23,6 +23,7 @@ namespace EducationApp.PresentationLayer.Controllers
         [HttpPost("create")]
         public async Task<ActionResult> CreateOrder(OrderModelItem ordersItemModel)
         {
+            ordersItemModel.UserId = 2;
             var result = await _orderService.CreateAsync(ordersItemModel);
 
             return Ok(result);

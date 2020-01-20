@@ -15,7 +15,7 @@ namespace EducationApp.BusinessLogicLayer.Extention.Mapper.OrderMapper
                 StatusOrder = MapList(orderFilterModel),
                 SortType = (SortType)orderFilterModel.SortType,
                 PageNumber = orderFilterModel.PageNumber,
-                PageSize = orderFilterModel.PageSize
+                PageSize = orderFilterModel.PageSize,
             };
 
             return resultFilter;

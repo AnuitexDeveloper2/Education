@@ -20,11 +20,12 @@ export class CreateOrderComponent implements OnInit {
   localStorage: Storage;
   
   constructor(@Inject(MAT_DIALOG_DATA) public data: OrderItemModelItem, private service: OrderService) { 
+    debugger;
     this.dataSource = new Array<OrderItemModelItem>();
     this.dataSource.push(data);
     this.orderModelItem = new OrderModelItem();
     this.displayedColumns = [ColumnName.Product, ColumnName.UnitPrice, ColumnName.Qty, ColumnName.OrderAmount];
-    this.orderModelItem.orderItems.items.push(data);
+    //this.orderModelItem.orderItems.items.push(data);
 }
   ngOnInit() {
 

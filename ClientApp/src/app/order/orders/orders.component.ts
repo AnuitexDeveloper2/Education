@@ -43,7 +43,7 @@ export class OrdersComponent implements OnInit {
     
   }
   getOrders() {
- 
+    debugger;
     return this.service.getOrders(this.orderFilter).subscribe(data => {
       this.itemsCount = data.itemsCount;
       this.items = data.items;
