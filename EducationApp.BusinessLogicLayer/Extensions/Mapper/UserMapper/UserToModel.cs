@@ -14,7 +14,7 @@ namespace EducationApp.BusinessLogicLayer.Extention.Mapper.UserMapper
                 Email = user.Email,
                 Id = user.Id,
                 UserName = user.UserName,
-                LockoutEnabled = user.LockoutEnabled
+                LockoutEnabled = user.LockoutEnabled,
             };
             return userItemModel;
         }

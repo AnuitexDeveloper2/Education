@@ -1,7 +1,7 @@
 import { Component, Inject,Input } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { PrintingEditionService } from 'src/app/shared/services/printingEdition/printing-edition.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { PrintingEditionService } from 'src/app/shared/services/printingEdition/printing-edition.service';
 import { AuthorService } from 'src/app/shared/services/author/author.service';
 import { AuthorModel } from 'src/app/shared/models/author/AuthorModel';
 import { AuthorModelItem } from 'src/app/shared/models/author/AuthorModelItem';
@@ -18,18 +18,18 @@ import { enumSelector } from "src/app/Extention/EnumExtention";
   providers:[PrintingEditionService]
 })
 export class CreateComponent {
-    printingEdition: FormGroup;
+    printingEditionForm: FormGroup;
     items = new Array<AuthorModelItem>();
     model: PrintingEditionModelItem;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: PrintingEditionModelItem, private service: PrintingEditionService,private authorService: AuthorService,private formBuilder: FormBuilder) {
-      this.printingEdition = this.formBuilder.group({
+      this.printingEditionForm = this.formBuilder.group({
       authors: [ Constants.EmptyString,Validators.required ],
       title: [ Constants.EmptyString, Validators.required ],
       description: [ Constants.EmptyString, Validators.required ],
       currency: [ Constants.EmptyString,Validators.required ],
       type: [ Constants.EmptyString,Validators.required ],
-      price: [ Constants.EmptyString, Validators.pattern('^[0-9]+$') ]
+      price: [ Constants.EmptyString, [Validators.required, Validators.pattern('^[0-9]+$')]]
     })
     this.model = new PrintingEditionModelItem();
    }
@@ -42,12 +42,12 @@ export class CreateComponent {
 
   save() {
     debugger;
-    this.model.price = this.printingEdition.get('price').value;
-    this.model.authors = this.Map(this.printingEdition.get('authors').value);
-    this.model.currency = parseInt(CurrencyType[this.printingEdition.get('currency').value]);
-    this.model.type = parseInt(ProductType[this.printingEdition.get('type').value]);
-    this.model.description = this.printingEdition.get('description').value;
-    this.model.title = this.printingEdition.get('title').value;
+    this.model.price = this.printingEditionForm.get('price').value;
+    this.model.authors = this.Map(this.printingEditionForm.get('authors').value);
+    this.model.currency = parseInt(CurrencyType[this.printingEditionForm.get('currency').value]);
+    this.model.type = parseInt(ProductType[this.printingEditionForm.get('type').value]);
+    this.model.description = this.printingEditionForm.get('description').value;
+    this.model.title = this.printingEditionForm.get('title').value;
     
     if(this.data != null) {
       this.model.id = this.data.id

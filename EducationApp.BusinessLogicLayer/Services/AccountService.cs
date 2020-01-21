@@ -122,26 +122,27 @@ namespace EducationApp.BusinessLogicLayer.Services
             return userModel;
         }
 
-        public async Task<BaseModel> SignInAsync(string email, string password)
+        public async Task<UserModelItem> SignInAsync(string email, string password)
         {
-             var usersModel = new BaseModel();
+            var userModel = new UserModelItem();
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
-                usersModel.Errors.Add(error.EmptyField);
-                return usersModel;
+                userModel.Errors.Add(error.EmptyField);
+                return userModel;
             }
             var user = await _userRepository.GetByEmailAsync(email);
             if (user == null)
             {
-                usersModel.Errors.Add(error.UserNotFound);
-                return usersModel;
+                userModel.Errors.Add(error.UserNotFound);
+                return userModel;
             }
             var result = await _userRepository.SignInAsync(user, password);
             if (result == null)
             {
-                usersModel.Errors.Add(error.NotValidPassword);
+                userModel.Errors.Add(error.NotValidPassword);
             }
-            return usersModel;
+            userModel = result.Map();
+            return userModel;
         }
 
         public async Task SignOutAsync()

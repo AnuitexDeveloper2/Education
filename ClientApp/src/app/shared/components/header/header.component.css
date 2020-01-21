@@ -1,9 +1,9 @@
 .header{
     background-color: gainsboro;
+    vertical-align: top;
 }
 
 .logo{
-    margin-top: 20px;
     margin-left: 50px;
 }
 .title{
@@ -11,10 +11,20 @@
     font-family: serif;
 }
 
+.number {
+    float: right;
+    color: red;
+}
+
 .cart{
-    float :"right";
+    float :right;
+
 }
 
 .matMenu {
+    float: right;
+}
+
+.navigator {
     float: right;
 }

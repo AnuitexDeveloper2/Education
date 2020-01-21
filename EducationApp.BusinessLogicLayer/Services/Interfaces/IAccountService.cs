@@ -10,7 +10,7 @@ namespace EducationApp.BusinessLogicLayer.Services.Interfaces
         Task<BaseModel> CreateUserAsync(UserModelItem userItemModel);
         Task<UserModelItem> GetByIdAsync(long Id);
         Task<UserModelItem> GetByEmailAsync(string email);
-        Task<BaseModel> SignInAsync(string email, string password);
+        Task<UserModelItem> SignInAsync(string email, string password);
         Task<BaseModel> RestorePasswordAsync(string email);
         Task SignOutAsync();
     }

@@ -1,32 +1,56 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { FormControl, Validators } from '@angular/forms';
+import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { AccountService } from "src/app/shared/services/account/account.service";
-import { BaseModel } from 'src/app/shared/models/Base/BaseModel';
 import { ErrorComponent } from "src/app/shared/components/error/error.component";
 import { Constants } from "src/app/shared/constants/constants";
+import { LocalStorage } from 'src/app/shared/services/localStorage/localStorage';
+import { UserModelItem } from 'src/app/shared/models/user/UserModelItem';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.css'],
-  providers: [AccountService],
+  providers: [AccountService,LocalStorage],
 })
 export class SignInComponent {
-  baseModel:BaseModel;
-  constructor(private accountService:AccountService,public dialog:MatDialog) {
-    this.baseModel = new BaseModel()
+  
+  userModel: UserModelItem;
+  loginForm: FormGroup;
+  email: string;
+  password: string;
+  
+
+  constructor(private accountService:AccountService,private dialog:MatDialog, private localStorage: LocalStorage, private formBuilder: FormBuilder, private router: Router) {
+
+    this.userModel = new UserModelItem();
+    this.loginForm = this.formBuilder.group({
+      email: [Constants.EmptyString,[Validators.required, Validators.email]],
+      password: [Constants.EmptyString, [Validators.required, Validators.minLength(8)]]
+    });
   }
-  email = new FormControl(Constants.EmptyString,Validators.required);
-  password = new FormControl(Constants.EmptyString,Validators.required);
 
   signIn() {
-    this.accountService.signIn(this.email.value,this.password.value).subscribe((data:BaseModel) => {
-      this.baseModel.errors = data.errors
-      if(this.baseModel.errors.length>0)
-      {
-       this.dialog.open(ErrorComponent,{data:this.baseModel.errors})
-      }
-  });
+    this.email = this.loginForm.get('email').value;
+    this.password = this.loginForm.get('password').value;
+    debugger;
+    this.accountService.signIn(this.email,this.password).subscribe((data:UserModelItem) => {
+      this.checkErrors(data);
+    });
+     
+  }
+
+  checkErrors(user: UserModelItem) {
+    debugger;
+    if(user.errors.length>0)
+    {
+      this.dialog.open(ErrorComponent,{data:user.errors})
+    }
+    if(user.errors.length === 0)
+    {
+      this.localStorage.setUser(user)
+      location.href = 'http://localhost:4200/books/main';
+    }
   }
 }

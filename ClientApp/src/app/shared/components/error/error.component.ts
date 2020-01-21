@@ -6,11 +6,9 @@ import { MAT_DIALOG_DATA } from '@angular/material';
   templateUrl: './error.component.html',
   styleUrls: ['./error.component.css']
 })
-export class ErrorComponent  {
+export class ErrorComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: Array<string>) { 
     
   }
-   
-  
 }

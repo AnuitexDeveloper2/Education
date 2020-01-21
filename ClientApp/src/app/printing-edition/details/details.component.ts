@@ -10,11 +10,13 @@ import { OrderModelItem } from 'src/app/shared/models/order/OrderModelItem';
 import { OrderItemModelItem } from 'src/app/shared/models/orderItem/orderItemModelItem';
 import { MyCartComponent } from 'src/app/cart/my-cart/my-cart.component';
 import { OrderItemModel } from 'src/app/shared/models/orderItem/orderItemModel';
+import { LocalStorage } from 'src/app/shared/services/localStorage/localStorage';
 
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
-  styleUrls: ['./details.component.css']
+  styleUrls: ['./details.component.css'],
+  providers: [LocalStorage]
 })
 export class DetailsComponent implements OnInit {
  
@@ -23,10 +25,10 @@ export class DetailsComponent implements OnInit {
   amount: number;
   orderModelItem: OrderModelItem;
   orderItemModelItem: OrderItemModelItem;
-  constructor(private service: PrintingEditionService, private dialog: MatDialog) {
+  constructor(private service: PrintingEditionService, private dialog: MatDialog, private localStorage: LocalStorage) {
     debugger;
     this.printingEdition = new PrintingEditionModelItem();
-    this.amountList =[Filter.one,Filter.two,Filter.three,Filter.four];
+    this.amountList = [Filter.one,Filter.two,Filter.three,Filter.four];
     this.amount = this.printingEdition.price;
     this.orderModelItem = new OrderModelItem();
     this.orderItemModelItem = new OrderItemModelItem();
@@ -48,6 +50,7 @@ export class DetailsComponent implements OnInit {
     this.orderItemModelItem.count = this.amount / this.printingEdition.price;
     this.orderItemModelItem.amount = this.amount;
     this.orderModelItem.orderItems.items.push(this.orderItemModelItem);
+    this.localStorage.setCart(this.orderModelItem)
     let dialogRef = this.dialog.open(MyCartComponent,{data:this.orderModelItem}).afterClosed().subscribe();
   }
 

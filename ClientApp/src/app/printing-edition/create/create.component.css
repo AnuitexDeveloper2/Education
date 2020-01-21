@@ -8,13 +8,13 @@
     height: 200px;
 }
 
-.mat__select{
+.mat-select{
     font-size: 14px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     
   } 
 
-  .authorsForm{
+  .authors-form{
     text-align: right;
   }
 
@@ -23,16 +23,16 @@
       
   }
 
-  .nameProperty{
+  .name-property{
       color: darkgray;
   }
 
-  .currencyForm{
+  .currency-form{
       width: 50px;
       
   }
 
-  .currencyProperty{
+  .currency-property{
     margin-top: 30%;
   }
 
@@ -44,7 +44,7 @@
       text-align: right;
   }
 
-  #block_container
+  #block-container
 {
     text-align:center;
 }

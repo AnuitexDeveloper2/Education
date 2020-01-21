@@ -1,8 +1,8 @@
 import { Component, OnInit, Type } from '@angular/core';
+import {PageEvent, MatSort, MatTableDataSource, MatDialog} from '@angular/material';
 import { PrintingEditionService } from "src/app/shared/services/printingEdition/printing-edition.service";
 import { PrintingEditionFilterModel } from 'src/app/shared/models/printing-editions/PrintingEditionFilterModel';
 import { PrintingEditionModelItem } from 'src/app/shared/models/printing-editions/PrintingEditionModelItem';
-import {PageEvent, MatSort, MatTableDataSource, MatDialog} from '@angular/material';
 import { CreateComponent } from 'src/app/printing-edition/create/create.component';
 import { ColumnName } from 'src/app/shared/constants/column-name';
 import { Filter } from 'src/app/shared/constants/Filter';
@@ -20,7 +20,6 @@ import { enumSelector } from 'src/app/Extention/EnumExtention';
 })
 export class PrintingEditionsComponent implements OnInit {
 
-  
   filter: PrintingEditionFilterModel;
   count: number;
   items: Array<PrintingEditionModelItem>;
@@ -28,7 +27,6 @@ export class PrintingEditionsComponent implements OnInit {
   dataSource = new MatTableDataSource();
   type: string[];
   stringEnums: string[];
-  
 
   constructor(private service: PrintingEditionService, private dialog: MatDialog ) {
 
@@ -69,6 +67,7 @@ export class PrintingEditionsComponent implements OnInit {
      }
    });
  }
+ 
   movePage(event: PageEvent) {
     this.filter.pageSize = event.pageSize;
     this.filter.pageNumber = event.pageIndex + Filter.one;

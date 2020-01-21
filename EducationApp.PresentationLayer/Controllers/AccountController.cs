@@ -71,7 +71,7 @@ namespace EducationApp.PresentationLayer.Controllers
 
             SetCookies(tokens.AccessToken, tokens.RefreshToken);
 
-            return Ok(result);
+            return Ok(user);
         }
         [Authorize]
         [HttpGet("signOut")]

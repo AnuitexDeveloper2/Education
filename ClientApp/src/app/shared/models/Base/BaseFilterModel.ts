@@ -1,7 +1,8 @@
-import { SortType } from '../../enums/SortType';
-import { CurrencyType } from '../../enums/CurrencyType';
+import { SortType } from 'src/app/shared/enums/SortType';
+import { CurrencyType } from 'src/app/shared/enums/CurrencyType';
 
-export class BaseFilterModel{
+export class BaseFilterModel {
+    
     searchString: string;
     pageNumber: number;
     pageSize: number;

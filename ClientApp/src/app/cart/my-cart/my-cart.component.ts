@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Predicate } from '@angular/core';
 import { OrderModelItem } from 'src/app/shared/models/order/OrderModelItem';
 import { OrderItemModelItem } from 'src/app/shared/models/orderItem/orderItemModelItem';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material';
@@ -12,27 +12,30 @@ import { StripeService } from 'src/app/shared/services/stripe/stripe.service';
 import { OrderFilterModel } from 'src/app/shared/models/order/OrderFilterModel';
 import { OrderStatusType } from 'src/app/shared/enums/OrderStatusType';
 import { OrderModel } from 'src/app/shared/models/order/OrderModel';
+import { LocalStorage } from 'src/app/shared/services/localStorage/localStorage';
 
 @Component({
   selector: 'app-my-cart',
   templateUrl: './my-cart.component.html',
-  styleUrls: ['./my-cart.component.css']
+  styleUrls: ['./my-cart.component.css'],
+  providers: [LocalStorage]
 })
 export class MyCartComponent implements OnInit {
 
   displayedColumns: string[]; 
-  dataSource:OrderModelItem;
+  dataSource: OrderModelItem;
   orderModelItem: OrderModelItem;
-  localStorage: Storage;
   orderItemModelItem: OrderItemModelItem;
   baseModel: BaseModel;
   amount = Filter.zero;
   orderFilter: OrderFilterModel;
   itemsCount: number;
   items: Array<OrderModelItem>;
+  callbeckUrl: Predicate<string>;
+ 
   
-  constructor(@Inject(MAT_DIALOG_DATA) public data: OrderModelItem, private orderService: OrderService, private dialog: MatDialog, private stripeService: StripeService,) { 
-    
+  constructor(@Inject(MAT_DIALOG_DATA) public data: OrderModelItem, private orderService: OrderService, private dialog: MatDialog, private stripeService: StripeService, private localStorage:LocalStorage) { 
+    debugger;
     this.dataSource = data;
     this.orderFilter = new OrderFilterModel();
     this.baseModel = new BaseModel();
@@ -44,6 +47,7 @@ export class MyCartComponent implements OnInit {
     this.items = new Array<OrderModelItem>();
   }
   ngOnInit() {
+    debugger;
     this.orderFilter.pageNumber = Filter.one;
     this.orderFilter.pageSize = Filter.ten;
     this.orderFilter.statusOrder = [Filter.zero];

@@ -23,7 +23,6 @@ namespace EducationApp.PresentationLayer.Controllers
         [HttpPost("create")]
         public async Task<ActionResult> CreateOrder(OrderModelItem ordersItemModel)
         {
-            ordersItemModel.UserId = 2;
             var result = await _orderService.CreateAsync(ordersItemModel);
 
             return Ok(result);
@@ -42,7 +41,6 @@ namespace EducationApp.PresentationLayer.Controllers
         [HttpPost("getUserOrders")]
         public async Task<OrderModel> GetUserOrders(OrderFilterModel orderFilterModel)
         {
-            orderFilterModel.Id = 2;
             var result = await _orderService.GetOrdersAsync(orderFilterModel);
 
             return result;

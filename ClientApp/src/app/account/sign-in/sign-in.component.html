@@ -1,35 +1,44 @@
 <span class="catalog" >Catalog</span>
-<div class="user_img">
-    <img src="assets/images/user.png" height="100" width="100" alt="user">
+<div class="user-img">
+    <img src="assets/images/user.png"  alt="user">
 </div>
-<p class="signIn">Sign-In</p>
-<div class="form">
-           E-Mail <br>
-    <input type="text" size="50" name="name" [formControl] = 'email'>
-    <br>
-   <p>
-       Password 
-       <a routerLink="/account/forgot-password" routerLinkActive="active">
-        <span class="forgot-password">forgot your password?</span>
-    </a>
-    <br>
-    <input type="password" size="50" name="name" [formControl] = 'password'>
-</p>
+<h1 class="sign-in">Sign-In</h1>
+
+<div class="sign-in-form" [formGroup] = loginForm>
+    
+    <div class="email-form">
+        <mat-form-field appearance="outline" [floatLabel]="'never'">
+            <mat-label class="label"> E-mail</mat-label>
+            <input class="input" matInput placeholder="E-mail" formControlName = "email" >
+            <mat-error>
+                E-mail not valid
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="password-form"></div>
+    <mat-form-field appearance="outline" [floatLabel]="'never'">
+        <mat-label class="label"> Password</mat-label>
+        <input matInput placeholder="Password" formControlName = "password" >
+        <mat-error>
+            Password must be at least 8 characters
+        </mat-error>
+    </mat-form-field>
+
+    
+    <form  >
+        <mat-checkbox class="checkbox">Remember me!</mat-checkbox>
+        <button class="sign-in-button"[disabled] = "!loginForm.valid" name="name"  (click) = "signIn()">Sign In</button>
+    </form>
+
+    <div class="newUser">
+        New to book Publishing Company? <br>
+        <form class="button">
+            <button  class="sign-up-button" type="submit" onClick='location.href="http://localhost:4200/account/register"'>Sign Up</button>
+        </form>      
+    </div>
+   
 </div>
-<div class="pointer">
-    <label >
-        <input type="checkbox" name="remember">
-        <span>Remember me</span>
-            <form action="">
-                <button class="signInButton" name="name" (click) = "signIn()">Sign In</button>
-            </form>
-    </label>
-</div>
-<div class="newUser">
-New to book Publishing Company? <br>
-<form>
-    <button  class="signUpButton" type="button" onClick='location.href="http://localhost:4200/account/register"'>Sign Up</button>
-</form>      
-</div>
+
 
 

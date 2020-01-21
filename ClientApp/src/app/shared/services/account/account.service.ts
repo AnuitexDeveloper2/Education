@@ -13,12 +13,16 @@ register(user: UserModelItem):Observable<BaseModel>{
   return this.http.post<BaseModel>( environment.baseUrl + `account/register`,user, { withCredentials: true })
   }
   
-  signIn(email:string,password:string):Observable<BaseModel>{
-    return this.http.post<BaseModel>(environment.baseUrl + `signIn/?password=${password}&email=${email}`, { withCredentials: true })
+  signIn(email:string,password:string):Observable<UserModelItem>{
+    return this.http.post<UserModelItem>(environment.baseUrl + `account/signIn/?password=${password}&email=${email}`, { withCredentials: true })
   }
 
   forgotPassword(email:string):Observable<BaseModel> {
     return this.http.post<BaseModel>(environment.baseUrl + `account/forgotPassword/?email=${email}`,{withCredentials:true});
+  }
+
+  logOut(user: UserModelItem) {
+    return this.http.post(environment.baseUrl + 'account/signOut/',user)
   }
 
 }

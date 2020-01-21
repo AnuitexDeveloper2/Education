@@ -1,41 +1,80 @@
-.user_img{
+.user-img{
     text-align: center;
+    height:"100";
+    width:"100";
 }
 .catalog{
     margin-left: 20px;
     margin-top: 40px;
 }
-.signIn{
+.sign-in{
+    text-align: center;
    font-family: 'Times New Roman', Times, serif;
    font-weight: bold;
-   font-size: 20px;
-   margin-left: 40%;
-}
-.form{
-    margin-left: 40%;
 }
 
-.pointer{
-    margin-left: 40%;
+.sign-in-form {
+    text-align: center;
 }
 
+.password-form {
+    text-align: center;
+}
 
-.signInButton{
+::ng-deep .mat-form-field .mat-form-field-infix {
+    width: 500px;
+    height: 1px;
+}
+
+.label {
+    color: green;
+}
+
+.sign-in-button {
     cursor: pointer;
-    background-color: rgb(136, 212, 136);
     border: black;
-    color: white;
-    
+    color: black;
+    text-align: center;
+    float: right;
+    margin-right: 38%;
+    vertical-align: top;
+}
+
+.checkbox {
+   margin-left: 32%;
+}
+
+.button {
+    margin-top:30px ;
 }
 
 .newUser{
   text-align: center;
+  margin-top: 100px;
 }
 
-.signUpButton{
+.sign-up-button{
     text-align:center;
     cursor:pointer;
     height:20px;
     width:250px;
 }
 
+button {
+    font-family: Arial;
+    background-color: #eee;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    cursor: hand;
+  }
+  button:hover {
+    background-color: #cfd8dc;
+    background-color:green;
+  }
+  button:disabled {
+    background-color: #eee;
+    color: #aaa;
+    cursor: auto;
+  }

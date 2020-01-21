@@ -1,33 +1,29 @@
-    <a href="http://localhost:4200/user/users">
-     <span class="forgot-password">users</span>
- </a>
-
- <a href="http://localhost:4200/author/authors">
-    <span class="forgot-password"> authors</span>
-</a>
-
-<a href="http://localhost:4200/account/sign-in">
-    <span class="forgot-password"> account</span>
-</a>
-
-<a href="http://localhost:4200/books/printing-editions">
-    <span class="forgot-password"> books</span>
-</a>
-
-
 <div>
-<div class="header">
-    <p class="logo">
-        <a  routerLink='/books/main' routerLinkActive='active'>
-            <img src="assets/images/open-book.png"  height="100" width="170" alt='mainPage' > 
-            <!--<button mat-button [matMenuTriggerFor]="menu">Menu</button>-->
+    <div class="header">
+        <p class="logo">
+            <a  routerLink='/books/main' routerLinkActive='active'>
+                <img src="assets/images/open-book.png"   height="100" width="170" alt='mainPage' > 
+            </a>
+            <button class="navigator" *ngIf = "user != null" mat-button [matMenuTriggerFor]="menu"> <mat-icon class="person-icon"> person_pin</mat-icon></button>
+            <mat-menu #menu="matMenu" >
+                <button>
+                <mat-icon class="person-icon"> person_pin</mat-icon>
+                    <a mat-menu-item *ngIf = "user.role == 'Admin'" href="http://localhost:4200/order/orders">Orders</a>
+                    <a mat-menu-item *ngIf = "user.role == 'Admin'" href="http://localhost:4200/user/users">Users</a>
+                    <a mat-menu-item *ngIf = "user.role == 'Admin'" href="http://localhost:4200/books/printing-editions">Products</a>
+                    <a mat-menu-item *ngIf = "user.role == 'Admin'" href="http://localhost:4200/author/authors">Authors</a>
+                    <a mat-menu-item href="http://localhost:4200/user/profile">My Profile</a>
+                    <a mat-menu-item *ngIf = "user.role == 'User'" href="http://localhost:4200/order/my-order">My Orders</a>
+                    <a mat-menu-item *ngIf = "user.role == 'User'" href="http://localhost:4200/books/main">Main</a>
+                </button>
+                    <button mat-menu-item (click) = "logOut()">Log Out</button>
+            </mat-menu>
+           
             <span class="title">
                 Book Publishing Company
             </span>
-        </a>
-        <a routerLink="order/create-order">
-        <img class="cart" src="assets/images/iconmonstr-shopping-cart-3.svg" alt='purchcaseCart' style="float: right;">
-       </a>
+            <span class="number">1</span>
+        <img class="cart" src="assets/images/iconmonstr-shopping-cart-3.svg" *ngIf = "user.role == 'User'" alt='purchcaseCart' (click) = moveToCart() >
     </p>
 </div>
 </div>

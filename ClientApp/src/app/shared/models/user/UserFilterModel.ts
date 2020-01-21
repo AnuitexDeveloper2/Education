@@ -8,4 +8,5 @@ export class UserFilterModel extends BaseFilterModel
     userSortType:UserSortType;
     userFilterStatus:UsersFilterType;
     sortType:SortType;
+    
 }

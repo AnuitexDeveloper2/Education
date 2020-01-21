@@ -79,11 +79,11 @@ namespace EducationApp.BusinessLogicLayer.Services
 
             var resultModel = new OrderModel();
 
-            if (getOrders == null)
-            {
-                resultModel.Errors.Add(errors.OrderIsNotFound);
-                return resultModel;
-            }
+            //if (getOrders == null)
+            //{
+            //    resultModel.Errors.Add(errors.OrderIsNotFound);
+            //    return resultModel;
+            //}
 
             foreach (var item in getOrders.Data)
             {
