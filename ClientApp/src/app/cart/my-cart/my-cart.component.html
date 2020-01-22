@@ -23,6 +23,7 @@
     <ng-container matColumnDef="OrderAmount">
       <th mat-header-cell *matHeaderCellDef> Order Amount </th>
       <td mat-cell *matCellDef="let element"> {{element.amount}} $
+        <mat-icon class="delete-icon" (click) = deleteItem(element)>delete_forever</mat-icon>
       </td>
     </ng-container>
   

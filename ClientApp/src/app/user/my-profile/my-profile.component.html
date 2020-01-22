@@ -1,0 +1,78 @@
+<span class="catalog" >Catalog</span>
+<h1 class="title">
+    My Profile
+    <span class = "img-button">
+        <img src="assets/images/iconmonstr-pencil-8.svg"  alt="edit" matTooltip="Edit Profile User" (click)= "show()">
+    </span>
+</h1>
+<div class="user-img">
+    <img src="assets/images/user.png" height="100" width="100" alt="user">
+</div>
+
+<form class="form-group" (ngSubmit)="onSubmit()" [formGroup]="userForm">
+    
+    <div>
+        <mat-form-field class="form" appearance="outline">
+            <mat-label class="label">Your Login</mat-label>
+            <input matInput placeholder="Please Enter Your Login" formControlName = "userName">
+            <mat-error>
+                Please enter your Login
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field class="form" appearance="outline">
+            <mat-label class="label">First Name</mat-label>
+            <input matInput placeholder="Please Enter Your First Name" formControlName = "firstName">
+            <mat-error>
+                Please enter your first name
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field class="form" appearance="outline">
+            <mat-label class="label">Last Name</mat-label>
+            <input matInput placeholder="Please Enter Your Last Name" formControlName = "lastName">
+            <mat-error>
+                Please enter your last name
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field class="form" appearance="outline">
+            <mat-label class="label">Email</mat-label>
+            <input matInput placeholder="Please Enter Your Email" formControlName = "email">
+            <mat-error>
+                Please enter valid email adress
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <form *ngIf = "hide == true" class="paswword-form" [formGroup] = "passwordForm">
+        <div>
+            <mat-form-field class="form" appearance="outline">
+                <mat-label class="label">Old Password</mat-label>
+                <input matInput type="password" placeholder="Please Enter Your Password" formControlName = "password">
+                <mat-error>
+                    Password must be at least 8 charachters
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field class="form" appearance="outline">
+                <mat-label class="label">New Password</mat-label>
+                <input matInput type="password" placeholder="Please Enter Your New Password" formControlName = "newPassword">
+                <mat-error>
+                    Password must be at least 8 charachters
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </form>
+
+    <form >
+        <button class="cancel" mat-raised-button >Cancel</button>
+        <button class="Save" [disabled] = !userForm.valid mat-raised-button (click) = editUser()>Save</button>
+      </form>
+

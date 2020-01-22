@@ -1,6 +1,6 @@
-import { Component, Inject,Input } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PrintingEditionService } from 'src/app/shared/services/printingEdition/printing-edition.service';
 import { AuthorService } from 'src/app/shared/services/author/author.service';
 import { AuthorModel } from 'src/app/shared/models/author/AuthorModel';
@@ -25,11 +25,11 @@ export class CreateComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: PrintingEditionModelItem, private service: PrintingEditionService,private authorService: AuthorService,private formBuilder: FormBuilder) {
       this.printingEditionForm = this.formBuilder.group({
       authors: [ Constants.EmptyString,Validators.required ],
-      title: [ Constants.EmptyString, Validators.required ],
-      description: [ Constants.EmptyString, Validators.required ],
+      title: [ data.title, Validators.required ],
+      description: [ data.description, Validators.required ],
       currency: [ Constants.EmptyString,Validators.required ],
       type: [ Constants.EmptyString,Validators.required ],
-      price: [ Constants.EmptyString, [Validators.required, Validators.pattern('^[0-9]+$')]]
+      price: [ data.price, [Validators.required, Validators.pattern('^[0-9]+$')]]
     })
     this.model = new PrintingEditionModelItem();
    }

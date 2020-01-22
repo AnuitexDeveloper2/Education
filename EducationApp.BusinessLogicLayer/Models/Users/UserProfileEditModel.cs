@@ -1,6 +1,8 @@
-﻿namespace EducationApp.BusinessLogicLayer.Models.Users
+﻿using EducationApp.BusinessLogicLayer.Models.Base;
+
+namespace EducationApp.BusinessLogicLayer.Models.Users
 {
-    public class UserProfileEditModel
+    public class UserProfileEditModel : BaseModel
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

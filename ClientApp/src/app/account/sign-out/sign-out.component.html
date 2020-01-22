@@ -1,5 +1,89 @@
-<div class="container"> 
-  <div class="left">Stuff</div> 
-  <div class="right">Here </div> 
-  <div style="clear:both;"></div> 
- </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+
+  
+  
+  
+  
+  <div action="#" class="form">
+    <form [formGroup] = "profileForm">
+      <h2 class="form__caption">My Profile</h2>
+      <div class = "images__modal">
+        <img src="assets/images/photograph.svg" class="form__logo" alt="person">
+        <img src="assets/images/pencil-edit-button.svg" alt="edit" class = "img__edit" (click) = "edit()">
+      </div>
+      <div class="form__row">
+        <span>Your First name</span>
+        <mat-form-field class="form__field">
+          <input matInput placeholder="First name"  formControlName = "firstName">
+          <mat-error>
+            This field must be filled
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form__row">
+        <span>Your Last name</span>
+        <mat-form-field class="form__field">
+          <input matInput placeholder="Last name"  formControlName = "lastName">
+          <mat-error>
+            This field must be filled
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form__row">
+        <span>E-mail</span>
+        <mat-form-field class="form__field">
+          <input matInput placeholder="Email"  formControlName = "email">
+          <mat-error>
+            Email incorrect
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+    <div id = "edit" [formGroup] = "passwordForm">
+      <div class="form__row">
+        <span>Current password</span>
+        <mat-form-field class="form__field">
+          <input matInput placeholder="At least 8 characters" type="password" formControlName = "currentPassword">
+          <mat-error>
+            Password incorrect
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form__row">
+        <span>New password</span>
+        <mat-form-field class="form__field">
+          <input matInput placeholder="At least 8 characters" type="password" formControlName = "newPassword">
+          <mat-error>
+            Password incorrect
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form__row">
+        <span>Confirm new password</span>
+        <mat-form-field class="form__field">
+          <input matInput placeholder="At least 8 characters" type="password">
+          <mat-error>
+            Password incorrect
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <button [disabled] = "!profileForm.valid" mat-raised-button (click) = "save()">Save</button>
+      <button mat-raised-button (click) = "cansel()">Cansel</button>
+    </div>
+  </div>
+-->

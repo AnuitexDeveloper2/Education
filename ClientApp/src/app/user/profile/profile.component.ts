@@ -1,10 +1,11 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material';
-import { FormControl } from "@angular/forms";
-import { UserService } from "src/app/shared/services/user.service";
+import { FormControl, FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { UserService } from "src/app/shared/services/user/user.service";
 import { UserModelItem } from 'src/app/shared/models/user/UserModelItem';
 import { BaseModel } from 'src/app/shared/models/Base/BaseModel';
 import { ErrorComponent } from 'src/app/shared/components/error/error.component';
+import { UserProfileEditModel } from 'src/app/shared/models/user/UserProfileEditModel';
 
 
 @Component({
@@ -13,24 +14,31 @@ import { ErrorComponent } from 'src/app/shared/components/error/error.component'
   styleUrls: ['./profile.component.css'],
   providers: [UserService]
 })
-export class ProfileComponent  {
+export class ProfileComponent {
   
   userModelItem: UserModelItem;
   baseModel: BaseModel;
-  firstName = new FormControl();
-  lastName = new FormControl();
+  userForm: FormGroup;
+ 
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: UserModelItem, private userService: UserService, private dialog:MatDialog) {
-   this.userModelItem = new UserModelItem();
-   this.baseModel = new BaseModel();
+  constructor(@Inject(MAT_DIALOG_DATA) public data: UserModelItem, private userService: UserService, private dialog: MatDialog, private formBuilder: FormBuilder) {
+   
+    this.userForm = this.formBuilder.group({
+      firstName: [data.firstName,Validators.required],
+      lastName: [data.lastName,Validators.required],
+      email: [data.email,Validators.email]
+    });
+    this.userModelItem = new UserModelItem();
+    this.baseModel = new BaseModel();
    }
 
   
-  editUser(){
+  editUser() {
     debugger;
-    let user = new UserModelItem();
-    user.firstName = this.firstName.value;
-    user.lastName = this.lastName.value;
+    let user = new UserProfileEditModel();
+    user.firstName = this.userForm.get('firstName').value;
+    user.lastName = this.userForm.get('lastName').value;
+    user.email = this.userForm.get('email').value;
     user.id = this.data.id;
     this.userService.edit(user).subscribe(data => {
       this.baseModel.errors = data.errors

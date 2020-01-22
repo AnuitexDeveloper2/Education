@@ -21,7 +21,7 @@
         </mat-form-field>
             <form class="send-data" >
             <div >
-             <button (click) = "purchase()">add to cart</button>
+             <button [disabled] = "user == null" (click) = "purchase()">add to cart</button >
           </div>
         </form>
     </div>

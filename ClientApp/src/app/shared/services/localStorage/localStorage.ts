@@ -5,6 +5,11 @@ import { CartModel } from 'src/app/shared//models/Cart/cartModel';
 import { OrderModelItem } from '../../models/order/OrderModelItem';
 
 export class LocalStorage {
+
+      items = new Array<OrderItemModelItem>();
+      constructor() {
+        
+      }
     setUser(user: UserModelItem): void {
         localStorage.setItem('user', JSON.stringify(user));
       }
@@ -13,20 +18,40 @@ export class LocalStorage {
         return JSON.parse(localStorage.getItem('user'));
       }
     
-      setCart(orderModelItem: OrderModelItem): void {
-        localStorage.setItem('cart', JSON.stringify(orderModelItem));
+      setCart(orderItemModelItem: OrderItemModelItem): void {
+        let test = this.getCart();
+        if (test != null) {
+          this.items= test;
+        }
+        this.items.push(orderItemModelItem);
+       
+        localStorage.setItem('cart', JSON.stringify(this.items));
       }
     
-      getCart(): CartModel {
+      getCart(): Array<OrderItemModelItem> {
     
-        let localCart: CartModel;
-        localCart = JSON.parse(localStorage.getItem('cart'));
-        if (localCart === null) {
+        let currentCart: Array<OrderItemModelItem>;
+        currentCart = JSON.parse(localStorage.getItem('cart'));
+        if (currentCart === null)
+        {
           return null;
         }
-         let cartModel: CartModel = new CartModel();
-    cartModel.orderItemModel = new OrderModelItem();
-    cartModel.orderItemModel.orderItems.items = new Array<OrderItemModelItem>();
+        return currentCart;
+  }
+       
+
+}
+
+
+
+
+
+
+
+
+
+
+
 
    /* localCart.orderItemModel.items.forEach((element: OrderItemModelItem) => {
       cartModel.orderItemModel.items.push({
@@ -39,7 +64,4 @@ export class LocalStorage {
 
     return cartModel;
     */
-  }
-       
-
-}
+ 

@@ -6,7 +6,6 @@ import { ErrorComponent } from "src/app/shared/components/error/error.component"
 import { Constants } from "src/app/shared/constants/constants";
 import { LocalStorage } from 'src/app/shared/services/localStorage/localStorage';
 import { UserModelItem } from 'src/app/shared/models/user/UserModelItem';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -22,7 +21,7 @@ export class SignInComponent {
   password: string;
   
 
-  constructor(private accountService:AccountService,private dialog:MatDialog, private localStorage: LocalStorage, private formBuilder: FormBuilder, private router: Router) {
+  constructor(private accountService:AccountService,private dialog:MatDialog, private localStorage: LocalStorage, private formBuilder: FormBuilder) {
 
     this.userModel = new UserModelItem();
     this.loginForm = this.formBuilder.group({

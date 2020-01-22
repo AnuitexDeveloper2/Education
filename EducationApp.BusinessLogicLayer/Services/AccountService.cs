@@ -136,6 +136,13 @@ namespace EducationApp.BusinessLogicLayer.Services
                 userModel.Errors.Add(error.UserNotFound);
                 return userModel;
             }
+
+            var wasPasswordValid = await _userRepository.ConfirmPasswordAsync(user, password);
+            if (!wasPasswordValid)
+            {
+                userModel.Errors.Add(error.NotValidPassword);
+                return userModel;
+            }
             var result = await _userRepository.SignInAsync(user, password);
             if (result == null)
             {

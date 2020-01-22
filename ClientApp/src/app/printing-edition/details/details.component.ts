@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { PrintingEditionModelItem } from 'src/app/shared/models/printing-editions/PrintingEditionModelItem';
 import { PrintingEditionService } from 'src/app/shared/services/printingEdition/printing-edition.service';
 import { Filter } from 'src/app/shared/constants/Filter';
-import { CreateOrderComponent } from 'src/app/order/create-order/create-order.component';
-import { OrderModel } from 'src/app/shared/models/order/OrderModel';
 import { OrderModelItem } from 'src/app/shared/models/order/OrderModelItem';
 import { OrderItemModelItem } from 'src/app/shared/models/orderItem/orderItemModelItem';
 import { MyCartComponent } from 'src/app/cart/my-cart/my-cart.component';
 import { OrderItemModel } from 'src/app/shared/models/orderItem/orderItemModel';
 import { LocalStorage } from 'src/app/shared/services/localStorage/localStorage';
+import { UserModelItem } from 'src/app/shared/models/user/UserModelItem';
 
 @Component({
   selector: 'app-details',
@@ -25,8 +23,10 @@ export class DetailsComponent implements OnInit {
   amount: number;
   orderModelItem: OrderModelItem;
   orderItemModelItem: OrderItemModelItem;
+  user: UserModelItem;
   constructor(private service: PrintingEditionService, private dialog: MatDialog, private localStorage: LocalStorage) {
-    debugger;
+    this.checkCurrentState();
+    this.user = localStorage.getUser();
     this.printingEdition = new PrintingEditionModelItem();
     this.amountList = [Filter.one,Filter.two,Filter.three,Filter.four];
     this.amount = this.printingEdition.price;
@@ -34,10 +34,11 @@ export class DetailsComponent implements OnInit {
     this.orderItemModelItem = new OrderItemModelItem();
     this.orderModelItem.orderItems = new OrderItemModel();
     this.orderModelItem.orderItems.items = new Array<OrderItemModelItem>();
-   }
+  }
   
   
   ngOnInit() {
+    debugger;
      this.printingEdition = this.service.printingEdition;
      this.amount = this.printingEdition.price
   }
@@ -49,12 +50,19 @@ export class DetailsComponent implements OnInit {
     this.orderItemModelItem.printingEditionId = this.printingEdition.id;
     this.orderItemModelItem.count = this.amount / this.printingEdition.price;
     this.orderItemModelItem.amount = this.amount;
-    this.orderModelItem.orderItems.items.push(this.orderItemModelItem);
-    this.localStorage.setCart(this.orderModelItem)
+    this.localStorage.setCart(this.orderItemModelItem)
+    this.orderModelItem.orderItems.items = this.localStorage.getCart();
     let dialogRef = this.dialog.open(MyCartComponent,{data:this.orderModelItem}).afterClosed().subscribe();
   }
 
-  quantity(qty:number) {
+  quantity(qty: number) {
     this.amount = this.printingEdition.price * qty;
+  }
+
+  checkCurrentState() {
+    this.printingEdition = this.service.printingEdition;
+    if ( this.printingEdition  == null) {
+      location.href = 'http://localhost:4200/books/main';
+    }
   }
 }

@@ -3,24 +3,25 @@
     <img src="assets/images/user.png" height="40" width="40" alt="user">
     <img class = "img__button" src="assets/images/edit-user.svg" height="15" width="15" style="position:relative;bottom: 20px;" alt="edit" >
 </div>
-<mat-dialog-content class="first-field">
-    <mat-form-field>
-        <input matInput  placeholder="First Name" value = {{data.firstName}}  [formControl] ="firstName">
-      </mat-form-field>
-</mat-dialog-content>
+<form [formGroup] = userForm >
+    <mat-dialog-content class="first-field">
+       <mat-form-field>
+           <input matInput  placeholder="First Name" value = {{data.firstName}}  formControlName ="firstName">
+         </mat-form-field>
+    </mat-dialog-content>
 
-<mat-dialog-content class="second-field">
-    <mat-form-field>
-        <input matInput  placeholder="Last name" value = {{data.lastName}} [formControl] ="lastName">
-      </mat-form-field>
-</mat-dialog-content>
+   <mat-dialog-content class="second-field">
+       <mat-form-field>
+           <input matInput  placeholder="Last name" value = {{data.lastName}} formControlName ="lastName">
+         </mat-form-field>
+    </mat-dialog-content>
 
-<mat-dialog-content class="third-field">
-    <mat-form-field>
-        <input matInput  placeholder="email" value = {{data.email}} [formControl] ="email">
-      </mat-form-field>
-</mat-dialog-content>
-
+   <mat-dialog-content class="third-field">
+       <mat-form-field>
+           <input matInput  placeholder="email" value = {{data.email}} formControlName ="email">
+         </mat-form-field>
+   </mat-dialog-content>
+</form>
 <mat-dialog-actions >
   <button class="cancel" mat-button mat-dialog-close>Cancel</button>
   <button class="Save" mat-button [mat-dialog-close]="true" cdkFocusInitial (click) = editUser()>Save</button>

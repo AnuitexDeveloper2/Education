@@ -17,8 +17,12 @@
 }
 
 .cart{
-    float :right;
+    float: right;
+}
 
+.log-in {
+    float: right;
+    margin-right: 5%;
 }
 
 .matMenu {

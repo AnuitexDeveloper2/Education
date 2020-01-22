@@ -19,7 +19,7 @@ export class CreateComponent {
   baseModel: BaseModel;
   constructor(@Inject(MAT_DIALOG_DATA) public data: AuthorModelItem, private authorService: AuthorService,private dialog: MatDialog) { 
     this.authorModel = new AuthorModelItem;
-    this.authorName = new FormControl();
+    this.authorName = new FormControl(data.name);
     this.baseModel = new BaseModel();
   }
 

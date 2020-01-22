@@ -33,7 +33,6 @@ export class MyCartComponent implements OnInit {
   items: Array<OrderModelItem>;
   callbeckUrl: Predicate<string>;
  
-  
   constructor(@Inject(MAT_DIALOG_DATA) public data: OrderModelItem, private orderService: OrderService, private dialog: MatDialog, private stripeService: StripeService, private localStorage:LocalStorage) { 
     debugger;
     this.dataSource = data;
@@ -46,6 +45,7 @@ export class MyCartComponent implements OnInit {
     this.orderModelItem.orderItems = new OrderItemModel();
     this.items = new Array<OrderModelItem>();
   }
+
   ngOnInit() {
     debugger;
     this.orderFilter.pageNumber = Filter.one;
@@ -63,12 +63,11 @@ export class MyCartComponent implements OnInit {
     })
   }
 
-  
-
-
   create() {
+    let user = this.localStorage.getUser();
     this.orderModelItem = this.data;
     this.orderModelItem.amountOrder = this.amount;
+    this.orderModelItem.userId = user.id;
     this.orderService.createOrder(this.orderModelItem).subscribe(data => {
       debugger;
         this.baseModel.errors = data.errors
@@ -80,12 +79,16 @@ export class MyCartComponent implements OnInit {
     this.stripeService.pay(this.amount);
   }
 
-
   private totalAmount(items: Array<OrderItemModelItem>): number {
     
     items.forEach(element => {
       this.amount = this.amount + element.amount;
     });
     return this.amount;
+  }
+
+  deleteItem(element: OrderItemModelItem) {
+    debugger;
+    let item = element;
   }
 }

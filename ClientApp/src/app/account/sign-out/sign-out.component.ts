@@ -20,20 +20,13 @@ export class SignOutComponent  {
   selectedItems = [];
   dropdownSettings = {};
   ngOnInit() {
-    this.dropdownList = enumSelector(ProductType); 
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
-      allowSearchFilter: true,
-      defaultOpen: true,
-      limitSelection: 2
-    };
-    
   }
+    edit() {
+      debugger;
+      let element = document.getElementById('edit');
+     // element.style.display = ['block'];
+    }
+    
   
 
 }
