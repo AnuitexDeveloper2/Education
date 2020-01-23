@@ -38,13 +38,11 @@ export class DetailsComponent implements OnInit {
   
   
   ngOnInit() {
-    debugger;
      this.printingEdition = this.service.printingEdition;
      this.amount = this.printingEdition.price
   }
 
   purchase() {
-    debugger;
     this.orderItemModelItem.printingEditionName = this.printingEdition.title;
     this.orderItemModelItem.printingEditionPrice = this.printingEdition.price;
     this.orderItemModelItem.printingEditionId = this.printingEdition.id;
@@ -52,7 +50,7 @@ export class DetailsComponent implements OnInit {
     this.orderItemModelItem.amount = this.amount;
     this.localStorage.setCart(this.orderItemModelItem)
     this.orderModelItem.orderItems.items = this.localStorage.getCart();
-    let dialogRef = this.dialog.open(MyCartComponent,{data:this.orderModelItem}).afterClosed().subscribe();
+    let dialogRef = this.dialog.open(MyCartComponent,{data:this.orderModelItem}).afterClosed().subscribe(() => this.moveMainPage());
   }
 
   quantity(qty: number) {
@@ -64,5 +62,9 @@ export class DetailsComponent implements OnInit {
     if ( this.printingEdition  == null) {
       location.href = 'http://localhost:4200/books/main';
     }
+  }
+
+  moveMainPage() {
+    location.href = 'http://localhost:4200/books/main';
   }
 }

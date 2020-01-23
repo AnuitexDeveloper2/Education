@@ -9,7 +9,6 @@ export class StripeService {
   constructor() { }
 
   loadStripe() {
-    debugger;
    if(!window.document.getElementById('stripe-script')) {
      var s = window.document.createElement("script");
      s.id = "stripe-script";

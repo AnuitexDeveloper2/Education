@@ -11,7 +11,6 @@ export class PayPageComponent implements OnInit {
   handler:any = null;
   amount: any;
   ngOnInit() {
- 
     this.loadStripe();
   }
 

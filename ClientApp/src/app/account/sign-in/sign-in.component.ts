@@ -7,6 +7,8 @@ import { Constants } from "src/app/shared/constants/constants";
 import { LocalStorage } from 'src/app/shared/services/localStorage/localStorage';
 import { UserModelItem } from 'src/app/shared/models/user/UserModelItem';
 
+
+
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
@@ -21,7 +23,7 @@ export class SignInComponent {
   password: string;
   
 
-  constructor(private accountService:AccountService,private dialog:MatDialog, private localStorage: LocalStorage, private formBuilder: FormBuilder) {
+  constructor(private accountService:AccountService,private dialog:MatDialog, private localStorage: LocalStorage, private formBuilder: FormBuilder ) {
 
     this.userModel = new UserModelItem();
     this.loginForm = this.formBuilder.group({
@@ -33,17 +35,15 @@ export class SignInComponent {
   signIn() {
     this.email = this.loginForm.get('email').value;
     this.password = this.loginForm.get('password').value;
-    debugger;
-    this.accountService.signIn(this.email,this.password).subscribe((data:UserModelItem) => {
+    this.accountService.signIn(this.email,this.password).subscribe((data: UserModelItem) => {
       this.checkErrors(data);
     });
-     
+    debugger;
+    
   }
 
   checkErrors(user: UserModelItem) {
-    debugger;
-    if(user.errors.length>0)
-    {
+    if(user.errors.length>0) {
       this.dialog.open(ErrorComponent,{data:user.errors})
     }
     if(user.errors.length === 0)

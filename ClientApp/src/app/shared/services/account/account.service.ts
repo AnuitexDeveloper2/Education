@@ -1,14 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Component } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { UserModelItem } from "src/app/shared/models/user/UserModelItem";
 import { Observable } from 'rxjs';
 import { BaseModel } from 'src/app/shared/models/Base/BaseModel';
 import { environment } from "src/environments/environment";
-
 @Injectable()
 export class AccountService {
   
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient ) { }
+
+  getToken(){
+  }
+
 register(user: UserModelItem):Observable<BaseModel>{
   return this.http.post<BaseModel>( environment.baseUrl + `account/register`,user, { withCredentials: true })
   }
@@ -24,5 +27,7 @@ register(user: UserModelItem):Observable<BaseModel>{
   logOut(user: UserModelItem) {
     return this.http.post(environment.baseUrl + 'account/signOut/',user)
   }
+
+  
 
 }

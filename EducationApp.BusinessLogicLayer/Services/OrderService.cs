@@ -10,6 +10,7 @@ using EducationApp.DataAccessLayer.Ropositories.Interfaces;
 using System.Threading.Tasks;
 using errors = EducationApp.BusinessLogicLayer.Common.Consts.Constants.Errors;
 using EducationApp.BusinessLogicLayer.Extention.Mapper.OrderMapper;
+using System;
 
 namespace EducationApp.BusinessLogicLayer.Services
 {
@@ -18,13 +19,11 @@ namespace EducationApp.BusinessLogicLayer.Services
         private readonly IOrderRepository _orderRepository;
         private readonly IPaymentRepository _paymentRepository;
         private readonly IOrderItemRepository _orderItemRepository;
-        private readonly IPrintingEditionRepository _printingEditionRepository;
-        public OrderService(IOrderRepository orderRepository, IOrderItemRepository orderItemRepository, IPaymentRepository paymentRepository, IPrintingEditionRepository printingEditionRepository)
+        public OrderService(IOrderRepository orderRepository, IOrderItemRepository orderItemRepository, IPaymentRepository paymentRepository)
         {
             _orderItemRepository = orderItemRepository;
             _orderRepository = orderRepository;
             _paymentRepository = paymentRepository;
-            _printingEditionRepository = printingEditionRepository;
         }
         public async Task<OrderModel> CreateAsync(OrderModelItem ordersItemModel)
         {
@@ -38,7 +37,8 @@ namespace EducationApp.BusinessLogicLayer.Services
 
             var payment = new Payment
             { 
-                TransactionId = ordersItemModel.TransactionId
+                TransactionId = ordersItemModel.TransactionId,
+                Date = DateTime.Now
             };
 
             var paymentId = await _paymentRepository.CreateAsync(payment);

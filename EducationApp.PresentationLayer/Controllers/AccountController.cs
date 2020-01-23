@@ -21,10 +21,14 @@ namespace EducationApp.PresentationLayer.Controllers
 
         private readonly IAccountService _accountService;
 
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
 
-        public AccountController(IJwtHelper jwtHelper, IAccountService accountService)
+
+        public AccountController(IJwtHelper jwtHelper, IAccountService accountService, IHttpContextAccessor httpContextAccessor )
         {
+            _httpContextAccessor = httpContextAccessor;
+
             _jwtHelper = jwtHelper;
 
             _accountService = accountService;
@@ -119,6 +123,7 @@ namespace EducationApp.PresentationLayer.Controllers
             HttpContext.Response.Cookies.Append(token.RefreshToken, refreshToken);
 
             HttpContext.Response.Cookies.Append(token.AccessToken, accessToken);
+
         }
     }
 }

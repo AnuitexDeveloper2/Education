@@ -20,7 +20,6 @@ import { UserModelItem } from 'src/app/shared/models/user/UserModelItem';
 })
 export class MyOrderComponent implements OnInit {
 
-  handler:any = null;
   orderFilter: OrderFilterModel;
   items: Array<OrderModelItem>
   itemsCount: number;

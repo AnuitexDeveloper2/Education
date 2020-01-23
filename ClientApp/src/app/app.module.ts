@@ -14,12 +14,14 @@ import { AccountModule } from 'src/app/account/account.module';
 import { CookieService } from 'ngx-cookie-service';
 import { UserModule } from "src/app/user/user.module";
 import { MaterialModule } from "src/app/material/material.module";
-import { AuthenticationInterceptor } from "src/app/shared/AuthenticationInterceptor";
 import { ModalModule } from "ng2-modal";
 import { FooterComponent } from 'src/app/shared/components/footer/footer.component';
 import { OrderModule } from 'src/app/order/order.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CartModule } from 'src/app/cart/cart.module';
+import { AccountService } from './shared/services/account/account.service';
+import { TokenInterceptorService } from './shared/services/TokenInterceptor/token-interceptor.service';
+import { AuthenticationServiceService } from './shared/services/authentication/authentication-service.service';
 
 
 @NgModule({
@@ -47,11 +49,11 @@ import { CartModule } from 'src/app/cart/cart.module';
   ],
   providers:[{
     provide:HTTP_INTERCEPTORS,
-    useClass: AuthenticationInterceptor,
+    useClass: TokenInterceptorService,
     multi:true,
   },
-  { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
-
+  CookieService,
+  AuthenticationServiceService,],
    bootstrap: [AppComponent]
 })
 export class AppModule { 

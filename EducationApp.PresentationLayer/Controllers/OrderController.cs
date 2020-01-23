@@ -46,7 +46,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return result;
         }
 
-        [Authorize(Roles = role.User)]
+        //[Authorize(Roles = role.User)]
         [HttpPost("update")]
         public async Task<ActionResult> UpdateOrder(string TransactoinId,long paymentId) 
         {

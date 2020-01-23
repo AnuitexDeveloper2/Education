@@ -30,8 +30,7 @@ export class HeaderComponent {
 
 
   logOut() {
-    localStorage.removeItem('user');
-    localStorage.removeItem('cart');
+    localStorage.clear();
     this.accountService.logOut(this.user).subscribe();
     location.href = 'http://localhost:4200/account/sign-in';
   }

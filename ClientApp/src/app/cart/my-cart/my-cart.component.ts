@@ -10,8 +10,6 @@ import { ErrorComponent } from 'src/app/shared/components/error/error.component'
 import { Filter } from 'src/app/shared/constants/Filter';
 import { StripeService } from 'src/app/shared/services/stripe/stripe.service';
 import { OrderFilterModel } from 'src/app/shared/models/order/OrderFilterModel';
-import { OrderStatusType } from 'src/app/shared/enums/OrderStatusType';
-import { OrderModel } from 'src/app/shared/models/order/OrderModel';
 import { LocalStorage } from 'src/app/shared/services/localStorage/localStorage';
 
 @Component({
@@ -34,7 +32,6 @@ export class MyCartComponent implements OnInit {
   callbeckUrl: Predicate<string>;
  
   constructor(@Inject(MAT_DIALOG_DATA) public data: OrderModelItem, private orderService: OrderService, private dialog: MatDialog, private stripeService: StripeService, private localStorage:LocalStorage) { 
-    debugger;
     this.dataSource = data;
     this.orderFilter = new OrderFilterModel();
     this.baseModel = new BaseModel();
@@ -47,20 +44,11 @@ export class MyCartComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger;
     this.orderFilter.pageNumber = Filter.one;
     this.orderFilter.pageSize = Filter.ten;
     this.orderFilter.statusOrder = [Filter.zero];
-    this.getOrders();
     this.items.push(this.data);
     this.stripeService.loadStripe();
-  }
-
-  getOrders() {
-    this.orderService.getUserOrders(this.orderFilter).subscribe(data => {
-      this.itemsCount = data.itemsCount;
-      this.items = data.items;
-    })
   }
 
   create() {
@@ -69,18 +57,18 @@ export class MyCartComponent implements OnInit {
     this.orderModelItem.amountOrder = this.amount;
     this.orderModelItem.userId = user.id;
     this.orderService.createOrder(this.orderModelItem).subscribe(data => {
-      debugger;
         this.baseModel.errors = data.errors
-        if(this.baseModel.errors.length>0){
+        if(this.baseModel.errors.length > 0) {
          this.dialog.open(ErrorComponent,{data:this.baseModel.errors})
         }
     })
 
     this.stripeService.pay(this.amount);
+    debugger;
+    let TransactionId = this.localStorage.getTransactionId();
   }
 
   private totalAmount(items: Array<OrderItemModelItem>): number {
-    
     items.forEach(element => {
       this.amount = this.amount + element.amount;
     });
@@ -89,6 +77,17 @@ export class MyCartComponent implements OnInit {
 
   deleteItem(element: OrderItemModelItem) {
     debugger;
+    let index: number = 0;
     let item = element;
+      for (let i = 0; i < this.dataSource.orderItems.items.length; i++) {
+      
+        if (item === this.dataSource.orderItems.items[i]) {
+          index = i;
+        }
+      }
+      this.localStorage.removeItemFromCart(index);
+      this.dataSource.orderItems.items = this.localStorage.getCart();
   }
+
+
 }
