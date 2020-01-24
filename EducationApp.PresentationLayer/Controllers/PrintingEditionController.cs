@@ -19,7 +19,7 @@ namespace EducationApp.PresentationLayer.Controllers
             _printingEditionService = printingEditionService;
         }
 
-        //[Authorize(Roles = role.Admin)]
+        [Authorize(Roles = role.Admin)]
         [HttpPost("create")]
         public async Task<ActionResult> Create(PrintingEditionModelItem printingEditonModelItem)
         {
@@ -28,7 +28,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        //[Authorize(Roles = role.Admin)]
+        [Authorize(Roles = role.Admin)]
         [HttpGet("remove")]
         public async Task<ActionResult> Remove(long id)
         {
@@ -37,7 +37,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        //[Authorize(Roles = role.Admin)]
+        [Authorize(Roles = role.Admin)]
         [HttpPost("update")]
         public async Task<ActionResult> Update(PrintingEditionModelItem printingEditionModelItem)
         {
@@ -46,7 +46,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        //[AllowAnonymous]
+        [AllowAnonymous]
         [HttpPost("get")]
         public async Task<ActionResult> Get(PrintingEditionFilterState printingEditionFilterState)
         {

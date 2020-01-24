@@ -5,7 +5,7 @@ import { OrderModel } from 'src/app/shared/models/order/OrderModel';
 import { environment } from 'src/environments/environment';
 import { OrderFilterModel } from 'src/app/shared/models/order/OrderFilterModel';
 import { OrderModelItem } from 'src/app/shared/models/order/OrderModelItem';
-import { BaseModel } from 'src/app/shared/models/Base/BaseModel';
+import { PaymentModel } from 'src/app/shared/models/payment/paymentModel';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class OrderService {
     return this.http.post<OrderModel>(environment.baseUrl + 'order/getUserOrders', orderFilter);
   }
 
-  createOrder(orderModelItem: OrderModelItem): Observable<BaseModel> {
-    return this.http.post<BaseModel>(environment.baseUrl + 'order/create', orderModelItem);
+  createOrder(orderModelItem: OrderModelItem): Observable<PaymentModel> {
+    return this.http.post<PaymentModel>(environment.baseUrl + 'order/create', orderModelItem);
   }
 }

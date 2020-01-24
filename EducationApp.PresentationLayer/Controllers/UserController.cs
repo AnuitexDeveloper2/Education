@@ -19,7 +19,7 @@ namespace EducationApp.PresentationLayer.Controllers
             _userService = userService;
         }
 
-        //[Authorize(Roles = role.Admin)]
+        [Authorize(Roles = role.Admin)]
         [HttpGet("blockUser")]
         public async Task<IActionResult> BlockUser(long id)
         {
@@ -28,7 +28,6 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
         [Authorize(role.Admin)]
-        [Authorize]
         [HttpGet("getProfile")]
         public async Task<UserModelItem> GetProfile(long id)
         {
@@ -38,7 +37,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return profile;
         }
 
-        //[Authorize(Roles = role.Admin)]
+        [Authorize(Roles = role.Admin)]
         [HttpGet("remove")]
         public async Task<ActionResult> RemoveUser(long id)
         {
@@ -56,7 +55,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        //[Authorize(Roles = role.User)]
+        [Authorize(Roles = role.User)]
         [HttpGet("changePassword")]
         public async Task<ActionResult> ChangePassword(long id, string oldPassword,string newPassword)
         {
@@ -65,7 +64,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = role.User)]
+        [Authorize(Roles = role.Admin)]
         [HttpPost("getUsers")]
         public async Task<ActionResult> GetUsers(UserFilterModel filterUser)
        {

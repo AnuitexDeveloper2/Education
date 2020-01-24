@@ -20,8 +20,10 @@ import {  MatButtonModule,
 
 import { Ng5SliderModule } from 'ng5-slider';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { ModalModule } from "ng2-modal";
 
 const MaterialComponent =[
+ ModalModule,
  MatMenuModule,
  MatRadioModule,
  NgMultiSelectDropDownModule,

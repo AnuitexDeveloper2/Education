@@ -6,7 +6,7 @@ import { BaseFilterModel } from 'src/app/shared/models/Base/BaseFilterModel';
 import { AuthorModule } from 'src/app/author/author.module';
 import { AuthorModelItem } from 'src/app/shared/models/author/AuthorModelItem';
 import { environment } from "src/environments/environment";
-import { BaseModel } from '../../models/Base/BaseModel';
+import { BaseModel } from 'src/app/shared/models/Base/BaseModel';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ email:string;
   }
 
   save(author:AuthorModelItem): Observable<BaseModel> {
-    return this.http.post<BaseModel>( environment.baseUrl +`author/create/`,author,{withCredentials: true});
+    return this.http.post<BaseModel>( environment.baseUrl +`author/create/`,author);
   }
 
   edit(id:number,name:string): Observable<BaseModel>{

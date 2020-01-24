@@ -18,12 +18,13 @@
 
     <div class="password-form"></div>
     <mat-form-field appearance="outline" [floatLabel]="'never'">
-        <mat-label class="label"> Password</mat-label>
-        <input matInput placeholder="Password" formControlName = "password" >
+        <mat-label class="label"> Password </mat-label> 
+        <input matInput type="password" placeholder="Password" formControlName = "password" >
         <mat-error>
             Password must be at least 8 characters
         </mat-error>
-    </mat-form-field>
+    </mat-form-field> <br>
+    <a href="http://localhost:4200/account/forgot-password"><span class="forgot-password">Forgot your password?</span></a>
 
     
     <form  >
@@ -37,7 +38,6 @@
             <button  class="sign-up-button" type="submit" onClick='location.href="http://localhost:4200/account/register"'>Sign Up</button>
         </form>      
     </div>
-   
 </div>
 
 

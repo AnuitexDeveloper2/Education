@@ -45,7 +45,7 @@ namespace EducationApp.PresentationLayer.Helpers
                  };
             claimsRefresh.AddRange(claimsRefresh);
 
-            var accessToken = GenerateToken(claimsAccess, 200.0);
+            var accessToken = GenerateToken(claimsAccess, 15.0);
             var refreshToken = GenerateToken(claimsRefresh, 450.0);
             securityToken = refreshToken;
             return new TokenModel

@@ -38,8 +38,6 @@ export class SignInComponent {
     this.accountService.signIn(this.email,this.password).subscribe((data: UserModelItem) => {
       this.checkErrors(data);
     });
-    debugger;
-    
   }
 
   checkErrors(user: UserModelItem) {

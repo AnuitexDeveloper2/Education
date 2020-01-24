@@ -19,7 +19,7 @@ namespace EducationApp.PresentationLayer.Controllers
             _orderService = orderService;
         }
 
-        //[Authorize(Roles = role.User)]
+        [Authorize(Roles = role.User)]
         [HttpPost("create")]
         public async Task<ActionResult> CreateOrder(OrderModelItem ordersItemModel)
         {
@@ -28,7 +28,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        //[Authorize(Roles = role.Admin)]
+        [Authorize(Roles = role.Admin)]
         [HttpPost("getOrders")]
         public async Task<OrderModel> GetOrders(OrderFilterModel orderFilterModel)
         {
@@ -37,7 +37,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return result;
         }
 
-        //[Authorize(Roles = role.User)]
+        [Authorize(Roles = role.User)]
         [HttpPost("getUserOrders")]
         public async Task<OrderModel> GetUserOrders(OrderFilterModel orderFilterModel)
         {
@@ -46,7 +46,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return result;
         }
 
-        //[Authorize(Roles = role.User)]
+        [Authorize(Roles = role.Admin)]
         [HttpPost("update")]
         public async Task<ActionResult> UpdateOrder(string TransactoinId,long paymentId) 
         {

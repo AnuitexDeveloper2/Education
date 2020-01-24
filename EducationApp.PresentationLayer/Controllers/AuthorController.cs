@@ -30,7 +30,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        //[Authorize(Roles = role.Admin)]
+        [Authorize(Roles = role.Admin)]
         [HttpGet("remove")]
         public async Task<ActionResult> Remove(long id)
         {
@@ -39,7 +39,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        //[Authorize(Roles = role.Admin)]
+        [Authorize(Roles = role.Admin)]
         [HttpGet("update")]
         public async Task<ActionResult> Update(long id, string name)
         {
@@ -48,7 +48,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok(result);
         }
 
-        //[Authorize(Roles = role.Admin)]
+        [Authorize(Roles = role.Admin)]
         [HttpGet("getAll")]
         public async Task<ActionResult> GetAll()
         {

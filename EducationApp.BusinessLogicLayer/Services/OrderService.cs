@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using errors = EducationApp.BusinessLogicLayer.Common.Consts.Constants.Errors;
 using EducationApp.BusinessLogicLayer.Extention.Mapper.OrderMapper;
 using System;
+using EducationApp.BusinessLogicLayer.Models.Payments;
 
 namespace EducationApp.BusinessLogicLayer.Services
 {
@@ -25,9 +26,9 @@ namespace EducationApp.BusinessLogicLayer.Services
             _orderRepository = orderRepository;
             _paymentRepository = paymentRepository;
         }
-        public async Task<OrderModel> CreateAsync(OrderModelItem ordersItemModel)
+        public async Task<PaymentModel> CreateAsync(OrderModelItem ordersItemModel)
         {
-            var resultModel = new OrderModel();
+            var resultModel = new PaymentModel();
 
             if (ordersItemModel == null)
             {

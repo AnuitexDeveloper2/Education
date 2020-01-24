@@ -22,13 +22,13 @@ export class LocalStorage {
       localStorage.setItem('cart', JSON.stringify(this.items));
       }
 
-   removeItemFromCart(index: number) {
+  removeItemFromCart(index: number) {
      let currentItems = this.getCart();
      currentItems.splice(index,1);
      localStorage.setItem('cart', JSON.stringify(currentItems))
    }
     
-   getCart(): Array<OrderItemModelItem> {
+  getCart(): Array<OrderItemModelItem> {
       let currentCart: Array<OrderItemModelItem>;
       currentCart = JSON.parse(localStorage.getItem('cart'));
       if (currentCart === null) {
@@ -41,11 +41,11 @@ export class LocalStorage {
     let id = localStorage.getItem('lsid')
     return id;
   }
+
+  setPayment(paymentId:number) {
+    localStorage.setItem('payment',paymentId.toString())
+  }
 }
-
-
-
-
 
 
 

@@ -2,7 +2,7 @@
 
 namespace EducationApp.BusinessLogicLayer.Models.Payments
 {
-    public class PaymentsModel : BaseModel
+    public class PaymentModel : BaseModel
     {
         public long TransactionId { get; set; }
     }

@@ -59,7 +59,7 @@ namespace EducationApp.PresentationLayer.Controllers
         }
 
 
-        [HttpPost("signIn")]
+        [HttpGet("signIn")]
         public async Task<ActionResult> SignIn(string email,string password)
         {
             var result = await _accountService.SignInAsync(email, password);

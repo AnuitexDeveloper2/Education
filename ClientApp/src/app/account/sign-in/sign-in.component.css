@@ -69,12 +69,19 @@ button {
     cursor: pointer;
     cursor: hand;
   }
+
   button:hover {
     background-color: #cfd8dc;
     background-color:green;
   }
+
   button:disabled {
     background-color: #eee;
     color: #aaa;
     cursor: auto;
+  }
+
+  .forgot-password {
+    float: right;
+    margin-right: 37%;
   }

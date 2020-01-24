@@ -50,7 +50,7 @@
     <div>
         <mat-form-field class="form" appearance="outline">
             <mat-label class="label">Password</mat-label>
-            <input matInput placeholder="Please Enter Your Password" formControlName = "password">
+            <input matInput type="password" placeholder="Please Enter Your Password" formControlName = "password">
             <mat-error>
                 Password must be at least 8 charachters
             </mat-error>
@@ -60,7 +60,10 @@
     <div>
         <mat-form-field class="form" appearance="outline">
             <mat-label class="form">Confirm Password</mat-label>
-            <input matInput placeholder="Please Enter Your Last Name">
+            <input type="password" matInput placeholder="Please Confirm Password">
+            <mat-error>
+                Password should be the same
+            </mat-error>
         </mat-form-field>
     </div>
 </form>
