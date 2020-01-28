@@ -67,6 +67,7 @@ namespace EducationApp.PresentationLayer.Controllers
             return Ok();
         }
 
+
         public async Task<ActionResult> RefreshTokenAsync(string refreshToken)
         {
             var token = new JwtSecurityTokenHandler().ReadJwtToken(refreshToken);
