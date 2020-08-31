@@ -23,14 +23,14 @@ export class HeaderComponent {
     this.orderModelItem.orderItems = new OrderItemModel();
     this.orderModelItem.orderItems.items = new Array<OrderItemModelItem>();
     this.orderModelItem.orderItems.items = this.localStorage.getCart();
-    this.countItems = this.countingItems(this.orderModelItem.orderItems.items)
+    this.countItems = this.countingItems(this.orderModelItem.orderItems.items);
     this.user = new UserModelItem();
     this.user = this.definitionUser();
   }
 
 
   logOut() {
-    
+
     localStorage.removeItem('cart');
     localStorage.removeItem('user');
     this.accountService.logOut(this.user).subscribe();
@@ -39,11 +39,11 @@ export class HeaderComponent {
 
   moveToCart() {
     if (this.countItems > 0) {
-      let dialogRef = this.dialog.open(MyCartComponent,{data:this.orderModelItem}).afterClosed().subscribe();
+      const dialogRef = this.dialog.open(MyCartComponent, {data: this.orderModelItem}).afterClosed().subscribe();
     }
   }
 
-   private countingItems(items: Array<OrderItemModelItem>) : number {
+   private countingItems(items: Array<OrderItemModelItem>): number {
       if (items == null) {
         return 0;
       }
@@ -54,7 +54,7 @@ export class HeaderComponent {
       let user = this.localStorage.getUser();
       if (user == null) {
         user = new UserModelItem();
-        user.role = 'user'
+        user.role = 'user';
       }
       return user;
     }

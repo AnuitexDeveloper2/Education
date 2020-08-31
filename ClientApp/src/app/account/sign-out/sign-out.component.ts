@@ -19,14 +19,11 @@ export class SignOutComponent  {
   dropdownList: string[];
   selectedItems = [];
   dropdownSettings = {};
-  ngOnInit() {
-  }
     edit() {
-      debugger;
-      let element = document.getElementById('edit');
+      const element = document.getElementById('edit');
      // element.style.display = ['block'];
     }
-    
-  
+
+
 
 }

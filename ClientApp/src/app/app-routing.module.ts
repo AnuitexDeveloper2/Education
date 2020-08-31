@@ -3,40 +3,40 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 const routes: Routes = [
-  
+
     {
       path: 'account',
-      loadChildren: () => import('src/app/account/account.module').then(mod =>mod.AccountModule)
+      loadChildren: () => import('src/app/account/account.module').then(mod => mod.AccountModule)
     },
-    
+
     {
       path: 'user',
-      loadChildren: () => import('src/app/user/user.module').then(mod =>mod.UserModule)
+      loadChildren: () => import('src/app/user/user.module').then(mod => mod.UserModule)
     },
-    
+
     {
       path: 'author',
-      loadChildren: () => import('src/app/author/author.module').then(mod =>mod.AuthorModule)
+      loadChildren: () => import('src/app/author/author.module').then(mod => mod.AuthorModule)
     },
 
     {
       path: 'books',
-      loadChildren: () => import('src/app/printing-edition/printing-edition.module').then(mod =>mod.PrintingEditionModule)
+      loadChildren: () => import('src/app/printing-edition/printing-edition.module').then(mod => mod.PrintingEditionModule)
     },
 
     {
       path: 'administrator',
-      loadChildren: () => import('src/app/administrator/administrator.module').then(mod =>mod.AdministratorModule)
+      loadChildren: () => import('src/app/administrator/administrator.module').then(mod => mod.AdministratorModule)
     },
 
     {
       path: 'order',
-      loadChildren: () => import('src/app/order/order.module').then(mod=>mod.OrderModule)
+      loadChildren: () => import('src/app/order/order.module').then(mod => mod.OrderModule)
     },
 
     {
       path: 'cart',
-      loadChildren: () => import('src/app/cart/cart.module').then(mod=>mod.CartModule)
+      loadChildren: () => import('src/app/cart/cart.module').then(mod => mod.CartModule)
     }
 
 ];

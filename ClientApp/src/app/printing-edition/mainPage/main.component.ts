@@ -54,13 +54,13 @@ export class MainComponent implements OnInit {
     this.filter.pageNumber = Filter.one;
     this.filter.pageSize = Filter.six;
     this.filter.currencyType = CurrencyType.USD;
-    this.filter.typeProduct = [ Filter.zero,Filter.one,Filter.two];
+    this.filter.typeProduct = [ Filter.zero, Filter.one, Filter.two];
     this.getBooks();
     this.filter.typeProduct = new Array<ProductType>();
   }
 
   getBooks() {
-    return this.service.get(this.filter).subscribe(data=> {
+    return this.service.get(this.filter).subscribe(data => {
       this.count = data.count;
       this.items = data.items;
     })
@@ -73,13 +73,11 @@ export class MainComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    debugger;
     this.filter.searchString = filterValue;
     this.getBooks();
   }
 
   priceFilter(minValue: number, maxValue: number) {
-    debugger; 
     this.filter.minPrice = minValue;
     this.filter.maxPrice = maxValue;
     this.getBooks();

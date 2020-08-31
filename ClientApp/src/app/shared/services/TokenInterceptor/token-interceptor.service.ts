@@ -10,7 +10,7 @@ export class TokenInterceptorService implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     request = this.addToken(request, this.authService.getJwtToken());
-        return next.handle(request).pipe();
+    return next.handle(request).pipe();
 
   }
 
@@ -20,7 +20,7 @@ export class TokenInterceptorService implements HttpInterceptor {
   });
     return request.clone({
       setHeaders: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
   }

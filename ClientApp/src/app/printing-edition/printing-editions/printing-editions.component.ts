@@ -1,6 +1,6 @@
 import { Component, OnInit, Type } from '@angular/core';
 import {PageEvent, MatSort, MatTableDataSource, MatDialog} from '@angular/material';
-import { PrintingEditionService } from "src/app/shared/services/printingEdition/printing-edition.service";
+import { PrintingEditionService } from 'src/app/shared/services/printingEdition/printing-edition.service';
 import { PrintingEditionFilterModel } from 'src/app/shared/models/printing-editions/PrintingEditionFilterModel';
 import { PrintingEditionModelItem } from 'src/app/shared/models/printing-editions/PrintingEditionModelItem';
 import { CreateComponent } from 'src/app/printing-edition/create/create.component';
@@ -33,14 +33,14 @@ export class PrintingEditionsComponent implements OnInit {
    this.displayedColumns = [ ColumnName.id, ColumnName.Name, ColumnName.Description, ColumnName.Category, ColumnName.Authors, ColumnName.Price, ColumnName.Edit ];
    this.filter = new PrintingEditionFilterModel();
    this.type = enumSelector(ProductType);
-   this.dataSource
+   this.dataSource;
    this.stringEnums = new Array<string>();
    }
 
   ngOnInit() {
     this.filter.minPrice = Filter.zero,
     this.filter.maxPrice = Filter.oneThousand,
-    this.filter.typeProduct = [0,1,2]
+    this.filter.typeProduct = [0, 1, 2];
     this.filter.pageNumber = Filter.one;
     this.filter.pageSize = Filter.ten;
     this.getBooks();
@@ -51,23 +51,23 @@ export class PrintingEditionsComponent implements OnInit {
     return this.service.get(this.filter).subscribe(data => {
       this.count = data.count;
       this.items = data.items;
-    })
+    });
   }
 
-  create(printingEdition: PrintingEditionModelItem){
+  create(printingEdition: PrintingEditionModelItem) {
     const dialogRef = this.dialog.open(CreateComponent).afterClosed().subscribe(() => this.getBooks());
   }
 
   remove(printingEdition: PrintingEditionModelItem) {
     debugger;
-   let dialogRef = this.dialog.open(RemoveComponent, {data: {pageName: 'book', name: printingEdition.title}})
+    let dialogRef = this.dialog.open(RemoveComponent, {data: {pageName: 'book', name: printingEdition.title}})
    .afterClosed().subscribe(data => {
      if (data) {
      this.service.remove(printingEdition.id).subscribe(() => this.getBooks());
      }
    });
  }
- 
+
   movePage(event: PageEvent) {
     this.filter.pageSize = event.pageSize;
     this.filter.pageNumber = event.pageIndex + Filter.one;
@@ -80,35 +80,34 @@ export class PrintingEditionsComponent implements OnInit {
   }
 
   edit(printingEdition: PrintingEditionModelItem) {
-    const dialogRef = this.dialog.open(CreateComponent,{data:printingEdition}).afterClosed().subscribe(() => this.getBooks());
+    const dialogRef = this.dialog.open(CreateComponent, {data: printingEdition}).afterClosed().subscribe(() => this.getBooks());
   }
 
   sort(event: MatSort) {
-    debugger;
     this.filter.printingEditionSortType = PrintingEditionSortType[event.active];
     this.filter.sortType = SortType[event.direction];
     this.getBooks();
   }
 
   filterBook(name: string) {
-    this.filter.typeProduct.push(ProductType[name])
+    this.filter.typeProduct.push(ProductType[name]);
     this.test(name);
     this.getBooks();
   }
 
-  private test  (name: string): number {
-    let lenght = this.stringEnums.length;
+  private test(name: string): number {
+    const lenght = this.stringEnums.length;
     for (let index = 0; index < lenght ; index++) {
       const element = this.stringEnums[index];
-      if (element == name) {
-        this.stringEnums.splice(index,1);
-        this.filter.typeProduct.splice(index,1);
+      if (element === name) {
+        this.stringEnums.splice(index, 1);
+        this.filter.typeProduct.splice(index, 1);
         this.filter.typeProduct.pop();
         return index;
       }
     }
-    
-      this.stringEnums.push(name)
-      return -1;
+
+    this.stringEnums.push(name);
+    return -1;
   }
 }

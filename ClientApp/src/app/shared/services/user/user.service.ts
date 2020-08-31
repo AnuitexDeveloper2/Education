@@ -11,26 +11,23 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class UserService {
- 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  
 
-  getUsers(userFilterModel:UserFilterModel):Observable<UserModel> {
-    return this.http.post<UserModel>(environment.baseUrl + 'user/getUsers',userFilterModel)
+  getUsers(userFilterModel: UserFilterModel): Observable<UserModel> {
+    return this.http.post<UserModel>(environment.baseUrl + 'user/getUsers', userFilterModel)
   }
 
-  changeUserStatus(id:number): Observable<BaseModel> {
+  changeUserStatus(id: number): Observable<BaseModel> {
     return this.http.get<BaseModel>(environment.baseUrl + `user/blockUser/?id=${id}`)
   }
 
-  removeUser(id:number): Observable<BaseModel> {
+  removeUser(id: number): Observable<BaseModel> {
     return this.http.get<BaseModel>(environment.baseUrl + `user/remove/?id=${id}`)
   }
 
-  edit(userEditModel:UserProfileEditModel): Observable<BaseModel> {
-    debugger;
-    return this.http.post<BaseModel>(environment.baseUrl +'user/editProfile',userEditModel,{withCredentials:true});
+  edit(userEditModel: UserProfileEditModel): Observable<BaseModel> {
+    return this.http.post<BaseModel>(environment.baseUrl + 'user/editProfile', userEditModel, {withCredentials: true});
   }
 
   changePassword(id: number, oldPassword: string, newPassword): Observable<BaseModel> {

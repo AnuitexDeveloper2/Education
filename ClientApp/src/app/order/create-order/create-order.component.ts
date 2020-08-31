@@ -16,13 +16,12 @@ import { LocalStorage } from 'src/app/shared/services/localStorage/localStorage'
 
 export class CreateOrderComponent {
 
-  
-  displayedColumns: string[]; 
+
+  displayedColumns: string[];
   dataSource: Array<OrderItemModelItem>;
   orderModelItem: OrderModelItem;
-  
-  constructor(@Inject(MAT_DIALOG_DATA) public data: OrderItemModelItem, private service: OrderService, private dialog: MatDialog, private localStorage: LocalStorage) { 
-    debugger;
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: OrderItemModelItem, private service: OrderService, private dialog: MatDialog, private localStorage: LocalStorage) {
     this.dataSource = new Array<OrderItemModelItem>();
     this.dataSource.push(data);
     this.orderModelItem = new OrderModelItem();
@@ -30,16 +29,15 @@ export class CreateOrderComponent {
 }
 
   create() {
-    debugger;
-    this.orderModelItem.orderItems.items.push(this.data)
+    this.orderModelItem.orderItems.items.push(this.data);
     this.service.createOrder(this.orderModelItem).subscribe((data: PaymentModel) => {
      this.checkError(data);
-    })
+    });
   }
 
-  checkError(data:PaymentModel) {
+  checkError(data: PaymentModel) {
     if (data.errors.length > 0) {
-      this.dialog.open(ErrorComponent,{ data: data.errors });
+      this.dialog.open(ErrorComponent, { data: data.errors });
     }
     if (data.errors.length == 0) {
       this.localStorage.setPayment(data.id);
@@ -47,4 +45,3 @@ export class CreateOrderComponent {
   }
 
 }
-  

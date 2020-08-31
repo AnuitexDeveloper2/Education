@@ -20,7 +20,7 @@ import { LocalStorage } from 'src/app/shared/services/localStorage/localStorage'
 })
 export class MyCartComponent implements OnInit {
 
-  displayedColumns: string[]; 
+  displayedColumns: string[];
   dataSource: OrderModelItem;
   orderModelItem: OrderModelItem;
   orderItemModelItem: OrderItemModelItem;
@@ -30,8 +30,8 @@ export class MyCartComponent implements OnInit {
   itemsCount: number;
   items: Array<OrderModelItem>;
   callbeckUrl: Predicate<string>;
- 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: OrderModelItem, private orderService: OrderService, private dialog: MatDialog, private stripeService: StripeService, private localStorage:LocalStorage) { 
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: OrderModelItem, private orderService: OrderService, private dialog: MatDialog, private stripeService: StripeService, private localStorage: LocalStorage) {
     this.dataSource = data;
     this.orderFilter = new OrderFilterModel();
     this.baseModel = new BaseModel();
@@ -52,20 +52,19 @@ export class MyCartComponent implements OnInit {
   }
 
   create() {
-    let user = this.localStorage.getUser();
+    const user = this.localStorage.getUser();
     this.orderModelItem = this.data;
     this.orderModelItem.amountOrder = this.amount;
     this.orderModelItem.userId = user.id;
     this.orderService.createOrder(this.orderModelItem).subscribe(data => {
-        this.baseModel.errors = data.errors
-        if(this.baseModel.errors.length > 0) {
-         this.dialog.open(ErrorComponent,{data:this.baseModel.errors})
+        this.baseModel.errors = data.errors;
+        if (this.baseModel.errors.length > 0) {
+         this.dialog.open(ErrorComponent, {data: this.baseModel.errors});
         }
-    })
+    });
 
     this.stripeService.pay(this.amount);
-    debugger;
-    let TransactionId = this.localStorage.getTransactionId();
+    const TransactionId = this.localStorage.getTransactionId();
   }
 
   private totalAmount(items: Array<OrderItemModelItem>): number {
@@ -76,17 +75,16 @@ export class MyCartComponent implements OnInit {
   }
 
   deleteItem(element: OrderItemModelItem) {
-    debugger;
-    let index: number = 0;
-    let item = element;
-      for (let i = 0; i < this.dataSource.orderItems.items.length; i++) {
-      
+    let index = 0;
+    const item = element;
+    for (let i = 0; i < this.dataSource.orderItems.items.length; i++) {
+
         if (item === this.dataSource.orderItems.items[i]) {
           index = i;
         }
       }
-      this.localStorage.removeItemFromCart(index);
-      this.dataSource.orderItems.items = this.localStorage.getCart();
+    this.localStorage.removeItemFromCart(index);
+    this.dataSource.orderItems.items = this.localStorage.getCart();
   }
 
 

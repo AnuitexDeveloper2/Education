@@ -4,14 +4,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { AppComponent } from 'src/app/app.component';
 import { Router } from '@angular/router';
-import { BrowserAnimationsModule  } from "@angular/platform-browser/animations";
+import { BrowserAnimationsModule  } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { AccountModule } from 'src/app/account/account.module';
 import { CookieService } from 'ngx-cookie-service';
-import { UserModule } from "src/app/user/user.module";
-import { MaterialModule } from "src/app/material/material.module";
+import { UserModule } from 'src/app/user/user.module';
+import { MaterialModule } from 'src/app/material/material.module';
 import { FooterComponent } from 'src/app/shared/components/footer/footer.component';
 import { OrderModule } from 'src/app/order/order.module';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -39,15 +39,15 @@ import { AuthenticationService } from 'src/app/shared/services/authentication/au
     SharedModule,
     CartModule
   ],
-  providers:[{
-    provide:HTTP_INTERCEPTORS,
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,
-    multi:true,
+    multi: true,
   },
    CookieService,
-   AuthenticationService,],
+   AuthenticationService, ],
    bootstrap: [AppComponent]
 })
-export class AppModule { 
-  constructor(router:Router){}
+export class AppModule {
+     constructor(router: Router) {}
 }

@@ -8,26 +8,26 @@ export class LocalStorage {
   setUser(user: UserModelItem) {
      localStorage.setItem('user', JSON.stringify(user));
    }
-    
+
   getUser(): UserModelItem {
      return JSON.parse(localStorage.getItem('user'));
    }
-    
+
   setCart(orderItemModelItem: OrderItemModelItem) {
-     let currentItems = this.getCart();
+     const currentItems = this.getCart();
      if (currentItems != null) {
-        this.items= currentItems;
+        this.items = currentItems;
       }
-         this.items.push(orderItemModelItem);
-      localStorage.setItem('cart', JSON.stringify(this.items));
+     this.items.push(orderItemModelItem);
+     localStorage.setItem('cart', JSON.stringify(this.items));
       }
 
   removeItemFromCart(index: number) {
-     let currentItems = this.getCart();
-     currentItems.splice(index,1);
-     localStorage.setItem('cart', JSON.stringify(currentItems))
+     const currentItems = this.getCart();
+     currentItems.splice(index, 1);
+     localStorage.setItem('cart', JSON.stringify(currentItems));
    }
-    
+
   getCart(): Array<OrderItemModelItem> {
       let currentCart: Array<OrderItemModelItem>;
       currentCart = JSON.parse(localStorage.getItem('cart'));
@@ -38,12 +38,12 @@ export class LocalStorage {
   }
 
   getTransactionId(): string {
-    let id = localStorage.getItem('lsid')
+    const id = localStorage.getItem('lsid');
     return id;
   }
 
-  setPayment(paymentId:number) {
-    localStorage.setItem('payment',paymentId.toString())
+  setPayment(paymentId: number) {
+    localStorage.setItem('payment', paymentId.toString());
   }
 }
 
@@ -65,4 +65,3 @@ export class LocalStorage {
 
     return cartModel;
     */
- 

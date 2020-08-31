@@ -44,9 +44,8 @@ namespace EducationApp.DataAccessLayer.Ropositories.EFRepositories
                                     });
             if (!string.IsNullOrWhiteSpace(printingEditionFilter.SearchString))
             {
-                //var searchByName = await printingEditions.Where(k => k.Authors.Any(l => l.Name.Contains(printingEditionFilter.SearchString))).ToListAsync();
-                printingEditions =  printingEditions.Where(l => l.Title.Contains(printingEditionFilter.SearchString));
-               // printingEditions = Enumerable.Concat(searchByName, searchByTitle).AsQueryable();
+                printingEditions = printingEditions.Where(l => l.Title.Contains(printingEditionFilter.SearchString));
+                // printingEditions = Enumerable.Concat(searchByName, searchByTitle).AsQueryable();
             }
 
             if (!printingEditions.Any())

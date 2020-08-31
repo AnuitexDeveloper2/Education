@@ -1,44 +1,61 @@
-<span class="catalog" >Catalog</span>
+<span class="catalog">Catalog</span>
 <div class="user-img">
-    <img src="assets/images/user.png"  alt="user">
+  <img src="assets/images/user.png" alt="user" />
 </div>
 <h1 class="sign-in">Sign-In</h1>
 
-<div class="sign-in-form" [formGroup] = loginForm>
-    
-    <div class="email-form">
-        <mat-form-field appearance="outline" [floatLabel]="'never'">
-            <mat-label class="label"> E-mail</mat-label>
-            <input class="input" matInput placeholder="E-mail" formControlName = "email" >
-            <mat-error>
-                E-mail not valid
-            </mat-error>
-        </mat-form-field>
-    </div>
-
-    <div class="password-form"></div>
+<div class="sign-in-form" [formGroup]="loginForm">
+  <div class="email-form">
     <mat-form-field appearance="outline" [floatLabel]="'never'">
-        <mat-label class="label"> Password </mat-label> 
-        <input matInput type="password" placeholder="Password" formControlName = "password" >
-        <mat-error>
-            Password must be at least 8 characters
-        </mat-error>
-    </mat-form-field> <br>
-    <a href="http://localhost:4200/account/forgot-password"><span class="forgot-password">Forgot your password?</span></a>
+      <mat-label class="label"> E-mail</mat-label>
+      <input
+        class="input"
+        matInput
+        placeholder="E-mail"
+        formControlName="email"
+      />
+      <mat-error> E-mail not valid </mat-error>
+    </mat-form-field>
+  </div>
 
-    
-    <form  >
-        <mat-checkbox class="checkbox">Remember me!</mat-checkbox>
-        <button class="sign-in-button"[disabled] = "!loginForm.valid" name="name"  (click) = "signIn()">Sign In</button>
+  <div class="password-form"></div>
+  <mat-form-field appearance="outline" [floatLabel]="'never'">
+    <mat-label class="label"> Password </mat-label>
+    <input
+      matInput
+      type="password"
+      placeholder="Password"
+      formControlName="password"
+    />
+    <mat-error> Password must be at least 8 characters </mat-error>
+  </mat-form-field>
+  <br />
+  <a href="http://localhost:4200/account/forgot-password"
+    ><span class="forgot-password">Forgot your password?</span></a
+  >
+
+  <form>
+    <mat-checkbox class="checkbox">Remember me!</mat-checkbox>
+    <button
+      class="sign-in-button"
+      [disabled]="!loginForm.valid"
+      name="name"
+      (click)="signIn()"
+    >
+      Sign In
+    </button>
+  </form>
+
+  <div class="newUser">
+    New to book Publishing Company? <br />
+    <form class="button">
+      <button
+        class="sign-up-button"
+        type="submit"
+        onClick='location.href="http://localhost:4200/account/register"'
+      >
+        Sign Up
+      </button>
     </form>
-
-    <div class="newUser">
-        New to book Publishing Company? <br>
-        <form class="button">
-            <button  class="sign-up-button" type="submit" onClick='location.href="http://localhost:4200/account/register"'>Sign Up</button>
-        </form>      
-    </div>
+  </div>
 </div>
-
-
-

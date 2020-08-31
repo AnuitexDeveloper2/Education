@@ -10,7 +10,7 @@ import { OrderStatusType } from 'src/app/shared/enums/OrderStatusType';
 import { MatSort, PageEvent } from '@angular/material';
 import { SortOrderType } from 'src/app/shared/enums/SortOrderType';
 import { SortType } from 'src/app/shared/enums/SortType';
-import { FormControl,ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-orders',
@@ -25,25 +25,34 @@ export class OrdersComponent implements OnInit {
   itemsCount: number;
   statusList: string[];
   status: FormControl;
-  
-  
+
+
   constructor(private service: OrderService) {
     this.orderFilter = new OrderFilterModel();
     this.items = new Array<OrderModelItem>();
-    this.displayedColumns = [ColumnName.Order,ColumnName.Date,ColumnName.UserName,ColumnName.UserEmail,ColumnName.Product,ColumnName.Title,ColumnName.Qty,ColumnName.OrderAmount,ColumnName.Status]
+    this.displayedColumns = [
+      ColumnName.Order,
+      ColumnName.Date,
+      ColumnName.UserName,
+      ColumnName.UserEmail,
+      ColumnName.Product,
+      ColumnName.Title,
+      ColumnName.Qty,
+      ColumnName.OrderAmount,
+      ColumnName.Status
+    ];
     this.statusList = enumSelector(OrderStatusType);
     this.status = new FormControl();
   }
 
   ngOnInit() {
-    this.orderFilter.statusOrder = [Filter.zero,Filter.one];
+    this.orderFilter.statusOrder = [Filter.zero, Filter.one];
     this.orderFilter.pageNumber = Filter.one;
     this.orderFilter.pageSize = Filter.ten;
     this.getOrders();
-    
+
   }
   getOrders() {
-    debugger;
     return this.service.getOrders(this.orderFilter).subscribe(data => {
       this.itemsCount = data.itemsCount;
       this.items = data.items;
@@ -63,12 +72,11 @@ export class OrdersComponent implements OnInit {
     }
 
     filterOrder(name: string) {
-      debugger;
       this.orderFilter.statusOrder = new Array<OrderStatusType>();
       this.orderFilter.statusOrder.push(OrderStatusType[name]);
       this.getOrders();
     }
-   
+
   }
 
 

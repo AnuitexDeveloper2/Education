@@ -17,35 +17,34 @@ export class CreateComponent {
   authorModel: AuthorModelItem;
   authorName: FormControl;
   baseModel: BaseModel;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: AuthorModelItem, private authorService: AuthorService,private dialog: MatDialog) { 
-    this.authorModel = new AuthorModelItem;
+  constructor(@Inject(MAT_DIALOG_DATA) public data: AuthorModelItem, private authorService: AuthorService, private dialog: MatDialog) {
+    this.authorModel = new AuthorModelItem();
     this.authorName = new FormControl(data.name);
     this.baseModel = new BaseModel();
   }
 
   save() {
     this.authorModel.name = this.authorName.value;
-    if (this.data.id == 0) {
+    if (this.data.id === 0) {
       this.authorService.save(this.authorModel).subscribe(data => {
-        this.baseModel.errors = data.errors
-        this.checkError(this.baseModel.errors)
+        this.baseModel.errors = data.errors;
+        this.checkError(this.baseModel.errors);
       });
     }
 
     if (this.data.id > 0) {
-      this.authorService.edit(this.data.id,this.authorModel.name).subscribe(data => {
-        this.baseModel.errors = data.errors
-        this.checkError(this.baseModel.errors) 
+      this.authorService.edit(this.data.id, this.authorModel.name).subscribe(data => {
+        this.baseModel.errors = data.errors;
+        this.checkError(this.baseModel.errors);
       });
     }
   }
 
-  private checkError(errors:Array<string>) {
-    debugger;
+  private checkError(errors: Array<string>) {
     if (errors.length > 0) {
-      this.dialog.open(ErrorComponent,{data:this.baseModel.errors})
+      this.dialog.open(ErrorComponent, { data: this.baseModel.errors })
     }
   }
 }
-    
+
 

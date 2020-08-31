@@ -1,7 +1,10 @@
 .footer{
+    position: fixed;
+    bottom: 0;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: grey;
     background-color: rgb(217, 243, 217);
+    width: 100%;
 }
 .version{
    text-align: center;
